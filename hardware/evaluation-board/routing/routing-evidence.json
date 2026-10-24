@@ -1,0 +1,21 @@
+{
+ "dsn_sha256": "55c13cc782c6f1abcab7a121f85a98aa2b9ffc28f9d53209ec94a62e4ef341d1",
+ "ses_sha256": "4204cf1b08a2d1becc762af5be74cb139e2df9db386536252744770713a55f29",
+ "command": [
+  "C:\\NUBM44 driver\\tools\\jre25\\jdk-25.0.4.1+1-jre\\bin\\java.exe",
+  "-jar",
+  "C:\\NUBM44 driver\\tools\\freerouting\\freerouting-2.5.0.jar",
+  "-de",
+  "C:\\NUBM44 driver\\build\\evaluation-board\\nubm44_driver.dsn",
+  "-do",
+  "C:\\NUBM44 driver\\build\\evaluation-board\\nubm44_driver.ses",
+  "--router.autorouter.max_passes=30",
+  "-mt",
+  "1",
+  "--router.automatic_neckdown=false",
+  "--router.neck_width_um=150",
+  "--router.fanout.enabled=false",
+  "--router.layers.routable=true,false,true,true",
+  "--gui.enabled=false"
+ ]
+}

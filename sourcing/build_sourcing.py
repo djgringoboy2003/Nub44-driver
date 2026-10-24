@@ -53,7 +53,7 @@ SERIES = [  # commodity resistor series ratings (Yageo RC/RT series specificatio
 EXTRA = {
     "TPS552882RPMR": {"supplier": "TI store", "spn": "TPS552882RPMR", "stock": "2950 (TI store, 2026-10-24, PWR-20)", "price": U},
     "XGL5030-102MEC": {"supplier": "LCSC / Coilcraft", "spn": "C6937849", "stock": U, "price": U},
-    "MCS1632R010FER": {"supplier": "DigiKey", "spn": "MCS1632R010FER", "stock": "~775k per search snippet (LEAD-07, unverified page)", "price": U},
+    "MCS1632R010FER": {"supplier": "DigiKey", "spn": "MCS1632R010FER", "stock": U, "price": U},
 }
 ALTERNATES = [
     ("RS1", "MCS1632R010FER", "RALEC", "LR1206-21R010F4", "LCSC C154635", "Same 1206 land pattern; 10 mOhm 1 W 1 %. Verify TCR/datasheet."),

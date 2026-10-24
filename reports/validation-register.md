@@ -13,9 +13,9 @@ Statuses come from tool reports; none are hard-coded.
 | D (compact-22mm) | OPEN |
 | E (compact-22mm) | OPEN |
 | F (compact-22mm) | OPEN |
-| D (evaluation-board) | OPEN |
-| E (evaluation-board) | OPEN |
-| F (evaluation-board) | OPEN |
+| D (evaluation-board) | PASS |
+| E (evaluation-board) | PASS |
+| F (evaluation-board) | HELD (owner decisions: REQ-BAT-04) |
 | G | OPEN: requires assembled-prototype testing (cannot be closed by software) |
 
 ## Register
@@ -44,17 +44,18 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-CALC-19 | Current-loop gain margin (all corners) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 12.0924 dB (limit min 10.0) |
 | VAL-CALC-20 | Crossover below RHP zero / 5 | CALC | **PASS** | engineering/calculations/power-stage-results.md | 4858.1463 Hz (limit max 11119.032651578316) |
 | VAL-CALC-21 | Crossover below CSA bandwidth / 3 | CALC | **PASS** | engineering/calculations/power-stage-results.md | 4858.1463 Hz (limit max 12333.333333333334) |
-| VAL-ERC-compact-22mm | ERC (compact-22mm): errors 0, warnings 0 | CAD | **PASS** | reports/erc-compact-22mm.json |  |
+| VAL-ERC-compact-22mm | ERC (compact-22mm) | CAD | **PASS** | reports/erc-compact-22mm.json | 0 unresolved findings |
 | VAL-NET-compact-22mm | Netlist equals connectivity.yaml (compact-22mm) | CAD | **PASS** | reports/schematic-compact-22mm.json | 0 differences |
-| VAL-ROUTE-compact-22mm | PCB placed and fully routed (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 35 unconnected items |
-| VAL-PARITY-compact-22mm | PCB matches schematic (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 65 parity issues |
-| VAL-DRC-compact-22mm | DRC errors (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 187 errors {'clearance': 30, 'courtyards_overlap': 8, 'copper_edge_clearance': 60, 'track_width': 62, 'starved_thermal': 27} |
-| VAL-EXPORT-compact-22mm | PCBWay export package (compact-22mm) | CAD | **NOT RUN** |  |  |
-| VAL-ERC-evaluation-board | ERC (evaluation-board): errors 0, warnings 0 | CAD | **PASS** | reports/erc-evaluation-board.json |  |
+| VAL-ROUTE-compact-22mm | PCB placed and fully routed (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 43 unconnected items |
+| VAL-PARITY-compact-22mm | PCB matches schematic (compact-22mm) | CAD | **PASS** | reports/drc-compact-22mm.json | 0 parity issues |
+| VAL-DRC-compact-22mm | Unresolved DRC findings (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 0 errors, 3 warnings, 0 exclusions {'connection_width': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20) |
+| VAL-EXPORT-compact-22mm | PCBWay export package internally consistent (compact-22mm) | CAD | **PASS** | manufacturing/pcbway/compact-22mm/reports/export-check.json |  |
+| VAL-ERC-evaluation-board | ERC (evaluation-board) | CAD | **PASS** | reports/erc-evaluation-board.json | 0 unresolved findings |
 | VAL-NET-evaluation-board | Netlist equals connectivity.yaml (evaluation-board) | CAD | **PASS** | reports/schematic-evaluation-board.json | 0 differences |
-| VAL-ROUTE-evaluation-board | PCB placed and fully routed (evaluation-board) | CAD | **NOT RUN** |  |  |
-| VAL-DRC-evaluation-board | DRC (evaluation-board) | CAD | **NOT RUN** |  |  |
-| VAL-EXPORT-evaluation-board | PCBWay export package (evaluation-board) | CAD | **NOT RUN** |  |  |
+| VAL-ROUTE-evaluation-board | PCB placed and fully routed (evaluation-board) | CAD | **PASS** | reports/drc-evaluation-board.json | 0 unconnected items |
+| VAL-PARITY-evaluation-board | PCB matches schematic (evaluation-board) | CAD | **PASS** | reports/drc-evaluation-board.json | 0 parity issues |
+| VAL-DRC-evaluation-board | Unresolved DRC findings (evaluation-board) | CAD | **PASS** | reports/drc-evaluation-board.json | 0 errors, 0 warnings, 0 exclusions {}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20) |
+| VAL-EXPORT-evaluation-board | PCBWay export package internally consistent (evaluation-board) | CAD | **PASS** | manufacturing/pcbway/evaluation-board/reports/export-check.json |  |
 | VAL-SIM-01 | Power-on, nominal battery 3.7 V, typical diode | SIM | **PASS** | simulation/results/results.md | {"steady_current_a": 3.9966775448338865, "overshoot_pct": 0.00025570983975481843, "peak_a": 3.996687764731632} |
 | VAL-SIM-02 | Power-on at 3.15 V (just above the 3.08 V hardware UVLO), maximum-Vf diode | SIM | **PASS** | simulation/results/results.md | {"steady_current_a": 3.9966157734288297, "overshoot_pct": 0.00023969124509472158, "peak_inductor_a": 6.35274849} |
 | VAL-SIM-03 | Current regulation across battery 3.0-4.2 V and diode Vf corners (incl. Vf below Vbat) | SIM | **PASS** | simulation/results/results.md | {"3.0V_min": 3.9968, "3.0V_typ": 3.9968, "3.0V_max": 3.9968, "3.7V_min": 3.9964, "3.7V_typ": 3.9964, "3.7V_max": 3.9969, "4.2V_min": 3.9966, "4.2V_typ": 3.9965, |

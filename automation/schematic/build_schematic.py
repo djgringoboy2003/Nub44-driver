@@ -105,9 +105,8 @@ TITLE_BLOCK_H = 45.0
 def layout_block(block: str, parts: list) -> dict:
     """Relative placement of one block: multi-pin parts in a top row, two-pin parts in a grid,
     single-pin parts (contacts, test pads) in a final row."""
-    multi = [p for p in parts if len(p["pins"]) > 2 or p["lib"].startswith("Connector_Generic:Conn_01x02")]
-    two = [p for p in parts if p not in multi and not p["lib"].startswith("Connector:TestPoint")
-           and not p["lib"].startswith("Connector_Generic:Conn_01x01")]
+    multi = [p for p in parts if len(p["pins"]) > 2 or (p["ref"].startswith("J") and len(p["pins"]) > 1)]
+    two = [p for p in parts if p not in multi and not p["ref"].startswith(("TP", "J"))]
     single = [p for p in parts if p not in multi and p not in two]
     items = []
     x, row_h = 25.4, 0.0
@@ -208,7 +207,7 @@ def _place(sch: Schematic, p: dict, x: float, y: float, rot: int, cfg: dict) -> 
         fields["Alternate"] = p["alt"]
     fp = p["footprint"]          # already resolved for the variant by spec_mod.parts_for
     lib_sym = kicad_lib.get_symbol(p["lib"])
-    is_tp = p["lib"].startswith("Connector:TestPoint")
+    is_external_pad = p["ref"].startswith(("TP", "J"))
     sch.place(p["ref"], p["lib"], x, y, rot, value=str(p["value"]), footprint=fp,
               datasheet=p.get("datasheet", "~"), description=p.get("desc", ""), fields=fields,
               in_bom=p.get("in_bom", True), dnp=p.get("dnp", False))
@@ -220,7 +219,7 @@ def _place(sch: Schematic, p: dict, x: float, y: float, rot: int, cfg: dict) -> 
         n0 = nums[0]
         if net == "NC":
             sch.no_connect(p["ref"], n0)
-        elif net == "GND" and not is_tp and not p["lib"].startswith("Connector_Generic"):
+        elif net == "GND" and not is_external_pad:
             sch.power(p["ref"], n0, "power:GND")
         else:
             two_pin = len(kicad_lib.symbol_pins(lib_sym)) == 2
@@ -259,14 +258,21 @@ def verify(variant: str, spec: dict, sch_path: Path) -> dict:
     cli = str(paths.kicad_cli())
     rep_dir = paths.REPORTS
     rep_dir.mkdir(parents=True, exist_ok=True)
-    up = subprocess.run([cli, "sch", "upgrade", "--force", str(sch_path)], capture_output=True, text=True)
     erc_json = rep_dir / f"erc-{variant}.json"
-    erc = subprocess.run([cli, "sch", "erc", "--format", "json", "--severity-all", "-o", str(erc_json),
-                          str(sch_path)], capture_output=True, text=True)
+    summary_json = rep_dir / f"schematic-{variant}.json"
     net_path = sch_path.with_suffix(".net")
-    subprocess.run([cli, "sch", "export", "netlist", "--format", "kicadsexpr", "-o", str(net_path), str(sch_path)],
-                   capture_output=True, text=True, check=True)
+    # A failed command must never leave previous passing evidence available.
+    for stale in (erc_json, summary_json, net_path):
+        stale.unlink(missing_ok=True)
+    up = subprocess.run([cli, "sch", "upgrade", "--force", str(sch_path)], capture_output=True, text=True,
+                        check=True)
+    erc = subprocess.run([cli, "sch", "erc", "--format", "json", "--severity-all", "-o", str(erc_json),
+                          str(sch_path)], capture_output=True, text=True, check=True)
+    export = subprocess.run([cli, "sch", "export", "netlist", "--format", "kicadsexpr", "-o", str(net_path),
+                             str(sch_path)], capture_output=True, text=True, check=True)
     data = json.loads(erc_json.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or not isinstance(data.get("sheets"), list):
+        raise ValueError(f"KiCad ERC produced an invalid report: {erc_json}")
     violations = [v for sh in data.get("sheets", []) for v in sh.get("violations", [])]
     errors = [v for v in violations if v["severity"] == "error"]
     warnings = [v for v in violations if v["severity"] == "warning"]
@@ -286,14 +292,15 @@ def verify(variant: str, spec: dict, sch_path: Path) -> dict:
             problems.append(f"{p['ref']}: footprint {comp['footprint']} != spec {want}")
     result = {
         "variant": variant, "schematic": str(sch_path.relative_to(ROOT)),
-        "upgrade_rc": up.returncode, "erc_errors": len(errors), "erc_warnings": len(warnings),
+        "upgrade_rc": up.returncode, "erc_rc": erc.returncode, "netlist_rc": export.returncode,
+        "erc_errors": len(errors), "erc_warnings": len(warnings),
         "erc_violations": [{"severity": v["severity"], "type": v["type"], "description": v["description"],
                             "items": [i.get("description", "") for i in v.get("items", [])]} for v in violations],
         "netlist_parts": len(actual["components"]), "netlist_nets": len(nets),
         "connectivity_differences": problems,
         "status": "PASS" if not errors and not problems else "FAIL",
     }
-    (rep_dir / f"schematic-{variant}.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
+    summary_json.write_text(json.dumps(result, indent=1), encoding="utf-8")
     return result
 
 

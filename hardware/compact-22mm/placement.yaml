@@ -9,7 +9,7 @@ board:
   outline: {type: circle, radius: 11.0}
   copper_layers: 4
   thickness: 1.6
-placement_radius: 9.55         # every courtyard corner inside this radius (ring copper starts at 9.9)
+placement_radius: 9.55         # every courtyard corner inside this radius (ring copper starts at 9.8)
 courtyard_gap: 0.02          # courtyards may almost touch (they already include assembly clearance)
 
 parts:
@@ -27,13 +27,13 @@ parts:
   C3: {pos: [-3.40, -1.8, 270], side: F}
   C14: {pos: [0.6, 3.75, 180], side: F}             # VOUT pin 11 <-> PGND pin 9, tightest boost loop
   C10: {pos: [0.6, 5.2, 180], side: F}
-  C11: {pos: [0.6, 7.1, 180], side: F}
+  C11: {pos: [0.6, 7.3, 180], side: F}
   RS1: {pos: [4.7, 4.9, 0], side: F}
 
   # power stage, bottom
-  Q1: {pos: [-5.0, -2.4, 180], side: B}
+  Q1: {pos: [-5.1, -2.4, 180], side: B}
   Q3: {pos: [-1.0, -6.7, 0], side: B}          # drain pad clear of the SW1 via column at x -1.76
-  U3: {pos: [4.8, -3.9, 0], side: B}
+  U3: {pos: [3.6, -5.0, 0], side: B}
   C13: {pos: [2.4, 5.6, 90], side: B}            # output cap under the VOUT area, via-connected
 
   # external connection pads (top) and test/programming pads (bottom)

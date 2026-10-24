@@ -2,63 +2,99 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-24 (Codex continuation; recovered routing checkpoint)._
+_Last updated: 2026-10-24 (Codex continuation; evaluation CAD and review exports complete)._
 
 | Gate | Status | Evidence |
 |---|---|---|
-| A Research complete | **Done** | `research/*.md`, `research/architecture-comparison.md`, `engineering/requirements.md` |
-| B Electrical design | **Done** (owner polarity confirmation pending) | `engineering/design/connectivity.yaml` → `hardware/*/nubm44_driver.kicad_sch`; ERC 0/0; netlist = spec pin-for-pin (`reports/schematic-*.json`) |
-| C Simulation | **Done (model-level)** | `simulation/run_sims.py` → `simulation/results/results.md`: SIM-01…SIM-11 PASS in a behavioural averaged model (no vendor model exists) |
-| D PCB placed and routed | **In progress (Variant A)** | All 65 parts placed (`hardware/compact-22mm/placement.yaml`); pours and via fields defined; FreeRouting leaves about 35–48 connections unrouted |
-| E ERC/DRC clean | Not yet | DRC report `reports/drc-compact-22mm.json` (latest run) |
-| F Manufacturing files | Open; export tooling exists, unvalidated | `automation/export/export_pcbway.py`; owner polarity decision remains blocked |
-| G Physical validation | Not started (needs hardware) | — |
+| A Research | PASS | Research/requirement documents; computed register |
+| B Electrical design | PASS | Both schematics: ERC 0 errors / 0 warnings; exact connectivity comparison |
+| C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
+| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 43 unconnected items |
+| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 3 / 43 / 0 |
+| F Manufacturing files | Evaluation HELD (REQ-BAT-04); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release |
+| G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
-**Design status:**
-- **Power stage:** TPS552882 buck-boost, 595 kHz, 1 µH.
-- **Current regulation:** a 10 mΩ Kelvin shunt (net-tie footprint) feeds the INA186A2, whose output drives FB
-  through a 6.65k/10.0k divider (3.996 A). The ISP/ISN backup ceiling is 4.8–5.2 A.
-- **Enable chain:** an EN/UVLO divider (3.08/2.83 V) with MCU, interlock and Zener over-voltage pull-downs.
-- **Firmware:** ATtiny1616; builds at 2.4 kB, 26/26 unit checks pass (`firmware/build.ps1`).
-- **Calculations:** 20 of 21 PASS. The one FAIL is the efficiency target: 94.6 % estimated at 4 V against > 95 %.
+The authoritative gate statuses are generated in [reports/validation-register.md](reports/validation-register.md)
+and mirrored into the requirement register by the validator. `scripts/validate.ps1` currently returns 1
+because the efficiency target and compact routing/DRC checks are unresolved, while all 120 Python tests pass.
 
-**Open owner decisions / blockers:**
-1. Battery polarity: REQ-BAT-04 is BLOCKED. Working assumption is spring = B+, ring = B−.
-2. Default current: 4.0 A as specified, which is above the NUBM44's 3.0 A typical. Recommend 3.5 A (change R8 only).
-3. Efficiency: the > 95 % at 4 V target is not achievable with the required protection (≈ 94.6 %).
-4. Sourcing: stock is UNKNOWN for several parts.
-5. Variant A routing density: FreeRouting has not completed the 22 mm board. See Next actions 1.
+**Design and deliverables:**
+- TPS552882 constant-current architecture and all hardware protections retained; default setpoint remains 4 A.
+- Both native KiCad projects are committed. The evaluation board is 45 x 40 mm, four layers, 68 footprints
+  and 13 labelled test points. Repeated finishing/DRC preserves its clean result.
+- The compact board has 65 footprints. Its corrected geometry has no DRC errors or parity findings,
+  but three connection-width warnings and 43 incomplete connections remain. See
+  [the compact assessment](engineering/compact-feasibility.md).
+- Firmware: 26 host checks pass; ATtiny1616 target build succeeds with warnings treated as errors
+  (approximately 2.4 kB flash image).
+- Calculations: 20 of 21 pass. Current estimated efficiency is 94.5883% at 4 V against a greater-than-95% target;
+  actual efficiency remains unmeasured.
+- Both `manufacturing/pcbway/<variant>/` review packages pass source/artifact hash, output inventory,
+  BOM/centroid and ZIP checks. Each has 31 artifacts, 48 BOM lines / 53 BOM parts and 52 centroid rows.
+  All PDFs open; all PNGs verify. Renders show board geometry without resolved component bodies.
+- Assembly instructions, stack-up note, dummy-load-first bench plan and final review report are under
+  `documentation/`. Source-defined routing checkpoints (DSN/SES/manifests/instructions) are archived in
+  `hardware/<variant>/routing/` so the exact current route can be restored from Git.
+- `doctor`, `build`, `validate`, `export-pcbway` and DRAFT `package` entry points exist. The toolchain doctor passes.
+
+**Owner decisions / open limitations:**
+1. REQ-BAT-04 remains BLOCKED: working contact polarity is centre spring B+, ring B-. Evaluation Gate F is held.
+2. Default 4 A remains the brief's setpoint and the documented diode-life risk (DD-13); alternate selection
+   requires an owner decision and the matching divider/calculation update.
+3. The current efficiency estimate misses its target; review losses/rework or document an accepted deviation.
+4. Supplier availability, unverified prices and physical measurements remain UNKNOWN.
+5. Evaluation power-layout review and bench validation remain open. Clean DRC does not verify switching
+   waveforms, power-neck temperature, thermal coupling or host fit.
+6. No Git remote is configured. Commits are local; a GitHub destination was requested asynchronously.
 
 ## Next actions (in order)
 
-1. **Correct the recovered PCB pipeline, then finish routing Variant A.** The latest DSN already contains 0.15 mm classes; the last run still imported undersized neck-down tracks. Fix bottom-side placement transforms, ring edge clearance, field parity and the C10/C11 courtyard overlap before the next routing attempt. Options:
-   - (a) Re-run FreeRouting with minimum-width neck-down behavior corrected and inspect actual KiCad DRC.
-   - (b) Improve placement for routability: group MCU nets, move more parts to the bottom side.
-   - (c) Complete the remaining connections with a scripted router.
-   - (d) If the board still cannot route cleanly, document the limit (Phase 8) and keep Variant B as the
-     route-complete board.
-2. Variant B (evaluation board) placement and routing; with relaxed density this should route completely.
-3. Exports: Gerbers/drill (X2 off), PCBWay BOM and centroid in plugin format, iBOM, renders, schematic PDF,
-   assembly and fab drawings, stack-up note; `manufacturing/pcbway/` and the zip.
-4. Verify existing entry scripts (`doctor`, `build`, `validate`, `export-pcbway`, `package`) and harden gate computation: missing/stale reports and unrouted boards must not pass release checks.
-5. Verify the existing sourcing database (`sourcing/components.csv`, `sourcing/build_sourcing.py`); supplier stock and price remain UNKNOWN without current evidence.
-6. Review existing assembly instructions and dummy-load-first bench plan; add final evidence and limitations. Gate G requires hardware.
+1. Confirm owner polarity before any Gate F release. Resolve the current/efficiency decisions as appropriate;
+   no part value or requirement has been silently relaxed.
+2. Review evaluation gate/boot loops, Kelvin/feedback isolation, power necks and thermal paths against the
+   source datasheets. Use `hardware/evaluation-board/LAYOUT.md` and the actual CAD/assembly package.
+3. After CAD/owner release, assemble an evaluation prototype and execute `documentation/testing/test-plan.md`
+   using a rated dummy load first. Record measured data; only bench evidence can close Gate G.
+4. Rework compact placement and explicit fanout using `engineering/compact-feasibility.md`. Do not rerun the
+   same autoroute expecting a different conclusion or waive its remaining findings.
+5. Verify supplier stock/prices and proposed alternatives; retain UNKNOWN until evidence is available.
 
-**How to rebuild what exists:**
+**Commands and routing replay:**
 ```powershell
-.venv\Scripts\python.exe automation\setup\build_library.py
-.venv\Scripts\python.exe automation\schematic\build_schematic.py
-.venv\Scripts\python.exe automation\placement\build_pcb.py --variant compact-22mm --stage all
-.venv\Scripts\python.exe engineering\calculations\power_stage.py
-.venv\Scripts\python.exe simulation\run_sims.py
-.\firmware\build.ps1
-.venv\Scripts\python.exe -m pytest tests
-.\scripts\validate.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\doctor.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\validate.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\export-pcbway.ps1 -Variant evaluation-board
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\package.ps1
 ```
 
-Existing entry scripts were added in commit `2faa5b6`; their existence does not mean the boards or manufacturing package pass validation.
+The per-process PowerShell flag is needed on this machine; no system policy was changed.
+For exact route restoration, follow `hardware/<variant>/routing/README.md`. A new `build.ps1` or
+`build_pcb.py --stage all` reroutes and may change geometry; exact post-route selectors then need fresh
+DRC and power-path inspection. Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-24: completed evaluation CAD, hardened evidence and generated review packages
+- Evaluation board: all 68 footprints placed, all nets connected, repeated KiCad DRC 0/0/0/0. Explicit
+  MCU/PG/ground escapes and source-defined BOOT1/SW2/ILIM corrections resolve the trapped connections.
+- Compact board: corrected bottom transforms, copper-only fanout, ring edge margin and capacitor spacing;
+  final DRC 0 errors / 3 connection-width warnings / 43 unconnected / 0 parity. The current compact placement
+  remains a routing draft; no feasibility or production claim was inferred from zero geometric errors.
+- Native project symbol derivatives keep verified custom footprint filters compatible with clean ERC.
+- Router minimum-width and ground-layer settings are explicit. Repeated finish is idempotent; native
+  deletions fix KiCad SWIG ownership failures, and project settings are preserved with atomic writes.
+- Tool failures, malformed/stale reports, source races, omissions and incomplete routes cannot pass the gate
+  computation. DRC/export evidence binds placement, connectivity, parameters and actual CAD bytes. Export
+  artifacts are independently checked and hashed; Git preserves those exact bytes.
+- Both DRAFT PCBWay packages internally pass; all PDFs/images and signed centroid data checked. Rendering
+  has no component-body/height verification. Stack-up/assembly notes and a safer unspecified rated dummy-load
+  selection replace the unsupported example in the earlier bench plan.
+- Toolchain doctor passes; 120 Python tests pass; firmware 26/26 checks and target build pass. Global validation
+  truthfully exits 1 for the efficiency target plus compact routing/DRC; battery polarity remains BLOCKED.
+- Exact router checkpoints archived; safe review packaging excludes tools, downloads, caches and failed
+  staging directories and records file hashes plus actual gate states. Actual DRAFT bundle smoke test: 249
+  members, no missing review files, valid ZIP CRC and per-file hashes. No order or manufacturing release.
+
 
 ### 2026-10-24: recovered Claude routing checkpoint and audited handoff
 - Preserved unfinished `floorplan.py`, geometry export, compact PCB, project rules and latest DRC report.

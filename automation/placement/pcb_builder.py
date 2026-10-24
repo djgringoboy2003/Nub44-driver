@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import math
 import sys
+from pathlib import Path
 
 import pcbnew
 
@@ -26,7 +27,10 @@ def P(job, x, y):
 
 
 def layer_id(board, name):
-    return board.GetLayerID(name)
+    layer = board.GetLayerID(name)
+    if layer == pcbnew.UNDEFINED_LAYER:
+        raise ValueError(f"Unknown KiCad layer name: {name}")
+    return layer
 
 
 # ---------------------------------------------------------------------------------- nets
@@ -50,11 +54,20 @@ def load_fp(item):
 
 
 def place_fp(board, job, fp, item, x, y, rot, side):
-    native_back = fp.GetLayer() == pcbnew.B_Cu
-    fp.SetPosition(P(job, x, y))
-    fp.SetOrientationDegrees(rot)
-    if side == "B" and not native_back:
+    # The source angle is applied in the library frame, before a left/right flip.
+    # auto_place reuses the same footprint across candidates: its current layer
+    # therefore cannot tell us its original library side after the first call.
+    native_back = item.setdefault("_native_back", fp.GetLayer() == pcbnew.B_Cu)
+    target_back = side == "B"
+    if (fp.GetLayer() == pcbnew.B_Cu) != target_back:
         fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+    fp.SetPosition(P(job, x, y))
+    fp.SetOrientationDegrees(180 - rot if target_back != native_back else rot)
+
+
+def copper_pad(pad):
+    """Paste/mask-only pads are not copper obstacles or electrical terminals."""
+    return any(pcbnew.IsCopperLayer(layer) for layer in pad.GetLayerSet().Seq())
 
 
 def courtyard_box(fp, side):
@@ -161,12 +174,14 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
     own_pads = []
     for fp in board.GetFootprints():
         for pad in fp.Pads():
+            if not copper_pad(pad):
+                continue
             (own_pads if pad.GetNetname() == net_name else foreign_pads).append(pad)
     tracks = list(board.GetTracks())
     done = failed = 0
     r = via_d / 2
 
-    def free(px, py, x, y):
+    def free(px, py, x, y, layer):
         pt = pcbnew.VECTOR2I(MM(x), MM(y))
         for pad in foreign_pads:
             if pad.HitTest(pt, MM(r + clr)):
@@ -179,7 +194,7 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
             sx, sy = px + (x - px) * i / n, py + (y - py) * i / n
             spt = pcbnew.VECTOR2I(MM(sx), MM(sy))
             for pad in foreign_pads:
-                if pad.HitTest(spt, MM(width / 2 + clr)):
+                if pad.IsOnLayer(layer) and pad.HitTest(spt, MM(width / 2 + clr)):
                     return False
         for t in tracks:
             if isinstance(t, pcbnew.PCB_VIA):           # hole-to-hole applies to every net
@@ -190,7 +205,10 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
                 continue
             if isinstance(t, pcbnew.PCB_VIA):
                 tx, ty = pcbnew.ToMM(t.GetPosition().x), pcbnew.ToMM(t.GetPosition().y)
-                if math.hypot(x - tx, y - ty) < r + pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2 + clr:
+                via_r = pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2
+                if math.hypot(x - tx, y - ty) < r + via_r + clr:
+                    return False
+                if _seg_dist(tx, ty, px, py, x, y) < width / 2 + via_r + clr:
                     return False
             else:
                 x0, y0 = pcbnew.ToMM(t.GetStart().x), pcbnew.ToMM(t.GetStart().y)
@@ -198,10 +216,11 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
                 tw = pcbnew.ToMM(t.GetWidth()) / 2
                 if _seg_dist(x, y, x0, y0, x1, y1) < r + tw + clr:
                     return False
-                for i in range(0, n + 1):
-                    sx, sy = px + (x - px) * i / n, py + (y - py) * i / n
-                    if _seg_dist(sx, sy, x0, y0, x1, y1) < width / 2 + tw + clr:
-                        return False
+                if t.GetLayer() == layer:
+                    for i in range(0, n + 1):
+                        sx, sy = px + (x - px) * i / n, py + (y - py) * i / n
+                        if _seg_dist(sx, sy, x0, y0, x1, y1) < width / 2 + tw + clr:
+                            return False
         return True
 
     for pad in own_pads:
@@ -219,7 +238,7 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
                 x, y = px + d * math.cos(a), py + d * math.sin(a)
                 if not inside_disc(job, (x - r, y - r, x + r, y + r), job["placement_radius"]):
                     continue
-                if free(px, py, x, y):
+                if free(px, py, x, y, layer):
                     best = (x, y)
                     break
             if best:
@@ -241,9 +260,25 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
 
 
 # ---------------------------------------------------------------------------------- copper
+def _track_key(track):
+    endpoints = tuple(sorted(((track.GetStart().x, track.GetStart().y),
+                              (track.GetEnd().x, track.GetEnd().y))))
+    return track.GetNetname(), track.GetLayer(), track.GetWidth(), endpoints
+
+
+def _via_key(via):
+    diameters = tuple((layer, via.GetWidth(layer)) for layer in via.GetLayerSet().Seq()
+                      if pcbnew.IsCopperLayer(layer))
+    position = via.GetPosition()
+    return (via.GetNetname(), position.x, position.y, via.GetViaType(), via.TopLayer(),
+            via.BottomLayer(), via.GetDrillValue(), diameters)
+
+
 def add_track(board, job, t):
+    """Add source segments once; preserve distinct widths, layers, nets and arcs."""
     pts = t["pts"]
     net = get_net(board, t["net"])
+    existing = {_track_key(track) for track in board.GetTracks() if type(track) is pcbnew.PCB_TRACK}
     for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
         tr = pcbnew.PCB_TRACK(board)
         tr.SetStart(P(job, x0, y0))
@@ -251,17 +286,25 @@ def add_track(board, job, t):
         tr.SetWidth(MM(t["width"]))
         tr.SetLayer(layer_id(board, t["layer"]))
         tr.SetNet(net)
-        board.Add(tr)
+        key = _track_key(tr)
+        if key not in existing:
+            board.Add(tr)
+            existing.add(key)
 
 
 def add_via(board, job, v):
+    """Add an exact through via once, accounting for span and per-layer diameters."""
     via = pcbnew.PCB_VIA(board)
     via.SetPosition(P(job, v["x"], v["y"]))
     via.SetViaType(pcbnew.VIATYPE_THROUGH)
+    via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
     via.SetDrill(MM(v.get("drill", 0.3)))
     via.SetWidth(MM(v.get("size", 0.6)))
     via.SetNet(get_net(board, v["net"]))
-    board.Add(via)
+    key = _via_key(via)
+    if not any(_via_key(existing) == key for existing in board.GetTracks()
+               if isinstance(existing, pcbnew.PCB_VIA)):
+        board.Add(via)
 
 
 def _point_in_poly(x, y, poly):
@@ -292,7 +335,7 @@ def add_via_field(board, job, vf, report):
     pitch = vf.get("pitch", 0.9)
     poly = [(x + ox, y + oy) for x, y in vf["polygon"]]
     # real pad shapes (a bounding box would be wrong for the ring contact, whose box spans the board)
-    pads = [(pad.GetNetname(), pad) for fp in board.GetFootprints() for pad in fp.Pads()]
+    pads = [(pad.GetNetname(), pad) for fp in board.GetFootprints() for pad in fp.Pads() if copper_pad(pad)]
     segs, vias = [], []
     for t in board.GetTracks():
         if isinstance(t, pcbnew.PCB_VIA):
@@ -362,12 +405,77 @@ def add_zone(board, job, z):
     board.Add(zone)
 
 
+def replace_source_zones(board, job):
+    """Replace prior/imported pours so repeated finish uses current source polygons."""
+    for zone in list(board.Zones()):
+        # Delete natively: Remove transfers loaded zone ownership to Python and
+        # KiCad 10's SWIG destructor can then corrupt subsequent zone wrappers.
+        board.Delete(zone)
+    for zone in job.get("zones_pre", []) + job.get("zones_post", []):
+        add_zone(board, job, zone)
+
+
+def normalize_track_widths(board, minimum_width_mm):
+    """Restore minimum widths after import; clearance and connectivity still require DRC."""
+    minimum_width = MM(minimum_width_mm)
+    widened = 0
+    for track in board.GetTracks():
+        if not isinstance(track, pcbnew.PCB_VIA) and track.GetWidth() < minimum_width:
+            track.SetWidth(minimum_width)
+            widened += 1
+    return widened
+
+
+def remove_source_copper(board, job):
+    """Remove exact source-listed imported items; absence is safe on repeat finish.
+
+    All requests are checked before mutation. Multiple matches are ambiguous and
+    fail closed. Coordinates use a 0.0001 mm geometric tolerance; track width is
+    deliberately unrestricted so a router neckdown does not hide the requested spur.
+    """
+    tolerance = MM(0.0001)
+
+    def near(a, b):
+        return math.hypot(a.x - b.x, a.y - b.y) <= tolerance
+
+    copper = list(board.GetTracks())
+    targets, report = {}, []
+    for kind, entries in (("via", job.get("remove_vias_post", [])),
+                          ("track", job.get("remove_tracks_post", []))):
+        for entry in entries:
+            if kind == "via":
+                position = P(job, entry["x"], entry["y"])
+                matches = [item for item in copper if isinstance(item, pcbnew.PCB_VIA)
+                           and item.GetNetname() == entry["net"] and near(item.GetPosition(), position)]
+            else:
+                if len(entry["pts"]) != 2:
+                    raise ValueError("remove_tracks_post requires exactly two segment endpoints")
+                start, end = (P(job, *point) for point in entry["pts"])
+                layer = layer_id(board, entry["layer"])
+                matches = [item for item in copper if type(item) is pcbnew.PCB_TRACK
+                           and item.GetNetname() == entry["net"] and item.GetLayer() == layer
+                           and ((near(item.GetStart(), start) and near(item.GetEnd(), end))
+                                or (near(item.GetStart(), end) and near(item.GetEnd(), start)))]
+            if len(matches) > 1:
+                raise RuntimeError(f"ambiguous source {kind} removal: {entry}; {len(matches)} matches")
+            report.append({"kind": kind, **entry, "matches": len(matches)})
+            for item in matches:
+                targets[id(item)] = item
+    for item in targets.values():
+        board.Delete(item)
+    return report
+
+
 def apply_project_rules(job):
     """pcbnew.SaveBoard() rewrites the .kicad_pro with the board's in-memory (default) settings, so the
     project design rules and net classes are re-applied after every save."""
     pro = job["board"][:-len(".kicad_pcb")] + ".kicad_pro"
-    with open(pro, encoding="utf-8") as f:
-        d = json.load(f)
+    # Capture before native SaveBoard: it can rewrite or truncate the project.
+    # New jobs always carry that snapshot; fallback supports old scratch jobs.
+    d = job.get("project_data")
+    if d is None:
+        with open(pro, encoding="utf-8") as f:
+            d = json.load(f)
     d.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rules", {}).update(job["rules"])
     ds = d["board"]["design_settings"]
     ds["track_widths"] = job["track_widths"]
@@ -375,8 +483,9 @@ def apply_project_rules(job):
     sev = ds.setdefault("rule_severities", {})
     sev.update(job.get("rule_severities", {}))
     d["net_settings"] = job["net_settings"]
-    with open(pro, "w", encoding="utf-8") as f:
-        json.dump(d, f, indent=2)
+    temporary = Path(pro).with_suffix(".kicad_pro.tmp")
+    temporary.write_text(json.dumps(d, indent=2), encoding="utf-8")
+    temporary.replace(pro)
 
 
 def apply_netclasses(board, job):
@@ -408,32 +517,50 @@ def apply_netclasses(board, job):
 
 
 def remove_dangling(board, job):
-    """Remove vias/tracks reported dangling by the previous DRC run (positions from the JSON report)."""
+    """Delete only dangling track/via UUIDs from DRC; shared endpoints are not identities."""
     try:
         with open(job["drc_report"], encoding="utf-8") as f:
             drc = json.load(f)
     except (OSError, KeyError, ValueError):
         return 0
-    targets = []
+    targets = {}
     for v in drc.get("violations", []):
         if v["type"] in ("via_dangling", "track_dangling"):
             for it in v["items"]:
-                pos = it.get("pos")
-                if pos:
-                    targets.append((v["type"], pos["x"], pos["y"]))
+                if it.get("uuid"):
+                    targets.setdefault(it["uuid"], set()).add(v["type"])
     removed = 0
     for t in list(board.GetTracks()):
         is_via = isinstance(t, pcbnew.PCB_VIA)
-        x, y = pcbnew.ToMM(t.GetPosition().x), pcbnew.ToMM(t.GetPosition().y)
-        for kind, tx, ty in targets:
-            if (kind == "via_dangling") == is_via and abs(x - tx) < 0.01 and abs(y - ty) < 0.01:
-                board.Remove(t)
-                removed += 1
-                break
+        kind = "via_dangling" if is_via else "track_dangling"
+        if kind in targets.get(t.m_Uuid.AsString(), set()):
+            board.Delete(t)
+            removed += 1
     return removed
 
 
 # ---------------------------------------------------------------------------------- modes
+def add_texts(board, job):
+    """Place explicit labels from the placement source; repeatable across finish runs."""
+    existing = {(t.GetText(), t.GetLayer(), t.GetPosition().x, t.GetPosition().y)
+                for t in board.GetDrawings() if isinstance(t, pcbnew.PCB_TEXT)}
+    for item in job.get("texts", []):
+        position = P(job, *item["at"])
+        layer = layer_id(board, item.get("layer", "F.Silkscreen"))
+        key = (item["text"], layer, position.x, position.y)
+        if key in existing:
+            continue
+        text = pcbnew.PCB_TEXT(board)
+        text.SetText(item["text"])
+        text.SetPosition(position)
+        text.SetLayer(layer)
+        text.SetTextSize(pcbnew.VECTOR2I(MM(item.get("size", 1.0)), MM(item.get("size", 1.0))))
+        text.SetTextThickness(MM(item.get("thickness", 0.15)))
+        text.SetMirrored(layer == pcbnew.B_SilkS)
+        board.Add(text)
+        existing.add(key)
+
+
 def mode_place(job):
     board = pcbnew.BOARD()
     board.SetCopperLayerCount(job["copper_layers"])
@@ -469,6 +596,7 @@ def mode_place(job):
     # manual parts first, then automatic ones in job order
     for item in job["footprints"]:
         fp = load_fp(item)
+        item["_native_back"] = fp.GetLayer() == pcbnew.B_Cu
         fp.SetFPID(pcbnew.LIB_ID(item["lib_nick"], item["fp_name"]))
         fp.SetReference(item["ref"])
         fp.SetValue(item["value"])
@@ -540,6 +668,7 @@ def mode_place(job):
     if job.get("zones_pre"):
         pcbnew.ZONE_FILLER(board).Fill(board.Zones())
 
+    add_texts(board, job)
     pcbnew.SaveBoard(job["board"], board)
     apply_project_rules(job)
     # reload so the .kicad_pro design rules / net classes are attached before DSN export
@@ -556,12 +685,26 @@ def mode_finish(job):
     if job.get("ses"):
         ok = pcbnew.ImportSpecctraSES(board, job["ses"])
         print(f"SES import {'ok' if ok else 'FAILED'}")
+        if not ok:
+            raise RuntimeError("Specctra session import failed; board was not saved")
+    removals = remove_source_copper(board, job)
+    if removals:
+        print("source copper removals: " + json.dumps(removals))
+    widened = normalize_track_widths(board, job["rules"]["min_track_width"])
+    print(f"restored {widened} imported track widths to the {job['rules']['min_track_width']} mm minimum; DRC required")
+    for track in job.get("tracks_post", []):
+        add_track(board, job, track)
     for v in job.get("vias_post", []):
         add_via(board, job, v)
-    existing = {(z.GetLayerName(), z.GetNetname(), z.GetAssignedPriority()) for z in board.Zones()}
-    for z in job.get("zones_post", []):
-        if (z["layer"], z["net"], z.get("priority", 0)) not in existing:
-            add_zone(board, job, z)
+    # Rebuild the source-defined zones on every finish. SES import/repeated finish
+    # can otherwise retain duplicate pours or outdated source polygons.
+    replace_source_zones(board, job)
+    # Preserve BOM/DNP flags while matching mount type to the actual copper pads.
+    for footprint in board.GetFootprints():
+        pads = [p for p in footprint.Pads() if copper_pad(p)]
+        mount = pcbnew.FP_THROUGH_HOLE if any(p.GetAttribute() == pcbnew.PAD_ATTRIB_PTH for p in pads) else pcbnew.FP_SMD
+        footprint.SetAttributes((footprint.GetAttributes() & ~(pcbnew.FP_THROUGH_HOLE | pcbnew.FP_SMD)) | mount)
+    add_texts(board, job)
     pcbnew.ZONE_FILLER(board).Fill(board.Zones())
     pcbnew.SaveBoard(job["board"], board)
     apply_project_rules(job)
@@ -581,11 +724,15 @@ def mode_geometry(job):
     """Write footprint geometry (unplaced: origin, orientation 0) for the fast floorplan checker:
     pad outlines, pad nets, courtyard box and whether the footprint is native to the back side."""
     out = {}
+    sources = {Path(__file__).resolve(), Path(job["board"]).with_suffix(".net")}
     for item in job["footprints"]:
+        sources.add(Path(item["lib_dir"]) / (item["fp_name"] + ".kicad_mod"))
         fp = load_fp(item)
         native_back = fp.GetLayer() == pcbnew.B_Cu
         pads = []
         for pad in fp.Pads():
+            if not copper_pad(pad):
+                continue
             if pad.GetAttribute() in (pcbnew.PAD_ATTRIB_PTH, pcbnew.PAD_ATTRIB_NPTH):
                 kind, layer = "THT", pcbnew.F_Cu
             else:
@@ -603,9 +750,12 @@ def mode_geometry(job):
                          "drill": pcbnew.ToMM(pad.GetDrillSize().x) if kind == "THT" else 0.0})
         out[item["ref"]] = {"native_back": native_back, "pads": pads,
                             "courtyard": courtyard_box(fp, "B" if native_back else "F")}
+    out["__meta__"] = {"format_version": 2, "sources": [
+        {"path": str(p), "mtime_ns": p.stat().st_mtime_ns, "size": p.stat().st_size}
+        for p in sorted(sources) if p.exists()]}
     with open(job["geometry"], "w", encoding="utf-8") as f:
         json.dump(out, f)
-    print(f"geometry for {len(out)} footprints")
+    print(f"geometry for {len(job['footprints'])} footprints")
 
 
 if __name__ == "__main__":

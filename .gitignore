@@ -29,3 +29,7 @@ build/
 research/datasheets/
 
 dist/
+
+# Failed/staged export drafts and transient native KiCad saves
+manufacturing/pcbway/.*-staging-*/
+hardware/*/*.tmp

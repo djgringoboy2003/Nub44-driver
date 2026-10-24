@@ -28,7 +28,7 @@ Statuses are updated as work proceeds; see the change history in git.
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
-| REQ-BAT-01 | Single-cell lithium-ion input, 3.7 V nominal. | BRIEF | INSPECT | OPEN | |
+| REQ-BAT-01 | Single-cell lithium-ion input, 3.7 V nominal. | BRIEF | INSPECT | DESIGNED | Source architecture and input protection support one cell; hardware tests remain open. |
 | REQ-BAT-02 | Operating input range to be determined by research (expected about 2.8–4.2 V under load). | BRIEF | CALC | VERIFIED-CALC | 2.83 V (hardware UVLO off) to 4.20 V at the board; firmware cut-off 2.9 V loaded. |
 | REQ-BAT-03 | Evaluate 16340, 14500, 18500, 18650 and 21700 cells; separate "fits" from "electrically suitable". | BRIEF | CALC | VERIFIED-CALC | 18650/21700 cells with ≥ 15 A CDR are suitable; 16340 and 14500 are unsuitable; 18350/18500 marginal (`research/battery-and-mechanics.md`). |
 | REQ-BAT-04 | One explicit battery polarity definition (centre spring and perimeter contact) used everywhere: schematic, PCB, silkscreen, drawings, instructions. | BRIEF | INSPECT, CAD | BLOCKED | Interpretation adopted: spring = B+, ring = B− (DD-12). Owner must confirm before Gate F release. |
@@ -39,7 +39,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
 | REQ-PWR-01 | Prefer a high-efficiency boost topology; compare at least three architectures numerically. | BRIEF | CALC | VERIFIED-CALC | Four architectures compared (`research/architecture-comparison.md`). |
-| REQ-PWR-02 | Efficiency target > 95 % at 4.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | AT-RISK | Estimated 94.6 % at 4.0 V with the required protection; > 95 % is not achievable without removing protection. |
+| REQ-PWR-02 | Efficiency target > 95 % at 4.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | AT-RISK | Current design estimates 94.6 % at 4.0 V, below target. Rework/loss review and bench confirmation remain open; this is not proof of an absolute efficiency limit. |
 | REQ-PWR-03 | Efficiency target ≥ 86 % at 3.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | VERIFIED-CALC | Estimated 91.3 % at 3.0 V (worst diode). Bench confirmation needed. |
 | REQ-PWR-04 | Converter components operate with margin: switch/inductor peak current ≥ 20 % below the minimum rated limit at worst case (minimum battery, maximum Vf, maximum current). | DERIVED | CALC | VERIFIED-CALC | Worst average inductor current 8.9 A including a 20 % margin against the 10.2 A minimum ILIM; 8.5 A peak against 14 A Isat. |
 | REQ-PWR-05 | Input and output filtering. | BRIEF | CALC, SIM | DESIGNED | 3 × 22 µF input, 4 × 22 µF output; ripple 8.9 % p-p worst corner. |
@@ -69,44 +69,44 @@ Statuses are updated as work proceeds; see the change history in git.
 | REQ-SAFE-09 | Open-load protection (laser disconnected). | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-09: Zener backstop alone limits VOUT to 6.7 V; AC0 trip at 5.6 V in firmware. |
 | REQ-SAFE-10 | Output short-circuit protection. | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-08: 4.0 A held into a 10 mΩ short; firmware latches FAULT_SHORT. |
 | REQ-SAFE-11 | Safe shutdown with controlled output discharge. | BRIEF | SIM, TEST | VERIFIED-SIM | Input isolated when disabled; 4.7 kΩ bleeder discharges VOUT; SIM-06/07. |
-| REQ-SAFE-12 | Physical testing uses a dummy load and controlled laser-safety arrangements (Class 4). | BRIEF | INSPECT | OPEN | `documentation/testing/` |
+| REQ-SAFE-12 | Physical testing uses a dummy load and controlled laser-safety arrangements (Class 4). | BRIEF | INSPECT | DESIGNED | Dummy-load-first procedure and controlled-area arrangements in documentation/testing/test-plan.md; no physical tests run. |
 
 ## 6. Mechanical and PCB
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
 | REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | DESIGNED | Circle of radius 11 mm in placement.yaml; full DRC remains open. |
-| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; perimeter copper edge-clearance violations still open. Polarity blocked by REQ-BAT-04. |
+| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; ring radius corrected in source for edge margin (DD-21). Polarity blocked by REQ-BAT-04. |
 | REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | DESIGNED | J3 PTH laser pads placed; routing incomplete. |
 | REQ-MECH-04 | Evaluate 2-layer and 4-layer stack-ups. | BRIEF | CALC | VERIFIED-CALC | 4-layer chosen; 2-layer rejected for density and current paths (DD-14). |
-| REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | DESIGNED | Variant B project generated from the same spec (0402 parts, full test pads); layout pending. |
+| REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | VERIFIED-CAD | Variant B four-layer 45 x 40 mm board has 68 parts, 13 labelled test points and repeated DRC 0/0/0/0; power-layout and bench review remain open. |
 | REQ-PCB-01 | Layout priorities: small switching loops, input caps near switches, Kelvin sensing, quiet feedback, thermal copper, grounding strategy. | BRIEF | INSPECT, CAD | OPEN | |
-| REQ-TEST-01 | Test points where practical. | BRIEF | CAD | OPEN | |
+| REQ-TEST-01 | Test points where practical. | BRIEF | CAD | VERIFIED-CAD | 10 compact test/connection pads and 13 evaluation test points placed; evaluation probe labels are source-defined. |
 
 ## 7. Tooling, manufacturing, documentation
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
-| REQ-CAD-01 | Native, editable KiCad schematic and PCB. | BRIEF | CAD | DESIGNED | Native KiCad 10 schematic (both variants) done; PCB layout in progress. |
+| REQ-CAD-01 | Native, editable KiCad schematic and PCB. | BRIEF | CAD | VERIFIED-CAD | Both native KiCad 10 projects open in the toolchain. Evaluation routing/DRC clean; compact routing remains open. |
 | REQ-CAD-02 | EasyEDA compatibility where practical. | BRIEF | INSPECT | OPEN | |
-| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | DESIGNED | Entry scripts exist; validation audit found missing gate dependencies and stale-report checks. Corrections in progress; DRC is failing. |
+| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | VERIFIED-CAD | Entry scripts run ERC/DRC and reject missing, malformed or stale evidence; strict gate-dependency and tool-failure regressions added. Two documented non-electrical DRC omissions are recorded in DD-20; current DRC findings remain open. |
 | REQ-CAD-04 | Netlist cross-checked against a machine-readable connectivity specification. | BRIEF | CAD | VERIFIED-CAD | Netlist equals connectivity.yaml pin-for-pin (reports/schematic-*.json); checker sensitivity tested. |
-| REQ-MFG-01 | PCBWay fabrication and assembly package generated from the real CAD files by one command. | BRIEF | CAD | DESIGNED | Export pipeline exists; no validated package or Gate F release yet. |
-| REQ-MFG-02 | BOM and placement data validated against the placed footprints. | BRIEF | CAD | OPEN | |
-| REQ-MFG-03 | No manufacturing order is placed automatically. | BRIEF | INSPECT | OPEN | |
+| REQ-MFG-01 | PCBWay fabrication and assembly package generated from the real CAD files by one command. | BRIEF | CAD | VERIFIED-CAD | Both review packages pass internal checks with source/artifact hashes; 31 artifacts per variant. Gate F release is separate and remains held/open. |
+| REQ-MFG-02 | BOM and placement data validated against the placed footprints. | BRIEF | CAD | VERIFIED-CAD | Exporter independently re-reads BOM/CPL and checks refs, counts, signed positions, rotation and side against actual board/native KiCad data. Both actual exports pass: 48 BOM lines / 53 parts and 52 centroid rows per variant. |
+| REQ-MFG-03 | No manufacturing order is placed automatically. | BRIEF | INSPECT | DESIGNED | Scripts only generate local files; no ordering integration or order action. |
 | REQ-SRC-01 | Component database with sourcing data; unverified data recorded as UNKNOWN. | BRIEF | INSPECT | DESIGNED | Existing sourcing/components.csv and generator; supplier availability and price unverified. |
-| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | DESIGNED | Assembly and bench-test instructions exist; CAD exports and final report still pending. |
+| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | DESIGNED | Assembly/stack-up notes, bench plan and CAD exports are present. Renders show board geometry without resolved component bodies; enclosure/height validation remains open. |
 
 ## 8. Release gates
 
 | Gate | Condition | Status |
 |---|---|---|
-| A | Research complete: requirements and component assumptions documented. | OPEN |
-| B | Electrical design complete: schematic, verified pin assignments, netlist. | OPEN |
-| C | Simulations executed and limitations documented. | OPEN |
-| D | PCB complete: all components placed, all nets routed. | OPEN |
-| E | ERC and DRC pass with no unresolved critical issues. | OPEN |
-| F | PCBWay files generated and internally checked. | OPEN |
-| G | Physical validation on an assembled prototype (thermal, electrical, fault). Cannot be closed by software. | OPEN |
+| A | Research complete: requirements and component assumptions documented. | PASS |
+| B | Electrical design complete: schematic, verified pin assignments, netlist. | PASS |
+| C | Simulations executed and limitations documented. | PASS |
+| D | PCB complete: all components placed, all nets routed. | D (compact-22mm): OPEN; D (evaluation-board): PASS |
+| E | ERC and DRC pass with no unresolved critical issues. | E (compact-22mm): OPEN; E (evaluation-board): PASS |
+| F | PCBWay files generated and internally checked. | F (compact-22mm): OPEN; F (evaluation-board): HELD (owner decisions: REQ-BAT-04) |
+| G | Physical validation on an assembled prototype (thermal, electrical, fault). Cannot be closed by software. | OPEN: requires assembled-prototype testing (cannot be closed by software) |
 
 Gate status is computed by `scripts/validate.ps1` from the validation register, not hard-coded.

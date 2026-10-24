@@ -24,7 +24,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | Item | Purpose |
 |---|---|
 | Bench supply, 0–6 V, ≥ 10 A, current limit | Battery substitute; set the limit to 10 A for normal tests, 1 A for first power-up |
-| Dummy load: a string of power diodes or a laser-diode simulator giving ≈ 4.2–4.8 V at 4 A (for example 6 × 1N5408 in series, on a heatsink; check its I–V first) | Representative of the diode's I–V knee and dynamic resistance; a resistor alone does not reproduce the knee |
+| Dummy load: a heatsink-mounted diode string or laser-diode simulator giving approximately 4.2-4.8 V at 4 A, with continuous-current and dissipation ratings verified for the chosen parts (MPNs UNKNOWN until selected) | Verify the load I-V curve and thermal rating before use; a resistor alone does not reproduce the diode knee |
 | Low-ohm shunt or current probe (≥ 20 MHz) | Laser current waveform; overshoot and ripple |
 | Oscilloscope, 4 channels | VOUT, laser current, EN pin, VIN |
 | Two DMMs, 4-wire capable | Efficiency (input and output V and I) |

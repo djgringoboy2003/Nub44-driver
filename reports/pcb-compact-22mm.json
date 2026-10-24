@@ -1,1 +1,16 @@
-{}
+{
+ "drc": {
+  "errors": 0,
+  "warnings": 3,
+  "unconnected": 43,
+  "parity": 0,
+  "by_type": {
+   "connection_width": 3
+  }
+ },
+ "route": {
+  "rc": 0,
+  "seconds": 590.0,
+  "summary": "2026-10-24 22:55:07.616 INFO   [D5F032\\D29D27] Skipping optimization stage: the board has 54 unrouted connection(s) (optimizer only runs on completely routed boards)."
+ }
+}

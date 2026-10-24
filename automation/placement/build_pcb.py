@@ -18,6 +18,7 @@ Usage: .venv\\Scripts\\python.exe automation\\placement\\build_pcb.py --variant 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -66,6 +67,10 @@ def board_net_names(net_path: Path) -> dict[str, str]:
 RULE_SEVERITIES = {
     # footprints intentionally differ from the library: silkscreen stripped for density (DD-20)
     "lib_footprint_mismatch": "ignore",
+    "missing_courtyard": "warning",
+    "track_not_centered_on_via": "warning",
+    "footprint_filters_mismatch": "warning",
+    "footprint_type_mismatch": "warning",
 }
 
 
@@ -101,7 +106,9 @@ def write_rules(variant: str, names: dict) -> None:
     ds["via_dimensions"] = pr["via_dimensions"]
     ds.setdefault("rule_severities", {}).update(pr["rule_severities"])
     d["net_settings"] = pr["net_settings"]
-    pro.write_text(json.dumps(d, indent=2), encoding="utf-8")
+    temporary = pro.with_suffix(".kicad_pro.tmp")
+    temporary.write_text(json.dumps(d, indent=2), encoding="utf-8")
+    temporary.replace(pro)
 
 
 # ------------------------------------------------------------------------------------ job
@@ -139,7 +146,7 @@ def make_job(variant: str, mode: str) -> dict:
         item = {
             "ref": ref, "value": comp["value"], "lib_dir": lib_dir(nick), "lib_nick": nick, "fp_name": name,
             "fields": {k: v for k, v in comp["fields"].items()
-                       if k not in ("Footprint", "Datasheet", "Reference", "Value")},
+                       if k not in ("Footprint", "Reference", "Value")},
             "dnp": bool(sp.get("dnp")), "in_bom": not is_pad_only, "in_pos": not is_pad_only and not sp.get("dnp"),
             "pad_nets": {p: pin_net[(ref, p)] for (r, p) in pin_net if r == ref},
             "no_courtyard": cfg.get("no_courtyard", False), "both_sides": cfg.get("both_sides", False),
@@ -166,19 +173,31 @@ def make_job(variant: str, mode: str) -> dict:
                      for s, boxes in (place.get("keepouts") or {}).items()},
         "footprints": manual + auto,
         "tracks": rename(place.get("tracks")), "vias": rename(place.get("vias")),
+        "texts": place.get("texts", []),
         "via_fields": rename(place.get("via_fields")),
         "fanout_nets": [names.get(n, n) for n in place.get("fanout_nets", [])],
         "fanout_skip": place.get("fanout_skip", []),
         "vias_post": rename(place.get("vias_post")),
+        "tracks_post": rename(place.get("tracks_post")),
+        "remove_vias_post": rename(place.get("remove_vias_post")),
+        "remove_tracks_post": rename(place.get("remove_tracks_post")),
         "zones_pre": rename(place.get("zones_pre")), "zones_post": rename(place.get("zones_post")),
         **project_rules(names), "drc_report": str(paths.REPORTS / f"drc-{variant}.json"),
         "board": str(vdir / f"{PROJECT}.kicad_pcb"), "dsn": str(build / f"{PROJECT}.dsn"),
         "ses": str(build / f"{PROJECT}.ses"), "report": str(build / "placement-report.json"),
         "geometry": str(build / "fpgeom.json"),
+        "project_data": json.loads((vdir / f"{PROJECT}.kicad_pro").read_text(encoding="utf-8")),
     }
 
 
 def kicad_py(job: dict, variant: str) -> None:
+    if job["mode"] == "finish":
+        manifest_path = paths.BUILD / variant / "routing-evidence.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+        for key in ("dsn", "ses"):
+            source = Path(job[key])
+            if not source.is_file() or manifest.get(f"{key}_sha256") != hashlib.sha256(source.read_bytes()).hexdigest():
+                raise RuntimeError(f"{variant}: missing or stale routing evidence for {key}; rerun routing")
     jf = paths.BUILD / variant / f"job-{job['mode']}.json"
     jf.write_text(json.dumps(job, indent=1), encoding="utf-8")
     r, dt = run([paths.kicad_python(), ROOT / "automation/placement/pcb_builder.py", jf], timeout=900)
@@ -192,27 +211,67 @@ def kicad_py(job: dict, variant: str) -> None:
 def stage_route(variant: str, passes: int, timeout: int) -> dict:
     build = paths.BUILD / variant
     dsn, ses = build / f"{PROJECT}.dsn", build / f"{PROJECT}.ses"
+    evidence = build / "routing-evidence.json"
+    evidence.unlink(missing_ok=True)
+    dsn_hash = hashlib.sha256(dsn.read_bytes()).hexdigest()
     if ses.exists():
         ses.unlink()
     cmd = paths.freerouting_cmd() + ["-de", str(dsn), "-do", str(ses),
                                      f"--router.autorouter.max_passes={passes}", "-mt", "1",
+                                     "--router.automatic_neckdown=false", "--router.neck_width_um=150",
+                                     "--router.fanout.enabled=false",
+                                     "--router.layers.routable=true,false,true,true",
                                      "--gui.enabled=false"]
-    r, dt = run(cmd, timeout=timeout)
     log = build / "freerouting.log"
+    try:
+        r, dt = run(cmd, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        def decode(value):
+            return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else value or ""
+        log.write_text(decode(exc.stdout) + "\n" + decode(exc.stderr), encoding="utf-8")
+        raise RuntimeError(f"FreeRouting timed out after {timeout} s; see {log}") from exc
     log.write_text(r.stdout + "\n" + r.stderr, encoding="utf-8")
     summary = [ln for ln in r.stdout.splitlines() if "Auto-routing stage completed" in ln or "unrouted" in ln]
     print(f"FreeRouting rc={r.returncode} in {dt:.0f} s; {summary[-1] if summary else 'no summary line'}")
-    if not ses.exists():
-        raise SystemExit("FreeRouting produced no session file (see build/<variant>/freerouting.log)")
+    if r.returncode != 0 or not ses.is_file() or ses.stat().st_size == 0:
+        raise RuntimeError(f"FreeRouting failed ({r.returncode}) or produced no session; see {log}")
+    if hashlib.sha256(dsn.read_bytes()).hexdigest() != dsn_hash:
+        raise RuntimeError("DSN changed during routing; rerun routing against the current placement")
+    evidence.write_text(json.dumps({
+        "dsn_sha256": dsn_hash,
+        "ses_sha256": hashlib.sha256(ses.read_bytes()).hexdigest(),
+        "command": [str(c) for c in cmd],
+    }, indent=1) + "\n", encoding="utf-8")
     return {"rc": r.returncode, "seconds": round(dt, 1), "summary": summary[-1] if summary else ""}
 
 
 def stage_drc(variant: str) -> dict:
     board = paths.HARDWARE / variant / f"{PROJECT}.kicad_pcb"
     out = paths.REPORTS / f"drc-{variant}.json"
-    run([paths.kicad_cli(), "pcb", "drc", "--format", "json", "--severity-all", "--schematic-parity",
-         "--refill-zones", "--save-board", "-o", out, board])
+    evidence = paths.REPORTS / f"drc-{variant}-evidence.json"
+    # Never accept a previous report after a failed CLI invocation.
+    out.unlink(missing_ok=True)
+    evidence.unlink(missing_ok=True)
+    sources = [board.parent / "placement.yaml", ROOT / "engineering/design/connectivity.yaml",
+               ROOT / "engineering/design/parameters.yaml"]
+    source_hashes = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
+    cmd = [paths.kicad_cli(), "pcb", "drc", "--format", "json", "--severity-all", "--schematic-parity",
+           "--refill-zones", "--save-board", "-o", out, board]
+    r, _ = run(cmd)
+    if r.returncode != 0 or not out.exists():
+        raise RuntimeError(f"KiCad DRC failed ({r.returncode}): {r.stdout}\n{r.stderr}")
     d = json.loads(out.read_text(encoding="utf-8"))
+    for key in ("violations", "unconnected_items", "schematic_parity"):
+        if not isinstance(d.get(key), list):
+            raise ValueError(f"Malformed DRC report: missing {key} array")
+    if any(hashlib.sha256(p.read_bytes()).hexdigest() != digest for p, digest in source_hashes.items()):
+        raise RuntimeError("Authoritative design source changed during DRC; rebuild and rerun validation")
+    inputs = [board, board.with_suffix(".kicad_sch"), board.with_suffix(".kicad_pro"), *sources]
+    evidence.write_text(json.dumps({
+        "report_sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+        "inputs": {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
+        "schematic_parity": True, "severity_all": True,
+    }, indent=1) + "\n", encoding="utf-8")
     viol = d.get("violations", [])
     res = {
         "errors": sum(v["severity"] == "error" for v in viol),
@@ -263,7 +322,10 @@ def main() -> int:
     if args.stage == "geometry":
         kicad_py(make_job(v, "geometry"), v)
         return 0
-    summary = {}
+    summary_path = paths.REPORTS / f"pcb-{v}.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.exists() else {}
+    if args.stage in ("all", "place"):
+        summary = {}
     if args.stage in ("all", "rules", "place"):
         write_rules(v, names)
     if args.stage in ("all", "place"):
@@ -279,7 +341,7 @@ def main() -> int:
         summary["drc"] = stage_drc(v)
     if args.stage in ("all", "render", "place"):
         stage_render(v)
-    (paths.REPORTS / f"pcb-{v}.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
+    summary_path.write_text(json.dumps(summary, indent=1), encoding="utf-8")
     return 0
 
 

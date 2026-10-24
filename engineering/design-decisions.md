@@ -174,3 +174,46 @@ The perimeter contact is 20 tangential pads per side with a stitching via in eac
 solder-mask opening. A single annular pad cannot be represented in Specctra DSN: FreeRouting saw a solid GND disc
 covering both outer layers and reported 182 pre-existing clearance violations. The GND pour fills the gaps
 after routing, so the exposed contact ring is continuous copper.
+
+
+## DD-20 DRC omissions and footprint graphics
+The shared generator removes footprint silkscreen graphics for density while retaining the library copper,
+mask, paste and fabrication geometry. This intentionally differs from the library footprint. The
+`lib_footprint_mismatch` rule is omitted for this generated-board workflow; source footprint loading,
+schematic parity and actual copper DRC remain required. Independent footprint geometry review is still
+required before release; this omission does not certify an arbitrary edited footprint.
+
+`tuning_profile_track_geometries` is also omitted: this design has no length-tuning profiles or tuned
+length requirements. Other previously implicit KiCad omissions (`missing_courtyard`,
+`track_not_centered_on_via`, `footprint_filters_mismatch`, `footprint_type_mismatch`) are restored as
+warnings. Validation lists the two documented omissions and rejects unknown omitted rules. Copper,
+clearance, routing and parity findings are not waived.
+
+## DD-21 Ring edge margin and reproducible bottom placement
+The original 10.25 mm ring centre radius with 0.80 mm-wide tangential rounded segments reaches about
+10.703 mm at segment corners; allowing the 0.025 mm half-stroke of Edge.Cuts leaves only about
+0.272 mm to the nominal 11 mm board radius, below the 0.30 mm design rule. Move the ring centre
+radius inward to 10.20 mm while retaining its width, segment count and plated stitching holes.
+These engineering geometry choices now live under `pcb` in parameters.yaml and drive the footprint
+generator. KiCad DRC must verify the actual generated result.
+
+Both variants retain fabrication-layer references; the evaluation board adds explicit probe and polarity labels from its placement source.
+
+The placement transform now starts from the native footprint side on every call. This prevents
+automatic bottom-side searches from changing orientation between a trial and final placement.
+Paste-only pads do not obstruct copper fanout; trace collision checks use their source layer, while
+through vias still clear copper on every layer. Real pcbnew regression checks cover these behaviors.
+
+
+## DD-22 Router constraints and review-only outputs
+FreeRouting's automatic neckdown and fanout stages can create tracks below the board's 0.15 mm
+minimum. Disable automatic neckdown and the fanout pre-pass in new runs, reserve In1.Cu for the GND
+plane, and retain the source-defined GND escapes. Restore any imported subminimum track to the
+configured minimum in the finish stage, then run full KiCad DRC. Widening is a geometry repair;
+its resulting clearance or connection findings remain failures, with no automatic waiver.
+Explicit finishing tracks and vias are recorded as tracks_post/vias_post in placement.yaml.
+
+Routing sessions are bound to the exact DSN and SES hashes. DRC evidence is bound to the final saved
+PCB, schematic, project rules and report hashes. Export evidence includes source and artifact hashes,
+required output inventory and independent BOM/centroid checks. Failed exports retain a separate draft
+for inspection. A successful export check establishes internal package consistency, not Gate F release.

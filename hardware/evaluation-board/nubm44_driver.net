@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\evaluation-board\\nubm44_driver.kicad_sch")
-		(date "2026-10-24T21:45:25")
+		(date "2026-10-24T22:55:21")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -1515,8 +1515,8 @@
 					(name "Description") "Battery centre spring (B+), hand-soldered after assembly; select to suit host")
 			)
 			(libsource
-				(lib "Connector_Generic")
-				(part "Conn_01x01")
+				(lib "nubm44")
+				(part "Battery_Contact")
 				(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			)
 			(property
@@ -1548,7 +1548,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_*")
+				(value "Connector*:*_1x??_* nubm44:Contact_Ring_R10.20_W0.80mm nubm44:Contact_Spring_Pad_D5.0mm nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -1587,8 +1587,8 @@
 					(name "Description") "Perimeter battery-negative ring contact (PCB copper feature)")
 			)
 			(libsource
-				(lib "Connector_Generic")
-				(part "Conn_01x01")
+				(lib "nubm44")
+				(part "Battery_Contact")
 				(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			)
 			(property
@@ -1620,7 +1620,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_*")
+				(value "Connector*:*_1x??_* nubm44:Contact_Ring_R10.20_W0.80mm nubm44:Contact_Spring_Pad_D5.0mm nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -1659,8 +1659,8 @@
 					(name "Description") "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)")
 			)
 			(libsource
-				(lib "Connector_Generic")
-				(part "Conn_01x02")
+				(lib "nubm44")
+				(part "Laser_Connector")
 				(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			)
 			(property
@@ -1692,7 +1692,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_*")
+				(value "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
 			)
 			(sheetpath
 				(names "/")
@@ -3704,8 +3704,8 @@
 					(name "Description") "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie")
 			)
 			(libsource
-				(lib "Device")
-				(part "R_Shunt")
+				(lib "nubm44")
+				(part "R_Shunt_Kelvin")
 				(description "Shunt resistor with Kelvin connections")
 			)
 			(property
@@ -3738,7 +3738,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "R_*Shunt*")
+				(value "R_*Shunt* nubm44:R_1206_3216Metric_Kelvin")
 			)
 			(sheetpath
 				(names "/")
@@ -3858,7 +3858,7 @@
 					(name "Description") "Test pad")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -3891,7 +3891,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -3930,7 +3930,7 @@
 					(name "Description") "Test pad")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -3963,7 +3963,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4002,7 +4002,7 @@
 					(name "Description") "Test pad")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4035,7 +4035,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4074,7 +4074,7 @@
 					(name "Description") "Current monitor test pad (0.5 V/A)")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4107,7 +4107,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4146,7 +4146,7 @@
 					(name "Description") "Test pad")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4179,7 +4179,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4218,7 +4218,7 @@
 					(name "Description") "Programming pad (UPDI)")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4251,7 +4251,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4290,7 +4290,7 @@
 					(name "Description") "Programming pad (target VCC)")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4323,7 +4323,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4362,7 +4362,7 @@
 					(name "Description") "Programming/test ground pad")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4395,7 +4395,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4434,7 +4434,7 @@
 					(name "Description") "Emission indicator LED output (anode; LED cathode to SGND)")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4467,7 +4467,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4506,7 +4506,7 @@
 					(name "Description") "External laser-module 10k NTC (other end to SGND)")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4539,7 +4539,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4578,7 +4578,7 @@
 					(name "Description") "Optional momentary switch to SGND")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4611,7 +4611,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4650,7 +4650,7 @@
 					(name "Description") "Signal ground for external switch, interlock, indicator and NTC")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4683,7 +4683,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -4722,7 +4722,7 @@
 					(name "Description") "External interlock loop: short to SGND to allow emission")
 			)
 			(libsource
-				(lib "Connector")
+				(lib "nubm44")
 				(part "TestPoint")
 				(description "test point")
 			)
@@ -4755,7 +4755,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Pin* Test*")
+				(value "Pin* Test* TestPoint:TestPoint_Pad_D2.0mm nubm44:Pad_SMD_D0.8mm_B nubm44:Pad_SMD_D1.0mm_F nubm44:Wire_Pad_PTH_D1.3mm")
 			)
 			(sheetpath
 				(names "/")
@@ -5135,99 +5135,6 @@
 	(variants)
 	(libparts
 		(libpart
-			(lib "Connector")
-			(part "TestPoint")
-			(description "test point")
-			(footprints
-				(fp "Pin*")
-				(fp "Test*")
-			)
-			(fields
-				(field
-					(name "Reference") "TP")
-				(field
-					(name "Value") "TestPoint")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "test point")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "1")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
-			(lib "Connector_Generic")
-			(part "Conn_01x01")
-			(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
-			(footprints
-				(fp "Connector*:*_1x??_*")
-			)
-			(fields
-				(field
-					(name "Reference") "J")
-				(field
-					(name "Value") "Conn_01x01")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "Pin_1")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
-			(lib "Connector_Generic")
-			(part "Conn_01x02")
-			(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
-			(footprints
-				(fp "Connector*:*_1x??_*")
-			)
-			(fields
-				(field
-					(name "Reference") "J")
-				(field
-					(name "Value") "Conn_01x02")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "Pin_1")
-					(type "passive")
-				)
-				(pin
-					(num "2")
-					(name "Pin_2")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
 			(lib "Device")
 			(part "C")
 			(description "Unpolarized capacitor")
@@ -5401,50 +5308,6 @@
 				)
 				(pin
 					(num "2")
-					(name "")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
-			(lib "Device")
-			(part "R_Shunt")
-			(description "Shunt resistor with Kelvin connections")
-			(footprints
-				(fp "R_*Shunt*")
-			)
-			(fields
-				(field
-					(name "Reference") "R")
-				(field
-					(name "Value") "R_Shunt")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Shunt resistor with Kelvin connections")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "")
-					(type "passive")
-				)
-				(pin
-					(num "2")
-					(name "")
-					(type "passive")
-				)
-				(pin
-					(num "3")
-					(name "")
-					(type "passive")
-				)
-				(pin
-					(num "4")
 					(name "")
 					(type "passive")
 				)
@@ -5686,6 +5549,38 @@
 		)
 		(libpart
 			(lib "nubm44")
+			(part "Battery_Contact")
+			(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+				(fp "nubm44:Contact_Ring_R10.20_W0.80mm")
+				(fp "nubm44:Contact_Spring_Pad_D5.0mm")
+				(fp "nubm44:Wire_Pad_PTH_D1.3mm")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Battery_Contact")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
 			(part "INA186")
 			(description "Zero-drift current-sense amplifier, 40 V common mode, REF pin, SC70-6 (DCK). A2 gain = 50 V/V")
 			(docs "https://www.ti.com/lit/ds/symlink/ina186.pdf")
@@ -5734,6 +5629,41 @@
 					(num "6")
 					(name "OUT")
 					(type "output")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "Laser_Connector")
+			(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+				(fp "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Laser_Connector")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
 				)
 			)
 		)
@@ -5823,6 +5753,51 @@
 				(pin
 					(num "5")
 					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "R_Shunt_Kelvin")
+			(description "Shunt resistor with Kelvin connections")
+			(footprints
+				(fp "R_*Shunt*")
+				(fp "nubm44:R_1206_3216Metric_Kelvin")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R_Shunt_Kelvin")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Shunt resistor with Kelvin connections")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "")
 					(type "passive")
 				)
 			)
@@ -5980,16 +5955,42 @@
 				)
 			)
 		)
+		(libpart
+			(lib "nubm44")
+			(part "TestPoint")
+			(description "test point")
+			(footprints
+				(fp "Pin*")
+				(fp "Test*")
+				(fp "TestPoint:TestPoint_Pad_D2.0mm")
+				(fp "nubm44:Pad_SMD_D0.8mm_B")
+				(fp "nubm44:Pad_SMD_D1.0mm_F")
+				(fp "nubm44:Wire_Pad_PTH_D1.3mm")
+			)
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+			)
+		)
 	)
 	(libraries
-		(library
-			(logical "Connector")
-			(uri "${KICAD10_SYMBOL_DIR}/Connector.kicad_sym")
-		)
-		(library
-			(logical "Connector_Generic")
-			(uri "${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym")
-		)
 		(library
 			(logical "Device")
 			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
@@ -6015,7 +6016,7 @@
 		(net
 			(code "1")
 			(name "/BAT_SPRING")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "J1")
 				(pin "1")
@@ -6081,7 +6082,7 @@
 		(net
 			(code "5")
 			(name "/COMP")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C9")
 				(pin "1")
@@ -6102,7 +6103,7 @@
 		(net
 			(code "6")
 			(name "/COMP_RC")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C8")
 				(pin "1")
@@ -6117,7 +6118,7 @@
 		(net
 			(code "7")
 			(name "/CS_OUT")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R8")
 				(pin "1")
@@ -6224,7 +6225,7 @@
 		(net
 			(code "11")
 			(name "/FB")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R8")
 				(pin "2")
@@ -6358,7 +6359,7 @@
 		(net
 			(code "18")
 			(name "/ISN_K")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "RS1")
 				(pin "3")
@@ -6380,7 +6381,7 @@
 		(net
 			(code "19")
 			(name "/ISP_K")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "RS1")
 				(pin "2")
@@ -6424,7 +6425,7 @@
 		(net
 			(code "21")
 			(name "/LD_P")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "D1")
 				(pin "1")
@@ -6565,7 +6566,7 @@
 		(net
 			(code "28")
 			(name "/SW1")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C5")
 				(pin "2")
@@ -6611,7 +6612,7 @@
 		(net
 			(code "29")
 			(name "/SW2")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C6")
 				(pin "2")
@@ -6673,7 +6674,7 @@
 		(net
 			(code "32")
 			(name "/VBAT")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C1")
 				(pin "1")
@@ -6841,7 +6842,7 @@
 		(net
 			(code "36")
 			(name "/VOUT")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C10")
 				(pin "1")
@@ -6931,7 +6932,7 @@
 		(net
 			(code "38")
 			(name "GND")
-			(class "Default")
+			(class "Ground")
 			(node
 				(ref "C1")
 				(pin "2")

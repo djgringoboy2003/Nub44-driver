@@ -1,0 +1,14 @@
+{
+ "route": {
+  "rc": 0,
+  "seconds": 109.5,
+  "summary": "2026-10-24 23:14:06.812 INFO   [74429C\\2967F3] Skipping optimization stage: the board has 4 unrouted connection(s) (optimizer only runs on completely routed boards)."
+ },
+ "drc": {
+  "errors": 0,
+  "warnings": 0,
+  "unconnected": 0,
+  "parity": 0,
+  "by_type": {}
+ }
+}

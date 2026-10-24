@@ -2,6 +2,8 @@
  "variant": "evaluation-board",
  "schematic": "hardware\\evaluation-board\\nubm44_driver.kicad_sch",
  "upgrade_rc": 0,
+ "erc_rc": 0,
+ "netlist_rc": 0,
  "erc_errors": 0,
  "erc_warnings": 0,
  "erc_violations": [],

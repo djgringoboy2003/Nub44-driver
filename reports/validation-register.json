@@ -7,9 +7,9 @@
   "D (compact-22mm)": "OPEN",
   "E (compact-22mm)": "OPEN",
   "F (compact-22mm)": "OPEN",
-  "D (evaluation-board)": "OPEN",
-  "E (evaluation-board)": "OPEN",
-  "F (evaluation-board)": "OPEN",
+  "D (evaluation-board)": "PASS",
+  "E (evaluation-board)": "PASS",
+  "F (evaluation-board)": "HELD (owner decisions: REQ-BAT-04)",
   "G": "OPEN: requires assembled-prototype testing (cannot be closed by software)"
  },
  "entries": [
@@ -191,11 +191,11 @@
   },
   {
    "id": "VAL-ERC-compact-22mm",
-   "item": "ERC (compact-22mm): errors 0, warnings 0",
+   "item": "ERC (compact-22mm)",
    "method": "CAD",
    "status": "PASS",
    "evidence": "reports/erc-compact-22mm.json",
-   "detail": ""
+   "detail": "0 unresolved findings"
   },
   {
    "id": "VAL-NET-compact-22mm",
@@ -211,39 +211,39 @@
    "method": "CAD",
    "status": "FAIL",
    "evidence": "reports/drc-compact-22mm.json",
-   "detail": "35 unconnected items"
+   "detail": "43 unconnected items"
   },
   {
    "id": "VAL-PARITY-compact-22mm",
    "item": "PCB matches schematic (compact-22mm)",
    "method": "CAD",
-   "status": "FAIL",
+   "status": "PASS",
    "evidence": "reports/drc-compact-22mm.json",
-   "detail": "65 parity issues"
+   "detail": "0 parity issues"
   },
   {
    "id": "VAL-DRC-compact-22mm",
-   "item": "DRC errors (compact-22mm)",
+   "item": "Unresolved DRC findings (compact-22mm)",
    "method": "CAD",
    "status": "FAIL",
    "evidence": "reports/drc-compact-22mm.json",
-   "detail": "187 errors {'clearance': 30, 'courtyards_overlap': 8, 'copper_edge_clearance': 60, 'track_width': 62, 'starved_thermal': 27}"
+   "detail": "0 errors, 3 warnings, 0 exclusions {'connection_width': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
   },
   {
    "id": "VAL-EXPORT-compact-22mm",
-   "item": "PCBWay export package (compact-22mm)",
+   "item": "PCBWay export package internally consistent (compact-22mm)",
    "method": "CAD",
-   "status": "NOT RUN",
-   "evidence": "",
+   "status": "PASS",
+   "evidence": "manufacturing/pcbway/compact-22mm/reports/export-check.json",
    "detail": ""
   },
   {
    "id": "VAL-ERC-evaluation-board",
-   "item": "ERC (evaluation-board): errors 0, warnings 0",
+   "item": "ERC (evaluation-board)",
    "method": "CAD",
    "status": "PASS",
    "evidence": "reports/erc-evaluation-board.json",
-   "detail": ""
+   "detail": "0 unresolved findings"
   },
   {
    "id": "VAL-NET-evaluation-board",
@@ -257,24 +257,32 @@
    "id": "VAL-ROUTE-evaluation-board",
    "item": "PCB placed and fully routed (evaluation-board)",
    "method": "CAD",
-   "status": "NOT RUN",
-   "evidence": "",
-   "detail": ""
+   "status": "PASS",
+   "evidence": "reports/drc-evaluation-board.json",
+   "detail": "0 unconnected items"
+  },
+  {
+   "id": "VAL-PARITY-evaluation-board",
+   "item": "PCB matches schematic (evaluation-board)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/drc-evaluation-board.json",
+   "detail": "0 parity issues"
   },
   {
    "id": "VAL-DRC-evaluation-board",
-   "item": "DRC (evaluation-board)",
+   "item": "Unresolved DRC findings (evaluation-board)",
    "method": "CAD",
-   "status": "NOT RUN",
-   "evidence": "",
-   "detail": ""
+   "status": "PASS",
+   "evidence": "reports/drc-evaluation-board.json",
+   "detail": "0 errors, 0 warnings, 0 exclusions {}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
   },
   {
    "id": "VAL-EXPORT-evaluation-board",
-   "item": "PCBWay export package (evaluation-board)",
+   "item": "PCBWay export package internally consistent (evaluation-board)",
    "method": "CAD",
-   "status": "NOT RUN",
-   "evidence": "",
+   "status": "PASS",
+   "evidence": "manufacturing/pcbway/evaluation-board/reports/export-check.json",
    "detail": ""
   },
   {

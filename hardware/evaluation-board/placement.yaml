@@ -1,0 +1,221 @@
+# Variant B: 45 x 40 mm evaluation board, same connectivity as Variant A.
+# Coordinates are mm from board centre, +y down, viewed from the top.
+# The entire assembly and every test pad are accessible from the top side.
+# The layout is a CAD work-in-progress; physical validation and release gates remain open.
+board:
+  outline: {type: rectangle, w: 45.0, h: 40.0}
+  copper_layers: 4
+  thickness: 1.6
+placement_box: [-21.3, -18.8, 21.3, 18.8]
+courtyard_gap: 0.10
+
+parts:
+  # Power enters at the left edge and leaves at the right edge.
+  J1: {pos: [-19.5, -8.0, 0], side: F, both_sides: true}
+  J2: {pos: [-19.5, -3.0, 0], side: F, both_sides: true}
+  J3: {pos: [18.0, -1.0, 90], side: F, both_sides: true}
+  Q1: {pos: [-14.5, -8.0, 180], side: F}
+  R1: {pos: [-14.5, -4.6, 0], side: F}
+
+  # Power core; U1's SW2 is above, VOUT/GND below, gate drive at left.
+  U1: {pos: [0.0, -4.0, 0], side: F}
+  L1: {pos: [0.75, -9.4, 270], side: F}
+  Q2: {pos: [-6.5, -10.0, 180], side: F}
+  Q3: {pos: [-6.5, -5.4, 0], side: F}
+  C1: {pos: [-10.5, -12.0, 270], side: F}
+  C2: {pos: [-10.5, -8.0, 270], side: F}
+  C3: {pos: [-10.5, -4.0, 270], side: F}
+  C4: {pos: [-3.6, -2.2, 90], side: F}
+  C5: {pos: [-3.4, -7.8, 90], side: F}
+  C6: {pos: [5.0, -6.4, 0], side: F}
+  C7: {pos: [3.7, -3.9, 90], side: F}
+  C14: {pos: [0.65, -0.5, 180], side: F}
+  C10: {pos: [0.65, 1.25, 180], side: F}
+  C11: {pos: [0.65, 3.5, 180], side: F}
+  C12: {pos: [4.4, 1.25, 180], side: F}
+  C13: {pos: [4.4, 3.5, 180], side: F}
+  RS1: {pos: [8.8, 1.0, 0], side: F}
+  D1: {pos: [13.5, 0.0, 90], side: F}
+  R7: {pos: [7.4, 3.5, 90], side: F}
+
+  # Quiet sense/feedback area to the right of U1, away from switch copper.
+  U2: {pos: [8.0, -3.0, 0], side: F}
+  C15: {pos: [8.0, -5.2, 0], side: F}
+  R8: {pos: [5.4, -1.4, 0], side: F}
+  R9: {pos: [3.7, -1.2, 90], side: F}
+  R2: {pos: [-2.3, -0.6, 0], side: F}
+  R3: {pos: [5.6, -3.6, 90], side: F}
+  R4: {pos: [6.8, -6.8, 90], side: F}
+  C8: {pos: [7.5, -9.5, 90], side: F}
+  C9: {pos: [9.7, -7.0, 90], side: F}
+  R5: {pos: [-6.9, -1.6, 0], side: F}
+  R6: {pos: [-5.0, 0.0, 0], side: F}
+
+  # Control and hardware shutdown chain below the power stage.
+  U3: {pos: [3.0, 10.2, 0], side: F}
+  C16: {pos: [-1.0, 9.2, 90], side: F}
+  C17: {pos: [-1.0, 12.0, 0], side: F}
+  D2: {pos: [-1.8, 6.4, 0], side: F}
+  R10: {pos: [2.5, 7.0, 0], side: F}
+  R11: {pos: [2.5, 5.6, 0], side: F}
+  R12: {pos: [5.5, 7.0, 0], side: F}
+  R13: {pos: [5.5, 5.6, 0], side: F}
+  RT1: {pos: [9.0, 5.5, 0], side: F}
+  R14: {pos: [7.4, 7.6, 90], side: F}
+  R15: {pos: [6.5, 10.0, 90], side: F}
+  R16: {pos: [8.0, 12.7, 0], side: F}
+  R17: {pos: [-3.0, 11.0, 90], side: F}
+  R18: {pos: [-11.0, 5.7, 0], side: F}
+  R19: {pos: [-7.5, 10.0, 0], side: F}
+  R20: {pos: [-5.0, 4.8, 0], side: F}
+  Q4: {pos: [-5.0, 10.8, 0], side: F}
+  Q5: {pos: [-9.5, 8.0, 0], side: F}
+  Q6: {pos: [-4.5, 7.2, 0], side: F}
+  D3: {pos: [-3.4, 2.5, 0], side: F}
+
+  # 2 mm probe pads and PTH external harness pads; all thirteen retained.
+  TP1: {pos: [-16.0, -15.0, 0], side: F}
+  TP2: {pos: [3.0, -15.0, 0], side: F}
+  TP3: {pos: [-11.0, 0.7, 0], side: F}
+  TP4: {pos: [12.0, -8.0, 0], side: F}
+  TP5: {pos: [12.0, -4.0, 0], side: F}
+  TP6: {pos: [0.0, 16.0, 0], side: F}
+  TP7: {pos: [4.0, 16.0, 0], side: F}
+  TP8: {pos: [8.0, 16.0, 0], side: F}
+  TP9: {pos: [18.0, 13.0, 0], side: F, both_sides: true}
+  TP10: {pos: [18.0, 9.0, 0], side: F, both_sides: true}
+  TP11: {pos: [-17.0, 13.0, 0], side: F, both_sides: true}
+  TP12: {pos: [-17.0, 9.0, 0], side: F, both_sides: true}
+  TP13: {pos: [-17.0, 5.0, 0], side: F, both_sides: true}
+
+texts:
+  - {text: "NUBM44 EVALUATION", at: [0.0, -18.2], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
+  - {text: "DUMMY LOAD FIRST", at: [0.0, -16.8], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "B+ INPUT", at: [-18.0, -11.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "B- INPUT", at: [-18.0, 0.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "LD+", at: [18.0, 3.5], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
+  - {text: "LD-", at: [18.0, -5.5], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
+  - {text: "VBAT", at: [-19.5, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "VOUT", at: [7.0, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "EN", at: [-14.0, 0.7], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "CS", at: [15.0, -8.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "FB", at: [15.0, -4.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "UPDI", at: [0.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "VMCU", at: [4.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "GND", at: [8.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "IND", at: [14.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "NTC", at: [14.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "SW", at: [-13.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "SGND", at: [-13.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+  - {text: "INTLK", at: [-13.5, 5.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+
+# GND pads escape onto the first inner layer. Power copper is explicitly limited
+# to the core and input path; lower control/feedback regions use GND beneath.
+fanout_nets: [GND]
+fanout_skip: [U1, U3]  # Explicit IC escapes below reserve the fine-pitch signal exits.
+tracks:
+  # RPM0026A centre-pad escape to the adjacent pin of the same net.
+  - {net: SW2, layer: F.Cu, width: 0.25, pts: [[0.25, -5.4], [0.0, -4.65]]}
+  - {net: VOUT, layer: F.Cu, width: 0.30, pts: [[0.625, -3.35], [0.625, -2.6]]}
+  - {net: GND, layer: F.Cu, width: 0.30, pts: [[-0.625, -3.35], [-0.625, -2.6]]}
+  # Ground fanout stays away from the output-current neck and adjacent MCU exits.
+  - {net: GND, layer: F.Cu, width: 0.25, pts: [[-1.85, -2.5125], [-2.345, -2.0175]]}
+  - {net: GND, layer: F.Cu, width: 0.25, pts: [[-0.625, -2.3625], [-0.8, -1.5]]}
+  - {net: GND, layer: F.Cu, width: 0.25, pts: [[-0.125, -2.3625], [-0.625, -2.3625]]}
+  - {net: GND, layer: F.Cu, width: 0.25, pts: [[1.8375, -3.5], [2.75, -3.5]]}
+  - {net: GND, layer: F.Cu, width: 0.25, pts: [[3.0, 10.2], [0.0, 10.2]]}
+  # Reserve PG exits before autorouting the adjacent EN/CC_FLAG signals.
+  - {net: PG, layer: F.Cu, width: 0.15, pts: [[-1.8375, -3.5], [-2.8, -3.5]]}
+  - {net: PG, layer: F.Cu, width: 0.15, pts: [[4.45, 9.8], [5.3, 9.8]]}
+  # MCU power and switch escape toward the open lower-left routing area.
+  - {net: VMCU, layer: F.Cu, width: 0.15, pts: [[1.55, 10.6], [0.9, 10.6], [0.7, 10.8]]}
+  - {net: VMCU, layer: F.Cu, width: 0.15, pts: [[-1.0, 9.975], [-1.05, 10.0], [-1.85, 10.0]]}
+  - {net: VMCU, layer: B.Cu, width: 0.15, pts: [[0.7, 10.8], [-0.9, 10.8], [-1.7, 10.0], [-1.85, 10.0]]}
+  - {net: SW_IN, layer: F.Cu, width: 0.15, pts: [[1.55, 9.8], [0.45, 9.8], [-0.2, 9.2]]}
+  - {net: SW_IN, layer: B.Cu, width: 0.15, pts: [[-0.2, 9.2], [-1.9, 9.2], [-5.2, 12.5], [-16.5, 12.5], [-17.0, 13.0]]}
+  # Fan the five MCU analogue/NTC pins out together so one cannot trap its neighbour.
+  - {net: NTC_BRD, layer: F.Cu, width: 0.15, pts: [[2.2, 11.65], [2.2, 12.0], [1.4, 12.8], [1.4, 13.2]]}
+  - {net: CS_OUT, layer: F.Cu, width: 0.15, pts: [[2.6, 11.65], [2.6, 12.4], [2.2, 12.8], [2.2, 13.2]]}
+  - {net: VOUT_SENSE, layer: F.Cu, width: 0.15, pts: [[3.0, 11.65], [3.0, 13.2]]}
+  - {net: VBAT_SENSE, layer: F.Cu, width: 0.15, pts: [[3.4, 11.65], [3.4, 12.4], [3.8, 12.8], [3.8, 13.2]]}
+  - {net: NTC_LD, layer: F.Cu, width: 0.15, pts: [[3.8, 11.65], [3.8, 12.0], [4.6, 12.8], [4.6, 13.2]]}
+
+vias:
+  - {net: GND, x: -2.345, y: -2.0175}
+  - {net: GND, x: -0.8, y: -1.5}
+  - {net: GND, x: 2.75, y: -3.5}
+  - {net: GND, x: 0.0, y: 10.2}
+  - {net: PG, x: -2.8, y: -3.5}
+  - {net: PG, x: 5.3, y: 9.8}
+  - {net: VMCU, x: 0.7, y: 10.8}
+  - {net: VMCU, x: -1.85, y: 10.0}
+  - {net: SW_IN, x: -0.2, y: 9.2}
+  - {net: NTC_BRD, x: 1.4, y: 13.2}
+  - {net: CS_OUT, x: 2.2, y: 13.2}
+  - {net: VOUT_SENSE, x: 3.0, y: 13.2}
+  - {net: VBAT_SENSE, x: 3.8, y: 13.2}
+  - {net: NTC_LD, x: 4.6, y: 13.2}
+
+via_fields:
+  - {net: VBAT, count: 10, pitch: 0.9, polygon: [[-13.0, -12.0], [-8.0, -12.0], [-8.0, -3.4], [-13.0, -3.4]]}
+  - {net: VOUT, count: 12, pitch: 0.9, polygon: [[0.4, 0.2], [7.7, 0.2], [7.7, 4.4], [0.4, 4.4]]}
+  - {net: GND, count: 8, pitch: 0.9, polygon: [[-8.0, -7.2], [-6.7, -7.2], [-6.7, -3.0], [-8.0, -3.0]]}
+
+zones_pre:
+  - {net: GND, layer: In1.Cu, priority: 0, solid: true,
+     polygon: [[-22.1, -19.6], [22.1, -19.6], [22.1, 19.6], [-22.1, 19.6]]}
+  - {net: VBAT, layer: In2.Cu, priority: 2, solid: true,
+     polygon: [[-13.8, -14.0], [-5.8, -14.0], [-5.8, -2.2], [-13.8, -2.2]]}
+  - {net: VBAT, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-13.8, -13.8], [-9.4, -13.8], [-9.4, -11.6], [-5.9, -11.6], [-5.9, -8.3], [-9.4, -8.3], [-9.4, -4.0], [-13.8, -4.0]]}
+  - {net: SW1, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-5.7, -10.55], [-4.3, -10.55], [-4.3, -11.9], [3.4, -11.9], [3.4, -10.0], [-4.3, -10.0], [-4.3, -4.0], [-7.0, -4.0], [-7.0, -6.8], [-5.7, -6.8]]}
+  - {net: SW2, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-1.6, -8.6], [3.1, -8.6], [3.1, -6.3], [0.7, -6.3], [0.7, -5.9], [0.1, -5.9], [0.1, -6.3], [-1.6, -6.3]]}
+  - {net: VOUT, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[0.1, -2.7], [1.3, -2.7], [1.3, -0.1], [7.9, -0.1], [7.9, 4.6], [0.25, 4.6], [0.25, 0.1], [0.1, 0.1]]}
+  - {net: VOUT, layer: In2.Cu, priority: 2, solid: true,
+     polygon: [[0.25, -0.1], [7.9, -0.1], [7.9, 4.6], [0.25, 4.6]]}
+  - {net: LD_P, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[9.0, -0.2], [19.2, -0.2], [19.2, 2.3], [9.0, 2.3]]}
+  - {net: BAT_SPRING, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-20.8, -9.4], [-14.0, -9.4], [-14.0, -6.6], [-20.8, -6.6]]}
+
+zones_post:
+  - {net: GND, layer: In2.Cu, priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.3,
+     polygon: [[-22.1, -19.6], [22.1, -19.6], [22.1, 19.6], [-22.1, 19.6]]}
+  - {net: GND, layer: F.Cu, priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.3,
+     polygon: [[-22.1, -19.6], [22.1, -19.6], [22.1, 19.6], [-22.1, 19.6]]}
+  - {net: GND, layer: B.Cu, priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.3,
+     polygon: [[-22.1, -19.6], [22.1, -19.6], [22.1, 19.6], [-22.1, 19.6]]}
+
+# Reviewed corrections to the routed session. Geometry selectors are exact and
+# repeatable; every corrected result is checked again by full KiCad DRC.
+# BOOT1 is moved below the board to leave the SW2 current path unobstructed.
+remove_vias_post:
+  - {net: BOOT1, x: 3.5527, y: -7.3464}
+  - {net: NTC_BRD, x: 1.4, y: 13.2}  # This routed signal stays on F.Cu; no layer change remains.
+remove_tracks_post:
+  - {net: BOOT1, layer: F.Cu, pts: [[-0.25, -5.65], [-0.25, -5.8774]]}
+  - {net: BOOT1, layer: F.Cu, pts: [[-0.25, -5.8774], [0.5728, -6.7002]]}
+  - {net: BOOT1, layer: F.Cu, pts: [[0.5728, -6.7002], [2.9065, -6.7002]]}
+  - {net: BOOT1, layer: F.Cu, pts: [[2.9065, -6.7002], [3.5527, -7.3464]]}
+  - {net: BOOT1, layer: In2.Cu, pts: [[-4.5808, -8.2024], [-4.4769, -8.3063]]}
+  - {net: BOOT1, layer: In2.Cu, pts: [[-4.4769, -8.3063], [2.5928, -8.3063]]}
+  - {net: BOOT1, layer: In2.Cu, pts: [[2.5928, -8.3063], [3.5527, -7.3464]]}
+  - {net: VBAT, layer: In2.Cu, pts: [[-3.6873, -6.6391], [6.0339, -6.6391]]}
+  - {net: SW2, layer: F.Cu, pts: [[0.4489, -6.0512], [0.25, -5.8523]]}
+  - {net: SW2, layer: F.Cu, pts: [[0.25, -5.8523], [0.25, -5.65]]}
+  - {net: VOUT, layer: F.Cu, pts: [[1.625, 2.375], [-1.7813, 2.375]]}
+tracks_post:
+  - {net: ILIM, layer: F.Cu, width: 0.15,
+     pts: [[1.8375, -4.5], [2.825, -4.375], [3.2, -4.025], [3.325, -3.975], [4.15, -3.8], [5.6, -3.09]]}
+  - {net: BOOT1, layer: F.Cu, width: 0.15, pts: [[-0.25, -5.65], [-0.15, -6.45]]}
+  - {net: BOOT1, layer: B.Cu, width: 0.15,
+     pts: [[-0.15, -6.45], [-3.35, -10.925], [-3.825, -11.375], [-3.975, -11.425], [-4.225, -11.425], [-4.45, -11.325], [-4.6, -11.15], [-4.65, -11.025], [-4.5808, -8.2024]]}
+  - {net: VBAT, layer: In2.Cu, width: 0.30,
+     pts: [[-3.6873, -6.6391], [-0.9, -6.6391], [-0.3, -7.2391], [0.0, -7.2391], [0.6, -6.6391], [6.0339, -6.6391]]}
+  - {net: SW2, layer: F.Cu, width: 0.30, pts: [[0.25, -5.65], [0.55, -6.1], [0.55, -7.4]]}
+  - {net: VOUT, layer: F.Cu, width: 0.15, pts: [[1.4, 2.4], [-1.7813, 2.375]]}
+vias_post:
+  - {net: BOOT1, x: -0.15, y: -6.45}

@@ -46,11 +46,29 @@ def xform(x, y, px, py, rot, mirror):
     return px + xr, py + yr
 
 
+def geometry_cache_is_current(geo):
+    meta = geo.get("__meta__", {})
+    if meta.get("format_version") != 2 or not meta.get("sources"):
+        return False
+    for source in meta["sources"]:
+        try:
+            stat = Path(source["path"]).stat()
+        except OSError:
+            return False
+        if stat.st_mtime_ns != source["mtime_ns"] or stat.st_size != source["size"]:
+            return False
+    return True
+
+
 def load(variant):
     vdir = paths.HARDWARE / variant
     place = yaml.safe_load((vdir / "placement.yaml").read_text(encoding="utf-8"))
     geo_path = paths.BUILD / variant / "fpgeom.json"
-    if not geo_path.exists():
+    try:
+        geo = json.loads(geo_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        geo = {}
+    if not geometry_cache_is_current(geo):
         subprocess.run([sys.executable, str(ROOT / "automation/placement/build_pcb.py"), "--variant", variant,
                         "--stage", "geometry"], check=True)
     geo = json.loads(geo_path.read_text(encoding="utf-8"))
@@ -75,7 +93,7 @@ def resolve(place, geo, rep):
                 (x, y), rot = a["anchor"], 0
             else:
                 x, y, rot = 0.0, 0.0, 0
-        mirror = side == "B" and not g["native_back"]
+        mirror = (side == "B") != g["native_back"]
         pads = []
         for p in g["pads"]:
             kind = p["kind"]
@@ -165,7 +183,6 @@ def ratsnest(parts):
     for net, pts in nets.items():
         if net.lstrip("/") in SKIP_RATS:
             continue
-        # one point per pad group: pads of the same ref and net closer than 0.6 mm count once
         for i, j, d in mst_edges(pts):
             out.append((net, pts[i], pts[j], d))
     return out

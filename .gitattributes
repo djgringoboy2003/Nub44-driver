@@ -1,0 +1,8 @@
+# Preserve exact CAD/report/artifact bytes across commits and checkouts: evidence uses SHA-256.
+* -text whitespace=cr-at-eol
+*.png binary
+*.zip binary
+*.pdf binary
+*.elf binary
+# Preserve router-emitted trailing spaces in provenance-hashed Specctra sessions.
+*.ses whitespace=-blank-at-eol,cr-at-eol

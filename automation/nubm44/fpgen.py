@@ -161,7 +161,7 @@ def spring_pad(diameter=6.0, side="B"):
     return _flip_texts(fp, side)
 
 
-def ring_contact(r_mid=10.25, width=0.8, n_seg=20, via_drill=0.3, via_size=0.6):
+def ring_contact(r_mid=10.20, width=0.8, n_seg=20, via_drill=0.3, via_size=0.6, segment_gap=0.7):
     """Perimeter battery-negative contact ring on both sides (pad "1" everywhere).
 
     Built from ``n_seg`` tangential arc-segment pads per side with a plated stitching via in each
@@ -172,7 +172,7 @@ def ring_contact(r_mid=10.25, width=0.8, n_seg=20, via_drill=0.3, via_size=0.6):
     items = []
     seg_angle = 360.0 / n_seg
     arc_len = 2 * math.pi * r_mid / n_seg
-    pad_len = round(arc_len - 0.7, 3)
+    pad_len = round(arc_len - segment_gap, 3)
     for k in range(n_seg):
         a = math.radians(k * seg_angle)
         x, y = round(r_mid * math.cos(a), 4), round(r_mid * math.sin(a), 4)
@@ -193,7 +193,7 @@ def ring_contact(r_mid=10.25, width=0.8, n_seg=20, via_drill=0.3, via_size=0.6):
     fp = footprint(f"Contact_Ring_R{r_mid:.2f}_W{width:.2f}mm",
                    "Perimeter B- contact ring, both sides: segmented pads + stitching vias + continuous mask "
                    "opening (PCB feature, no part)",
-                   "battery ring contact driver", items, attr="smd", ref_y=-(r_mid - 1.5), val_y=r_mid - 1.5)
+                   "battery ring contact driver", items, attr="through_hole", ref_y=-(r_mid - 1.5), val_y=r_mid - 1.5)
     attr = next(n for n in fp if isinstance(n, list) and n and n[0] == "attr")
     attr += [Sym("exclude_from_pos_files"), Sym("exclude_from_bom"), Sym("allow_missing_courtyard")]
     return fp
@@ -269,8 +269,15 @@ def kelvin_1206():
 
 
 def build_all(out_dir: Path) -> list[str]:
+    import yaml
+    from . import paths
+
+    pcb = yaml.safe_load((paths.DESIGN / "parameters.yaml").read_text(encoding="utf-8"))["pcb"]
     out_dir.mkdir(parents=True, exist_ok=True)
-    fps = [tps552882_rpm0026a(), kelvin_1206(), spring_pad(5.0, "B"), ring_contact(), laser_pads(),
+    ring = ring_contact(r_mid=pcb["ring_mid_radius_mm"], width=pcb["ring_width_mm"],
+                        n_seg=pcb["ring_segments"], segment_gap=pcb["ring_segment_gap_mm"],
+                        via_size=pcb["via_diameter_mm"], via_drill=pcb["via_drill_mm"])
+    fps = [tps552882_rpm0026a(), kelvin_1206(), spring_pad(5.0, "B"), ring, laser_pads(),
            wire_pad(1.3, 2.6), smd_pad(1.0, "F"), smd_pad(1.0, "B"), smd_pad(1.4, "F"), smd_pad(0.8, "B")]
     names = []
     for fp in fps:

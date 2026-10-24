@@ -25,12 +25,12 @@ power_flags: [VBAT, GND, VMCU]
 
 parts:
   # ------------------------------------------------------------------ power_in
-  - {ref: J1, block: power_in, lib: Connector_Generic:Conn_01x01, value: "B+ spring", dnp: true,
+  - {ref: J1, block: power_in, lib: nubm44:Battery_Contact, value: "B+ spring", dnp: true,
      footprint: nubm44:Contact_Spring_Pad_D5.0mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "Battery centre spring (B+), hand-soldered after assembly; select to suit host",
      pins: {1: BAT_SPRING}}
-  - {ref: J2, block: power_in, lib: Connector_Generic:Conn_01x01, value: "B- ring", in_bom: false,
-     footprint: nubm44:Contact_Ring_R10.25_W0.80mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
+  - {ref: J2, block: power_in, lib: nubm44:Battery_Contact, value: "B- ring", in_bom: false,
+     footprint: nubm44:Contact_Ring_R10.20_W0.80mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
      mpn: "-", mfr: "-", desc: "Perimeter battery-negative ring contact (PCB copper feature)", pins: {1: GND}}
   - {ref: Q1, block: power_in, lib: nubm44:Q_PMOS_PowerPAK1212, value: SiSS23DN,
      footprint: Package_SO:Vishay_PowerPAK_1212-8_Single, mpn: SISS23DN-T1-GE3, mfr: Vishay,
@@ -46,7 +46,7 @@ parts:
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 input", pins: {1: VBAT, 2: GND}}
   - {ref: C4, block: power_in, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
      mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 input HF decoupling", pins: {1: VBAT, 2: GND}}
-  - {ref: TP1, block: power_in, lib: Connector:TestPoint, value: VBAT, in_bom: false,
+  - {ref: TP1, block: power_in, lib: nubm44:TestPoint, value: VBAT, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm,
      mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VBAT}}
 
@@ -100,15 +100,15 @@ parts:
      mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 output HF", pins: {1: VOUT, 2: GND}}
   - {ref: R7, block: converter, lib: Device:R, value: 4.7k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
      mpn: RC0201FR-074K7L, mpn_eval: RC0402FR-074K7L, mfr: Yageo, desc: "4.7 kOhm 1% 0402 output bleeder", pins: {1: VOUT, 2: GND}}
-  - {ref: TP2, block: converter, lib: Connector:TestPoint, value: VOUT, in_bom: false,
+  - {ref: TP2, block: converter, lib: nubm44:TestPoint, value: VOUT, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: VOUT}}
-  - {ref: TP3, block: converter, variants: [evaluation-board], lib: Connector:TestPoint, value: EN, in_bom: false,
+  - {ref: TP3, block: converter, variants: [evaluation-board], lib: nubm44:TestPoint, value: EN, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: EN_UVLO}}
 
   # ------------------------------------------------------------------ sense
-  - {ref: RS1, block: sense, lib: Device:R_Shunt, value: 10m, footprint: nubm44:R_1206_3216Metric_Kelvin,
+  - {ref: RS1, block: sense, lib: nubm44:R_Shunt_Kelvin, value: 10m, footprint: nubm44:R_1206_3216Metric_Kelvin,
      mpn: MCS1632R010FER, mfr: Ohmite, desc: "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie",
      alt: "RALEC LR1206-21R010F4 (LCSC C154635)", pins: {1: VOUT, 2: ISP_K, 3: ISN_K, 4: LD_P}}
   - {ref: U2, block: sense, lib: nubm44:INA186, value: INA186A2, footprint: Package_TO_SOT_SMD:SOT-363_SC-70-6,
@@ -124,13 +124,13 @@ parts:
   - {ref: D1, block: sense, lib: Diode:PMEG4010CEJ, value: PMEG4010CEJ, footprint: Diode_SMD:D_SOD-323F,
      mpn: "PMEG4010CEJ,115", mfr: Nexperia, desc: "40 V 1 A Schottky, reverse/ESD clamp across laser output",
      pins: {1: LD_P, 2: GND}}
-  - {ref: J3, block: sense, lib: Connector_Generic:Conn_01x02, value: "LASER LD+/LD-", in_bom: false,
+  - {ref: J3, block: sense, lib: nubm44:Laser_Connector, value: "LASER LD+/LD-", in_bom: false,
      footprint: nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm, mpn: "-", mfr: "-",
      desc: "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)", pins: {1: LD_P, 2: GND}}
-  - {ref: TP4, block: sense, variants: [evaluation-board], lib: Connector:TestPoint, value: CS, in_bom: false,
+  - {ref: TP4, block: sense, variants: [evaluation-board], lib: nubm44:TestPoint, value: CS, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Current monitor test pad (0.5 V/A)", pins: {1: CS_OUT}}
-  - {ref: TP5, block: sense, variants: [evaluation-board], lib: Connector:TestPoint, value: FB, in_bom: false,
+  - {ref: TP5, block: sense, variants: [evaluation-board], lib: nubm44:TestPoint, value: FB, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: FB}}
 
@@ -164,25 +164,25 @@ parts:
      mpn: RC0201FR-0710KL, mpn_eval: RC0402FR-0710KL, mfr: Yageo, desc: "10 kOhm 1% NTC bias (external laser NTC)", pins: {1: NTC_PWR, 2: NTC_LD}}
   - {ref: R16, block: control, lib: Device:R, value: "220", footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
      mpn: RC0201FR-07220RL, mpn_eval: RC0402FR-07220RL, mfr: Yageo, desc: "220 Ohm 1% indicator LED series", pins: {1: IND_OUT, 2: IND_PAD}}
-  - {ref: TP6, block: control, lib: Connector:TestPoint, value: UPDI, in_bom: false,
+  - {ref: TP6, block: control, lib: nubm44:TestPoint, value: UPDI, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Programming pad (UPDI)", pins: {1: UPDI}}
-  - {ref: TP7, block: control, lib: Connector:TestPoint, value: VMCU, in_bom: false,
+  - {ref: TP7, block: control, lib: nubm44:TestPoint, value: VMCU, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Programming pad (target VCC)", pins: {1: VMCU}}
-  - {ref: TP8, block: control, lib: Connector:TestPoint, value: GND, in_bom: false,
+  - {ref: TP8, block: control, lib: nubm44:TestPoint, value: GND, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Programming/test ground pad", pins: {1: GND}}
-  - {ref: TP9, block: control, lib: Connector:TestPoint, value: IND, in_bom: false,
+  - {ref: TP9, block: control, lib: nubm44:TestPoint, value: IND, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "Emission indicator LED output (anode; LED cathode to SGND)", pins: {1: IND_PAD}}
-  - {ref: TP10, block: control, lib: Connector:TestPoint, value: NTC_LD, in_bom: false,
+  - {ref: TP10, block: control, lib: nubm44:TestPoint, value: NTC_LD, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "External laser-module 10k NTC (other end to SGND)", pins: {1: NTC_LD}}
-  - {ref: TP11, block: control, lib: Connector:TestPoint, value: SW, in_bom: false,
+  - {ref: TP11, block: control, lib: nubm44:TestPoint, value: SW, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "Optional momentary switch to SGND", pins: {1: SW_IN}}
-  - {ref: TP12, block: control, lib: Connector:TestPoint, value: SGND, in_bom: false,
+  - {ref: TP12, block: control, lib: nubm44:TestPoint, value: SGND, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "Signal ground for external switch, interlock, indicator and NTC", pins: {1: GND}}
 
@@ -199,7 +199,7 @@ parts:
      mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% interlock pull-up to VBAT", pins: {1: VBAT, 2: INTLK_N}}
   - {ref: R19, block: enable, lib: Device:R, value: 47k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
      mpn: RC0201FR-0747KL, mpn_eval: RC0402FR-0747KL, mfr: Yageo, desc: "47 kOhm 1% interlock sense to MCU", pins: {1: INTLK_N, 2: INTLK_MCU}}
-  - {ref: TP13, block: enable, lib: Connector:TestPoint, value: INTLK, in_bom: false,
+  - {ref: TP13, block: enable, lib: nubm44:TestPoint, value: INTLK, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "External interlock loop: short to SGND to allow emission", pins: {1: INTLK_N}}
   - {ref: Q6, block: enable, lib: Transistor_FET:DMG1012T, value: DMG1012T, footprint: Package_TO_SOT_SMD:SOT-523,

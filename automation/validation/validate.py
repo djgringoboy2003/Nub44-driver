@@ -11,6 +11,7 @@ decisions; gate G always needs hardware).
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import subprocess
 import sys
@@ -20,9 +21,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 from nubm44 import paths, spec  # noqa: E402
+from export.export_pcbway import required_files as required_export_files  # noqa: E402
 
 REP = ROOT / "reports"
 entries: list[dict] = []
+SIMULATION_IDS = tuple(f"VAL-SIM-{i:02d}" for i in range(1, 12))
+DRC_IGNORED_REASONS = {
+    "lib_footprint_mismatch": "density silkscreen removal; DD-20",
+    "tuning_profile_track_geometries": "no track length tuning used; DD-20",
+}
 
 
 def add(eid, item, method, status, evidence, detail=""):
@@ -36,6 +43,88 @@ def load_json(p: Path):
         return json.loads(p.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
+
+
+def freshness_problems(report: Path, inputs: list[Path]) -> list[str]:
+    """Legacy evidence has no hashes: require it to postdate every input it claims to check."""
+    problems = []
+    for p in inputs:
+        if not p.is_file():
+            problems.append(f"missing input: {p.name}")
+        elif p.stat().st_mtime_ns > report.stat().st_mtime_ns:
+            problems.append(f"stale evidence: {p.name} is newer than {report.name}")
+    return problems
+
+
+def issue_list_ok(value) -> bool:
+    return isinstance(value, list) and all(
+        isinstance(v, dict) and v.get("severity") in ("error", "warning", "exclusion")
+        and isinstance(v.get("type"), str) and isinstance(v.get("description"), str)
+        and isinstance(v.get("items"), list) for v in value)
+
+
+def kicad_report_problems(data, kind: str, source: Path) -> list[str]:
+    """A missing report field must never mean that its check found no problems."""
+    if not isinstance(data, dict):
+        return [f"malformed {kind.upper()} report: expected an object"]
+    problems = []
+    if data.get("$schema") != f"https://schemas.kicad.org/{kind}.v1.json":
+        problems.append(f"unrecognised {kind.upper()} schema")
+    if data.get("source") != source.name:
+        problems.append(f"{kind.upper()} report source differs from {source.name}")
+    severities = data.get("included_severities")
+    if not isinstance(severities, list) or not all(s in severities for s in ("error", "warning", "exclusion")):
+        problems.append(f"{kind.upper()} report must include errors, warnings and exclusions")
+    if kind == "drc":
+        for name in ("violations", "unconnected_items", "schematic_parity"):
+            if not issue_list_ok(data.get(name)):
+                problems.append(f"missing or malformed {name}")
+        ignored = data.get("ignored_checks")
+        if not isinstance(ignored, list) or any(
+                not isinstance(rule, dict) or not isinstance(rule.get("key"), str) for rule in ignored):
+            problems.append("missing or malformed ignored_checks")
+        else:
+            decisions = ROOT / "engineering/design-decisions.md"
+            text = decisions.read_text(encoding="utf-8") if decisions.is_file() else ""
+            dd20 = re.search(r"^## DD-20\b[\s\S]*?(?=^## |\Z)", text, re.M)
+            for rule in ignored:
+                key = rule["key"]
+                if key not in DRC_IGNORED_REASONS:
+                    problems.append(f"undocumented disabled DRC rule: {key}")
+                elif dd20 is None or key not in dd20.group():
+                    problems.append(f"disabled DRC rule {key} requires documented DD-20 exception")
+    else:
+        sheets = data.get("sheets")
+        if not isinstance(sheets, list) or not sheets or any(
+                not isinstance(s, dict) or not issue_list_ok(s.get("violations")) for s in sheets):
+            problems.append("missing or malformed ERC sheets/violations")
+    return problems
+
+
+def design_source_paths(variant: str) -> list[Path]:
+    return [paths.HARDWARE / variant / "placement.yaml", ROOT / "engineering/design/connectivity.yaml",
+            ROOT / "engineering/design/parameters.yaml"]
+
+
+def drc_evidence_problems(variant: str, report: Path) -> list[str]:
+    """Hash the final saved PCB because KiCad can save it after writing the DRC report."""
+    manifest = load_json(REP / f"drc-{variant}-evidence.json")
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("inputs"), dict):
+        return ["missing or malformed DRC evidence manifest; rerun PCB DRC"]
+    problems = []
+    if manifest.get("report_sha256") != hashlib.sha256(report.read_bytes()).hexdigest():
+        problems.append("DRC report hash differs from evidence manifest")
+    if manifest.get("schematic_parity") is not True or manifest.get("severity_all") is not True:
+        problems.append("DRC evidence does not confirm schematic parity and all severities")
+    inputs = [paths.HARDWARE / variant / f"nubm44_driver.{suffix}"
+              for suffix in ("kicad_pcb", "kicad_sch", "kicad_pro")]
+    for p in inputs + design_source_paths(variant):
+        key = p.relative_to(ROOT).as_posix()
+        if not p.is_file():
+            problems.append(f"missing DRC input: {key}")
+        elif manifest["inputs"].get(key) != hashlib.sha256(p.read_bytes()).hexdigest():
+            problems.append(f"stale DRC evidence: {key} hash differs")
+    return problems
 
 
 def research():
@@ -61,35 +150,75 @@ def calculations():
 
 
 def schematic(variant):
-    d = load_json(REP / f"schematic-{variant}.json")
-    if d is None:
-        return add(f"VAL-SCH-{variant}", f"Schematic ERC + netlist ({variant})", "CAD", "NOT RUN", "")
-    add(f"VAL-ERC-{variant}", f"ERC ({variant}): errors {d['erc_errors']}, warnings {d['erc_warnings']}", "CAD",
-        "PASS" if d["erc_errors"] == 0 and d["erc_warnings"] == 0 else "FAIL", f"reports/erc-{variant}.json")
+    summary = REP / f"schematic-{variant}.json"
+    erc_report = REP / f"erc-{variant}.json"
+    sch = paths.HARDWARE / variant / "nubm44_driver.kicad_sch"
+    net = sch.with_suffix(".net")
+    d, erc = load_json(summary), load_json(erc_report)
+    problems = []
+    if not isinstance(d, dict) or d.get("variant") != variant or any(
+            type(d.get(k)) is not int or d[k] < 0 for k in ("erc_errors", "erc_warnings")) or any(
+            type(d.get(k)) is not int or d[k] <= 0 for k in ("netlist_parts", "netlist_nets")) or not isinstance(
+            d.get("connectivity_differences"), list) or d.get("upgrade_rc") != 0 or str(
+            d.get("schematic", "")).replace("\\", "/") != sch.relative_to(ROOT).as_posix():
+        problems.append("missing or malformed schematic summary")
+    problems += kicad_report_problems(erc, "erc", sch)
+    if summary.is_file():
+        problems += freshness_problems(summary, [sch, net, erc_report,
+                                                ROOT / "engineering/design/connectivity.yaml",
+                                                ROOT / "engineering/design/parameters.yaml"])
+    if erc_report.is_file():
+        problems += freshness_problems(erc_report, [sch])
+    if problems:
+        status = "NOT RUN" if not summary.exists() or not erc_report.exists() else "FAIL"
+        for prefix, item in (("ERC", "ERC"), ("NET", "Netlist equals connectivity.yaml")):
+            add(f"VAL-{prefix}-{variant}", f"{item} ({variant})", "CAD", status,
+                f"reports/schematic-{variant}.json", "; ".join(problems))
+        return status
+    violations = [v for sheet in erc["sheets"] for v in sheet["violations"]]
+    counts_match = (sum(v["severity"] == "error" for v in violations) == d["erc_errors"]
+                    and sum(v["severity"] == "warning" for v in violations) == d["erc_warnings"])
+    add(f"VAL-ERC-{variant}", f"ERC ({variant})", "CAD",
+        "PASS" if not violations and counts_match else "FAIL", f"reports/erc-{variant}.json",
+        f"{len(violations)} unresolved findings" + ("; summary count mismatch" if not counts_match else ""))
     return add(f"VAL-NET-{variant}", f"Netlist equals connectivity.yaml ({variant})", "CAD",
                "PASS" if not d["connectivity_differences"] else "FAIL", f"reports/schematic-{variant}.json",
                f"{len(d['connectivity_differences'])} differences")
 
 
 def drc(variant):
-    d = load_json(REP / f"drc-{variant}.json")
+    report = REP / f"drc-{variant}.json"
+    d = load_json(report)
     pcb = paths.HARDWARE / variant / "nubm44_driver.kicad_pcb"
-    if d is None or not pcb.exists():
-        add(f"VAL-ROUTE-{variant}", f"PCB placed and fully routed ({variant})", "CAD", "NOT RUN", "")
-        return add(f"VAL-DRC-{variant}", f"DRC ({variant})", "CAD", "NOT RUN", "")
-    viol = d.get("violations", [])
+    problems = kicad_report_problems(d, "drc", pcb)
+    if report.is_file():
+        problems += drc_evidence_problems(variant, report)
+    if not pcb.is_file():
+        problems.append("PCB does not exist")
+    if problems:
+        status = "NOT RUN" if not report.exists() or not pcb.exists() else "FAIL"
+        for prefix, item in (("ROUTE", "PCB placed and fully routed"), ("PARITY", "PCB matches schematic"),
+                             ("DRC", "DRC")):
+            add(f"VAL-{prefix}-{variant}", f"{item} ({variant})", "CAD", status,
+                f"reports/drc-{variant}.json", "; ".join(problems))
+        return status
+    viol = d["violations"]
     errors = [v for v in viol if v["severity"] == "error"]
-    unconn = d.get("unconnected_items", [])
-    parity = d.get("schematic_parity", [])
+    warnings = [v for v in viol if v["severity"] == "warning"]
+    unconn = d["unconnected_items"]
+    parity = d["schematic_parity"]
     add(f"VAL-ROUTE-{variant}", f"PCB placed and fully routed ({variant})", "CAD",
         "PASS" if not unconn else "FAIL", f"reports/drc-{variant}.json", f"{len(unconn)} unconnected items")
     add(f"VAL-PARITY-{variant}", f"PCB matches schematic ({variant})", "CAD",
         "PASS" if not parity else "FAIL", f"reports/drc-{variant}.json", f"{len(parity)} parity issues")
     types = {}
-    for v in errors:
+    for v in viol:
         types[v["type"]] = types.get(v["type"], 0) + 1
-    return add(f"VAL-DRC-{variant}", f"DRC errors ({variant})", "CAD", "PASS" if not errors else "FAIL",
-               f"reports/drc-{variant}.json", f"{len(errors)} errors {types}")
+    return add(f"VAL-DRC-{variant}", f"Unresolved DRC findings ({variant})", "CAD", "PASS" if not viol else "FAIL",
+               f"reports/drc-{variant}.json",
+               f"{len(errors)} errors, {len(warnings)} warnings, {len(viol) - len(errors) - len(warnings)} exclusions {types}"
+               + "; ignored checks: " + (", ".join(f"{r['key']} ({DRC_IGNORED_REASONS[r['key']]})"
+                                                  for r in d["ignored_checks"]) or "none"))
 
 
 def simulation():
@@ -125,12 +254,39 @@ def firmware():
 
 
 def exports(variant):
-    d = load_json(paths.MANUFACTURING / "pcbway" / variant / "reports" / "export-check.json")
-    if d is None:
+    report = paths.MANUFACTURING / "pcbway" / variant / "reports" / "export-check.json"
+    d = load_json(report)
+    if not report.exists():
         return add(f"VAL-EXPORT-{variant}", f"PCBWay export package ({variant})", "CAD", "NOT RUN", "")
+    if not isinstance(d, dict) or d.get("variant") != variant or d.get("status") not in ("PASS", "FAIL") or not isinstance(d.get("problems"), list):
+        return add(f"VAL-EXPORT-{variant}", f"PCBWay export package ({variant})", "CAD", "FAIL",
+                   str(report.relative_to(ROOT)), "missing or malformed export check")
+    problems = list(d["problems"])
+    inputs, files, hashes = d.get("inputs"), d.get("files"), d.get("file_sha256")
+    if not all(isinstance(value, dict) for value in (inputs, files, hashes)) or d.get("required_files") != required_export_files(variant):
+        problems.append("missing or malformed export source/output hash manifest")
+    else:
+        source_paths = [paths.HARDWARE / variant / f"nubm44_driver.{suffix}"
+                        for suffix in ("kicad_pcb", "kicad_sch", "kicad_pro")]
+        source_paths.append(ROOT / "documentation/stack-up.md")
+        source_paths += design_source_paths(variant)
+        for p in source_paths:
+            key = p.relative_to(ROOT).as_posix()
+            if not p.is_file() or inputs.get(key) != hashlib.sha256(p.read_bytes()).hexdigest():
+                problems.append(f"stale export evidence: {key} hash differs or input missing")
+        package = report.parent.parent
+        for rel in set(files) | set(required_export_files(variant)):
+            if not isinstance(rel, str) or not (package / rel).resolve().is_relative_to(package.resolve()):
+                problems.append(f"invalid export artifact path: {rel}")
+                continue
+            p = package / rel
+            if not p.is_file() or type(files.get(rel)) is not int or files[rel] <= 0:
+                problems.append(f"missing, empty or unmanifested export artifact: {rel}")
+            elif p.stat().st_size != files[rel] or hashes.get(rel) != hashlib.sha256(p.read_bytes()).hexdigest():
+                problems.append(f"export artifact size/hash differs: {rel}")
     return add(f"VAL-EXPORT-{variant}", f"PCBWay export package internally consistent ({variant})", "CAD",
-               d["status"], f"manufacturing/pcbway/{variant}/reports/export-check.json",
-               "; ".join(d["problems"])[:200])
+               "PASS" if d["status"] == "PASS" and not problems else "FAIL",
+               f"manufacturing/pcbway/{variant}/reports/export-check.json", "; ".join(map(str, problems)))
 
 
 def requirement_blocks():
@@ -146,20 +302,22 @@ def requirement_blocks():
 
 def gates(blocked):
     st = {e["id"]: e["status"] for e in entries}
+    counts = {}
+    for e in entries:
+        counts[e["id"]] = counts.get(e["id"], 0) + 1
 
-    def ok(prefixes):
-        rel = [s for k, s in st.items() if any(k.startswith(p) for p in prefixes)]
-        return bool(rel) and all(s == "PASS" for s in rel)
+    def ok(ids):
+        return all(counts.get(k) == 1 and st.get(k) == "PASS" for k in ids)
 
     g = {}
     g["A"] = "PASS" if st.get("VAL-A1") == "PASS" else "OPEN"
-    g["B"] = "PASS" if ok(["VAL-ERC-", "VAL-NET-"]) else "OPEN"
-    g["C"] = "PASS" if ok(["VAL-SIM-"]) else "OPEN"
+    g["B"] = "PASS" if ok([f"VAL-{check}-{v}" for v in spec.VARIANTS for check in ("ERC", "NET")]) else "OPEN"
+    g["C"] = "PASS" if ok(SIMULATION_IDS) else "OPEN"
     for v in spec.VARIANTS:
-        g[f"D ({v})"] = "PASS" if st.get(f"VAL-ROUTE-{v}") == "PASS" else "OPEN"
-        g[f"E ({v})"] = "PASS" if st.get(f"VAL-DRC-{v}") == "PASS" and st.get(f"VAL-PARITY-{v}") == "PASS" else "OPEN"
-        files_ok = st.get(f"VAL-EXPORT-{v}") == "PASS"
-        if files_ok and g[f"E ({v})"] == "PASS" and g["B"] == "PASS":
+        g[f"D ({v})"] = "PASS" if ok([f"VAL-ROUTE-{v}", f"VAL-PARITY-{v}"]) else "OPEN"
+        g[f"E ({v})"] = "PASS" if ok([f"VAL-{check}-{v}" for check in ("ERC", "NET", "ROUTE", "DRC", "PARITY")]) else "OPEN"
+        files_ok = ok([f"VAL-EXPORT-{v}"])
+        if files_ok and all(g[k] == "PASS" for k in ("B", "C", f"D ({v})", f"E ({v})")):
             g[f"F ({v})"] = "HELD (owner decisions: " + ", ".join(blocked) + ")" if blocked else "PASS"
         else:
             g[f"F ({v})"] = "OPEN"
@@ -167,7 +325,21 @@ def gates(blocked):
     return g
 
 
+def sync_requirement_gates(computed):
+    """Keep the requirement register's gate table derived from the same evidence."""
+    requirement_path = ROOT / "engineering/requirements.md"
+    text = requirement_path.read_text(encoding="utf-8")
+    for gate in "ABCDEFG":
+        values = [(key, value) for key, value in computed.items()
+                  if key == gate or key.startswith(f"{gate} (")]
+        status = "; ".join(f"{key}: {value}" if key != gate else value for key, value in values)
+        text = re.sub(rf"^(\| {gate} \| [^|]* \| )[^|]*( \|)$",
+                      lambda match: match[1] + status + match[2], text, flags=re.M)
+    requirement_path.write_text(text, encoding="utf-8", newline="\n")
+
+
 def main() -> int:
+    entries.clear()
     research()
     calculations()
     for v in spec.VARIANTS:
@@ -178,6 +350,7 @@ def main() -> int:
     firmware()
     blocked = requirement_blocks()
     g = gates(blocked)
+    sync_requirement_gates(g)
     REP.mkdir(exist_ok=True)
     (REP / "validation-register.json").write_text(json.dumps({"date": str(date.today()), "gates": g, "entries": entries},
                                                              indent=1), encoding="utf-8")
@@ -190,7 +363,7 @@ def main() -> int:
         lines.append(f"| {e['id']} | {e['item']} | {e['method']} | **{e['status']}** | {e['evidence']} | {e['detail']} |")
     lines += ["", "Physical verification still required (Gate G): see documentation/testing/test-plan.md."]
     (REP / "validation-register.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    fails = [e for e in entries if e["status"] in ("FAIL", "NOT RUN") and e["id"] != "VAL-REQ-BLOCKED"]
+    fails = [e for e in entries if e["status"] != "PASS" and e["id"] != "VAL-REQ-BLOCKED"]
     print(f"{len(entries)} entries; FAIL/NOT RUN: {len(fails)}")
     for k, v in g.items():
         print(f"  gate {k}: {v}")
