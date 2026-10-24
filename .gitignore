@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Downloaded third-party tools (re-created by scripts/setup.ps1)
+tools/
+
+# KiCad local/transient files
+*-backups/
+*.kicad_prl
+fp-info-cache
+_autosave-*
+~*.lck
+*.lck
+\#auto_saved_files\#
+
+# Routing scratch
+automation/routing/work/
+*.ses.bak
+freerouting.log
+
+# Build scratch (final outputs live in manufacturing/, documentation/, reports/)
+build/
+
+# Third-party datasheets and vendor documents: kept locally, not redistributed via git.
+# URLs and revisions are listed in research/source-index.md and research/sources/*.md.
+research/datasheets/

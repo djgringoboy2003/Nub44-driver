@@ -1,0 +1,71 @@
+# Authoritative design parameters for the NUBM44 driver (both PCB variants).
+# Every value here is either a requirement, a datasheet figure (with source ID from
+# research/sources/*.md) or an engineering choice explained in engineering/design-decisions.md.
+# engineering/calculations/power_stage.py reads this file and verifies margins.
+
+laser:
+  # NUBM44 has no public Nichia datasheet (LD-xx sources). Community LIV data, 25 C case:
+  # Vf(4 A) = 4.26-4.62 V; tempco about -3.8 mV/K; threshold 0.25-0.45 A.
+  vf_model:            # Vf = v0 + rd * I, fitted to the 25 C spread at 3-4 A
+    min: {v0: 3.60, rd: 0.165}
+    typ: {v0: 3.75, rd: 0.170}
+    max: {v0: 3.95, rd: 0.170}
+  vf_tempco_v_per_k: -0.0038
+  case_temp_c: [0, 65]
+  design_compliance_v: [3.8, 5.2]   # driver must regulate anywhere in this range at the diode
+  wiring_resistance_ohm: 0.010      # 2 x ~60 mm of 20 AWG plus joints (estimate)
+
+current:
+  i_set_a: 4.0                      # REQ-OUT-01 (brief). Exceeds NUBM44 typical 3.0 A; see REQ register.
+  alternates_a: [3.0, 3.5]          # BOM options via R_FB_TOP only
+  accuracy_target_pct: 5.0          # REQ-OUT-03
+
+battery:
+  v_full: 4.20
+  v_nominal: 3.70
+  v_fw_warn_loaded: 3.10            # firmware step-down / warning
+  v_fw_cutoff_loaded: 2.90          # firmware latch-off
+  v_rest_min_start: 3.20            # firmware refuses to start below this resting voltage
+  ri_cell_ohm: 0.020                # recommended high-drain 18650/21700 (research/battery-and-mechanics.md)
+  r_contacts_ohm: 0.020             # springs bypassed + host path (target <= 20 mOhm)
+
+converter:                          # TI TPS552882 (PWR-10, SLVSFC5)
+  part: TPS552882RPMR
+  vref_v: 1.2                       # 1.188/1.2/1.212
+  vref_tol_pct: 1.0
+  f_sw_hz: 595000                   # R_FSW = 33.2 k, Eq. 3: f(MHz) = 1000/(0.05*R + 20)
+  r_fsw_ohm: 33200
+  r_ilim_ohm: 27400                 # Eq. 5: I = 330000/R -> 12.04 A typ
+  ilim_tol: [0.848, 1.152]          # from 14/16.5/19 A at 20 k
+  en_uvlo_v: 1.23
+  en_uvlo_hys_a: 5.0e-6
+  r_en_top_ohm: 49900
+  r_en_bot_ohm: 33200
+  gea_s: 190.0e-6
+  rea_ohm: 100.0e+6                 # not specified; assumed (only affects DC gain)
+  ri_equiv_ohm: 0.055               # "equivalent internal current sense resistor" (p.25)
+  rds_boost_ls_ohm: 0.0071          # typ, VCC = 5.2 V (p.7); no max published
+  rds_boost_hs_ohm: 0.0076
+  soft_start_s: 0.004
+  isp_isn_limit_v: [0.048, 0.050, 0.052]
+  min_off_time_boost_s: 145.0e-9    # max
+  min_on_time_buck_s: 130.0e-9      # max
+  iq_a: 760.0e-6
+
+components:
+  inductor: {part: XGL5030-102MEC, l_h: 1.0e-6, dcr_typ_ohm: 0.0048, dcr_max_ohm: 0.0058,
+             isat_10pct_a: 5.9, isat_20pct_a: 10.2, isat_30pct_a: 14.0, irms_20c_a: 12.8}
+  q_reverse: {part: SiSS23DN, rds_max_4v5: 0.0045, rds_max_2v5: 0.0063, vgs_max: 8.0}
+  q_buck: {part: SiSS80DN, rds_max_4v5: 0.00115, rds_max_2v5: 0.0030, qg_c: 36.0e-9}
+  shunt: {part: MCS1632R010FER, r_ohm: 0.010, tol_pct: 1.0, p_rated_w: 1.0}
+  csa: {part: INA186A2IDCKR, gain: 50, gain_err_pct: 1.0, vos_v: 50.0e-6, bw_hz: 37000}
+  fb_divider: {r_top_ohm: 6650, r_bot_ohm: 10000, tol_pct: 0.1}
+  c_out: {count: 4, c_nom_f: 22.0e-6, bias_retention: 0.55, esr_each_ohm: 0.006}
+  c_in: {count: 3, c_nom_f: 22.0e-6, bias_retention: 0.50, esr_each_ohm: 0.006}
+  bleeder_ohm: 4700
+  ov_backstop_zener_v: 6.2          # D3 BZT52C6V2 + Q6 DMG1012T gate pull-down 4.7 k
+
+compensation:                       # from a scan over 12 loop corners (see power-stage-results.md)
+  r_c_ohm: 1200
+  c_c_f: 56.0e-9
+  c_p_f: 680.0e-12
