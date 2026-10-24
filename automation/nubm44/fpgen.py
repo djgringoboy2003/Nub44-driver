@@ -161,25 +161,42 @@ def spring_pad(diameter=6.0, side="B"):
     return _flip_texts(fp, side)
 
 
-def ring_contact(r_mid=10.2, width=1.0, n_vias=16, via_drill=0.3, via_size=0.6):
-    """Perimeter battery-negative ring on both sides, stitched with plated vias (pad 1 everywhere)."""
+def ring_contact(r_mid=10.25, width=0.8, n_seg=20, via_drill=0.3, via_size=0.6):
+    """Perimeter battery-negative contact ring on both sides (pad "1" everywhere).
+
+    Built from ``n_seg`` tangential arc-segment pads per side with a plated stitching via in each
+    gap, plus a continuous solder-mask opening so the whole ring is exposed contact surface.
+    A single annular custom pad is avoided on purpose: Specctra DSN cannot describe the hole, so the
+    autorouter would see a solid disc covering the board. The GND copper pour closes the gaps after
+    routing."""
     items = []
-    for side in ("F", "B"):
-        items.append(S("pad", "1", Sym("smd"), Sym("custom"), S("at", r_mid, 0), S("size", width * 0.9, width * 0.9),
-                       S("layers", f"{side}.Cu", f"{side}.Mask"),
-                       S("options", S("clearance", Sym("outline")), S("anchor", Sym("circle"))),
-                       S("primitives", S("gr_circle", S("center", -r_mid, 0), S("end", 0, 0),
-                                         S("width", width), S("fill", Sym("no")))),
-                       S("uuid", _uid("ring", side, r_mid))))
-    for i in range(n_vias):
-        a = 2 * math.pi * (i + 0.5) / n_vias
-        items.append(tht_circle("1", round(r_mid * math.cos(a), 4), round(r_mid * math.sin(a), 4),
+    seg_angle = 360.0 / n_seg
+    arc_len = 2 * math.pi * r_mid / n_seg
+    pad_len = round(arc_len - 0.7, 3)
+    for k in range(n_seg):
+        a = math.radians(k * seg_angle)
+        x, y = round(r_mid * math.cos(a), 4), round(r_mid * math.sin(a), 4)
+        for side in ("F", "B"):
+            # long axis tangential; KiCad pad angles are counter-clockwise on screen (Y down)
+            items.append(S("pad", "1", Sym("smd"), Sym("roundrect"), S("at", x, y, round(-k * seg_angle + 90, 3)),
+                           S("size", pad_len, width), S("layers", f"{side}.Cu"),
+                           S("roundrect_rratio", 0.25), S("uuid", _uid("ringseg", side, k))))
+        av = math.radians((k + 0.5) * seg_angle)
+        items.append(tht_circle("1", round(r_mid * math.cos(av), 4), round(r_mid * math.sin(av), 4),
                                 via_size, via_drill))
-    items += [_circle(0, 0, r_mid + width / 2 + 0.05, "F.CrtYd", 0.05),
-              _circle(0, 0, r_mid - width / 2 - 0.05, "F.CrtYd", 0.05)]
-    return footprint(f"Contact_Ring_R{r_mid:.2f}_W{width:.2f}mm",
-                     "Perimeter B- contact ring, both sides, via-stitched (PCB feature, no part)",
-                     "battery ring contact driver", items, attr="smd", ref_y=-(r_mid - 1.5), val_y=r_mid - 1.5)
+    for side in ("F", "B"):
+        items.append(S("fp_circle", S("center", 0, 0), S("end", r_mid, 0),
+                       S("stroke", S("width", width), S("type", Sym("solid"))), S("fill", Sym("no")),
+                       S("layer", f"{side}.Mask"), S("uuid", _uid("ringmask", side))))
+    # No courtyard: a closed courtyard circle would be treated as covering the whole board interior.
+    items += [_circle(0, 0, r_mid, "F.Fab", 0.1)]
+    fp = footprint(f"Contact_Ring_R{r_mid:.2f}_W{width:.2f}mm",
+                   "Perimeter B- contact ring, both sides: segmented pads + stitching vias + continuous mask "
+                   "opening (PCB feature, no part)",
+                   "battery ring contact driver", items, attr="smd", ref_y=-(r_mid - 1.5), val_y=r_mid - 1.5)
+    attr = next(n for n in fp if isinstance(n, list) and n and n[0] == "attr")
+    attr += [Sym("exclude_from_pos_files"), Sym("exclude_from_bom"), Sym("allow_missing_courtyard")]
+    return fp
 
 
 def laser_pads(pitch=4.0, drill=1.1, size=2.2):
@@ -218,12 +235,42 @@ def _flip_texts(fp, side):
             for c in node:
                 if isinstance(c, list) and c and c[0] == "layer":
                     c[1] = str(c[1]).replace("F.", "B.")
+                if isinstance(c, list) and c and c[0] == "effects":     # back-side text reads mirrored
+                    c.append(S("justify", Sym("mirror")))
+    return fp
+
+
+def kelvin_1206():
+    """1206 current shunt with Kelvin sense pads (net tie).
+
+    Pads 1 and 4 copy KiCad's R_1206_3216Metric current pads (+-1.4625 mm, 1.125 x 1.75 mm).
+    Pads 2 and 3 are copper-only sense pads 0.2 mm inside each current pad's inner edge, joined to it
+    by a 0.25 mm net-tie bridge. Pin numbering follows the KiCad Device:R_Shunt symbol
+    (1 = current A, 2 = sense A, 3 = sense B, 4 = current B)."""
+    items = [smd_rr(1, -1.4625, 0, 1.125, 1.75, r=0.25), smd_rr(4, 1.4625, 0, 1.125, 1.75, r=0.25)]
+    for num, x in ((2, -0.55), (3, 0.55)):
+        items.append(S("pad", str(num), Sym("smd"), Sym("rect"), S("at", x, 0), S("size", 0.3, 0.3),
+                       S("layers", "F.Cu"), S("uuid", _uid("kelvin", num))))
+    for x0, x1 in ((-0.95, -0.55), (0.55, 0.95)):
+        items.append(S("fp_rect", S("start", x0, -0.125), S("end", x1, 0.125),
+                       S("stroke", S("width", 0), S("type", Sym("solid"))), S("fill", Sym("yes")),
+                       S("layer", "F.Cu"), S("uuid", _uid("nettie", x0))))
+    items += [_rect(-2.28, -1.13, 2.28, 1.13, "F.CrtYd", 0.05), _rect(-1.6, -0.8, 1.6, 0.8, "F.Fab", 0.1),
+              _line(-0.727, -0.91, 0.727, -0.91, "F.SilkS", 0.12), _line(-0.727, 0.91, 0.727, 0.91, "F.SilkS", 0.12),
+              _fp_text("${REFERENCE}", 0, 0, "F.Fab", 0.5)]
+    fp = footprint("R_1206_3216Metric_Kelvin",
+                   "1206 current-sense resistor with Kelvin sense pads (net tie 1-2, 3-4); current pads per "
+                   "KiCad R_1206_3216Metric", "shunt kelvin 4-terminal net tie", items, ref_y=-1.8, val_y=1.8,
+                   model="${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step")
+    # net-tie declaration must precede graphics in the file; insert after (attr ...)
+    idx = next(i for i, n in enumerate(fp) if isinstance(n, list) and n and n[0] == "attr")
+    fp.insert(idx + 1, S("net_tie_pad_groups", "1,2", "3,4"))
     return fp
 
 
 def build_all(out_dir: Path) -> list[str]:
     out_dir.mkdir(parents=True, exist_ok=True)
-    fps = [tps552882_rpm0026a(), spring_pad(6.0, "B"), ring_contact(), laser_pads(),
+    fps = [tps552882_rpm0026a(), kelvin_1206(), spring_pad(5.0, "B"), ring_contact(), laser_pads(),
            wire_pad(1.3, 2.6), smd_pad(1.0, "F"), smd_pad(1.0, "B"), smd_pad(1.4, "F"), smd_pad(0.8, "B")]
     names = []
     for fp in fps:

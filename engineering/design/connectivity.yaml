@@ -3,7 +3,8 @@
 # - The validator compares KiCad's exported netlist against it, pin by pin.
 # - Pin numbers are symbol/footprint pad numbers (verified sources in research/source-index.md).
 # - "NC" marks an intentionally unconnected pin (gets a no-connect flag).
-# - footprint_eval overrides the footprint for Variant B (evaluation board) only.
+# - footprint_eval / mpn_eval / mfr_eval override for Variant B (evaluation board) only.
+# - variants: [..] restricts a part to the listed variants (default: all).
 # - Values that come from calculations are traced in engineering/calculations/power-stage-results.md.
 
 meta:
@@ -25,26 +26,26 @@ power_flags: [VBAT, GND, VMCU]
 parts:
   # ------------------------------------------------------------------ power_in
   - {ref: J1, block: power_in, lib: Connector_Generic:Conn_01x01, value: "B+ spring", dnp: true,
-     footprint: nubm44:Contact_Spring_Pad_D6.0mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
+     footprint: nubm44:Contact_Spring_Pad_D5.0mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "Battery centre spring (B+), hand-soldered after assembly; select to suit host",
      pins: {1: BAT_SPRING}}
   - {ref: J2, block: power_in, lib: Connector_Generic:Conn_01x01, value: "B- ring", in_bom: false,
-     footprint: nubm44:Contact_Ring_R10.20_W1.00mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
+     footprint: nubm44:Contact_Ring_R10.25_W0.80mm, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm,
      mpn: "-", mfr: "-", desc: "Perimeter battery-negative ring contact (PCB copper feature)", pins: {1: GND}}
   - {ref: Q1, block: power_in, lib: nubm44:Q_PMOS_PowerPAK1212, value: SiSS23DN,
      footprint: Package_SO:Vishay_PowerPAK_1212-8_Single, mpn: SISS23DN-T1-GE3, mfr: Vishay,
      desc: "P-MOSFET -20 V, 4.5/6.3 mOhm max @ -4.5/-2.5 V; reverse-polarity protection",
      datasheet: https://www.vishay.com/docs/62999/siss23dn.pdf, pins: {1: VBAT, 2: VBAT, 3: VBAT, 4: Q1_G, 5: BAT_SPRING}}
-  - {ref: R1, block: power_in, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% 0402; Q1 gate to GND", pins: {1: Q1_G, 2: GND}}
+  - {ref: R1, block: power_in, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% 0402; Q1 gate to GND", pins: {1: Q1_G, 2: GND}}
   - {ref: C1, block: power_in, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 input", pins: {1: VBAT, 2: GND}}
   - {ref: C2, block: power_in, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 input", pins: {1: VBAT, 2: GND}}
   - {ref: C3, block: power_in, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 input", pins: {1: VBAT, 2: GND}}
-  - {ref: C4, block: power_in, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 input HF decoupling", pins: {1: VBAT, 2: GND}}
+  - {ref: C4, block: power_in, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 input HF decoupling", pins: {1: VBAT, 2: GND}}
   - {ref: TP1, block: power_in, lib: Connector:TestPoint, value: VBAT, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm,
      mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VBAT}}
@@ -54,7 +55,7 @@ parts:
      footprint: nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm, mpn: TPS552882RPMR, mfr: Texas Instruments,
      desc: "Buck-boost converter, external buck FETs, VQFN-HR-26", datasheet: https://www.ti.com/lit/ds/symlink/tps552882.pdf,
      pins: {1: DR1L, 2: DR1H, 3: VBAT, 4: EN_UVLO, 5: PG, 6: CC_FLAG, 7: GND, 8: FSW, 9: GND, 10: GND,
-            11: VOUT, 12: VOUT, 13: LD_P, 14: FB, 15: GND, 16: NC, 17: ILIM, 18: COMP, 19: VCC5,
+            11: VOUT, 12: ISP_K, 13: ISN_K, 14: FB, 15: GND, 16: NC, 17: ILIM, 18: COMP, 19: VCC5,
             20: BOOT2, 21: SW2, 22: BOOT1, 23: SW1, 24: GND, 25: SW2, 26: VOUT}}
   - {ref: Q2, block: converter, lib: nubm44:Q_NMOS_PowerPAK1212, value: SiSS80DN,
      footprint: Package_SO:Vishay_PowerPAK_1212-8_Single, mpn: SISS80DN-T1-GE3, mfr: Vishay,
@@ -67,26 +68,26 @@ parts:
   - {ref: L1, block: converter, lib: Device:L, value: 1.0u, footprint: Inductor_SMD:L_Coilcraft_XAL5030-XXX,
      mpn: XGL5030-102MEC, mfr: Coilcraft, desc: "1.0 uH 4.8/5.8 mOhm, Isat 10.2 A (20%) / 14 A (30%); XGL5030 uses the XAL5030 land pattern (verify)",
      pins: {1: SW1, 2: SW2}}
-  - {ref: C5, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 BOOT1", pins: {1: BOOT1, 2: SW1}}
-  - {ref: C6, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 BOOT2", pins: {1: BOOT2, 2: SW2}}
+  - {ref: C5, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 BOOT1", pins: {1: BOOT1, 2: SW1}}
+  - {ref: C6, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 BOOT2", pins: {1: BOOT2, 2: SW2}}
   - {ref: C7, block: converter, lib: Device:C, value: 10u, footprint: Capacitor_SMD:C_0603_1608Metric,
      mpn: CL10A106KP8NNNC, mfr: Samsung, desc: "10 uF 10 V X5R 0603 VCC (> 4.7 uF required)", pins: {1: VCC5, 2: GND}}
-  - {ref: R2, block: converter, lib: Device:R, value: 33.2k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0733K2L, mfr: Yageo, desc: "33.2 kOhm 1% 0402 FSW (595 kHz)", pins: {1: FSW, 2: GND}}
-  - {ref: R3, block: converter, lib: Device:R, value: 27.4k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0727K4L, mfr: Yageo, desc: "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)", pins: {1: ILIM, 2: GND}}
-  - {ref: R4, block: converter, lib: Device:R, value: 1.2k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-071K2L, mfr: Yageo, desc: "1.2 kOhm 1% 0402 compensation Rc", pins: {1: COMP, 2: COMP_RC}}
+  - {ref: R2, block: converter, lib: Device:R, value: 33.2k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0733K2L, mpn_eval: RC0402FR-0733K2L, mfr: Yageo, desc: "33.2 kOhm 1% 0402 FSW (595 kHz)", pins: {1: FSW, 2: GND}}
+  - {ref: R3, block: converter, lib: Device:R, value: 27.4k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0727K4L, mpn_eval: RC0402FR-0727K4L, mfr: Yageo, desc: "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)", pins: {1: ILIM, 2: GND}}
+  - {ref: R4, block: converter, lib: Device:R, value: 1.2k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-071K2L, mpn_eval: RC0402FR-071K2L, mfr: Yageo, desc: "1.2 kOhm 1% 0402 compensation Rc", pins: {1: COMP, 2: COMP_RC}}
   - {ref: C8, block: converter, lib: Device:C, value: 56n, footprint: Capacitor_SMD:C_0402_1005Metric,
      mpn: CL05B563KO5NNNC, mfr: Samsung, desc: "56 nF 16 V X7R 0402 compensation Cc", pins: {1: COMP_RC, 2: GND}}
-  - {ref: C9, block: converter, lib: Device:C, value: 680p, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: GRM1555C1H681JA01D, mfr: Murata, desc: "680 pF 50 V C0G 0402 compensation Cp", pins: {1: COMP, 2: GND}}
-  - {ref: R5, block: converter, lib: Device:R, value: 49.9k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0749K9L, mfr: Yageo, desc: "49.9 kOhm 1% 0402 EN/UVLO top (3.08/2.83 V)", pins: {1: VBAT, 2: EN_UVLO}}
-  - {ref: R6, block: converter, lib: Device:R, value: 33.2k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0733K2L, mfr: Yageo, desc: "33.2 kOhm 1% 0402 EN/UVLO bottom", pins: {1: EN_UVLO, 2: GND}}
+  - {ref: C9, block: converter, lib: Device:C, value: 680p, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM0335C1H681JA01D, mpn_eval: GRM1555C1H681JA01D, mfr: Murata, mfr_eval: Murata, desc: "680 pF 50 V C0G 0402 compensation Cp", pins: {1: COMP, 2: GND}}
+  - {ref: R5, block: converter, lib: Device:R, value: 49.9k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0749K9L, mpn_eval: RC0402FR-0749K9L, mfr: Yageo, desc: "49.9 kOhm 1% 0402 EN/UVLO top (3.08/2.83 V)", pins: {1: VBAT, 2: EN_UVLO}}
+  - {ref: R6, block: converter, lib: Device:R, value: 33.2k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0733K2L, mpn_eval: RC0402FR-0733K2L, mfr: Yageo, desc: "33.2 kOhm 1% 0402 EN/UVLO bottom", pins: {1: EN_UVLO, 2: GND}}
   - {ref: C10, block: converter, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 output", pins: {1: VOUT, 2: GND}}
   - {ref: C11, block: converter, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
@@ -95,26 +96,26 @@ parts:
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 output", pins: {1: VOUT, 2: GND}}
   - {ref: C13, block: converter, lib: Device:C, value: 22u, footprint: Capacitor_SMD:C_0805_2012Metric,
      mpn: CL21A226MOQNNNE, mfr: Samsung, desc: "22 uF 16 V X5R 0805 output", pins: {1: VOUT, 2: GND}}
-  - {ref: C14, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 output HF", pins: {1: VOUT, 2: GND}}
-  - {ref: R7, block: converter, lib: Device:R, value: 4.7k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-074K7L, mfr: Yageo, desc: "4.7 kOhm 1% 0402 output bleeder", pins: {1: VOUT, 2: GND}}
+  - {ref: C14, block: converter, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 output HF", pins: {1: VOUT, 2: GND}}
+  - {ref: R7, block: converter, lib: Device:R, value: 4.7k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-074K7L, mpn_eval: RC0402FR-074K7L, mfr: Yageo, desc: "4.7 kOhm 1% 0402 output bleeder", pins: {1: VOUT, 2: GND}}
   - {ref: TP2, block: converter, lib: Connector:TestPoint, value: VOUT, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: VOUT}}
-  - {ref: TP3, block: converter, lib: Connector:TestPoint, value: EN, in_bom: false,
+  - {ref: TP3, block: converter, variants: [evaluation-board], lib: Connector:TestPoint, value: EN, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: EN_UVLO}}
 
   # ------------------------------------------------------------------ sense
-  - {ref: RS1, block: sense, lib: Device:R, value: 10m, footprint: Resistor_SMD:R_1206_3216Metric,
-     mpn: MCS1632R010FER, mfr: Ohmite, desc: "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)",
-     alt: "RALEC LR1206-21R010F4 (LCSC C154635)", pins: {1: VOUT, 2: LD_P}}
+  - {ref: RS1, block: sense, lib: Device:R_Shunt, value: 10m, footprint: nubm44:R_1206_3216Metric_Kelvin,
+     mpn: MCS1632R010FER, mfr: Ohmite, desc: "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie",
+     alt: "RALEC LR1206-21R010F4 (LCSC C154635)", pins: {1: VOUT, 2: ISP_K, 3: ISN_K, 4: LD_P}}
   - {ref: U2, block: sense, lib: nubm44:INA186, value: INA186A2, footprint: Package_TO_SOT_SMD:SOT-363_SC-70-6,
      mpn: INA186A2IDCKR, mfr: Texas Instruments, desc: "Current-sense amplifier G = 50, SC70-6",
-     datasheet: https://www.ti.com/lit/ds/symlink/ina186.pdf, pins: {1: GND, 2: GND, 3: VBAT, 4: VOUT, 5: LD_P, 6: CS_OUT}}
-  - {ref: C15, block: sense, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 U2 supply", pins: {1: VBAT, 2: GND}}
+     datasheet: https://www.ti.com/lit/ds/symlink/ina186.pdf, pins: {1: GND, 2: GND, 3: VBAT, 4: ISP_K, 5: ISN_K, 6: CS_OUT}}
+  - {ref: C15, block: sense, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 U2 supply", pins: {1: VBAT, 2: GND}}
   - {ref: R8, block: sense, lib: Device:R, value: 6.65k, footprint: Resistor_SMD:R_0402_1005Metric,
      mpn: RT0402BRD076K65L, mfr: Yageo, desc: "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)",
      pins: {1: CS_OUT, 2: FB}}
@@ -126,10 +127,10 @@ parts:
   - {ref: J3, block: sense, lib: Connector_Generic:Conn_01x02, value: "LASER LD+/LD-", in_bom: false,
      footprint: nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm, mpn: "-", mfr: "-",
      desc: "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)", pins: {1: LD_P, 2: GND}}
-  - {ref: TP4, block: sense, lib: Connector:TestPoint, value: CS, in_bom: false,
+  - {ref: TP4, block: sense, variants: [evaluation-board], lib: Connector:TestPoint, value: CS, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Current monitor test pad (0.5 V/A)", pins: {1: CS_OUT}}
-  - {ref: TP5, block: sense, lib: Connector:TestPoint, value: FB, in_bom: false,
+  - {ref: TP5, block: sense, variants: [evaluation-board], lib: Connector:TestPoint, value: FB, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Test pad", pins: {1: FB}}
 
@@ -140,29 +141,29 @@ parts:
      pins: {1: INTLK_MCU, 2: SW_IN, 3: GND, 4: VMCU, 5: NTC_PWR, 6: NTC_BRD, 7: CS_OUT, 8: VOUT_SENSE,
             9: VBAT_SENSE, 10: NTC_LD, 11: NC, 12: IND_OUT, 13: CC_FLAG, 14: PG, 15: NC, 16: NC, 17: NC,
             18: NC, 19: UPDI, 20: LASER_EN_N, 21: GND}}
-  - {ref: D2, block: control, lib: Device:D_Schottky, value: BAT54WS, footprint: Diode_SMD:D_SOD-323,
-     mpn: BAT54WS-7-F, mfr: Diodes Incorporated, desc: "30 V Schottky, MCU supply isolation (hold-up)",
+  - {ref: D2, block: control, lib: Device:D_Schottky, value: RB521S30, footprint: Diode_SMD:D_SOD-523,
+     mpn: RB521S30T1G, mfr: onsemi, desc: "30 V 200 mA Schottky SOD-523, MCU supply isolation (hold-up)",
      pins: {1: VMCU, 2: VBAT}}
   - {ref: C16, block: control, lib: Device:C, value: 10u, footprint: Capacitor_SMD:C_0603_1608Metric,
      mpn: CL10A106KP8NNNC, mfr: Samsung, desc: "10 uF 10 V X5R 0603 MCU hold-up", pins: {1: VMCU, 2: GND}}
-  - {ref: C17, block: control, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0402_1005Metric,
-     mpn: CL05B104KO5NNNC, mfr: Samsung, desc: "100 nF 16 V X7R 0402 MCU decoupling", pins: {1: VMCU, 2: GND}}
-  - {ref: R10, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VBAT sense top", pins: {1: VBAT, 2: VBAT_SENSE}}
-  - {ref: R11, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VBAT sense bottom", pins: {1: VBAT_SENSE, 2: GND}}
-  - {ref: R12, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VOUT sense top (VOUT/6)", pins: {1: VOUT, 2: VOUT_SENSE}}
-  - {ref: R13, block: control, lib: Device:R, value: 20k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0720KL, mfr: Yageo, desc: "20 kOhm 1% VOUT sense bottom", pins: {1: VOUT_SENSE, 2: GND}}
-  - {ref: RT1, block: control, lib: Device:Thermistor_NTC, value: 10k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: NCP15XH103F03RC, mfr: Murata, desc: "NTC 10 kOhm 1% B25/50 3380 K, board temperature", pins: {1: NTC_BRD, 2: GND}}
-  - {ref: R14, block: control, lib: Device:R, value: 10k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0710KL, mfr: Yageo, desc: "10 kOhm 1% NTC bias (board)", pins: {1: NTC_PWR, 2: NTC_BRD}}
-  - {ref: R15, block: control, lib: Device:R, value: 10k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0710KL, mfr: Yageo, desc: "10 kOhm 1% NTC bias (external laser NTC)", pins: {1: NTC_PWR, 2: NTC_LD}}
-  - {ref: R16, block: control, lib: Device:R, value: "220", footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07220RL, mfr: Yageo, desc: "220 Ohm 1% indicator LED series", pins: {1: IND_OUT, 2: IND_PAD}}
+  - {ref: C17, block: control, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
+     mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 MCU decoupling", pins: {1: VMCU, 2: GND}}
+  - {ref: R10, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VBAT sense top", pins: {1: VBAT, 2: VBAT_SENSE}}
+  - {ref: R11, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VBAT sense bottom", pins: {1: VBAT_SENSE, 2: GND}}
+  - {ref: R12, block: control, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% VOUT sense top (VOUT/6)", pins: {1: VOUT, 2: VOUT_SENSE}}
+  - {ref: R13, block: control, lib: Device:R, value: 20k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0720KL, mpn_eval: RC0402FR-0720KL, mfr: Yageo, desc: "20 kOhm 1% VOUT sense bottom", pins: {1: VOUT_SENSE, 2: GND}}
+  - {ref: RT1, block: control, lib: Device:Thermistor_NTC, value: 10k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: NCP03XH103F05RL, mpn_eval: NCP15XH103F03RC, mfr: Murata, desc: "NTC 10 kOhm 1% B25/50 3380 K, board temperature", pins: {1: NTC_BRD, 2: GND}}
+  - {ref: R14, block: control, lib: Device:R, value: 10k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0710KL, mpn_eval: RC0402FR-0710KL, mfr: Yageo, desc: "10 kOhm 1% NTC bias (board)", pins: {1: NTC_PWR, 2: NTC_BRD}}
+  - {ref: R15, block: control, lib: Device:R, value: 10k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0710KL, mpn_eval: RC0402FR-0710KL, mfr: Yageo, desc: "10 kOhm 1% NTC bias (external laser NTC)", pins: {1: NTC_PWR, 2: NTC_LD}}
+  - {ref: R16, block: control, lib: Device:R, value: "220", footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07220RL, mpn_eval: RC0402FR-07220RL, mfr: Yageo, desc: "220 Ohm 1% indicator LED series", pins: {1: IND_OUT, 2: IND_PAD}}
   - {ref: TP6, block: control, lib: Connector:TestPoint, value: UPDI, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",
      desc: "Programming pad (UPDI)", pins: {1: UPDI}}
@@ -189,22 +190,22 @@ parts:
   - {ref: Q4, block: enable, lib: Transistor_FET:DMG1012T, value: DMG1012T, footprint: Package_TO_SOT_SMD:SOT-523,
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N-MOSFET 20 V SOT-523; MCU enable (on = converter off)",
      pins: {1: LASER_EN_N, 2: GND, 3: EN_UVLO}}
-  - {ref: R17, block: enable, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% Q4 gate pull-up (default off)", pins: {1: VMCU, 2: LASER_EN_N}}
+  - {ref: R17, block: enable, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% Q4 gate pull-up (default off)", pins: {1: VMCU, 2: LASER_EN_N}}
   - {ref: Q5, block: enable, lib: Transistor_FET:DMG1012T, value: DMG1012T, footprint: Package_TO_SOT_SMD:SOT-523,
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N-MOSFET 20 V SOT-523; interlock open = converter off",
      pins: {1: INTLK_N, 2: GND, 3: EN_UVLO}}
-  - {ref: R18, block: enable, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% interlock pull-up to VBAT", pins: {1: VBAT, 2: INTLK_N}}
-  - {ref: R19, block: enable, lib: Device:R, value: 47k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-0747KL, mfr: Yageo, desc: "47 kOhm 1% interlock sense to MCU", pins: {1: INTLK_N, 2: INTLK_MCU}}
+  - {ref: R18, block: enable, lib: Device:R, value: 100k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-07100KL, mpn_eval: RC0402FR-07100KL, mfr: Yageo, desc: "100 kOhm 1% interlock pull-up to VBAT", pins: {1: VBAT, 2: INTLK_N}}
+  - {ref: R19, block: enable, lib: Device:R, value: 47k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0747KL, mpn_eval: RC0402FR-0747KL, mfr: Yageo, desc: "47 kOhm 1% interlock sense to MCU", pins: {1: INTLK_N, 2: INTLK_MCU}}
   - {ref: TP13, block: enable, lib: Connector:TestPoint, value: INTLK, in_bom: false,
      footprint: nubm44:Pad_SMD_D1.0mm_F, footprint_eval: nubm44:Wire_Pad_PTH_D1.3mm, mpn: "-", mfr: "-",
      desc: "External interlock loop: short to SGND to allow emission", pins: {1: INTLK_N}}
   - {ref: Q6, block: enable, lib: Transistor_FET:DMG1012T, value: DMG1012T, footprint: Package_TO_SOT_SMD:SOT-523,
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N-MOSFET 20 V SOT-523; over-voltage backstop",
      pins: {1: OV_G, 2: GND, 3: EN_UVLO}}
-  - {ref: D3, block: enable, lib: Device:D_Zener, value: 6.2V, footprint: Diode_SMD:D_SOD-323,
-     mpn: BZT52C6V2S-7-F, mfr: Diodes Incorporated, desc: "6.2 V Zener, OV backstop threshold", pins: {1: VOUT, 2: OV_G}}
-  - {ref: R20, block: enable, lib: Device:R, value: 4.7k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0402FR-074K7L, mfr: Yageo, desc: "4.7 kOhm 1% Q6 gate pull-down", pins: {1: OV_G, 2: GND}}
+  - {ref: D3, block: enable, lib: Device:D_Zener, value: 6.2V, footprint: Diode_SMD:D_SOD-523,
+     mpn: BZX585-C6V2, mfr: Nexperia, desc: "6.2 V Zener SOD-523, OV backstop threshold", pins: {1: VOUT, 2: OV_G}}
+  - {ref: R20, block: enable, lib: Device:R, value: 4.7k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-074K7L, mpn_eval: RC0402FR-074K7L, mfr: Yageo, desc: "4.7 kOhm 1% Q6 gate pull-down", pins: {1: OV_G, 2: GND}}

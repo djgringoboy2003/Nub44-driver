@@ -1,0 +1,14 @@
+* reverse polarity
+VB batp 0 DC -4.2
+RB batp spring 0.04
+M1 spring gate vbat vbat PFET
+.model PFET VDMOS(pchan Vto=-0.7 Kp=60 Rd=2m Rs=1m Rb=5m Is=1e-12 N=1.0)
+RG gate 0 100k
+RLOAD vbat 0 2
+.op
+.control
+run
+print i(VB) v(vbat)
+quit
+.endc
+.end

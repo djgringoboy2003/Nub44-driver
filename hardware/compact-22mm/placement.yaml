@@ -1,0 +1,138 @@
+# Variant A (22 mm) placement and copper source file.
+# Coordinates: mm relative to the board centre, +x right, +y down, viewed from the TOP side.
+# rot is applied before flipping for bottom-side parts. Bottom-native footprints (spring pad,
+# bottom test pads) are not flipped.
+# Manual entries ("pos") fix the power stage and mechanics; "auto" entries are placed by
+# pcb_builder.auto_place at the nearest collision-free spot to the anchor, scored by net proximity.
+
+board:
+  outline: {type: circle, radius: 11.0}
+  copper_layers: 4
+  thickness: 1.6
+placement_radius: 9.55         # every courtyard corner inside this radius (ring copper starts at 9.9)
+courtyard_gap: 0.02          # courtyards may almost touch (they already include assembly clearance)
+
+parts:
+  # mechanics and contacts
+  J1: {pos: [0.0, 0.0, 0], side: B}                 # centre spring pad (bottom-native)
+  J2: {pos: [0.0, 0.0, 0], side: F, no_courtyard: true}
+  J3: {pos: [7.2, 0.3, 90], side: F, both_sides: true}   # LD+ at (7.2, 2.3), LD- at (7.2, -1.7)
+
+  # power stage, top
+  U1: {pos: [0.6, 0.9, 0], side: F}
+  L1: {pos: [1.37, -4.55, 270], side: F}             # pad 2 (SW2) near U1, pad 1 (SW1) at the top
+  Q2: {pos: [-4.0, -5.4, 180], side: F}             # sources face L1 pad 1, drain faces the input caps
+  C1: {pos: [-7.48, -1.8, 270], side: F}             # pad 1 (VBAT) up, pad 2 (GND) down
+  C2: {pos: [-5.44, -1.8, 270], side: F}
+  C3: {pos: [-3.40, -1.8, 270], side: F}
+  C14: {pos: [0.6, 3.75, 180], side: F}             # VOUT pin 11 <-> PGND pin 9, tightest boost loop
+  C10: {pos: [0.6, 5.2, 180], side: F}
+  C11: {pos: [0.6, 7.1, 180], side: F}
+  RS1: {pos: [4.7, 4.9, 0], side: F}
+
+  # power stage, bottom
+  Q1: {pos: [-5.0, -2.4, 180], side: B}
+  Q3: {pos: [-1.0, -6.7, 0], side: B}          # drain pad clear of the SW1 via column at x -1.76
+  U3: {pos: [4.8, -3.9, 0], side: B}
+  C13: {pos: [2.4, 5.6, 90], side: B}            # output cap under the VOUT area, via-connected
+
+  # external connection pads (top) and test/programming pads (bottom)
+  TP13: {pos: [-8.3, 1.5, 0], side: F}
+  TP11: {pos: [-7.8, 3.4, 0], side: F}
+  TP9: {pos: [-6.7, 4.8, 0], side: F}
+  TP10: {pos: [-5.4, 6.2, 0], side: F}
+  TP12: {pos: [-3.8, 7.4, 0], side: F}
+  TP1: {pos: [-7.61, 3.55, 0], side: B}
+  TP8: {pos: [-6.43, 5.40, 0], side: B}
+  TP2: {pos: [-4.82, 6.88, 0], side: B}
+  TP6: {pos: [-2.87, 7.89, 0], side: B}
+  TP7: {pos: [-0.73, 8.37, 0], side: B}
+
+  # automatically placed parts: anchor = pad of a placed part (+ offset) or a board point
+  C12: {auto: {anchor: [3.0, 7.2], side: F}}
+  C4: {auto: {anchor: {ref: U1, pad: "3", offset: [-1.7, 0.0]}, side: F}}
+  C5: {auto: {anchor: {ref: U1, pad: "22", offset: [-1.8, -0.6]}, side: F}}
+  C6: {auto: {anchor: {ref: U1, pad: "20", offset: [1.7, -0.6]}, side: F}}
+  C7: {auto: {anchor: {ref: U1, pad: "19", offset: [1.4, 0.0]}, side: F}}
+  R3: {auto: {anchor: {ref: U1, pad: "17", offset: [1.5, 0.0]}, side: F}}
+  R4: {auto: {anchor: {ref: U1, pad: "18", offset: [1.6, -0.4]}, side: F}}
+  C8: {auto: {anchor: {ref: U1, pad: "18", offset: [2.6, -0.4]}, side: F}}
+  C9: {auto: {anchor: {ref: U1, pad: "18", offset: [1.6, 0.6]}, side: F}}
+  R8: {auto: {anchor: {ref: U1, pad: "14", offset: [1.5, 0.3]}, side: F}}
+  R9: {auto: {anchor: {ref: U1, pad: "14", offset: [1.5, 1.2]}, side: F}}
+  R2: {auto: {anchor: {ref: U1, pad: "8", offset: [-1.6, 0.9]}, side: F}}
+  R5: {auto: {anchor: {ref: U1, pad: "4", offset: [-2.4, 0.4]}, side: F}}
+  R6: {auto: {anchor: {ref: U1, pad: "4", offset: [-2.4, 1.4]}, side: F}}
+  D1: {auto: {anchor: [5.8, 2.4], side: B}}
+  U2: {auto: {anchor: [4.4, 6.0], side: B}}
+  C15: {auto: {anchor: [3.0, 6.4], side: B}}
+  R7: {auto: {anchor: [3.3, 3.9], side: B}}
+  R1: {auto: {anchor: {ref: Q1, pad: "4", offset: [-0.8, 0.0]}, side: B}}
+  C16: {auto: {anchor: {ref: U3, pad: "4", offset: [-1.5, 0.0]}, side: B}}
+  C17: {auto: {anchor: {ref: U3, pad: "4", offset: [-1.5, 1.0]}, side: B}}
+  D2: {auto: {anchor: {ref: U3, pad: "4", offset: [-2.6, 1.6]}, side: B}}
+  R10: {auto: {anchor: {ref: U3, pad: "9", offset: [0.0, 1.6]}, side: B}}
+  R11: {auto: {anchor: {ref: U3, pad: "9", offset: [1.0, 1.6]}, side: B}}
+  R12: {auto: {anchor: {ref: U3, pad: "8", offset: [0.0, 1.6]}, side: B}}
+  R13: {auto: {anchor: {ref: U3, pad: "8", offset: [-1.0, 1.6]}, side: B}}
+  RT1: {auto: {anchor: [3.6, 1.6], side: B}}
+  R14: {auto: {anchor: {ref: U3, pad: "6", offset: [-1.2, 0.0]}, side: B}}
+  R15: {auto: {anchor: {ref: U3, pad: "10", offset: [0.0, 1.4]}, side: B}}
+  R16: {auto: {anchor: {ref: U3, pad: "12", offset: [1.2, 0.0]}, side: B}}
+  R17: {auto: {anchor: [-3.2, 2.8], side: B}}
+  R19: {auto: {anchor: {ref: U3, pad: "1", offset: [-1.2, 0.0]}, side: B}}
+  Q4: {auto: {anchor: [-4.0, 3.4], side: B}}
+  Q5: {auto: {anchor: [-4.6, 2.0], side: B}}
+  Q6: {auto: {anchor: [-3.0, 4.6], side: B}}
+  R18: {auto: {anchor: [-5.6, 3.0], side: B}}
+  R20: {auto: {anchor: [-2.0, 5.2], side: B}}
+  D3: {auto: {anchor: [-1.2, 4.4], side: B}}
+
+# ---------------------------------------------------------------------------- copper
+# Stack-up roles: F.Cu power + signals, In1.Cu solid GND plane, In2.Cu VBAT plane, B.Cu power + signals.
+# Polygons were drawn against the extracted pad map (see PROGRESS.md log); zone fill keeps clearances.
+
+fanout_nets: [GND]                 # every GND SMD pad gets its own short track + via to In1
+fanout_skip: [J2]                  # ring contact has its own stitching vias
+
+tracks:
+  # RPM0026A centre pads cannot hold vias at PCBWay (0.15 mm annular ring needs > 0.375 mm pads),
+  # so each centre pad is bridged to the edge pin of the same net that sits directly beside it (DD-16).
+  - {net: SW2, layer: F.Cu, width: 0.25, pts: [[0.85, -0.50], [0.60, 0.25]]}     # pin 21 -> pad 25
+  - {net: VOUT, layer: F.Cu, width: 0.30, pts: [[1.225, 1.55], [1.225, 2.30]]}   # pad 26 -> pin 11
+  - {net: GND, layer: F.Cu, width: 0.30, pts: [[-0.025, 1.55], [-0.025, 2.30]]}  # pad 24 -> pin 9
+
+via_fields:
+  - {net: VBAT, count: 10, pitch: 0.9, polygon: [[-8.7, -5.6], [-6.0, -6.7], [-6.0, -3.45], [-8.7, -3.45]]}
+  - {net: VBAT, count: 8, pitch: 0.9, polygon: [[-9.1, -2.4], [-7.25, -2.4], [-7.25, 0.9], [-9.1, 0.9]]}
+  - {net: VBAT, count: 4, pitch: 0.9, polygon: [[-7.2, -1.15], [-5.6, -1.15], [-5.6, 0.9], [-7.2, 0.9]]}
+  - {net: SW1, count: 6, pitch: 0.9, polygon: [[-1.75, -5.3], [1.5, -5.3], [1.5, -4.0], [-1.75, -4.0]]}   # under the L1 body
+  - {net: GND, count: 6, pitch: 0.9, polygon: [[-1.9, 3.3], [0.0, 3.3], [0.0, 6.4], [-1.9, 6.4]]}
+
+zones_pre:
+  - {net: GND, layer: In1.Cu, circle: [0, 0, 10.6], priority: 0, solid: true}
+  - {net: VBAT, layer: In2.Cu, priority: 2, solid: true,   # left region only: battery current path Q1 -> C1-C3/Q2
+     polygon: [[-2.5, -9.6], [-2.5, 1.5], [-10.4, 1.5], [-10.2, -2.5], [-9.0, -5.5], [-7.0, -7.6], [-4.5, -9.2]]}
+  - {net: VBAT, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-8.55, -2.15], [-2.45, -2.15], [-2.45, -3.45], [-3.62, -3.45], [-3.62, -6.80], [-5.8, -6.80], [-7.4, -5.4], [-8.55, -4.0]]}
+  - {net: VBAT, layer: B.Cu, priority: 2, solid: true,
+     polygon: [[-9.1, 0.95], [-5.85, 0.95], [-5.85, -2.98], [-7.30, -2.98], [-7.30, -2.45], [-9.1, -2.45]]}
+  - {net: SW1, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-3.15, -4.0], [1.60, -4.0], [1.60, -5.52], [3.85, -5.52], [3.85, -6.95], [-1.85, -6.95], [-1.85, -6.05], [-3.15, -6.05]]}
+  - {net: SW1, layer: B.Cu, priority: 2, solid: true,
+     polygon: [[-3.0, -3.95], [1.6, -3.95], [1.6, -5.25], [-0.75, -5.25], [-0.75, -8.0], [-3.0, -8.0]]}
+  - {net: SW2, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[-0.98, -3.55], [3.77, -3.55], [3.77, -1.30], [1.30, -1.30], [1.30, -1.00], [0.70, -1.00], [0.70, -1.30], [-0.98, -1.30]]}
+  - {net: VOUT, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[0.75, 3.0], [3.0, 3.0], [3.0, 2.2], [4.95, 2.2], [4.95, 3.4], [3.85, 3.4], [3.85, 6.7], [2.2, 6.7], [2.2, 7.95], [0.95, 7.95], [0.95, 4.4], [0.75, 4.4]]}
+  - {net: VOUT, layer: B.Cu, priority: 2, solid: true,
+     polygon: [[1.55, 5.9], [3.9, 5.9], [3.9, 7.3], [1.55, 7.3]]}
+  - {net: LD_P, layer: F.Cu, priority: 2, solid: true,
+     polygon: [[5.55, 3.95], [6.35, 3.95], [6.35, 1.55], [8.45, 1.55], [8.45, 3.8], [7.05, 5.9], [5.55, 5.9]]}
+  - {net: BAT_SPRING, layer: B.Cu, priority: 2, solid: true,
+     polygon: [[-5.40, -3.70], [-2.30, -3.70], [-1.30, -2.10], [-1.30, 0.80], [-2.60, 0.80], [-5.40, -1.10]]}
+
+zones_post:
+  - {net: GND, layer: In2.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
+  - {net: GND, layer: F.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
+  - {net: GND, layer: B.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}

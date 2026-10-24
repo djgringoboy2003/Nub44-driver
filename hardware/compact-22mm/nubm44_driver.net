@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
-		(date "2026-10-24T20:56:24")
+		(date "2026-10-24T21:44:55")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -273,17 +273,17 @@
 		(comp
 			(ref "C4")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 input HF decoupling")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "power_in")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -297,11 +297,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -345,17 +345,17 @@
 		(comp
 			(ref "C5")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 BOOT1")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -369,11 +369,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -417,17 +417,17 @@
 		(comp
 			(ref "C6")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 BOOT2")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -441,11 +441,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -633,17 +633,17 @@
 		(comp
 			(ref "C9")
 			(value "680p")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "680 pF 50 V C0G 0402 compensation Cp")
 			(fields
 				(field
-					(name "MPN") "GRM1555C1H681JA01D")
+					(name "MPN") "GRM0335C1H681JA01D")
 				(field
 					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -657,7 +657,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "GRM1555C1H681JA01D")
+				(value "GRM0335C1H681JA01D")
 			)
 			(property
 				(name "Manufacturer")
@@ -993,17 +993,17 @@
 		(comp
 			(ref "C14")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 output HF")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -1017,11 +1017,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -1065,17 +1065,17 @@
 		(comp
 			(ref "C15")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 U2 supply")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "sense")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -1089,11 +1089,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -1209,17 +1209,17 @@
 		(comp
 			(ref "C17")
 			(value "100n")
-			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(footprint "Capacitor_SMD:C_0201_0603Metric")
 			(description "100 nF 16 V X7R 0402 MCU decoupling")
 			(fields
 				(field
-					(name "MPN") "CL05B104KO5NNNC")
+					(name "MPN") "GRM033R61A104KE15D")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+					(name "Footprint") "Capacitor_SMD:C_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -1233,11 +1233,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL05B104KO5NNNC")
+				(value "GRM033R61A104KE15D")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "Murata")
 			)
 			(property
 				(name "Block")
@@ -1352,23 +1352,23 @@
 		)
 		(comp
 			(ref "D2")
-			(value "BAT54WS")
-			(footprint "Diode_SMD:D_SOD-323")
-			(description "30 V Schottky, MCU supply isolation (hold-up)")
+			(value "RB521S30")
+			(footprint "Diode_SMD:D_SOD-523")
+			(description "30 V 200 mA Schottky SOD-523, MCU supply isolation (hold-up)")
 			(fields
 				(field
-					(name "MPN") "BAT54WS-7-F")
+					(name "MPN") "RB521S30T1G")
 				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "onsemi")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Diode_SMD:D_SOD-323")
+					(name "Footprint") "Diode_SMD:D_SOD-523")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "30 V Schottky, MCU supply isolation (hold-up)")
+					(name "Description") "30 V 200 mA Schottky SOD-523, MCU supply isolation (hold-up)")
 			)
 			(libsource
 				(lib "Device")
@@ -1377,11 +1377,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "BAT54WS-7-F")
+				(value "RB521S30T1G")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "onsemi")
 			)
 			(property
 				(name "Block")
@@ -1425,22 +1425,22 @@
 		(comp
 			(ref "D3")
 			(value "6.2V")
-			(footprint "Diode_SMD:D_SOD-323")
-			(description "6.2 V Zener, OV backstop threshold")
+			(footprint "Diode_SMD:D_SOD-523")
+			(description "6.2 V Zener SOD-523, OV backstop threshold")
 			(fields
 				(field
-					(name "MPN") "BZT52C6V2S-7-F")
+					(name "MPN") "BZX585-C6V2")
 				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "Nexperia")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Diode_SMD:D_SOD-323")
+					(name "Footprint") "Diode_SMD:D_SOD-523")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "6.2 V Zener, OV backstop threshold")
+					(name "Description") "6.2 V Zener SOD-523, OV backstop threshold")
 			)
 			(libsource
 				(lib "Device")
@@ -1449,11 +1449,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "BZT52C6V2S-7-F")
+				(value "BZX585-C6V2")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "Nexperia")
 			)
 			(property
 				(name "Block")
@@ -1497,7 +1497,7 @@
 		(comp
 			(ref "J1")
 			(value "B+ spring")
-			(footprint "nubm44:Contact_Spring_Pad_D6.0mm")
+			(footprint "nubm44:Contact_Spring_Pad_D5.0mm")
 			(description "Battery centre spring (B+), hand-soldered after assembly; select to suit host")
 			(fields
 				(field
@@ -1507,7 +1507,7 @@
 				(field
 					(name "Block") "power_in")
 				(field
-					(name "Footprint") "nubm44:Contact_Spring_Pad_D6.0mm")
+					(name "Footprint") "nubm44:Contact_Spring_Pad_D5.0mm")
 				(field
 					(name "Datasheet")
 				)
@@ -1569,7 +1569,7 @@
 		(comp
 			(ref "J2")
 			(value "B- ring")
-			(footprint "nubm44:Contact_Ring_R10.20_W1.00mm")
+			(footprint "nubm44:Contact_Ring_R10.25_W0.80mm")
 			(description "Perimeter battery-negative ring contact (PCB copper feature)")
 			(fields
 				(field
@@ -1579,7 +1579,7 @@
 				(field
 					(name "Block") "power_in")
 				(field
-					(name "Footprint") "nubm44:Contact_Ring_R10.20_W1.00mm")
+					(name "Footprint") "nubm44:Contact_Ring_R10.25_W0.80mm")
 				(field
 					(name "Datasheet")
 				)
@@ -2244,17 +2244,17 @@
 		(comp
 			(ref "R1")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% 0402; Q1 gate to GND")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "power_in")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2268,7 +2268,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -2316,17 +2316,17 @@
 		(comp
 			(ref "R2")
 			(value "33.2k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "33.2 kOhm 1% 0402 FSW (595 kHz)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0733K2L")
+					(name "MPN") "RC0201FR-0733K2L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2340,7 +2340,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0733K2L")
+				(value "RC0201FR-0733K2L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2388,17 +2388,17 @@
 		(comp
 			(ref "R3")
 			(value "27.4k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0727K4L")
+					(name "MPN") "RC0201FR-0727K4L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2412,7 +2412,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0727K4L")
+				(value "RC0201FR-0727K4L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2460,17 +2460,17 @@
 		(comp
 			(ref "R4")
 			(value "1.2k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "1.2 kOhm 1% 0402 compensation Rc")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-071K2L")
+					(name "MPN") "RC0201FR-071K2L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2484,7 +2484,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-071K2L")
+				(value "RC0201FR-071K2L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2532,17 +2532,17 @@
 		(comp
 			(ref "R5")
 			(value "49.9k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "49.9 kOhm 1% 0402 EN/UVLO top (3.08/2.83 V)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0749K9L")
+					(name "MPN") "RC0201FR-0749K9L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2556,7 +2556,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0749K9L")
+				(value "RC0201FR-0749K9L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2604,17 +2604,17 @@
 		(comp
 			(ref "R6")
 			(value "33.2k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "33.2 kOhm 1% 0402 EN/UVLO bottom")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0733K2L")
+					(name "MPN") "RC0201FR-0733K2L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2628,7 +2628,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0733K2L")
+				(value "RC0201FR-0733K2L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2676,17 +2676,17 @@
 		(comp
 			(ref "R7")
 			(value "4.7k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "4.7 kOhm 1% 0402 output bleeder")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-074K7L")
+					(name "MPN") "RC0201FR-074K7L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2700,7 +2700,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-074K7L")
+				(value "RC0201FR-074K7L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2892,17 +2892,17 @@
 		(comp
 			(ref "R10")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% VBAT sense top")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2916,7 +2916,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -2964,17 +2964,17 @@
 		(comp
 			(ref "R11")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% VBAT sense bottom")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -2988,7 +2988,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3036,17 +3036,17 @@
 		(comp
 			(ref "R12")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% VOUT sense top (VOUT/6)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3060,7 +3060,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3108,17 +3108,17 @@
 		(comp
 			(ref "R13")
 			(value "20k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "20 kOhm 1% VOUT sense bottom")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0720KL")
+					(name "MPN") "RC0201FR-0720KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3132,7 +3132,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0720KL")
+				(value "RC0201FR-0720KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3180,17 +3180,17 @@
 		(comp
 			(ref "R14")
 			(value "10k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "10 kOhm 1% NTC bias (board)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0710KL")
+					(name "MPN") "RC0201FR-0710KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3204,7 +3204,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0710KL")
+				(value "RC0201FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3252,17 +3252,17 @@
 		(comp
 			(ref "R15")
 			(value "10k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "10 kOhm 1% NTC bias (external laser NTC)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0710KL")
+					(name "MPN") "RC0201FR-0710KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3276,7 +3276,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0710KL")
+				(value "RC0201FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3324,17 +3324,17 @@
 		(comp
 			(ref "R16")
 			(value "220")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "220 Ohm 1% indicator LED series")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07220RL")
+					(name "MPN") "RC0201FR-07220RL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3348,7 +3348,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07220RL")
+				(value "RC0201FR-07220RL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3396,17 +3396,17 @@
 		(comp
 			(ref "R17")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% Q4 gate pull-up (default off)")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3420,7 +3420,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3468,17 +3468,17 @@
 		(comp
 			(ref "R18")
 			(value "100k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "100 kOhm 1% interlock pull-up to VBAT")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-07100KL")
+					(name "MPN") "RC0201FR-07100KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3492,7 +3492,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-07100KL")
+				(value "RC0201FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3540,17 +3540,17 @@
 		(comp
 			(ref "R19")
 			(value "47k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "47 kOhm 1% interlock sense to MCU")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-0747KL")
+					(name "MPN") "RC0201FR-0747KL")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3564,7 +3564,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-0747KL")
+				(value "RC0201FR-0747KL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3612,17 +3612,17 @@
 		(comp
 			(ref "R20")
 			(value "4.7k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "4.7 kOhm 1% Q6 gate pull-down")
 			(fields
 				(field
-					(name "MPN") "RC0402FR-074K7L")
+					(name "MPN") "RC0201FR-074K7L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3636,7 +3636,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0402FR-074K7L")
+				(value "RC0201FR-074K7L")
 			)
 			(property
 				(name "Manufacturer")
@@ -3684,8 +3684,8 @@
 		(comp
 			(ref "RS1")
 			(value "10m")
-			(footprint "Resistor_SMD:R_1206_3216Metric")
-			(description "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+			(footprint "nubm44:R_1206_3216Metric_Kelvin")
+			(description "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie")
 			(fields
 				(field
 					(name "MPN") "MCS1632R010FER")
@@ -3696,17 +3696,17 @@
 				(field
 					(name "Alternate") "RALEC LR1206-21R010F4 (LCSC C154635)")
 				(field
-					(name "Footprint") "Resistor_SMD:R_1206_3216Metric")
+					(name "Footprint") "nubm44:R_1206_3216Metric_Kelvin")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+					(name "Description") "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie")
 			)
 			(libsource
 				(lib "Device")
-				(part "R")
-				(description "Resistor")
+				(part "R_Shunt")
+				(description "Shunt resistor with Kelvin connections")
 			)
 			(property
 				(name "MPN")
@@ -3734,11 +3734,11 @@
 			)
 			(property
 				(name "ki_keywords")
-				(value "R res resistor")
+				(value "R res shunt resistor")
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "R_*")
+				(value "R_*Shunt*")
 			)
 			(sheetpath
 				(names "/")
@@ -3753,7 +3753,13 @@
 							(num "1")
 						)
 						(pin
+							(num "4")
+						)
+						(pin
 							(num "2")
+						)
+						(pin
+							(num "3")
 						)
 					)
 				)
@@ -3762,17 +3768,17 @@
 		(comp
 			(ref "RT1")
 			(value "10k")
-			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(footprint "Resistor_SMD:R_0201_0603Metric")
 			(description "NTC 10 kOhm 1% B25/50 3380 K, board temperature")
 			(fields
 				(field
-					(name "MPN") "NCP15XH103F03RC")
+					(name "MPN") "NCP03XH103F05RL")
 				(field
 					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+					(name "Footprint") "Resistor_SMD:R_0201_0603Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -3786,7 +3792,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "NCP15XH103F03RC")
+				(value "NCP03XH103F05RL")
 			)
 			(property
 				(name "Manufacturer")
@@ -3964,222 +3970,6 @@
 				(tstamps "/")
 			)
 			(tstamps "b9f59cb6-4797-55d5-843b-245bb96a0546")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "TP3")
-			(value "EN")
-			(footprint "nubm44:Pad_SMD_D0.8mm_B")
-			(description "Test pad")
-			(fields
-				(field
-					(name "MPN") "-")
-				(field
-					(name "Manufacturer") "-")
-				(field
-					(name "Block") "converter")
-				(field
-					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Test pad")
-			)
-			(libsource
-				(lib "Connector")
-				(part "TestPoint")
-				(description "test point")
-			)
-			(property
-				(name "MPN")
-				(value "-")
-			)
-			(property
-				(name "Manufacturer")
-				(value "-")
-			)
-			(property
-				(name "Block")
-				(value "converter")
-			)
-			(property
-				(name "Sheetname")
-				(value "nubm44_driver")
-			)
-			(property
-				(name "Sheetfile")
-				(value "nubm44_driver.kicad_sch")
-			)
-			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "ki_keywords")
-				(value "test point tp")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "Pin* Test*")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "6e39b4dc-427c-53e2-996d-206ef2203a9b")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "TP4")
-			(value "CS")
-			(footprint "nubm44:Pad_SMD_D0.8mm_B")
-			(description "Current monitor test pad (0.5 V/A)")
-			(fields
-				(field
-					(name "MPN") "-")
-				(field
-					(name "Manufacturer") "-")
-				(field
-					(name "Block") "sense")
-				(field
-					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Current monitor test pad (0.5 V/A)")
-			)
-			(libsource
-				(lib "Connector")
-				(part "TestPoint")
-				(description "test point")
-			)
-			(property
-				(name "MPN")
-				(value "-")
-			)
-			(property
-				(name "Manufacturer")
-				(value "-")
-			)
-			(property
-				(name "Block")
-				(value "sense")
-			)
-			(property
-				(name "Sheetname")
-				(value "nubm44_driver")
-			)
-			(property
-				(name "Sheetfile")
-				(value "nubm44_driver.kicad_sch")
-			)
-			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "ki_keywords")
-				(value "test point tp")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "Pin* Test*")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "61c07ed2-6382-5aff-9c3b-109c45e4fa71")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "TP5")
-			(value "FB")
-			(footprint "nubm44:Pad_SMD_D0.8mm_B")
-			(description "Test pad")
-			(fields
-				(field
-					(name "MPN") "-")
-				(field
-					(name "Manufacturer") "-")
-				(field
-					(name "Block") "sense")
-				(field
-					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Test pad")
-			)
-			(libsource
-				(lib "Connector")
-				(part "TestPoint")
-				(description "test point")
-			)
-			(property
-				(name "MPN")
-				(value "-")
-			)
-			(property
-				(name "Manufacturer")
-				(value "-")
-			)
-			(property
-				(name "Block")
-				(value "sense")
-			)
-			(property
-				(name "Sheetname")
-				(value "nubm44_driver")
-			)
-			(property
-				(name "Sheetfile")
-				(value "nubm44_driver.kicad_sch")
-			)
-			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "ki_keywords")
-				(value "test point tp")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "Pin* Test*")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "714f2b11-f30c-5729-9e1d-4101b658a11a")
 			(units
 				(unit
 					(name "A")
@@ -5402,6 +5192,50 @@
 		)
 		(libpart
 			(lib "Device")
+			(part "R_Shunt")
+			(description "Shunt resistor with Kelvin connections")
+			(footprints
+				(fp "R_*Shunt*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R_Shunt")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Shunt resistor with Kelvin connections")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
 			(part "Thermistor_NTC")
 			(description "Temperature dependent resistor, negative temperature coefficient")
 			(footprints
@@ -6074,12 +5908,6 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "TP4")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
-			)
-			(node
 				(ref "U2")
 				(pin "6")
 				(pinfunction "OUT_6")
@@ -6159,12 +5987,6 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "TP3")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
-			)
-			(node
 				(ref "U1")
 				(pin "4")
 				(pinfunction "EN/UVLO_4")
@@ -6183,12 +6005,6 @@
 			(node
 				(ref "R9")
 				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "TP5")
-				(pin "1")
-				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -6307,6 +6123,50 @@
 		)
 		(net
 			(code "18")
+			(name "/ISN_K")
+			(class "Default")
+			(node
+				(ref "RS1")
+				(pin "3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "ISN_13")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "IN-_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "19")
+			(name "/ISP_K")
+			(class "Default")
+			(node
+				(ref "RS1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "ISP_12")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "IN+_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "20")
 			(name "/LASER_EN_N")
 			(class "Default")
 			(node
@@ -6328,7 +6188,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "21")
 			(name "/LD_P")
 			(class "Default")
 			(node
@@ -6345,24 +6205,12 @@
 			)
 			(node
 				(ref "RS1")
-				(pin "2")
+				(pin "4")
 				(pintype "passive")
-			)
-			(node
-				(ref "U1")
-				(pin "13")
-				(pinfunction "ISN_13")
-				(pintype "input")
-			)
-			(node
-				(ref "U2")
-				(pin "5")
-				(pinfunction "IN-_5")
-				(pintype "input")
 			)
 		)
 		(net
-			(code "20")
+			(code "22")
 			(name "/NTC_BRD")
 			(class "Default")
 			(node
@@ -6383,7 +6231,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "23")
 			(name "/NTC_LD")
 			(class "Default")
 			(node
@@ -6405,7 +6253,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "24")
 			(name "/NTC_PWR")
 			(class "Default")
 			(node
@@ -6426,7 +6274,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "25")
 			(name "/OV_G")
 			(class "Default")
 			(node
@@ -6448,7 +6296,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "26")
 			(name "/PG")
 			(class "Default")
 			(node
@@ -6465,7 +6313,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "27")
 			(name "/Q1_G")
 			(class "Default")
 			(node
@@ -6481,7 +6329,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "28")
 			(name "/SW1")
 			(class "Default")
 			(node
@@ -6527,7 +6375,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "29")
 			(name "/SW2")
 			(class "Default")
 			(node
@@ -6555,7 +6403,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "30")
 			(name "/SW_IN")
 			(class "Default")
 			(node
@@ -6572,7 +6420,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "31")
 			(name "/UPDI")
 			(class "Default")
 			(node
@@ -6589,7 +6437,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "32")
 			(name "/VBAT")
 			(class "Default")
 			(node
@@ -6682,7 +6530,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "33")
 			(name "/VBAT_SENSE")
 			(class "Default")
 			(node
@@ -6703,7 +6551,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "34")
 			(name "/VCC5")
 			(class "Default")
 			(node
@@ -6719,7 +6567,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "35")
 			(name "/VMCU")
 			(class "Default")
 			(node
@@ -6757,7 +6605,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "36")
 			(name "/VOUT")
 			(class "Default")
 			(node
@@ -6820,25 +6668,13 @@
 			)
 			(node
 				(ref "U1")
-				(pin "12")
-				(pinfunction "ISP_12")
-				(pintype "input")
-			)
-			(node
-				(ref "U1")
 				(pin "26")
 				(pinfunction "VOUT_26")
 				(pintype "passive")
 			)
-			(node
-				(ref "U2")
-				(pin "4")
-				(pinfunction "IN+_4")
-				(pintype "input")
-			)
 		)
 		(net
-			(code "35")
+			(code "37")
 			(name "/VOUT_SENSE")
 			(class "Default")
 			(node
@@ -6859,7 +6695,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "38")
 			(name "GND")
 			(class "Default")
 			(node
@@ -7109,7 +6945,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "39")
 			(name "unconnected-(U1-CDC-Pad16)")
 			(class "Default")
 			(node
@@ -7120,7 +6956,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "40")
 			(name "unconnected-(U3-PB3-Pad11)")
 			(class "Default")
 			(node
@@ -7131,7 +6967,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "41")
 			(name "unconnected-(U3-PC0-Pad15)")
 			(class "Default")
 			(node
@@ -7142,7 +6978,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "42")
 			(name "unconnected-(U3-PC1-Pad16)")
 			(class "Default")
 			(node
@@ -7153,7 +6989,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "43")
 			(name "unconnected-(U3-PC2-Pad17)")
 			(class "Default")
 			(node
@@ -7164,7 +7000,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "44")
 			(name "unconnected-(U3-PC3-Pad18)")
 			(class "Default")
 			(node

@@ -1,0 +1,99 @@
+* flash
+.option method=gear reltol=1e-4 abstol=1e-9 vntol=1e-6
+* ---------------- battery, contacts, reverse-polarity FET (on), input capacitance
+VB batp_i 0 DC 4.2
+RB batp_i batp_l 0.04
+LB batp_l batp 50n
+RQ1 batp vin 0.0065
+CIN vin cin_e 3.3e-05
+RCIN cin_e 0 0.002
+* ---------------- EN/UVLO divider, pull-downs (MCU, interlock, OV backstop)
+R5 vin enp 49900
+R6 enp 0 33200
+BHYS 0 enp I = (V(en_int) > 0.5) ? 5e-06 : 0
+VMCU mcu_en 0 PWL(0 0 0.0005 0 0.00051 1 0.01 1 0.01001 0 0.02 0 0.02001 1 0.03 1 0.03001 0)
+VIL il_ok 0 PWL(0 1)
+SQ4 enp 0 q4c 0 SWLOW
+BQ4 q4c 0 V = (V(mcu_en) > 0.5) ? 0 : 1
+SQ5 enp 0 q5c 0 SWLOW
+BQ5 q5c 0 V = (V(il_ok) > 0.5) ? 0 : 1
+* OV backstop: BZT52C6V2-class Zener + DMG1012T, about 6.5 V at threshold
+BOV ovr 0 V = (V(vout) > 6.5) ? 1 : 0
+ROV ovr ovc 1k
+COV ovc 0 1n
+SQ6 enp 0 ovc 0 SWLOW
+.model SWLOW SW(Ron=5 Roff=1e9 Vt=0.5 Vh=0.05)
+* internal enable: UVLO comparator on EN pin and VIN UVLO (rising 3.0 V max / falling 2.65 V)
+BEN en_raw 0 V = (V(enp) > 1.23 && V(vin) > 2.7) ? 1 : 0
+REN en_raw en_int 100
+CEN en_int 0 1n
+* ---------------- soft start: 1.2 V reference ramp in 4 ms, reset when disabled
+BSS 0 vref I = (V(en_int) > 0.5) ? ((V(vref) < 1.2) ? 1.2*1e-9/0.004 : 0) : 0
+CSS vref 0 1n
+BSSN ssn 0 V = (V(en_int) > 0.5) ? 0 : 1
+SSS vref 0 ssn 0 SWHI
+.model SWHI SW(Ron=1 Roff=1e12 Vt=0.5 Vh=0.05)
+* note SSS shorts vref when en_int is LOW (switch closes when control < Vt via inverted control below)
+* ---------------- error amplifier (gm) and compensation
+BGM 0 comp I = (V(en_int) > 0.5) ? 0.00019*(V(vref)-V(fb)) : -1e-3*V(comp)
+* ISP/ISN backup current loop: pulls COMP down above 50 mV (strength assumed)
+BCC comp 0 I = 0.002*max(V(vout)-V(ldp)-0.05, 0)/0.001
+RC comp comp_rc 1200
+CC comp_rc 0 5.6e-08
+CP comp 0 6.8e-10
+REA comp 0 100000000.0
+DCH comp clamp_hi DCL
+VCH clamp_hi 0 2.5
+DCLO 0 comp DCL
+.model DCL D(Is=1e-12 N=0.05)
+* current command and inner PI current loop -> control variable u
+BIC icmd 0 V = min(max(V(comp)/0.055, -2), 12.043795620437956)
+BERR err 0 V = V(icmd) - I(VIL1)
+BUI 0 uint I = (V(en_int) > 0.5) ? 6000e-6*V(err) : -1e-3*V(uint)
+CUI uint 0 1u
+DUH uint uh DCL
+VUH uh 0 1.92
+DUL 0 uint DCL
+BU u 0 V = (V(en_int) > 0.5) ? min(max(V(uint) + 0.08*V(err), 0), 1.92) : 0
+BD1 d1 0 V = min(V(u), 1)
+BD2 d2 0 V = max(V(u) - 1, 0)
+* ---------------- averaged power stage (inductor explicit), losses lumped
+BNA na 0 V = V(d1)*V(vin)
+BNB nb 0 V = (1-V(d2))*V(vout)
+VIL1 na nl1 0
+RL nl1 nl2 0.017759999999999998
+L1 nl2 nl3 1e-06
+* with the converter disabled all four FETs are off: block reverse inductor current
+DOFF nl3 nb DIDEAL
+SON nl3 nb en_int 0 SWHI2
+.model SWHI2 SW(Ron=1e-4 Roff=1e9 Vt=0.5 Vh=0.05)
+.model DIDEAL D(Is=1e-9 N=0.5 Rs=1e-3)
+BIIN vin 0 I = V(d1)*I(VIL1)
+BIOUT 0 vout I = (1-V(d2))*I(VIL1)
+* ---------------- output: capacitors, bleeder, shunt, wiring, clamp diode, laser
+COUT vout cout_e 4.8400000000000004e-05
+RCOUT cout_e 0 0.0015
+R7 vout 0 4700
+RS1 vout ldp 0.01
+LW ldp ldw 50n
+RW ldw ldk 0.010
+D1 0 ldk DSCH
+.model DSCH D(Is=2e-6 N=1.05 Rs=0.08 Cjo=60p)
+BLD ldk 0 I = 6.06061*0.03*ln(1+exp((V(ldk)-3.6)/0.03))
+* ---------------- current sense amplifier INA186A2 + FB divider
+BCSA csa_i 0 V = min(max(50*(V(vout)-V(ldp)), 0), V(vin)-0.02)
+RCSA csa_i csf 4301.5
+CCSA csf 0 1n
+ECSB csout 0 csf 0 1
+R8 csout fb 6650
+R9 fb 0 10000
+
+.tran 1u 0.036 0 2u uic
+.control
+set wr_singlescale
+set wr_vecnames
+run
+wrdata flash.csv I(VIL1) v(vout) v(ldk) v(vin) v(enp) v(vref) v(comp) v(u) v(csout) i(VB)
+quit
+.endc
+.end

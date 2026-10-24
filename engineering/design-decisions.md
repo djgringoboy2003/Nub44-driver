@@ -87,8 +87,10 @@ as a wired AND:
 - Continuous and flash, with flash at 2 Hz / 50 % by default (REQ-MODE-03, assumption).
 - Mode advances on a short power interruption (< 0.5 s) or a press of the optional e-switch pad.
 - Each turn-on enforces a 2 s emission delay with the indicator active, and requires the interlock to be closed.
-- Low-voltage behaviour: warn and step down at 3.1 V loaded, latch off at 2.9 V, and refuse to start below 3.2 V
-  resting.
+- Low-voltage behaviour: warn at 3.1 V loaded (indicator blinks 4 Hz), latch off at 2.9 V for 200 ms, and refuse
+  to start below 3.2 V resting. *Correction (firmware design):* the earlier "step down" is not possible. The
+  current is set in hardware, and toggling EN restarts the 4 ms soft start, so firmware can only warn and
+  cut off.
 
 ## DD-09 Converter configuration
 - MODE → AGND: internal VCC, FPWM. FPWM keeps loop dynamics fixed and lets the converter pull energy back during
@@ -134,3 +136,41 @@ in a metal pill, with the GND perimeter ring as the heat path. Planes and vias c
 - An on-board NTC feeds firmware derating.
 - An optional external NTC pad monitors the laser module (case limit 65 °C).
 - Thermal performance is NEEDS-TEST (Gate G).
+
+## DD-16 TPS552882 centre pads: bridged to edge pins instead of via-in-pad
+TI recommends thermal vias in the RPM0026A centre pads (24 PGND, 25 SW2, 26 VOUT). Those pads are 0.375 mm wide,
+and PCBWay requires a 0.15 mm annular ring for vias in pads. That leaves no room for a drill, so via-in-pad is
+not manufacturable without HDI microvias. The land pattern places each centre pad directly beside an edge pin of
+the same net (24↔9, 25↔21, 26↔11), so each pair is joined by a short bridge track: 0.25–0.30 mm wide with
+≥ 0.22 mm clearance to neighbours. Vias go outside the package.
+**Consequences:**
+- Higher IC junction temperature than TI's EVM, and the full SW2 current passes through the pin-21/pad-25 bridge.
+- This is a Gate G thermal test item.
+- For production, quote HDI (laser microvia) via-in-pad as an option.
+
+## DD-17 Variant A density measures (22 mm)
+Measured courtyard occupancy with 0402 passives was 73 % (top) / 67 % (bottom), which is the practical packing
+limit. The following were applied to the compact variant only, unless stated:
+- 0201 for non-precision resistors and small capacitors. The FB divider stays 0402 / 0.1 %.
+- Ring contact 0.8 mm wide (was 1.0).
+- Spring pad Ø 5.0 mm (was 6.0).
+- CS / FB / EN test pads only on the evaluation board.
+- SOD-523 diodes for D2 and D3 (both variants).
+
+No protection function was removed. Variant B keeps 0402 parts and the full set of test pads.
+
+## DD-18 Stack-up roles and power distribution
+- **F.Cu:** power pours (VBAT input, SW1, SW2, VOUT, LD+) and signals.
+- **In1.Cu:** solid GND plane.
+- **In2.Cu:** VBAT pour on the left (Q1 → C1–C3/Q2 current path) and a GND fill elsewhere, leaving the
+  remainder of the layer free for routing.
+- **B.Cu:** BAT_SPRING (spring → Q1), local VBAT and SW1 pours, and signals.
+- **Vias:** the battery current crosses layers through automatically placed via fields; vias are never in pads.
+- **Kelvin sensing:** sense nets ISP_K and ISN_K are separate nets that start at net-tie sense pads in the
+  shunt footprint.
+
+## DD-19 Segmented ring contact
+The perimeter contact is 20 tangential pads per side with a stitching via in each gap, plus a continuous
+solder-mask opening. A single annular pad cannot be represented in Specctra DSN: FreeRouting saw a solid GND disc
+covering both outer layers and reported 182 pre-existing clearance violations. The GND pour fills the gaps
+after routing, so the exposed contact ring is continuous copper.

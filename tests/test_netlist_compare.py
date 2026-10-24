@@ -9,7 +9,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "automation"))
 
-from nubm44 import netlist  # noqa: E402
+from nubm44 import netlist, spec as spec_mod  # noqa: E402
 
 SPEC = ROOT / "engineering/design/connectivity.yaml"
 NET = ROOT / "hardware/compact-22mm/nubm44_driver.net"
@@ -19,7 +19,7 @@ NET = ROOT / "hardware/compact-22mm/nubm44_driver.net"
 def data():
     if not NET.exists():
         pytest.skip("netlist not generated yet (run automation/schematic/build_schematic.py)")
-    spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
+    spec = {"parts": spec_mod.parts_for("compact-22mm")}
     actual = netlist.read_kicad_netlist(NET)
     nets = {k.lstrip("/"): v for k, v in actual["nets"].items()}
     return spec, nets

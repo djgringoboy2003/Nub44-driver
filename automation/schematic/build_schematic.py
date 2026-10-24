@@ -28,7 +28,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 
-from nubm44 import kicad_lib, netlist, paths  # noqa: E402
+from nubm44 import kicad_lib, netlist, paths, spec as spec_mod  # noqa: E402
 from nubm44.schematic import Schematic, snap, xform  # noqa: E402
 
 SPEC = ROOT / "engineering/design/connectivity.yaml"
@@ -163,7 +163,7 @@ def build(variant: str, spec: dict) -> Path:
                               "Class 4 laser product: see documentation/testing for safety requirements"))
 
     by_block: dict[str, list] = {}
-    for part in spec["parts"]:
+    for part in spec_mod.parts_for(variant):
         by_block.setdefault(part["block"], []).append(part)
 
     layouts = {block: layout_block(block, parts) for block, parts in by_block.items()}
@@ -206,7 +206,7 @@ def _place(sch: Schematic, p: dict, x: float, y: float, rot: int, cfg: dict) -> 
     fields = {"MPN": p.get("mpn", ""), "Manufacturer": p.get("mfr", ""), "Block": p["block"]}
     if p.get("alt"):
         fields["Alternate"] = p["alt"]
-    fp = p.get(cfg["fp_key"]) or p["footprint"]
+    fp = p["footprint"]          # already resolved for the variant by spec_mod.parts_for
     lib_sym = kicad_lib.get_symbol(p["lib"])
     is_tp = p["lib"].startswith("Connector:TestPoint")
     sch.place(p["ref"], p["lib"], x, y, rot, value=str(p["value"]), footprint=fp,
@@ -273,13 +273,13 @@ def verify(variant: str, spec: dict, sch_path: Path) -> dict:
 
     actual = netlist.read_kicad_netlist(net_path)
     nets = {name.lstrip("/"): pins for name, pins in actual["nets"].items()}
-    intended = netlist.nets_from_spec(spec["parts"])
+    parts = spec_mod.parts_for(variant)
+    intended = netlist.nets_from_spec(parts)
     problems = netlist.compare(intended, nets)
     # every placed part must be in the netlist with the variant's footprint
-    fp_key = VARIANTS[variant]["fp_key"]
-    for p in spec["parts"]:
+    for p in parts:
         comp = actual["components"].get(p["ref"])
-        want = p.get(fp_key) or p["footprint"]
+        want = p["footprint"]
         if comp is None:
             problems.append(f"{p['ref']}: missing from netlist")
         elif comp["footprint"] != want:

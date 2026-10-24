@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\evaluation-board\\nubm44_driver.kicad_sch")
-		(date "2026-10-24T20:56:37")
+		(date "2026-10-24T21:45:25")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -1352,23 +1352,23 @@
 		)
 		(comp
 			(ref "D2")
-			(value "BAT54WS")
-			(footprint "Diode_SMD:D_SOD-323")
-			(description "30 V Schottky, MCU supply isolation (hold-up)")
+			(value "RB521S30")
+			(footprint "Diode_SMD:D_SOD-523")
+			(description "30 V 200 mA Schottky SOD-523, MCU supply isolation (hold-up)")
 			(fields
 				(field
-					(name "MPN") "BAT54WS-7-F")
+					(name "MPN") "RB521S30T1G")
 				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "onsemi")
 				(field
 					(name "Block") "control")
 				(field
-					(name "Footprint") "Diode_SMD:D_SOD-323")
+					(name "Footprint") "Diode_SMD:D_SOD-523")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "30 V Schottky, MCU supply isolation (hold-up)")
+					(name "Description") "30 V 200 mA Schottky SOD-523, MCU supply isolation (hold-up)")
 			)
 			(libsource
 				(lib "Device")
@@ -1377,11 +1377,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "BAT54WS-7-F")
+				(value "RB521S30T1G")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "onsemi")
 			)
 			(property
 				(name "Block")
@@ -1425,22 +1425,22 @@
 		(comp
 			(ref "D3")
 			(value "6.2V")
-			(footprint "Diode_SMD:D_SOD-323")
-			(description "6.2 V Zener, OV backstop threshold")
+			(footprint "Diode_SMD:D_SOD-523")
+			(description "6.2 V Zener SOD-523, OV backstop threshold")
 			(fields
 				(field
-					(name "MPN") "BZT52C6V2S-7-F")
+					(name "MPN") "BZX585-C6V2")
 				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "Nexperia")
 				(field
 					(name "Block") "enable")
 				(field
-					(name "Footprint") "Diode_SMD:D_SOD-323")
+					(name "Footprint") "Diode_SMD:D_SOD-523")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "6.2 V Zener, OV backstop threshold")
+					(name "Description") "6.2 V Zener SOD-523, OV backstop threshold")
 			)
 			(libsource
 				(lib "Device")
@@ -1449,11 +1449,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "BZT52C6V2S-7-F")
+				(value "BZX585-C6V2")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "Nexperia")
 			)
 			(property
 				(name "Block")
@@ -3684,8 +3684,8 @@
 		(comp
 			(ref "RS1")
 			(value "10m")
-			(footprint "Resistor_SMD:R_1206_3216Metric")
-			(description "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+			(footprint "nubm44:R_1206_3216Metric_Kelvin")
+			(description "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie")
 			(fields
 				(field
 					(name "MPN") "MCS1632R010FER")
@@ -3696,17 +3696,17 @@
 				(field
 					(name "Alternate") "RALEC LR1206-21R010F4 (LCSC C154635)")
 				(field
-					(name "Footprint") "Resistor_SMD:R_1206_3216Metric")
+					(name "Footprint") "nubm44:R_1206_3216Metric_Kelvin")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+					(name "Description") "10 mOhm 1% 1 W 1206 current shunt; Kelvin sense pads 2/3 via footprint net tie")
 			)
 			(libsource
 				(lib "Device")
-				(part "R")
-				(description "Resistor")
+				(part "R_Shunt")
+				(description "Shunt resistor with Kelvin connections")
 			)
 			(property
 				(name "MPN")
@@ -3734,11 +3734,11 @@
 			)
 			(property
 				(name "ki_keywords")
-				(value "R res resistor")
+				(value "R res shunt resistor")
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "R_*")
+				(value "R_*Shunt*")
 			)
 			(sheetpath
 				(names "/")
@@ -3753,7 +3753,13 @@
 							(num "1")
 						)
 						(pin
+							(num "4")
+						)
+						(pin
 							(num "2")
+						)
+						(pin
+							(num "3")
 						)
 					)
 				)
@@ -5402,6 +5408,50 @@
 		)
 		(libpart
 			(lib "Device")
+			(part "R_Shunt")
+			(description "Shunt resistor with Kelvin connections")
+			(footprints
+				(fp "R_*Shunt*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R_Shunt")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Shunt resistor with Kelvin connections")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
 			(part "Thermistor_NTC")
 			(description "Temperature dependent resistor, negative temperature coefficient")
 			(footprints
@@ -6307,6 +6357,50 @@
 		)
 		(net
 			(code "18")
+			(name "/ISN_K")
+			(class "Default")
+			(node
+				(ref "RS1")
+				(pin "3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "ISN_13")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "IN-_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "19")
+			(name "/ISP_K")
+			(class "Default")
+			(node
+				(ref "RS1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "ISP_12")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "IN+_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "20")
 			(name "/LASER_EN_N")
 			(class "Default")
 			(node
@@ -6328,7 +6422,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "21")
 			(name "/LD_P")
 			(class "Default")
 			(node
@@ -6345,24 +6439,12 @@
 			)
 			(node
 				(ref "RS1")
-				(pin "2")
+				(pin "4")
 				(pintype "passive")
-			)
-			(node
-				(ref "U1")
-				(pin "13")
-				(pinfunction "ISN_13")
-				(pintype "input")
-			)
-			(node
-				(ref "U2")
-				(pin "5")
-				(pinfunction "IN-_5")
-				(pintype "input")
 			)
 		)
 		(net
-			(code "20")
+			(code "22")
 			(name "/NTC_BRD")
 			(class "Default")
 			(node
@@ -6383,7 +6465,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "23")
 			(name "/NTC_LD")
 			(class "Default")
 			(node
@@ -6405,7 +6487,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "24")
 			(name "/NTC_PWR")
 			(class "Default")
 			(node
@@ -6426,7 +6508,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "25")
 			(name "/OV_G")
 			(class "Default")
 			(node
@@ -6448,7 +6530,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "26")
 			(name "/PG")
 			(class "Default")
 			(node
@@ -6465,7 +6547,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "27")
 			(name "/Q1_G")
 			(class "Default")
 			(node
@@ -6481,7 +6563,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "28")
 			(name "/SW1")
 			(class "Default")
 			(node
@@ -6527,7 +6609,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "29")
 			(name "/SW2")
 			(class "Default")
 			(node
@@ -6555,7 +6637,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "30")
 			(name "/SW_IN")
 			(class "Default")
 			(node
@@ -6572,7 +6654,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "31")
 			(name "/UPDI")
 			(class "Default")
 			(node
@@ -6589,7 +6671,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "32")
 			(name "/VBAT")
 			(class "Default")
 			(node
@@ -6682,7 +6764,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "33")
 			(name "/VBAT_SENSE")
 			(class "Default")
 			(node
@@ -6703,7 +6785,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "34")
 			(name "/VCC5")
 			(class "Default")
 			(node
@@ -6719,7 +6801,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "35")
 			(name "/VMCU")
 			(class "Default")
 			(node
@@ -6757,7 +6839,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "36")
 			(name "/VOUT")
 			(class "Default")
 			(node
@@ -6820,25 +6902,13 @@
 			)
 			(node
 				(ref "U1")
-				(pin "12")
-				(pinfunction "ISP_12")
-				(pintype "input")
-			)
-			(node
-				(ref "U1")
 				(pin "26")
 				(pinfunction "VOUT_26")
 				(pintype "passive")
 			)
-			(node
-				(ref "U2")
-				(pin "4")
-				(pinfunction "IN+_4")
-				(pintype "input")
-			)
 		)
 		(net
-			(code "35")
+			(code "37")
 			(name "/VOUT_SENSE")
 			(class "Default")
 			(node
@@ -6859,7 +6929,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "38")
 			(name "GND")
 			(class "Default")
 			(node
@@ -7109,7 +7179,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "39")
 			(name "unconnected-(U1-CDC-Pad16)")
 			(class "Default")
 			(node
@@ -7120,7 +7190,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "40")
 			(name "unconnected-(U3-PB3-Pad11)")
 			(class "Default")
 			(node
@@ -7131,7 +7201,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "41")
 			(name "unconnected-(U3-PC0-Pad15)")
 			(class "Default")
 			(node
@@ -7142,7 +7212,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "42")
 			(name "unconnected-(U3-PC1-Pad16)")
 			(class "Default")
 			(node
@@ -7153,7 +7223,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "43")
 			(name "unconnected-(U3-PC2-Pad17)")
 			(class "Default")
 			(node
@@ -7164,7 +7234,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "44")
 			(name "unconnected-(U3-PC3-Pad18)")
 			(class "Default")
 			(node

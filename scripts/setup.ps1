@@ -147,4 +147,25 @@ if ($Force -or -not (Test-Path $Ibom)) {
 }
 Log "InteractiveHtmlBom: $Ibom"
 
+# ------------------------------------------------------------------ AVR toolchain (firmware)
+$AvrGcc = Join-Path $Tools 'avr-gcc\avr-gcc-15.2.0-x64-windows\bin\avr-gcc.exe'
+if ($Force -or -not (Test-Path $AvrGcc)) {
+    $zip = Join-Path $Tools 'dl-avr\avr-gcc-15.2.0-x64-windows.zip'
+    Get-Verified 'https://github.com/ZakKemble/avr-gcc-build/releases/download/v15.2.0-1/avr-gcc-15.2.0-x64-windows.zip' `
+        $zip '3BCFDBDBFF6E3576EF0BEF9E119B16F7012657D30F002D6D9D4848A7EFD4F8B7'
+    Expand-Zip $zip (Join-Path $Tools 'avr-gcc')
+}
+Log "avr-gcc: $((& $AvrGcc --version | Select-Object -First 1))"
+
+# ------------------------------------------------------------------ TinyCC (host unit tests of firmware logic)
+# No published SHA-256 (Savannah publishes a GPG .sig); hash pinned from the first download on 2026-10-24.
+$Tcc = Join-Path $Tools 'tcc\tcc\tcc.exe'
+if ($Force -or -not (Test-Path $Tcc)) {
+    $zip = Join-Path $Tools 'dl-tcc\tcc-0.9.27-win64-bin.zip'
+    Get-Verified 'https://download.savannah.gnu.org/releases/tinycc/tcc-0.9.27-win64-bin.zip' `
+        $zip '34A721949A2583FDFF725312DA092FA0F5F1F284B702E6F811C6954714FAABB2'
+    Expand-Zip $zip (Join-Path $Tools 'tcc')
+}
+Log "tcc: $Tcc"
+
 Log 'setup complete; run scripts\doctor.ps1 to verify'

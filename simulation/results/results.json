@@ -1,0 +1,128 @@
+[
+ {
+  "id": "SIM-01",
+  "name": "Power-on, nominal battery 3.7 V, typical diode",
+  "metrics": {
+   "steady_current_a": 3.9966775448338865,
+   "overshoot_pct": 0.00025570983975481843,
+   "peak_a": 3.996687764731632
+  },
+  "limit": "overshoot <= 10 % (REQ-OUT-05), steady current within 5 % of 4.0 A",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-02",
+  "name": "Power-on at 3.15 V (just above the 3.08 V hardware UVLO), maximum-Vf diode",
+  "metrics": {
+   "steady_current_a": 3.9966157734288297,
+   "overshoot_pct": 0.00023969124509472158,
+   "peak_inductor_a": 6.35274849
+  },
+  "limit": "overshoot <= 10 %, current within 5 %, peak inductor current < ILIM min 10.2 A",
+  "pass": 1.0,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-03",
+  "name": "Current regulation across battery 3.0-4.2 V and diode Vf corners (incl. Vf below Vbat)",
+  "metrics": {
+   "3.0V_min": 3.9968,
+   "3.0V_typ": 3.9968,
+   "3.0V_max": 3.9968,
+   "3.7V_min": 3.9964,
+   "3.7V_typ": 3.9964,
+   "3.7V_max": 3.9969,
+   "4.2V_min": 3.9966,
+   "4.2V_typ": 3.9965,
+   "4.2V_max": 3.9967
+  },
+  "limit": "model-level regulation within 2 % at every corner (tolerances excluded)",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-04",
+  "name": "Input voltage reduction (4.0 -> 3.2 V over 1 ms, 40 mOhm source)",
+  "metrics": {
+   "max_current_deviation_pct": 2.6285632341476295
+  },
+  "limit": "deviation <= 5 %",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-05",
+  "name": "Load variation: diode Vf drops 0.15 V over 2 ms (faster than diode thermal time constants)",
+  "metrics": {
+   "max_current_deviation_pct": 0.08351300000000172
+  },
+  "limit": "deviation <= 5 %",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-06",
+  "name": "Flash transitions at full battery 4.2 V with lowest-Vf diode (Vf < Vbat region)",
+  "metrics": {
+   "peak_current_a": 3.9967737576273845,
+   "turn_off_to_50mA_s": 0.000491301700000002
+  },
+  "limit": "peak <= 4.4 A on every turn-on; current < 50 mA within 2 ms of disable",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-07",
+  "name": "Fault shutdown: interlock opens during emission",
+  "metrics": {
+   "time_to_50mA_s": 6.461617000000017e-05
+  },
+  "limit": "< 2 ms",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-08",
+  "name": "Output short-circuit (10 mOhm) during emission",
+  "metrics": {
+   "peak_inductor_current_a": 12.5687542,
+   "settled_output_current_a": 3.996672699321357
+  },
+  "limit": "inductor current < 25 A cycle-by-cycle peak limit; output current settles <= 5.2 A (backup ceiling)",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-09",
+  "name": "Open load (diode disconnected) during emission, hardware backstop only",
+  "metrics": {
+   "peak_vout_v": 6.71037081
+  },
+  "limit": "VOUT peak < 10 V (16 V-rated capacitors, 2x margin)",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-10",
+  "name": "Reverse battery (-4.2 V): P-FET blocks (body diode reverse-biased, Vgs = 0)",
+  "metrics": {
+   "reverse_current_a": 2.492341e-07,
+   "vbat_node_v": -4.98468e-07
+  },
+  "limit": "reverse current < 1 mA",
+  "pass": true,
+  "status": "PASS"
+ },
+ {
+  "id": "SIM-11",
+  "name": "Control-loop response (linearised model, 12 corners)",
+  "metrics": {
+   "min_phase_margin_deg": 111.72886450565349,
+   "min_gain_margin_db": 12.092440233441394
+  },
+  "limit": "PM >= 50 deg, GM >= 10 dB (time-domain step tests SIM-04/05 corroborate)",
+  "pass": true,
+  "status": "PASS"
+ }
+]

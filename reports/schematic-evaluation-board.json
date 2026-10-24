@@ -6,7 +6,7 @@
  "erc_warnings": 0,
  "erc_violations": [],
  "netlist_parts": 68,
- "netlist_nets": 42,
+ "netlist_nets": 44,
  "connectivity_differences": [],
  "status": "PASS"
 }
