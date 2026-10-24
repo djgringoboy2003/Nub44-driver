@@ -1,0 +1,43 @@
+# Pin table: TI SLVSFC5 (Nov 2020) Table 5-1, pages 3-4 (source PWR-10 / LEAD-01).
+# Pins sharing a name on one side are stacked (KiCad library convention).
+name: TPS552882
+reference: U
+value: TPS552882
+footprint: nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm
+datasheet: https://www.ti.com/lit/ds/symlink/tps552882.pdf
+description: 36-V 16-A synchronous buck-boost converter, boost leg integrated, external buck-leg FETs, VQFN-HR-26 (RPM0026A)
+keywords: buck-boost converter TPS552882 average current mode
+fp_filters: TI*RPM0026A*
+width: 30.48
+height: 30.48
+pins:
+  left:
+    - {number: 3, name: VIN, type: power_in}
+    - {number: 4, name: EN/UVLO, type: input}
+    - {number: 15, name: MODE, type: passive}
+    - {number: 8, name: FSW, type: passive}
+    - {number: 17, name: ILIM, type: passive}
+    - {number: 7, name: DITH/SYNC, type: input}
+    - {number: 16, name: CDC, type: output}
+    - {number: 19, name: VCC, type: power_out}
+  right:
+    - {number: 11, name: VOUT, type: power_out}
+    - {number: 26, name: VOUT, type: power_out}
+    - {number: 12, name: ISP, type: input}
+    - {number: 13, name: ISN, type: input}
+    - {number: 14, name: FB, type: input}
+    - {number: 18, name: COMP, type: passive}
+    - {number: 5, name: PG, type: open_collector}
+    - {number: 6, name: CC, type: open_collector}
+  top:
+    - {number: 22, name: BOOT1, type: passive}
+    - {number: 2, name: DR1H, type: output}
+    - {number: 23, name: SW1, type: passive}
+    - {number: 1, name: DR1L, type: output}
+    - {number: 21, name: SW2, type: passive}
+    - {number: 25, name: SW2, type: passive}
+    - {number: 20, name: BOOT2, type: passive}
+  bottom:
+    - {number: 10, name: AGND, type: power_in}
+    - {number: 9, name: PGND, type: power_in}
+    - {number: 24, name: PGND, type: power_in}

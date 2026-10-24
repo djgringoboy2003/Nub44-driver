@@ -1,0 +1,7178 @@
+(export
+	(version "E")
+	(design
+		(source "C:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
+		(date "2026-10-24T20:56:24")
+		(tool "Eeschema 10.0.6")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "NUBM44 driver - Variant A (22 mm)")
+				(company "NUBM44 driver project")
+				(rev "A")
+				(date "2026-10-24")
+				(source "nubm44_driver.kicad_sch")
+				(comment
+					(number "1")
+					(value "Generated from engineering/design/connectivity.yaml - do not edit by hand")
+				)
+				(comment
+					(number "2")
+					(value "Battery polarity: centre spring = B+, ring = B- (REQ-BAT-04, owner confirmation pending)")
+				)
+				(comment
+					(number "3")
+					(value "Class 4 laser product: see documentation/testing for safety requirements")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "C1")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 input")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 input")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "69f4c378-4241-5732-bf54-a6987d355903")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C2")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 input")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 input")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4a685dcf-0b36-5c1a-8fc4-c371fbcf5419")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C3")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 input")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 input")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "aac28001-0e49-5ca8-84ba-103340f95d34")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C4")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 input HF decoupling")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 input HF decoupling")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "80c7536e-f584-5231-9f95-e95815f28228")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C5")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 BOOT1")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 BOOT1")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6640babd-d96e-534f-b38a-a00b37f52d7a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C6")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 BOOT2")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 BOOT2")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e11c21a3-3186-5f46-9957-44fdd655239a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C7")
+			(value "10u")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "10 uF 10 V X5R 0603 VCC (> 4.7 uF required)")
+			(fields
+				(field
+					(name "MPN") "CL10A106KP8NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 uF 10 V X5R 0603 VCC (> 4.7 uF required)")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL10A106KP8NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3066e8f7-0b7e-5876-a814-a21aa8daaac6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C8")
+			(value "56n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "56 nF 16 V X7R 0402 compensation Cc")
+			(fields
+				(field
+					(name "MPN") "CL05B563KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "56 nF 16 V X7R 0402 compensation Cc")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B563KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ac8c6929-a9cf-5924-9be0-60c019831814")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C9")
+			(value "680p")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "680 pF 50 V C0G 0402 compensation Cp")
+			(fields
+				(field
+					(name "MPN") "GRM1555C1H681JA01D")
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "680 pF 50 V C0G 0402 compensation Cp")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "GRM1555C1H681JA01D")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "06ec82da-a868-557c-bc87-78a61fba68d7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C10")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 output")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 output")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "db0893ea-6e64-5a24-9a8f-428fec392fa4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C11")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 output")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 output")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e1acb453-5db5-558e-9cbc-e271992f0296")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C12")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 output")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 output")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "233fbc2e-4675-571c-b515-83d6acbd76a2")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C13")
+			(value "22u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "22 uF 16 V X5R 0805 output")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "22 uF 16 V X5R 0805 output")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c1685a6f-e89f-5f60-ba1d-f8ab68c1833f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C14")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 output HF")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 output HF")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c213bef4-f12d-5ce2-963a-eae3ecb0602a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C15")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 U2 supply")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 U2 supply")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3ba5d7a5-50c0-5b5c-9200-50856e14cc7c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C16")
+			(value "10u")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "10 uF 10 V X5R 0603 MCU hold-up")
+			(fields
+				(field
+					(name "MPN") "CL10A106KP8NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 uF 10 V X5R 0603 MCU hold-up")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL10A106KP8NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0700042d-a1a7-5fea-8229-8fb7c23eeec0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C17")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "100 nF 16 V X7R 0402 MCU decoupling")
+			(fields
+				(field
+					(name "MPN") "CL05B104KO5NNNC")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R 0402 MCU decoupling")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "CL05B104KO5NNNC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f7f7b24e-a0c6-5b89-8045-fcbe17bcb4f5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D1")
+			(value "PMEG4010CEJ")
+			(footprint "Diode_SMD:D_SOD-323F")
+			(description "40 V 1 A Schottky, reverse/ESD clamp across laser output")
+			(fields
+				(field
+					(name "MPN") "PMEG4010CEJ,115")
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "40 V 1 A Schottky, reverse/ESD clamp across laser output")
+			)
+			(libsource
+				(lib "Diode")
+				(part "PMEG4010CEJ")
+				(description "40V, 1A very low Vf MEGA Schottky barrier rectifier, SOD-323F")
+			)
+			(property
+				(name "MPN")
+				(value "PMEG4010CEJ,115")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "forward voltage diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "D*SOD?323F*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "63f51389-cbcb-5cb0-bc20-140b3bc53df3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D2")
+			(value "BAT54WS")
+			(footprint "Diode_SMD:D_SOD-323")
+			(description "30 V Schottky, MCU supply isolation (hold-up)")
+			(fields
+				(field
+					(name "MPN") "BAT54WS-7-F")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "30 V Schottky, MCU supply isolation (hold-up)")
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Schottky")
+				(description "Schottky diode")
+			)
+			(property
+				(name "MPN")
+				(value "BAT54WS-7-F")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode Schottky")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "834e4746-3858-5d2c-a5f4-5653df9900ae")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D3")
+			(value "6.2V")
+			(footprint "Diode_SMD:D_SOD-323")
+			(description "6.2 V Zener, OV backstop threshold")
+			(fields
+				(field
+					(name "MPN") "BZT52C6V2S-7-F")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "6.2 V Zener, OV backstop threshold")
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Zener")
+				(description "Zener diode")
+			)
+			(property
+				(name "MPN")
+				(value "BZT52C6V2S-7-F")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e6f60c2c-f0a6-5dd1-9726-15f741138dcf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J1")
+			(value "B+ spring")
+			(footprint "nubm44:Contact_Spring_Pad_D6.0mm")
+			(description "Battery centre spring (B+), hand-soldered after assembly; select to suit host")
+			(fields
+				(field
+					(name "MPN") "UNKNOWN")
+				(field
+					(name "Manufacturer") "UNKNOWN")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "nubm44:Contact_Spring_Pad_D6.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Battery centre spring (B+), hand-soldered after assembly; select to suit host")
+			)
+			(libsource
+				(lib "Connector_Generic")
+				(part "Conn_01x01")
+				(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "MPN")
+				(value "UNKNOWN")
+			)
+			(property
+				(name "Manufacturer")
+				(value "UNKNOWN")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c6494ea7-baf3-54c9-9d3b-29f84efeb480")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "B- ring")
+			(footprint "nubm44:Contact_Ring_R10.20_W1.00mm")
+			(description "Perimeter battery-negative ring contact (PCB copper feature)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "nubm44:Contact_Ring_R10.20_W1.00mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Perimeter battery-negative ring contact (PCB copper feature)")
+			)
+			(libsource
+				(lib "Connector_Generic")
+				(part "Conn_01x01")
+				(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "eaa3c502-e7d4-5c89-80d3-59d823e9eba9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "LASER LD+/LD-")
+			(footprint "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+			(description "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)")
+			)
+			(libsource
+				(lib "Connector_Generic")
+				(part "Conn_01x02")
+				(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d142f958-a5ca-5c6b-9ca7-5fbe233b3357")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "L1")
+			(value "1.0u")
+			(footprint "Inductor_SMD:L_Coilcraft_XAL5030-XXX")
+			(description "1.0 uH 4.8/5.8 mOhm, Isat 10.2 A (20%) / 14 A (30%); XGL5030 uses the XAL5030 land pattern (verify)")
+			(fields
+				(field
+					(name "MPN") "XGL5030-102MEC")
+				(field
+					(name "Manufacturer") "Coilcraft")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Inductor_SMD:L_Coilcraft_XAL5030-XXX")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1.0 uH 4.8/5.8 mOhm, Isat 10.2 A (20%) / 14 A (30%); XGL5030 uses the XAL5030 land pattern (verify)")
+			)
+			(libsource
+				(lib "Device")
+				(part "L")
+				(description "Inductor")
+			)
+			(property
+				(name "MPN")
+				(value "XGL5030-102MEC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Coilcraft")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "inductor choke coil reactor magnetic")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Choke_* *Coil* Inductor_* L_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "af108c77-aae3-52a9-b0d6-53865bb079cc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q1")
+			(value "SiSS23DN")
+			(footprint "Package_SO:Vishay_PowerPAK_1212-8_Single")
+			(datasheet "https://www.vishay.com/docs/62999/siss23dn.pdf")
+			(description "P-MOSFET -20 V, 4.5/6.3 mOhm max @ -4.5/-2.5 V; reverse-polarity protection")
+			(fields
+				(field
+					(name "MPN") "SISS23DN-T1-GE3")
+				(field
+					(name "Manufacturer") "Vishay")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Package_SO:Vishay_PowerPAK_1212-8_Single")
+				(field
+					(name "Datasheet") "https://www.vishay.com/docs/62999/siss23dn.pdf")
+				(field
+					(name "Description") "P-MOSFET -20 V, 4.5/6.3 mOhm max @ -4.5/-2.5 V; reverse-polarity protection")
+			)
+			(libsource
+				(lib "nubm44")
+				(part "Q_PMOS_PowerPAK1212")
+				(description "P-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			)
+			(property
+				(name "MPN")
+				(value "SISS23DN-T1-GE3")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Vishay")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "PMOS P-MOS")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "37ac0a2f-0bd2-5fb6-b888-f41e878d1fde")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q2")
+			(value "SiSS80DN")
+			(footprint "Package_SO:Vishay_PowerPAK_1212-8_Single")
+			(datasheet "https://www.vishay.com/docs/77684/siss80dn.pdf")
+			(description "N-MOSFET 20 V, 1.15 mOhm max @ 4.5 V; buck-leg high side")
+			(fields
+				(field
+					(name "MPN") "SISS80DN-T1-GE3")
+				(field
+					(name "Manufacturer") "Vishay")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Package_SO:Vishay_PowerPAK_1212-8_Single")
+				(field
+					(name "Datasheet") "https://www.vishay.com/docs/77684/siss80dn.pdf")
+				(field
+					(name "Description") "N-MOSFET 20 V, 1.15 mOhm max @ 4.5 V; buck-leg high side")
+			)
+			(libsource
+				(lib "nubm44")
+				(part "Q_NMOS_PowerPAK1212")
+				(description "N-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			)
+			(property
+				(name "MPN")
+				(value "SISS80DN-T1-GE3")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Vishay")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "NMOS N-MOS")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "52fef2a1-dbcb-57f9-92f2-964ca47cf744")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q3")
+			(value "SiSS80DN")
+			(footprint "Package_SO:Vishay_PowerPAK_1212-8_Single")
+			(datasheet "https://www.vishay.com/docs/77684/siss80dn.pdf")
+			(description "N-MOSFET 20 V, 1.15 mOhm max @ 4.5 V; buck-leg low side")
+			(fields
+				(field
+					(name "MPN") "SISS80DN-T1-GE3")
+				(field
+					(name "Manufacturer") "Vishay")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Package_SO:Vishay_PowerPAK_1212-8_Single")
+				(field
+					(name "Datasheet") "https://www.vishay.com/docs/77684/siss80dn.pdf")
+				(field
+					(name "Description") "N-MOSFET 20 V, 1.15 mOhm max @ 4.5 V; buck-leg low side")
+			)
+			(libsource
+				(lib "nubm44")
+				(part "Q_NMOS_PowerPAK1212")
+				(description "N-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			)
+			(property
+				(name "MPN")
+				(value "SISS80DN-T1-GE3")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Vishay")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "NMOS N-MOS")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a20f311e-214d-5f55-ae76-5396b13624af")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q4")
+			(value "DMG1012T")
+			(footprint "Package_TO_SOT_SMD:SOT-523")
+			(description "N-MOSFET 20 V SOT-523; MCU enable (on = converter off)")
+			(fields
+				(field
+					(name "MPN") "DMG1012T-7")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "N-MOSFET 20 V SOT-523; MCU enable (on = converter off)")
+			)
+			(libsource
+				(lib "Transistor_FET")
+				(part "DMG1012T")
+				(description "20V Vds, 0.63 Id, N-Channel MOSFET with ESD protection, SOT-523")
+			)
+			(property
+				(name "MPN")
+				(value "DMG1012T-7")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "N-Channel MOSFET")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?523*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "763f1744-6244-59e5-8516-8520a92c9243")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q5")
+			(value "DMG1012T")
+			(footprint "Package_TO_SOT_SMD:SOT-523")
+			(description "N-MOSFET 20 V SOT-523; interlock open = converter off")
+			(fields
+				(field
+					(name "MPN") "DMG1012T-7")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "N-MOSFET 20 V SOT-523; interlock open = converter off")
+			)
+			(libsource
+				(lib "Transistor_FET")
+				(part "DMG1012T")
+				(description "20V Vds, 0.63 Id, N-Channel MOSFET with ESD protection, SOT-523")
+			)
+			(property
+				(name "MPN")
+				(value "DMG1012T-7")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "N-Channel MOSFET")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?523*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3900a869-5df4-5c61-9cad-286ab38cbfb5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q6")
+			(value "DMG1012T")
+			(footprint "Package_TO_SOT_SMD:SOT-523")
+			(description "N-MOSFET 20 V SOT-523; over-voltage backstop")
+			(fields
+				(field
+					(name "MPN") "DMG1012T-7")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "N-MOSFET 20 V SOT-523; over-voltage backstop")
+			)
+			(libsource
+				(lib "Transistor_FET")
+				(part "DMG1012T")
+				(description "20V Vds, 0.63 Id, N-Channel MOSFET with ESD protection, SOT-523")
+			)
+			(property
+				(name "MPN")
+				(value "DMG1012T-7")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "N-Channel MOSFET")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?523*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e0dcf641-f5fb-557d-a85c-e61518563953")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% 0402; Q1 gate to GND")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% 0402; Q1 gate to GND")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "af09ca3e-3fdb-56ed-b4af-aa1b68c6744b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "33.2k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "33.2 kOhm 1% 0402 FSW (595 kHz)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0733K2L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "33.2 kOhm 1% 0402 FSW (595 kHz)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0733K2L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3aa98f72-eac8-5634-a550-4c58f2667617")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "27.4k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0727K4L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0727K4L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ee62910b-3eeb-509e-9a44-3d7482cc479c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "1.2k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "1.2 kOhm 1% 0402 compensation Rc")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-071K2L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1.2 kOhm 1% 0402 compensation Rc")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-071K2L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3a591f59-6add-5f2b-a04b-0fc0a8d33d92")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R5")
+			(value "49.9k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "49.9 kOhm 1% 0402 EN/UVLO top (3.08/2.83 V)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0749K9L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "49.9 kOhm 1% 0402 EN/UVLO top (3.08/2.83 V)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0749K9L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c0c15c06-be7f-5061-afd3-013a2baaf0f3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R6")
+			(value "33.2k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "33.2 kOhm 1% 0402 EN/UVLO bottom")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0733K2L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "33.2 kOhm 1% 0402 EN/UVLO bottom")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0733K2L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "165a3fb8-2897-5afe-b576-e1fc27168a3e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R7")
+			(value "4.7k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "4.7 kOhm 1% 0402 output bleeder")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-074K7L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "4.7 kOhm 1% 0402 output bleeder")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-074K7L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "53c75629-0de6-5793-8799-0a74ccac9187")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R8")
+			(value "6.65k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)")
+			(fields
+				(field
+					(name "MPN") "RT0402BRD076K65L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RT0402BRD076K65L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "74e8e20b-a833-5665-b73e-2ff4a4c0c039")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R9")
+			(value "10.0k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "10.0 kOhm 0.1% 0402 FB bottom")
+			(fields
+				(field
+					(name "MPN") "RT0402BRD0710KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10.0 kOhm 0.1% 0402 FB bottom")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RT0402BRD0710KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "518b98eb-c224-55d1-9984-f97247c0b9fd")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R10")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% VBAT sense top")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% VBAT sense top")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6e31feec-0867-5b5a-9726-8d25727e5458")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R11")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% VBAT sense bottom")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% VBAT sense bottom")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b4e947e5-cc6c-5b92-926e-6001d2d79673")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R12")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% VOUT sense top (VOUT/6)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% VOUT sense top (VOUT/6)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0daca010-bf66-58c0-a76c-5c391b65e04d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R13")
+			(value "20k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "20 kOhm 1% VOUT sense bottom")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0720KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "20 kOhm 1% VOUT sense bottom")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0720KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6d250677-29cc-5bf7-9db8-a299c4879cbc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R14")
+			(value "10k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "10 kOhm 1% NTC bias (board)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0710KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kOhm 1% NTC bias (board)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0710KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e93bbe0f-3c7f-5946-a2e3-de1488d8c986")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R15")
+			(value "10k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "10 kOhm 1% NTC bias (external laser NTC)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0710KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kOhm 1% NTC bias (external laser NTC)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0710KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "eeb650f2-27b2-505a-947d-3c5731023802")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R16")
+			(value "220")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "220 Ohm 1% indicator LED series")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07220RL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "220 Ohm 1% indicator LED series")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07220RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2d8947db-648e-542d-a347-c3f7f847ea2b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R17")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% Q4 gate pull-up (default off)")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% Q4 gate pull-up (default off)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "05372cca-f513-55a2-b4bd-239f8bab41ca")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R18")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "100 kOhm 1% interlock pull-up to VBAT")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-07100KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kOhm 1% interlock pull-up to VBAT")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c9a6a535-4f86-5ae4-8f5a-78b89f0ec24d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R19")
+			(value "47k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "47 kOhm 1% interlock sense to MCU")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-0747KL")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kOhm 1% interlock sense to MCU")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0747KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "63c770a9-36c6-5c2e-9e53-99342694427d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R20")
+			(value "4.7k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "4.7 kOhm 1% Q6 gate pull-down")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-074K7L")
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "4.7 kOhm 1% Q6 gate pull-down")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-074K7L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "bc181bb3-5442-53d7-8457-c5eacec8f344")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "RS1")
+			(value "10m")
+			(footprint "Resistor_SMD:R_1206_3216Metric")
+			(description "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+			(fields
+				(field
+					(name "MPN") "MCS1632R010FER")
+				(field
+					(name "Manufacturer") "Ohmite")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Alternate") "RALEC LR1206-21R010F4 (LCSC C154635)")
+				(field
+					(name "Footprint") "Resistor_SMD:R_1206_3216Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 mOhm 1% 1 W 1206 current shunt (Kelvin-routed sense lines)")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "MCS1632R010FER")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Ohmite")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Alternate")
+				(value "RALEC LR1206-21R010F4 (LCSC C154635)")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "84692492-267e-5993-accf-1e51ce5a39a0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "RT1")
+			(value "10k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "NTC 10 kOhm 1% B25/50 3380 K, board temperature")
+			(fields
+				(field
+					(name "MPN") "NCP15XH103F03RC")
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "NTC 10 kOhm 1% B25/50 3380 K, board temperature")
+			)
+			(libsource
+				(lib "Device")
+				(part "Thermistor_NTC")
+				(description "Temperature dependent resistor, negative temperature coefficient")
+			)
+			(property
+				(name "MPN")
+				(value "NCP15XH103F03RC")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "thermistor NTC resistor sensor RTD")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_* RV_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7546f4db-33e4-5d7b-9211-c0ff0c7a0145")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP1")
+			(value "VBAT")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Test pad")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "power_in")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Test pad")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "power_in")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d4932d20-3252-57ba-b358-d69bff2e8bd8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP2")
+			(value "VOUT")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Test pad")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Test pad")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b9f59cb6-4797-55d5-843b-245bb96a0546")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP3")
+			(value "EN")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Test pad")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Test pad")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6e39b4dc-427c-53e2-996d-206ef2203a9b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP4")
+			(value "CS")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Current monitor test pad (0.5 V/A)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Current monitor test pad (0.5 V/A)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "61c07ed2-6382-5aff-9c3b-109c45e4fa71")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP5")
+			(value "FB")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Test pad")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Test pad")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "714f2b11-f30c-5729-9e1d-4101b658a11a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP6")
+			(value "UPDI")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Programming pad (UPDI)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Programming pad (UPDI)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5ecc69d8-8512-56d5-98cd-289e3223545a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP7")
+			(value "VMCU")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Programming pad (target VCC)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Programming pad (target VCC)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "48a5392f-f3fc-51f5-b794-b7e851ece068")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP8")
+			(value "GND")
+			(footprint "nubm44:Pad_SMD_D0.8mm_B")
+			(description "Programming/test ground pad")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D0.8mm_B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Programming/test ground pad")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ff691761-2788-5640-a039-e0b16624740b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP9")
+			(value "IND")
+			(footprint "nubm44:Pad_SMD_D1.0mm_F")
+			(description "Emission indicator LED output (anode; LED cathode to SGND)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D1.0mm_F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Emission indicator LED output (anode; LED cathode to SGND)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "312342f1-63e6-50f8-93c1-aaf3e54d1ffb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP10")
+			(value "NTC_LD")
+			(footprint "nubm44:Pad_SMD_D1.0mm_F")
+			(description "External laser-module 10k NTC (other end to SGND)")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D1.0mm_F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "External laser-module 10k NTC (other end to SGND)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "90536591-8371-5002-891e-f3953197cb7f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP11")
+			(value "SW")
+			(footprint "nubm44:Pad_SMD_D1.0mm_F")
+			(description "Optional momentary switch to SGND")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D1.0mm_F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Optional momentary switch to SGND")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "89b7e564-2927-55f6-9d6d-f46024f91a1f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP12")
+			(value "SGND")
+			(footprint "nubm44:Pad_SMD_D1.0mm_F")
+			(description "Signal ground for external switch, interlock, indicator and NTC")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D1.0mm_F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Signal ground for external switch, interlock, indicator and NTC")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a1b664b8-25d3-57a0-b15c-c1f9de937f0c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP13")
+			(value "INTLK")
+			(footprint "nubm44:Pad_SMD_D1.0mm_F")
+			(description "External interlock loop: short to SGND to allow emission")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "enable")
+				(field
+					(name "Footprint") "nubm44:Pad_SMD_D1.0mm_F")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "External interlock loop: short to SGND to allow emission")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "enable")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "93a39395-6d88-504f-96ed-4dd27dd2d84f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "TPS552882")
+			(footprint "nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm")
+			(datasheet "https://www.ti.com/lit/ds/symlink/tps552882.pdf")
+			(description "Buck-boost converter, external buck FETs, VQFN-HR-26")
+			(fields
+				(field
+					(name "MPN") "TPS552882RPMR")
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "Block") "converter")
+				(field
+					(name "Footprint") "nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tps552882.pdf")
+				(field
+					(name "Description") "Buck-boost converter, external buck FETs, VQFN-HR-26")
+			)
+			(libsource
+				(lib "nubm44")
+				(part "TPS552882")
+				(description "36-V 16-A synchronous buck-boost converter, boost leg integrated, external buck-leg FETs, VQFN-HR-26 (RPM0026A)")
+			)
+			(property
+				(name "MPN")
+				(value "TPS552882RPMR")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "Block")
+				(value "converter")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "buck-boost converter TPS552882 average current mode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TI*RPM0026A*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "31e6b989-d716-5438-bd80-6349ac7e0ee8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "INA186A2")
+			(footprint "Package_TO_SOT_SMD:SOT-363_SC-70-6")
+			(datasheet "https://www.ti.com/lit/ds/symlink/ina186.pdf")
+			(description "Current-sense amplifier G = 50, SC70-6")
+			(fields
+				(field
+					(name "MPN") "INA186A2IDCKR")
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "Block") "sense")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-363_SC-70-6")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/ina186.pdf")
+				(field
+					(name "Description") "Current-sense amplifier G = 50, SC70-6")
+			)
+			(libsource
+				(lib "nubm44")
+				(part "INA186")
+				(description "Zero-drift current-sense amplifier, 40 V common mode, REF pin, SC70-6 (DCK). A2 gain = 50 V/V")
+			)
+			(property
+				(name "MPN")
+				(value "INA186A2IDCKR")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "Block")
+				(value "sense")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "current sense amplifier shunt INA186")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?363*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1f336dd4-0b38-506e-a6c0-1e41ba580d8f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "ATtiny1616-MNR")
+			(footprint "Package_DFN_QFN:VQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm")
+			(datasheet "https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-16-17-DataSheet-DS40002204A.pdf")
+			(description "8-bit MCU, 16 KB, VQFN-20 3x3")
+			(fields
+				(field
+					(name "MPN") "ATTINY1616-MNR")
+				(field
+					(name "Manufacturer") "Microchip")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "Package_DFN_QFN:VQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm")
+				(field
+					(name "Datasheet") "https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-16-17-DataSheet-DS40002204A.pdf")
+				(field
+					(name "Description") "8-bit MCU, 16 KB, VQFN-20 3x3")
+			)
+			(libsource
+				(lib "MCU_Microchip_ATtiny")
+				(part "ATtiny1616-M")
+				(description "20MHz, 16kB Flash, 2kB SRAM, 256B EEPROM, VQFN-20")
+			)
+			(property
+				(name "MPN")
+				(value "ATTINY1616-MNR")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Microchip")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_driver")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_driver.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "AVR 8bit Microcontroller tinyAVR")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "VQFN*1EP*3x3mm*P0.4mm*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6161566a-dfd8-510f-9e77-009cd3700e45")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "9")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "Connector")
+			(part "TestPoint")
+			(description "test point")
+			(footprints
+				(fp "Pin*")
+				(fp "Test*")
+			)
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector_Generic")
+			(part "Conn_01x01")
+			(description "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_01x01")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector_Generic")
+			(part "Conn_01x02")
+			(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_01x02")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C")
+			(description "Unpolarized capacitor")
+			(footprints
+				(fp "C_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_Schottky")
+			(description "Schottky diode")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_Schottky")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Schottky diode")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_Zener")
+			(description "Zener diode")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_Zener")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Zener diode")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "L")
+			(description "Inductor")
+			(footprints
+				(fp "Choke_*")
+				(fp "*Coil*")
+				(fp "Inductor_*")
+				(fp "L_*")
+			)
+			(fields
+				(field
+					(name "Reference") "L")
+				(field
+					(name "Value") "L")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Inductor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R")
+			(description "Resistor")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "Thermistor_NTC")
+			(description "Temperature dependent resistor, negative temperature coefficient")
+			(footprints
+				(fp "R_*")
+				(fp "RV_*")
+			)
+			(fields
+				(field
+					(name "Reference") "TH")
+				(field
+					(name "Value") "Thermistor_NTC")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Temperature dependent resistor, negative temperature coefficient")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Diode")
+			(part "PMEG4010CEJ")
+			(description "40V, 1A very low Vf MEGA Schottky barrier rectifier, SOD-323F")
+			(docs "https://assets.nexperia.com/documents/data-sheet/PMEG4010CEH_PMEG4010CEJ.pdf")
+			(footprints
+				(fp "D*SOD?323F*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "PMEG4010CEJ")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323F")
+				(field
+					(name "Datasheet") "https://assets.nexperia.com/documents/data-sheet/PMEG4010CEH_PMEG4010CEJ.pdf")
+				(field
+					(name "Description") "40V, 1A very low Vf MEGA Schottky barrier rectifier, SOD-323F")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "MCU_Microchip_ATtiny")
+			(part "ATtiny1616-M")
+			(description "20MHz, 16kB Flash, 2kB SRAM, 256B EEPROM, VQFN-20")
+			(docs "http://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny3216_ATtiny1616-data-sheet-40001997B.pdf")
+			(footprints
+				(fp "VQFN*1EP*3x3mm*P0.4mm*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "ATtiny1616-M")
+				(field
+					(name "Footprint") "Package_DFN_QFN:VQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm")
+				(field
+					(name "Datasheet") "http://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny3216_ATtiny1616-data-sheet-40001997B.pdf")
+				(field
+					(name "Description") "20MHz, 16kB Flash, 2kB SRAM, 256B EEPROM, VQFN-20")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "PA2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "2")
+					(name "PA3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "3")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "VCC")
+					(type "power_in")
+				)
+				(pin
+					(num "5")
+					(name "PA4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "PA5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "PA6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "PA7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "PB5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "PB4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "PB3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "PB2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "PB1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "PB0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "PC0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "PC1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "PC2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "PC3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "~{RESET}/PA0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "PA1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "21")
+					(name "GND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Transistor_FET")
+			(part "DMG1012T")
+			(description "20V Vds, 0.63 Id, N-Channel MOSFET with ESD protection, SOT-523")
+			(docs "https://www.diodes.com/assets/Datasheets/ds31783.pdf")
+			(footprints
+				(fp "SOT?523*")
+			)
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "DMG1012T")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-523")
+				(field
+					(name "Datasheet") "https://www.diodes.com/assets/Datasheets/ds31783.pdf")
+				(field
+					(name "Description") "20V Vds, 0.63 Id, N-Channel MOSFET with ESD protection, SOT-523")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "INA186")
+			(description "Zero-drift current-sense amplifier, 40 V common mode, REF pin, SC70-6 (DCK). A2 gain = 50 V/V")
+			(docs "https://www.ti.com/lit/ds/symlink/ina186.pdf")
+			(footprints
+				(fp "SOT?363*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "INA186A2")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-363_SC-70-6")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/ina186.pdf")
+				(field
+					(name "Description") "Zero-drift current-sense amplifier, 40 V common mode, REF pin, SC70-6 (DCK). A2 gain = 50 V/V")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "REF")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "VS")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "IN+")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "IN-")
+					(type "input")
+				)
+				(pin
+					(num "6")
+					(name "OUT")
+					(type "output")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "Q_NMOS_PowerPAK1212")
+			(description "N-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "Q_NMOS_PowerPAK1212")
+				(field
+					(name "Footprint") "Package_SO:Vishay_PowerPAK_1212-8_Single")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "N-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "Q_PMOS_PowerPAK1212")
+			(description "P-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "Q_PMOS_PowerPAK1212")
+				(field
+					(name "Footprint") "Package_SO:Vishay_PowerPAK_1212-8_Single")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "P-channel MOSFET in Vishay PowerPAK 1212-8: pins 1-3 S, 4 G, 5 D (drain pad), matching footprint Package_SO:Vishay_PowerPAK_1212-8_Single")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "nubm44")
+			(part "TPS552882")
+			(description "36-V 16-A synchronous buck-boost converter, boost leg integrated, external buck-leg FETs, VQFN-HR-26 (RPM0026A)")
+			(docs "https://www.ti.com/lit/ds/symlink/tps552882.pdf")
+			(footprints
+				(fp "TI*RPM0026A*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TPS552882")
+				(field
+					(name "Footprint") "nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tps552882.pdf")
+				(field
+					(name "Description") "36-V 16-A synchronous buck-boost converter, boost leg integrated, external buck-leg FETs, VQFN-HR-26 (RPM0026A)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "DR1L")
+					(type "output")
+				)
+				(pin
+					(num "2")
+					(name "DR1H")
+					(type "output")
+				)
+				(pin
+					(num "3")
+					(name "VIN")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "EN/UVLO")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "PG")
+					(type "open_collector")
+				)
+				(pin
+					(num "6")
+					(name "CC")
+					(type "open_collector")
+				)
+				(pin
+					(num "7")
+					(name "DITH/SYNC")
+					(type "input")
+				)
+				(pin
+					(num "8")
+					(name "FSW")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "PGND")
+					(type "power_in")
+				)
+				(pin
+					(num "10")
+					(name "AGND")
+					(type "power_in")
+				)
+				(pin
+					(num "11")
+					(name "VOUT")
+					(type "power_out")
+				)
+				(pin
+					(num "12")
+					(name "ISP")
+					(type "input")
+				)
+				(pin
+					(num "13")
+					(name "ISN")
+					(type "input")
+				)
+				(pin
+					(num "14")
+					(name "FB")
+					(type "input")
+				)
+				(pin
+					(num "15")
+					(name "MODE")
+					(type "passive")
+				)
+				(pin
+					(num "16")
+					(name "CDC")
+					(type "output")
+				)
+				(pin
+					(num "17")
+					(name "ILIM")
+					(type "passive")
+				)
+				(pin
+					(num "18")
+					(name "COMP")
+					(type "passive")
+				)
+				(pin
+					(num "19")
+					(name "VCC")
+					(type "power_out")
+				)
+				(pin
+					(num "20")
+					(name "BOOT2")
+					(type "passive")
+				)
+				(pin
+					(num "21")
+					(name "SW2")
+					(type "passive")
+				)
+				(pin
+					(num "22")
+					(name "BOOT1")
+					(type "passive")
+				)
+				(pin
+					(num "23")
+					(name "SW1")
+					(type "passive")
+				)
+				(pin
+					(num "24")
+					(name "PGND")
+					(type "passive")
+				)
+				(pin
+					(num "25")
+					(name "SW2")
+					(type "passive")
+				)
+				(pin
+					(num "26")
+					(name "VOUT")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "Connector")
+			(uri "${KICAD10_SYMBOL_DIR}/Connector.kicad_sym")
+		)
+		(library
+			(logical "Connector_Generic")
+			(uri "${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym")
+		)
+		(library
+			(logical "Device")
+			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
+		)
+		(library
+			(logical "Diode")
+			(uri "${KICAD10_SYMBOL_DIR}/Diode.kicad_sym")
+		)
+		(library
+			(logical "MCU_Microchip_ATtiny")
+			(uri "${KICAD10_SYMBOL_DIR}/MCU_Microchip_ATtiny.kicad_sym")
+		)
+		(library
+			(logical "Transistor_FET")
+			(uri "${KICAD10_SYMBOL_DIR}/Transistor_FET.kicad_sym")
+		)
+		(library
+			(logical "nubm44")
+			(uri "${KIPRJMOD}/../libraries/nubm44.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "/BAT_SPRING")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "5")
+				(pinfunction "D_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "/BOOT1")
+			(class "Default")
+			(node
+				(ref "C5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "22")
+				(pinfunction "BOOT1_22")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "/BOOT2")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "20")
+				(pinfunction "BOOT2_20")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "4")
+			(name "/CC_FLAG")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "CC_6")
+				(pintype "open_collector")
+			)
+			(node
+				(ref "U3")
+				(pin "13")
+				(pinfunction "PB1_13")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "5")
+			(name "/COMP")
+			(class "Default")
+			(node
+				(ref "C9")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "18")
+				(pinfunction "COMP_18")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "6")
+			(name "/COMP_RC")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "7")
+			(name "/CS_OUT")
+			(class "Default")
+			(node
+				(ref "R8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "OUT_6")
+				(pintype "output")
+			)
+			(node
+				(ref "U3")
+				(pin "7")
+				(pinfunction "PA6_7")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "8")
+			(name "/DR1H")
+			(class "Default")
+			(node
+				(ref "Q2")
+				(pin "4")
+				(pinfunction "G_4")
+				(pintype "input")
+			)
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "DR1H_2")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "9")
+			(name "/DR1L")
+			(class "Default")
+			(node
+				(ref "Q3")
+				(pin "4")
+				(pinfunction "G_4")
+				(pintype "input")
+			)
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "DR1L_1")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "10")
+			(name "/EN_UVLO")
+			(class "Default")
+			(node
+				(ref "Q4")
+				(pin "3")
+				(pinfunction "D_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q5")
+				(pin "3")
+				(pinfunction "D_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q6")
+				(pin "3")
+				(pinfunction "D_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "EN/UVLO_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "11")
+			(name "/FB")
+			(class "Default")
+			(node
+				(ref "R8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "14")
+				(pinfunction "FB_14")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "12")
+			(name "/FSW")
+			(class "Default")
+			(node
+				(ref "R2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "FSW_8")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "13")
+			(name "/ILIM")
+			(class "Default")
+			(node
+				(ref "R3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "17")
+				(pinfunction "ILIM_17")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "14")
+			(name "/IND_OUT")
+			(class "Default")
+			(node
+				(ref "R16")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "12")
+				(pinfunction "PB2_12")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "15")
+			(name "/IND_PAD")
+			(class "Default")
+			(node
+				(ref "R16")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP9")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "16")
+			(name "/INTLK_MCU")
+			(class "Default")
+			(node
+				(ref "R19")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "PA2_1")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "17")
+			(name "/INTLK_N")
+			(class "Default")
+			(node
+				(ref "Q5")
+				(pin "1")
+				(pinfunction "G_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R18")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R19")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP13")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "18")
+			(name "/LASER_EN_N")
+			(class "Default")
+			(node
+				(ref "Q4")
+				(pin "1")
+				(pinfunction "G_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R17")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "20")
+				(pinfunction "PA1_20")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "19")
+			(name "/LD_P")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "RS1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "ISN_13")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "IN-_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "20")
+			(name "/NTC_BRD")
+			(class "Default")
+			(node
+				(ref "R14")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "RT1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "6")
+				(pinfunction "PA5_6")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "21")
+			(name "/NTC_LD")
+			(class "Default")
+			(node
+				(ref "R15")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP10")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "10")
+				(pinfunction "PB4_10")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "22")
+			(name "/NTC_PWR")
+			(class "Default")
+			(node
+				(ref "R14")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R15")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "5")
+				(pinfunction "PA4_5")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "23")
+			(name "/OV_G")
+			(class "Default")
+			(node
+				(ref "D3")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q6")
+				(pin "1")
+				(pinfunction "G_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R20")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "24")
+			(name "/PG")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "PG_5")
+				(pintype "open_collector")
+			)
+			(node
+				(ref "U3")
+				(pin "14")
+				(pinfunction "PB0_14")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "25")
+			(name "/Q1_G")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "4")
+				(pinfunction "G_4")
+				(pintype "input")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "26")
+			(name "/SW1")
+			(class "Default")
+			(node
+				(ref "C5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q2")
+				(pin "1")
+				(pinfunction "S_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q2")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q2")
+				(pin "3")
+				(pinfunction "S_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q3")
+				(pin "5")
+				(pinfunction "D_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "23")
+				(pinfunction "SW1_23")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "27")
+			(name "/SW2")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "21")
+				(pinfunction "SW2_21")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "25")
+				(pinfunction "SW2_25")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "28")
+			(name "/SW_IN")
+			(class "Default")
+			(node
+				(ref "TP11")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "PA3_2")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "29")
+			(name "/UPDI")
+			(class "Default")
+			(node
+				(ref "TP6")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "19")
+				(pinfunction "~{RESET}/PA0_19")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "30")
+			(name "/VBAT")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C15")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "1")
+				(pinfunction "S_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "3")
+				(pinfunction "S_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q2")
+				(pin "5")
+				(pinfunction "D_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "R10")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R18")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "VIN_3")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "VS_3")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "31")
+			(name "/VBAT_SENSE")
+			(class "Default")
+			(node
+				(ref "R10")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R11")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "9")
+				(pinfunction "PB5_9")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "32")
+			(name "/VCC5")
+			(class "Default")
+			(node
+				(ref "C7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "19")
+				(pinfunction "VCC_19")
+				(pintype "power_out")
+			)
+		)
+		(net
+			(code "33")
+			(name "/VMCU")
+			(class "Default")
+			(node
+				(ref "C16")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C17")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R17")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "34")
+			(name "/VOUT")
+			(class "Default")
+			(node
+				(ref "C10")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C11")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C12")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C13")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C14")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R12")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "RS1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "11")
+				(pinfunction "VOUT_11")
+				(pintype "power_out")
+			)
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "ISP_12")
+				(pintype "input")
+			)
+			(node
+				(ref "U1")
+				(pin "26")
+				(pinfunction "VOUT_26")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "IN+_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "35")
+			(name "/VOUT_SENSE")
+			(class "Default")
+			(node
+				(ref "R12")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R13")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "8")
+				(pinfunction "PA7_8")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "36")
+			(name "GND")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C10")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C12")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C13")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C14")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C15")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C16")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C17")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C7")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C9")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q3")
+				(pin "1")
+				(pinfunction "S_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q3")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q3")
+				(pin "3")
+				(pinfunction "S_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q4")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q5")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q6")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R13")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R20")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "RT1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP12")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP8")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "10")
+				(pinfunction "AGND_10")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U1")
+				(pin "15")
+				(pinfunction "MODE_15")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "24")
+				(pinfunction "PGND_24")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "DITH/SYNC_7")
+				(pintype "input")
+			)
+			(node
+				(ref "U1")
+				(pin "9")
+				(pinfunction "PGND_9")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "REF_1")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U3")
+				(pin "21")
+				(pinfunction "GND_21")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "GND_3")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "37")
+			(name "unconnected-(U1-CDC-Pad16)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "16")
+				(pinfunction "CDC_16")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "38")
+			(name "unconnected-(U3-PB3-Pad11)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "11")
+				(pinfunction "PB3_11")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "39")
+			(name "unconnected-(U3-PC0-Pad15)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "15")
+				(pinfunction "PC0_15")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "40")
+			(name "unconnected-(U3-PC1-Pad16)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "16")
+				(pinfunction "PC1_16")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "41")
+			(name "unconnected-(U3-PC2-Pad17)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "17")
+				(pinfunction "PC2_17")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "42")
+			(name "unconnected-(U3-PC3-Pad18)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "18")
+				(pinfunction "PC3_18")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+	)
+)

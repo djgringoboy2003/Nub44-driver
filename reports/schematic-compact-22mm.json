@@ -1,0 +1,12 @@
+{
+ "variant": "compact-22mm",
+ "schematic": "hardware\\compact-22mm\\nubm44_driver.kicad_sch",
+ "upgrade_rc": 0,
+ "erc_errors": 0,
+ "erc_warnings": 0,
+ "erc_violations": [],
+ "netlist_parts": 68,
+ "netlist_nets": 42,
+ "connectivity_differences": [],
+ "status": "PASS"
+}

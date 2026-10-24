@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "nubm44")(type "KiCad")(uri "${KIPRJMOD}/../libraries/nubm44.kicad_sym")(options "")(descr "NUBM44 driver project symbols"))
+)

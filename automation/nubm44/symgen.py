@@ -123,13 +123,50 @@ def build_symbol(spec: dict) -> list:
     return sym
 
 
-def build_library(spec_dir: Path, out_file: Path, version: int, generator_version: str) -> list[str]:
-    """Build every ``*.yaml`` symbol spec in ``spec_dir`` into one ``.kicad_sym`` file."""
+def derive_renumbered(base: list, new_name: str, mapping: dict, stacked: dict, props: dict) -> list:
+    """Copy a flattened library symbol, renumber its pins and add hidden stacked pins.
+
+    ``mapping``: old pin number -> new pin number. ``stacked``: new pin number -> list of extra
+    numbers placed at the same position (hidden, passive). ``props``: property values to override.
+    """
+    import copy
+    sym = copy.deepcopy(base)
+    old_name = str(sym[1]).split(":")[-1]
+    sym[1] = new_name
+    for unit in [c for c in sym if isinstance(c, list) and c and c[0] == "symbol"]:
+        unit[1] = str(unit[1]).replace(old_name, new_name, 1)
+        extra = []
+        for pin in [c for c in unit if isinstance(c, list) and c and c[0] == "pin"]:
+            num_node = next(c for c in pin if isinstance(c, list) and c and c[0] == "number")
+            old = str(num_node[1])
+            if old not in mapping:
+                continue
+            num_node[1] = mapping[old]
+            for extra_num in stacked.get(mapping[old], []):
+                dup = copy.deepcopy(pin)
+                dup[1] = Sym("passive")
+                next(c for c in dup if isinstance(c, list) and c and c[0] == "number")[1] = extra_num
+                if not any(isinstance(c, list) and c and c[0] == "hide" for c in dup):
+                    dup.insert(4, S("hide", Sym("yes")))
+                extra.append(dup)
+        unit += extra
+    for prop in [c for c in sym if isinstance(c, list) and c and c[0] == "property"]:
+        if str(prop[1]) in props:
+            prop[2] = props[str(prop[1])]
+    return sym
+
+
+def build_library(spec_dir: Path, out_file: Path, version: int, generator_version: str,
+                  extra_symbols: list | None = None) -> list[str]:
+    """Build every ``*.yaml`` symbol spec in ``spec_dir`` (plus ``extra_symbols``) into one ``.kicad_sym``."""
     syms, names = [], []
     for f in sorted(spec_dir.glob("*.yaml")):
         spec = yaml.safe_load(f.read_text(encoding="utf-8"))
         syms.append(build_symbol(spec))
         names.append(spec["name"])
+    for s in extra_symbols or []:
+        syms.append(s)
+        names.append(str(s[1]))
     lib = S("kicad_symbol_lib", S("version", version), S("generator", "nubm44_symgen"),
             S("generator_version", generator_version), *syms)
     out_file.parent.mkdir(parents=True, exist_ok=True)

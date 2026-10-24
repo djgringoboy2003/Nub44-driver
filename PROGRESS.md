@@ -7,7 +7,7 @@ _Last updated: 2026-10-24._
 | Gate | Status | Evidence |
 |---|---|---|
 | A Research complete | **Done** | `research/*.md`, `research/architecture-comparison.md`, `engineering/requirements.md` |
-| B Electrical design (schematic, netlist) | **In progress** | Connectivity defined in `engineering/design-decisions.md` DD-02…DD-11; library generation started |
+| B Electrical design (schematic, netlist) | **Done** (pending owner polarity confirmation) | `engineering/design/connectivity.yaml` → `hardware/*/nubm44_driver.kicad_sch`; ERC 0 errors / 0 warnings; netlist matches spec pin-for-pin (`reports/schematic-*.json`); checker sensitivity tested (`tests/test_netlist_compare.py`) |
 | C Simulation | Not started | — |
 | D PCB placed and routed | Not started | Toolchain round-trip proven (pcbnew API → DSN → FreeRouting → SES → DRC clean) on a test board |
 | E ERC/DRC clean | Not started | — |
@@ -32,11 +32,10 @@ _Last updated: 2026-10-24._
 
 ## Next actions (in order)
 
-1. Generate the project library: footprints (`automation/nubm44/fpgen.py`, in progress), symbols (TPS552882,
-   INA186, PowerPAK MOSFETs, contacts), 3D placeholder models.
-2. Write `engineering/design/connectivity.yaml` (all parts, MPNs, footprints, pin→net).
-3. Schematic build script, then `kicad-cli sch upgrade`, ERC, netlist export, and a pin-by-pin comparison with
-   connectivity.yaml.
+1. ~~Project library~~ done: `automation/setup/build_library.py` (symbols + footprints + placeholder 3D, upgraded to KiCad 10).
+2. ~~connectivity.yaml~~ done (68 parts, 42 nets).
+3. ~~Schematic build + ERC + netlist check~~ done: `automation/schematic/build_schematic.py` (both variants).
+   Known improvement: the generated sheet is label-based on A1. Hierarchical sheets and wired power paths would read better.
 4. ngspice behavioural simulations: start-up, flash transitions, open load, short circuit, battery step,
    loop response.
 5. PCB generation (pcbnew API): 22 mm outline, 4-layer stack-up, placement YAML, critical power routing,
