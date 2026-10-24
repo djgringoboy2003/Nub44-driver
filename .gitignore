@@ -27,3 +27,5 @@ build/
 # Third-party datasheets and vendor documents: kept locally, not redistributed via git.
 # URLs and revisions are listed in research/source-index.md and research/sources/*.md.
 research/datasheets/
+
+dist/

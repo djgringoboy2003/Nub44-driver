@@ -1,0 +1,7 @@
+references,primary_mpn,alt_manufacturer,alt_mpn,alt_supplier_pn,notes
+RS1,MCS1632R010FER,RALEC,LR1206-21R010F4,LCSC C154635,Same 1206 land pattern; 10 mOhm 1 W 1 %. Verify TCR/datasheet.
+Q1,SISS23DN-T1-GE3,Diodes Inc.,DMP2005UFG-13,LCSC C2922355,PowerDI3333-8: DIFFERENT land pattern; footprint change and review required.
+"Q2,Q3",SISS80DN-T1-GE3,Diodes Inc.,DMN22M5UFG-7,LCSC C3289380 (stock 0 on 2026-10-24),PowerDI3333-8: DIFFERENT land pattern; 2.0 mOhm @4.5 V.
+"Q2,Q3",SISS80DN-T1-GE3,Infineon,IRLHM620TRPBF,LCSC C538149,EOL notice in datasheet: not for new designs; PQFN 3.3x3.3 land pattern differs.
+L1,XGL5030-102MEC,Coilcraft,XAL5030-102MEC,UNKNOWN,Same 5.28 x 5.48 mm land pattern family; check Isat/DCR.
+U2,INA186A2IDCKR,Texas Instruments,INA186A3IDCKR,LCSC C2058245,Gain 100: requires FB divider recalculation (R8/R9).

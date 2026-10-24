@@ -160,6 +160,7 @@ def make_job(variant: str, mode: str) -> dict:
         "mode": mode, "origin": ORIGIN, "outline": place["board"]["outline"],
         "copper_layers": place["board"]["copper_layers"], "thickness": place["board"]["thickness"],
         "placement_radius": place.get("placement_radius", 1e9), "courtyard_gap": place.get("courtyard_gap", 0.05),
+        "placement_box": place.get("placement_box"),
         "keepouts": {s: [[b[0] + ORIGIN[0], b[1] + ORIGIN[1], b[2] + ORIGIN[0], b[3] + ORIGIN[1]] for b in boxes]
                      for s, boxes in (place.get("keepouts") or {}).items()},
         "footprints": manual + auto,

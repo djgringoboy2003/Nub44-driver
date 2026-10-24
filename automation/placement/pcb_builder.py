@@ -78,7 +78,12 @@ def overlap(a, b, gap=0.0):
 
 
 def inside_disc(job, box, r_max):
+    """True when the box lies inside the placement area: a disc of r_max, or job['placement_box']
+    (x0, y0, x1, y1 relative to the board centre) for rectangular boards."""
     ox, oy = job["origin"]
+    if job.get("placement_box"):
+        x0, y0, x1, y1 = job["placement_box"]
+        return box[0] >= ox + x0 and box[1] >= oy + y0 and box[2] <= ox + x1 and box[3] <= oy + y1
     for x, y in ((box[0], box[1]), (box[2], box[1]), (box[0], box[3]), (box[2], box[3])):
         if math.hypot(x - ox, y - oy) > r_max:
             return False
@@ -212,7 +217,7 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
             for k in range(16):
                 a = 2 * math.pi * k / 16
                 x, y = px + d * math.cos(a), py + d * math.sin(a)
-                if math.hypot(x - ox, y - oy) > job["placement_radius"] - r:
+                if not inside_disc(job, (x - r, y - r, x + r, y + r), job["placement_radius"]):
                     continue
                 if free(px, py, x, y):
                     best = (x, y)
@@ -434,6 +439,7 @@ def mode_place(job):
     board.SetCopperLayerCount(job["copper_layers"])
     bds = board.GetDesignSettings()
     bds.SetBoardThickness(MM(job["thickness"]))
+    bds.SetAuxOrigin(P(job, 0, 0))          # drill/place origin = board centre (centroid file reference)
 
     # outline
     if job["outline"]["type"] == "circle":

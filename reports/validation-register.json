@@ -1,0 +1,401 @@
+{
+ "date": "2026-10-24",
+ "gates": {
+  "A": "PASS",
+  "B": "PASS",
+  "C": "PASS",
+  "D (compact-22mm)": "OPEN",
+  "E (compact-22mm)": "OPEN",
+  "F (compact-22mm)": "OPEN",
+  "D (evaluation-board)": "OPEN",
+  "E (evaluation-board)": "OPEN",
+  "F (evaluation-board)": "OPEN",
+  "G": "OPEN: requires assembled-prototype testing (cannot be closed by software)"
+ },
+ "entries": [
+  {
+   "id": "VAL-A1",
+   "item": "Research and requirement documents present",
+   "method": "INSPECT",
+   "status": "PASS",
+   "evidence": "research/nubm44-research.md, research/converter-ic-research.md, research/component-research.md, ...",
+   "detail": ""
+  },
+  {
+   "id": "VAL-CALC-01",
+   "item": "Current setpoint worst-case tolerance",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "3.5799 % (limit max 5.0)"
+  },
+  {
+   "id": "VAL-CALC-02",
+   "item": "Nominal setpoint error",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "0.1 % (limit max 0.5)"
+  },
+  {
+   "id": "VAL-CALC-03",
+   "item": "Backup current limit minimum above setpoint (no interference)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "4.8 A (limit min 4.350354954954955)"
+  },
+  {
+   "id": "VAL-CALC-04",
+   "item": "Average inductor current vs ILIM minimum (20 % margin)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "8.8715 A (limit max 10.213138686131387)"
+  },
+  {
+   "id": "VAL-CALC-05",
+   "item": "Peak inductor current vs Isat (30 % drop rating)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "8.4579 A (limit max 14.0)"
+  },
+  {
+   "id": "VAL-CALC-06",
+   "item": "Inductor RMS current vs Irms (20 C rise)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "7.3929 A (limit max 12.8)"
+  },
+  {
+   "id": "VAL-CALC-07",
+   "item": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target > 95 %)",
+   "method": "CALC",
+   "status": "FAIL",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "94.5883 % (limit min 95.0)"
+  },
+  {
+   "id": "VAL-CALC-08",
+   "item": "Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "91.2684 % (limit min 86.0)"
+  },
+  {
+   "id": "VAL-CALC-09",
+   "item": "Boost off-time vs minimum off-time",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "909.3389 ns (limit min 145.0)"
+  },
+  {
+   "id": "VAL-CALC-10",
+   "item": "Reverse-polarity FET dissipation (worst point)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "0.5085 W (limit max 0.6)"
+  },
+  {
+   "id": "VAL-CALC-11",
+   "item": "Shunt dissipation vs 50 % of rating",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "0.16 W (limit max 0.5)"
+  },
+  {
+   "id": "VAL-CALC-12",
+   "item": "TPS552882 junction estimate at 50 C board (60 K/W assumed)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "97.1115 C (limit max 125)"
+  },
+  {
+   "id": "VAL-CALC-13",
+   "item": "Hardware UVLO falling threshold >= 2.80 V cell floor",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "2.8292 V (limit min 2.8)"
+  },
+  {
+   "id": "VAL-CALC-14",
+   "item": "Hardware UVLO falling threshold below firmware cut-off",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "2.8292 V (limit max 2.85)"
+  },
+  {
+   "id": "VAL-CALC-15",
+   "item": "OV backstop trip (min) above normal maximum output",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "6.39 V (limit min 5.273)"
+  },
+  {
+   "id": "VAL-CALC-16",
+   "item": "Laser current ripple (p-p) as % of setpoint",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "8.8537 % (limit max 10.0)"
+  },
+  {
+   "id": "VAL-CALC-17",
+   "item": "Output capacitor RMS current per capacitor",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "0.921 A (limit max 3.0)"
+  },
+  {
+   "id": "VAL-CALC-18",
+   "item": "Current-loop phase margin (all corners)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "111.7289 deg (limit min 50.0)"
+  },
+  {
+   "id": "VAL-CALC-19",
+   "item": "Current-loop gain margin (all corners)",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "12.0924 dB (limit min 10.0)"
+  },
+  {
+   "id": "VAL-CALC-20",
+   "item": "Crossover below RHP zero / 5",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "4858.1463 Hz (limit max 11119.032651578316)"
+  },
+  {
+   "id": "VAL-CALC-21",
+   "item": "Crossover below CSA bandwidth / 3",
+   "method": "CALC",
+   "status": "PASS",
+   "evidence": "engineering/calculations/power-stage-results.md",
+   "detail": "4858.1463 Hz (limit max 12333.333333333334)"
+  },
+  {
+   "id": "VAL-ERC-compact-22mm",
+   "item": "ERC (compact-22mm): errors 0, warnings 0",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/erc-compact-22mm.json",
+   "detail": ""
+  },
+  {
+   "id": "VAL-NET-compact-22mm",
+   "item": "Netlist equals connectivity.yaml (compact-22mm)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/schematic-compact-22mm.json",
+   "detail": "0 differences"
+  },
+  {
+   "id": "VAL-ROUTE-compact-22mm",
+   "item": "PCB placed and fully routed (compact-22mm)",
+   "method": "CAD",
+   "status": "FAIL",
+   "evidence": "reports/drc-compact-22mm.json",
+   "detail": "35 unconnected items"
+  },
+  {
+   "id": "VAL-PARITY-compact-22mm",
+   "item": "PCB matches schematic (compact-22mm)",
+   "method": "CAD",
+   "status": "FAIL",
+   "evidence": "reports/drc-compact-22mm.json",
+   "detail": "65 parity issues"
+  },
+  {
+   "id": "VAL-DRC-compact-22mm",
+   "item": "DRC errors (compact-22mm)",
+   "method": "CAD",
+   "status": "FAIL",
+   "evidence": "reports/drc-compact-22mm.json",
+   "detail": "187 errors {'clearance': 30, 'courtyards_overlap': 8, 'copper_edge_clearance': 60, 'track_width': 62, 'starved_thermal': 27}"
+  },
+  {
+   "id": "VAL-EXPORT-compact-22mm",
+   "item": "PCBWay export package (compact-22mm)",
+   "method": "CAD",
+   "status": "NOT RUN",
+   "evidence": "",
+   "detail": ""
+  },
+  {
+   "id": "VAL-ERC-evaluation-board",
+   "item": "ERC (evaluation-board): errors 0, warnings 0",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/erc-evaluation-board.json",
+   "detail": ""
+  },
+  {
+   "id": "VAL-NET-evaluation-board",
+   "item": "Netlist equals connectivity.yaml (evaluation-board)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/schematic-evaluation-board.json",
+   "detail": "0 differences"
+  },
+  {
+   "id": "VAL-ROUTE-evaluation-board",
+   "item": "PCB placed and fully routed (evaluation-board)",
+   "method": "CAD",
+   "status": "NOT RUN",
+   "evidence": "",
+   "detail": ""
+  },
+  {
+   "id": "VAL-DRC-evaluation-board",
+   "item": "DRC (evaluation-board)",
+   "method": "CAD",
+   "status": "NOT RUN",
+   "evidence": "",
+   "detail": ""
+  },
+  {
+   "id": "VAL-EXPORT-evaluation-board",
+   "item": "PCBWay export package (evaluation-board)",
+   "method": "CAD",
+   "status": "NOT RUN",
+   "evidence": "",
+   "detail": ""
+  },
+  {
+   "id": "VAL-SIM-01",
+   "item": "Power-on, nominal battery 3.7 V, typical diode",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"steady_current_a\": 3.9966775448338865, \"overshoot_pct\": 0.00025570983975481843, \"peak_a\": 3.996687764731632}"
+  },
+  {
+   "id": "VAL-SIM-02",
+   "item": "Power-on at 3.15 V (just above the 3.08 V hardware UVLO), maximum-Vf diode",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"steady_current_a\": 3.9966157734288297, \"overshoot_pct\": 0.00023969124509472158, \"peak_inductor_a\": 6.35274849}"
+  },
+  {
+   "id": "VAL-SIM-03",
+   "item": "Current regulation across battery 3.0-4.2 V and diode Vf corners (incl. Vf below Vbat)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"3.0V_min\": 3.9968, \"3.0V_typ\": 3.9968, \"3.0V_max\": 3.9968, \"3.7V_min\": 3.9964, \"3.7V_typ\": 3.9964, \"3.7V_max\": 3.9969, \"4.2V_min\": 3.9966, \"4.2V_typ\": 3.9965,"
+  },
+  {
+   "id": "VAL-SIM-04",
+   "item": "Input voltage reduction (4.0 -> 3.2 V over 1 ms, 40 mOhm source)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"max_current_deviation_pct\": 2.6285632341476295}"
+  },
+  {
+   "id": "VAL-SIM-05",
+   "item": "Load variation: diode Vf drops 0.15 V over 2 ms (faster than diode thermal time constants)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"max_current_deviation_pct\": 0.08351300000000172}"
+  },
+  {
+   "id": "VAL-SIM-06",
+   "item": "Flash transitions at full battery 4.2 V with lowest-Vf diode (Vf < Vbat region)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"peak_current_a\": 3.9967737576273845, \"turn_off_to_50mA_s\": 0.000491301700000002}"
+  },
+  {
+   "id": "VAL-SIM-07",
+   "item": "Fault shutdown: interlock opens during emission",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"time_to_50mA_s\": 6.461617000000017e-05}"
+  },
+  {
+   "id": "VAL-SIM-08",
+   "item": "Output short-circuit (10 mOhm) during emission",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"peak_inductor_current_a\": 12.5687542, \"settled_output_current_a\": 3.996672699321357}"
+  },
+  {
+   "id": "VAL-SIM-09",
+   "item": "Open load (diode disconnected) during emission, hardware backstop only",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"peak_vout_v\": 6.71037081}"
+  },
+  {
+   "id": "VAL-SIM-10",
+   "item": "Reverse battery (-4.2 V): P-FET blocks (body diode reverse-biased, Vgs = 0)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"reverse_current_a\": 2.492341e-07, \"vbat_node_v\": -4.98468e-07}"
+  },
+  {
+   "id": "VAL-SIM-11",
+   "item": "Control-loop response (linearised model, 12 corners)",
+   "method": "SIM",
+   "status": "PASS",
+   "evidence": "simulation/results/results.md",
+   "detail": "{\"min_phase_margin_deg\": 111.72886450565349, \"min_gain_margin_db\": 12.092440233441394}"
+  },
+  {
+   "id": "VAL-FW-TEST",
+   "item": "Firmware state-machine unit tests (host)",
+   "method": "TEST(host)",
+   "status": "PASS",
+   "evidence": "firmware/tests/test_app.c",
+   "detail": "26 checks, 0 failures"
+  },
+  {
+   "id": "VAL-FW-BUILD",
+   "item": "Firmware builds for ATtiny1616 with -Werror",
+   "method": "BUILD",
+   "status": "PASS",
+   "evidence": "firmware/build.ps1",
+   "detail": ""
+  },
+  {
+   "id": "VAL-REQ-BLOCKED",
+   "item": "Requirements awaiting owner decisions",
+   "method": "INSPECT",
+   "status": "FAIL",
+   "evidence": "engineering/requirements.md",
+   "detail": "REQ-BAT-04"
+  },
+  {
+   "id": "VAL-REQ-RISK",
+   "item": "Requirements at risk (documented, not blocking CAD)",
+   "method": "INSPECT",
+   "status": "PASS",
+   "evidence": "engineering/requirements.md",
+   "detail": "REQ-OUT-01, REQ-PWR-02"
+  }
+ ]
+}
