@@ -577,6 +577,38 @@ def mode_cleanup(job):
     print(f"cleanup: removed {n} dangling vias/tracks")
 
 
+def mode_geometry(job):
+    """Write footprint geometry (unplaced: origin, orientation 0) for the fast floorplan checker:
+    pad outlines, pad nets, courtyard box and whether the footprint is native to the back side."""
+    out = {}
+    for item in job["footprints"]:
+        fp = load_fp(item)
+        native_back = fp.GetLayer() == pcbnew.B_Cu
+        pads = []
+        for pad in fp.Pads():
+            if pad.GetAttribute() in (pcbnew.PAD_ATTRIB_PTH, pcbnew.PAD_ATTRIB_NPTH):
+                kind, layer = "THT", pcbnew.F_Cu
+            else:
+                kind = "B" if pad.IsOnLayer(pcbnew.B_Cu) and not pad.IsOnLayer(pcbnew.F_Cu) else "F"
+                layer = pcbnew.B_Cu if kind == "B" else pcbnew.F_Cu
+            poly = pad.GetEffectivePolygon(layer, pcbnew.ERROR_INSIDE)
+            outline = []
+            if poly.OutlineCount():
+                o = poly.Outline(0)
+                outline = [(round(pcbnew.ToMM(o.CPoint(k).x), 4), round(pcbnew.ToMM(o.CPoint(k).y), 4))
+                           for k in range(o.PointCount())]
+            pos = pad.GetPosition()
+            pads.append({"num": pad.GetNumber(), "x": pcbnew.ToMM(pos.x), "y": pcbnew.ToMM(pos.y), "kind": kind,
+                         "net": item["pad_nets"].get(pad.GetNumber(), ""), "outline": outline,
+                         "drill": pcbnew.ToMM(pad.GetDrillSize().x) if kind == "THT" else 0.0})
+        out[item["ref"]] = {"native_back": native_back, "pads": pads,
+                            "courtyard": courtyard_box(fp, "B" if native_back else "F")}
+    with open(job["geometry"], "w", encoding="utf-8") as f:
+        json.dump(out, f)
+    print(f"geometry for {len(out)} footprints")
+
+
 if __name__ == "__main__":
     job = json.load(open(sys.argv[1], encoding="utf-8"))
-    {"place": mode_place, "finish": mode_finish, "cleanup": mode_cleanup}[job["mode"]](job)
+    {"place": mode_place, "finish": mode_finish, "cleanup": mode_cleanup,
+     "geometry": mode_geometry}[job["mode"]](job)

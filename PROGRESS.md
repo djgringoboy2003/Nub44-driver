@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-24 (evening)._
+_Last updated: 2026-10-24 (Codex continuation; recovered routing checkpoint)._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -11,7 +11,7 @@ _Last updated: 2026-10-24 (evening)._
 | C Simulation | **Done (model-level)** | `simulation/run_sims.py` → `simulation/results/results.md`: SIM-01…SIM-11 PASS in a behavioural averaged model (no vendor model exists) |
 | D PCB placed and routed | **In progress (Variant A)** | All 65 parts placed (`hardware/compact-22mm/placement.yaml`); pours and via fields defined; FreeRouting leaves about 35–48 connections unrouted |
 | E ERC/DRC clean | Not yet | DRC report `reports/drc-compact-22mm.json` (latest run) |
-| F Manufacturing files | Not started | Formats researched (`research/pcbway-requirements.md`) |
+| F Manufacturing files | Open; export tooling exists, unvalidated | `automation/export/export_pcbway.py`; owner polarity decision remains blocked |
 | G Physical validation | Not started (needs hardware) | — |
 
 **Design status:**
@@ -31,9 +31,8 @@ _Last updated: 2026-10-24 (evening)._
 
 ## Next actions (in order)
 
-1. **Finish routing Variant A.** Options, in order of preference:
-   - (a) Re-run FreeRouting now that the real 0.15 mm net classes are in the DSN; until the last run the DSN
-     carried a single 0.2 mm default class.
+1. **Correct the recovered PCB pipeline, then finish routing Variant A.** The latest DSN already contains 0.15 mm classes; the last run still imported undersized neck-down tracks. Fix bottom-side placement transforms, ring edge clearance, field parity and the C10/C11 courtyard overlap before the next routing attempt. Options:
+   - (a) Re-run FreeRouting with minimum-width neck-down behavior corrected and inspect actual KiCad DRC.
    - (b) Improve placement for routability: group MCU nets, move more parts to the bottom side.
    - (c) Complete the remaining connections with a scripted router.
    - (d) If the board still cannot route cleanly, document the limit (Phase 8) and keep Variant B as the
@@ -41,24 +40,32 @@ _Last updated: 2026-10-24 (evening)._
 2. Variant B (evaluation board) placement and routing; with relaxed density this should route completely.
 3. Exports: Gerbers/drill (X2 off), PCBWay BOM and centroid in plugin format, iBOM, renders, schematic PDF,
    assembly and fab drawings, stack-up note; `manufacturing/pcbway/` and the zip.
-4. Entry scripts: `doctor.ps1`, `build.ps1`, `validate.ps1` (validation register + gate computation),
-   `export-pcbway.ps1`, `package.ps1`.
-5. Sourcing database `sourcing/components.csv` (from connectivity.yaml plus researched supplier data; UNKNOWN where
-   not verified) and cost estimate.
-6. Documentation: assembly instructions, bench test plan (Gate G, dummy load first), final report.
+4. Verify existing entry scripts (`doctor`, `build`, `validate`, `export-pcbway`, `package`) and harden gate computation: missing/stale reports and unrouted boards must not pass release checks.
+5. Verify the existing sourcing database (`sourcing/components.csv`, `sourcing/build_sourcing.py`); supplier stock and price remain UNKNOWN without current evidence.
+6. Review existing assembly instructions and dummy-load-first bench plan; add final evidence and limitations. Gate G requires hardware.
 
 **How to rebuild what exists:**
 ```powershell
-.venv\Scripts\python.exe automation\setupuild_library.py          # symbols + footprints
-.venv\Scripts\python.exe automation\schematicuild_schematic.py     # schematics + ERC + netlist check
-.venv\Scripts\python.exe automation\placementuild_pcb.py --variant compact-22mm --stage all
+.venv\Scripts\python.exe automation\setup\build_library.py
+.venv\Scripts\python.exe automation\schematic\build_schematic.py
+.venv\Scripts\python.exe automation\placement\build_pcb.py --variant compact-22mm --stage all
 .venv\Scripts\python.exe engineering\calculations\power_stage.py
-.venv\Scripts\python.exe simulationun_sims.py
-.irmwareuild.ps1
+.venv\Scripts\python.exe simulation\run_sims.py
+.\firmware\build.ps1
 .venv\Scripts\python.exe -m pytest tests
+.\scripts\validate.ps1
 ```
 
+Existing entry scripts were added in commit `2faa5b6`; their existence does not mean the boards or manufacturing package pass validation.
+
 ## Log
+
+### 2026-10-24: recovered Claude routing checkpoint and audited handoff
+- Preserved unfinished `floorplan.py`, geometry export, compact PCB, project rules and latest DRC report.
+- Actual checkpoint: 65 placed footprints, 33 unconnected items, 91 DRC errors (50 undersized tracks, 40 ring edge violations, one courtyard overlap), 44 warnings and six Datasheet field mismatches.
+- Existing Python tests: 11 passed. The previous entry-script/export milestone had not updated this handoff or the requirement register.
+- Validation audit found that Gate E omitted routing/ERC and Gate F could consequently pass an unrouted board. Fixing the evidence and release dependencies is active work; no release is approved.
+- No Git remote is configured; commits are local until a destination is supplied.
 
 ### 2026-10-24 (evening): library, schematic, simulation, firmware, PCB pipeline
 - **Library:**

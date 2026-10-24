@@ -75,9 +75,9 @@ Statuses are updated as work proceeds; see the change history in git.
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
-| REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | OPEN | |
-| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | OPEN | |
-| REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | OPEN | |
+| REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | DESIGNED | Circle of radius 11 mm in placement.yaml; full DRC remains open. |
+| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; perimeter copper edge-clearance violations still open. Polarity blocked by REQ-BAT-04. |
+| REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | DESIGNED | J3 PTH laser pads placed; routing incomplete. |
 | REQ-MECH-04 | Evaluate 2-layer and 4-layer stack-ups. | BRIEF | CALC | VERIFIED-CALC | 4-layer chosen; 2-layer rejected for density and current paths (DD-14). |
 | REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | DESIGNED | Variant B project generated from the same spec (0402 parts, full test pads); layout pending. |
 | REQ-PCB-01 | Layout priorities: small switching loops, input caps near switches, Kelvin sensing, quiet feedback, thermal copper, grounding strategy. | BRIEF | INSPECT, CAD | OPEN | |
@@ -89,13 +89,13 @@ Statuses are updated as work proceeds; see the change history in git.
 |---|---|---|---|---|---|
 | REQ-CAD-01 | Native, editable KiCad schematic and PCB. | BRIEF | CAD | DESIGNED | Native KiCad 10 schematic (both variants) done; PCB layout in progress. |
 | REQ-CAD-02 | EasyEDA compatibility where practical. | BRIEF | INSPECT | OPEN | |
-| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | OPEN | |
+| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | DESIGNED | Entry scripts exist; validation audit found missing gate dependencies and stale-report checks. Corrections in progress; DRC is failing. |
 | REQ-CAD-04 | Netlist cross-checked against a machine-readable connectivity specification. | BRIEF | CAD | VERIFIED-CAD | Netlist equals connectivity.yaml pin-for-pin (reports/schematic-*.json); checker sensitivity tested. |
-| REQ-MFG-01 | PCBWay fabrication and assembly package generated from the real CAD files by one command. | BRIEF | CAD | OPEN | |
+| REQ-MFG-01 | PCBWay fabrication and assembly package generated from the real CAD files by one command. | BRIEF | CAD | DESIGNED | Export pipeline exists; no validated package or Gate F release yet. |
 | REQ-MFG-02 | BOM and placement data validated against the placed footprints. | BRIEF | CAD | OPEN | |
 | REQ-MFG-03 | No manufacturing order is placed automatically. | BRIEF | INSPECT | OPEN | |
-| REQ-SRC-01 | Component database with sourcing data; unverified data recorded as UNKNOWN. | BRIEF | INSPECT | OPEN | `sourcing/components.csv` |
-| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | OPEN | |
+| REQ-SRC-01 | Component database with sourcing data; unverified data recorded as UNKNOWN. | BRIEF | INSPECT | DESIGNED | Existing sourcing/components.csv and generator; supplier availability and price unverified. |
+| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | DESIGNED | Assembly and bench-test instructions exist; CAD exports and final report still pending. |
 
 ## 8. Release gates
 

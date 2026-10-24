@@ -8,6 +8,7 @@ Pipeline (each stage can be run alone with --stage):
   finish  KiCad Python: import SES, add copper pours, fill zones
   drc     kicad-cli DRC with schematic parity -> reports/drc-<variant>.json
   render  layer plots for review -> build/<variant>/*.png
+  geometry footprint geometry cache for the fast floorplan checker (floorplan.py)
 
 The schematic netlist (hardware/<variant>/nubm44_driver.net, produced by build_schematic.py) is the
 source of footprints and connectivity, so the PCB always follows the schematic.
@@ -173,6 +174,7 @@ def make_job(variant: str, mode: str) -> dict:
         **project_rules(names), "drc_report": str(paths.REPORTS / f"drc-{variant}.json"),
         "board": str(vdir / f"{PROJECT}.kicad_pcb"), "dsn": str(build / f"{PROJECT}.dsn"),
         "ses": str(build / f"{PROJECT}.ses"), "report": str(build / "placement-report.json"),
+        "geometry": str(build / "fpgeom.json"),
     }
 
 
@@ -250,7 +252,7 @@ def stage_render(variant: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--variant", default="compact-22mm")
-    ap.add_argument("--stage", default="all", choices=["all", "rules", "place", "route", "finish", "cleanup", "drc", "render"])
+    ap.add_argument("--stage", default="all", choices=["all", "rules", "place", "route", "finish", "cleanup", "drc", "render", "geometry"])
     ap.add_argument("--passes", type=int, default=30)
     ap.add_argument("--route-timeout", type=int, default=1800)
     args = ap.parse_args()
@@ -258,6 +260,9 @@ def main() -> int:
     if (paths.HARDWARE / v / "MANUAL_EDITS").exists() and args.stage in ("all", "place", "finish"):
         raise SystemExit(f"{v}: MANUAL_EDITS present; refusing to regenerate the board")
     names = board_net_names(paths.HARDWARE / v / f"{PROJECT}.net")
+    if args.stage == "geometry":
+        kicad_py(make_job(v, "geometry"), v)
+        return 0
     summary = {}
     if args.stage in ("all", "rules", "place"):
         write_rules(v, names)
