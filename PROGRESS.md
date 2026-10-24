@@ -1,40 +1,67 @@
-# Progress log
+# Progress
 
-Newest entries first. Each entry records what was actually done and what evidence exists.
+## Current state (handover)
 
-## 2026-10-24 — Phase 0: discovery and environment
+_Last updated: 2026-10-24._
 
-### Workspace audit
-- `C:\NUBM44 driver` was empty and not a git repository. Initialised git (`main`).
-- The previous design files named in the brief do not exist on this machine (searched the workspace and the
-  whole user profile). Recorded in `references/previous-design/README.md`. The previous concept is audited from
-  the brief's description in `engineering/previous-design-audit.md`.
-
-### Machine
-- Windows 10 Pro 22H2 (10.0.19045), x64, Intel Core i5-7300U (2 cores / 4 threads), 15.9 GB RAM, ~170 GB free on C:.
-- User account is **not** an administrator. All tools are installed per-user or project-local; no elevation used.
-
-### Software found
-| Tool | Version | Location |
+| Gate | Status | Evidence |
 |---|---|---|
-| Git | 2.55.0.windows.5 | `C:\Program Files\Git` |
-| Python | 3.11.9 | `%LOCALAPPDATA%\Programs\Python\Python311` |
-| Java | Temurin OpenJDK 17.0.20.1 | `C:\Program Files\Eclipse Adoptium\jdk-17.0.20.101-hotspot` |
-| Node.js | 22.23.2 | `C:\Program Files\nodejs` |
-| winget | 1.29.380 | WindowsApps |
-| PowerShell | 7.6.8 | |
+| A Research complete | **Done** | `research/*.md`, `research/architecture-comparison.md`, `engineering/requirements.md` |
+| B Electrical design (schematic, netlist) | **In progress** | Connectivity defined in `engineering/design-decisions.md` DD-02…DD-11; library generation started |
+| C Simulation | Not started | — |
+| D PCB placed and routed | Not started | Toolchain round-trip proven (pcbnew API → DSN → FreeRouting → SES → DRC clean) on a test board |
+| E ERC/DRC clean | Not started | — |
+| F Manufacturing files | Not started | PCBWay formats researched (`research/pcbway-requirements.md`) |
+| G Physical validation | Not started (needs hardware) | — |
 
-Missing at start: KiCad, ngspice, FreeRouting, EasyEDA, AVR toolchain, 7-Zip.
+**Design status in one paragraph:**
+- **Power stage and current regulation:** TPS552882 buck-boost (VIN from a high-side SiSS23DN
+  reverse-polarity P-FET; external SiSS80DN buck-leg FETs; XGL5030-102 1 µH). Laser current regulation:
+  10 mΩ high-side shunt → INA186A2 (G = 50) → 6.65k/10.0k divider → FB = 1.2 V at 3.996 A. Backup ceiling:
+  TPS552882 ISP/ISN 4.8–5.2 A.
+- **Enable chain:** EN/UVLO is a VBAT divider (3.08 V on / 2.83 V off) with three open-drain pull-downs:
+  MCU (default off), interlock, and an over-voltage Zener backstop. The MCU is an ATtiny1616.
+- **Calculations:** `engineering/calculations/power_stage.py` gives 20 of 21 checks PASS. The one FAIL is a
+  genuine finding: efficiency at 4.0 V is 94.6 % against the > 95 % target.
 
-### Software installed
-| Tool | Version | How | Location |
-|---|---|---|---|
-| ngspice | 47 (2026-08-11) | Official SourceForge `ngspice-47_64.7z`, extracted with py7zr | `tools/ngspice/Spice64` |
-| FreeRouting CLI | 2.5.0 (2026-10-05) | Official GitHub release `freerouting-cli-2.5.0-windows-x64.zip`, SHA-256 checked against the release checksum file | `tools/freerouting` |
-| Python venv | 3.11.9 | `python -m venv .venv` + numpy, scipy, matplotlib, pandas, pyyaml, jsonschema, pytest, jinja2, pypdf, pymupdf, py7zr, reportlab, sexpdata | `.venv` |
-| KiCad | 10.0.6 | `winget install KiCad.KiCad --scope user` (installer's `/currentuser` mode; no admin) | in progress |
+**Open owner decisions / blockers:**
+1. **Battery polarity:** REQ-BAT-04 is BLOCKED. The working interpretation is spring = B+, ring = B−; the owner must confirm.
+2. **Default current:** 4.0 A (as specified) is above the NUBM44's typical 3.0 A. Recommend 3.5 A; it is a single resistor change.
+3. **Efficiency:** the > 95 % at 4 V target is not achievable with the required protection (≈ 94.6 % estimated).
+4. **Sourcing:** stock is UNKNOWN for several parts (TPS552882 at LCSC, XGL5030-102, SiSS80DN).
 
-### Research (parallel)
-Five research tasks launched with separate file ownership under `research/`:
-NUBM44 laser diode, converter ICs/architecture, supporting components and sourcing, PCBWay + CAD tooling,
-batteries + host mechanics.
+## Next actions (in order)
+
+1. Generate the project library: footprints (`automation/nubm44/fpgen.py`, in progress), symbols (TPS552882,
+   INA186, PowerPAK MOSFETs, contacts), 3D placeholder models.
+2. Write `engineering/design/connectivity.yaml` (all parts, MPNs, footprints, pin→net).
+3. Schematic build script, then `kicad-cli sch upgrade`, ERC, netlist export, and a pin-by-pin comparison with
+   connectivity.yaml.
+4. ngspice behavioural simulations: start-up, flash transitions, open load, short circuit, battery step,
+   loop response.
+5. PCB generation (pcbnew API): 22 mm outline, 4-layer stack-up, placement YAML, critical power routing,
+   FreeRouting for the rest, zones, DRC with schematic parity. Then Variant B (evaluation board).
+6. Exports: Gerbers, drill, BOM/centroid in PCBWay format, renders, iBOM, PDFs; `manufacturing/pcbway/` package.
+7. Firmware (ATtiny1616): state machine, emission delay, interlock, LVC, thermal, flash, off-time mode memory.
+8. Entry-point scripts: `doctor.ps1`, `build.ps1`, `validate.ps1`, `export-pcbway.ps1`, `package.ps1`.
+9. Final report.
+
+## Log
+
+### 2026-10-24: research, architecture, calculations (commit 862e82d)
+- Workspace was empty and not a git repo; initialised `main`. The previous design files named in the brief are not
+  on this machine. The concept was audited from the brief (`engineering/previous-design-audit.md`); every proposed
+  part fails a datasheet limit.
+- Machine: Windows 10 Pro 22H2 x64, i5-7300U, 16 GB RAM. Non-admin account, so all tools are per-user or project-local.
+- Installed:
+  - KiCad 10.0.6 (winget, user scope)
+  - ngspice 47
+  - Temurin JRE 25.0.4.1 + FreeRouting 2.5.0 jar (the native CLI crashes)
+  - InteractiveHtmlBom 2.12.0
+  - Python venv
+- Verified:
+  - Schematic writer: KiCad ERC and netlist export agree with intended connectivity at all four rotations.
+  - pcbnew → DSN → FreeRouting → SES → KiCad DRC round trip: 0 violations, 0 unconnected.
+- Five parallel research tasks (laser, converters, components, batteries/mechanics, PCBWay/CAD) hit the account
+  usage limit once. They were resumed with bounded budgets and completed.
+- Architecture A (TPS552882) selected over a TPS61288 boost with clamp, the TPS552892, and the XL6009.
