@@ -125,8 +125,9 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 
 1. Owner decisions:
    - the current setpoint, the efficiency deviation and the HDI via-in-pad option;
-   - for the compact board, which routing-capacity option to take (`engineering/compact-feasibility.md`):
-     plated harness pads, an MCU pin swap, inner-layer fine lines, or HDI.
+   - for the compact board, the direction (`engineering/compact-feasibility.md`): HDI, a placement
+     re-architecture, or fewer parts. Router simulations show that the pin swap and inner fine lines alone
+     do not finish it.
 
    No part value or requirement has been silently relaxed.
 2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
@@ -166,6 +167,15 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: compact routing options simulated
+- **Router:** `grid_route.py` accepts optional per-layer rules (`layer_rules`: clearance, maximum width).
+  The default behaviour is unchanged; the compact checkpoint was captured at 90f09b8.
+- **Simulation on a copy of the placed copper:**
+  - Moving U3's and C3's ground fanout vias removes the two unreachable MCU pins.
+  - An MCU pin swap and 0.10/0.13 mm inner lines, alone or together, still leave about 19 nets clashing.
+  - The table is in `engineering/compact-feasibility.md`. The board lacks routing capacity, not a better
+    net order.
 
 ### 2026-10-25: compact board grid-routed to 20 open items
 - **Grid router:**

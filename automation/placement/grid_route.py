@@ -30,6 +30,8 @@ placement.yaml settings (all optional except nets):
     soft: [{net: VBAT, layer: In2.Cu}]
     via_cost: 1.0                    # in mm of track
     layer_cost: {F.Cu: 1.3}          # track-length multiplier per layer (default 1)
+    layer_rules: {In2.Cu: {clearance: 0.13, max_width: 0.1}}   # optional per-layer fine lines; the board
+                                     # design rules must allow them too (KiCad DRC is the check of record)
 """
 from __future__ import annotations
 
@@ -185,8 +187,18 @@ class Board:
                 m |= mask
         return m
 
+    def layer_rule(self, layer: str, key: str, default):
+        return ((self.cfg.get("layer_rules") or {}).get(layer) or {}).get(key, default)
+
+    def track_width(self, width: float, layer: str) -> float:
+        return min(width, self.layer_rule(layer, "max_width", width))
+
+    def clearance(self, layer: str) -> float:
+        return self.layer_rule(layer, "clearance", RULES["min_clearance"])
+
     def legality(self, net: str, width: float):
-        """Track-legal cells per routable layer and via-legal cells for this net (fixed copper only)."""
+        """Track-legal cells per routable layer and via-legal cells for this net (fixed copper only).
+        ``layer_rules`` may narrow tracks and clearance per layer (e.g. fine lines on an inner layer)."""
         c, mg = RULES["min_clearance"], self.cfg["margin"]
         vr = self.cfg["via_diameter"] / 2
         edge = self.radius - RULES["min_copper_edge_clearance"]
@@ -194,7 +206,8 @@ class Board:
         for l in self.copper:
             if l in self.layers:
                 d = edt_mm(self.foreign(net, l), self.h)
-                track_ok[l] = ((d >= width / 2 + c + mg) & (self.rr <= edge - width / 2 - mg)
+                w = self.track_width(width, l)
+                track_ok[l] = ((d >= w / 2 + self.clearance(l) + mg) & (self.rr <= edge - w / 2 - mg)
                                & ~self.keepout_other(net, l))
                 via_ok &= d >= vr + c + mg
             else:                                   # plane layers: only other holes' copper matters
@@ -401,7 +414,7 @@ class Router:
             return []
         rows, cols = np.divmod(np.asarray(cells), g.nx)
         hw = self.width[net] / 2
-        rmax = max(hw, self.vr) + self.sep + max(self.hw.values())
+        rmax = max(hw, self.vr) + self.sep + max(self.hw.values())   # the default layer rules are the widest
         pad = int(math.ceil(rmax / g.h)) + 2
         i0, i1 = max(rows.min() - pad, 0), min(rows.max() + pad, g.ny - 1)
         j0, j1 = max(cols.min() - pad, 0), min(cols.max() + pad, g.nx - 1)
@@ -418,8 +431,11 @@ class Router:
             for c in cl[l]:
                 m[c // g.nx - i0, c % g.nx - j0] = True
             d_cl = edt_mm(m, g.h)
+            sep = self.b.clearance(l) + self.cfg["route_margin"]
+            hw_l = self.b.track_width(self.width[net], l) / 2
             for k in self.classes:
-                near = (d_cl <= hw + self.sep + self.hw[k]) | (d_via <= self.vr + self.sep + self.hw[k])
+                hk = self.vr if k == "via" else self.b.track_width(k, l) / 2
+                near = (d_cl <= hw_l + sep + hk) | (d_via <= self.vr + sep + hk)
                 out.append((k, l, flat[near]))
         return out
 
@@ -464,7 +480,7 @@ class Router:
                     polylines.append((layer, pts))
                     cl[layer] += cells
                     for a, b in zip(pts, pts[1:]):
-                        extra[layer] |= seg_mask(g, a, b, self.width[net] / 2)
+                        extra[layer] |= seg_mask(g, a, b, self.b.track_width(self.width[net], layer) / 2)
                 for (i, j) in self.layer_changes(path, own_hole):
                     x, y = g.x0 + (j + 0.5) * g.h, g.y0 + (i + 0.5) * g.h
                     vias_xy.append((round(x, 4), round(y, 4)))
@@ -610,7 +626,8 @@ class Router:
                 pts = list(pts)
                 pts[0] = self.snap(net, layer, pts[0])
                 pts[-1] = self.snap(net, layer, pts[-1])
-                tracks.append({"net": net, "layer": layer, "width": self.width[net], "pts": [list(p) for p in pts]})
+                tracks.append({"net": net, "layer": layer, "width": self.b.track_width(self.width[net], layer),
+                               "pts": [list(p) for p in pts]})
             for x, y in st["vias_xy"]:
                 vias.append({"net": net, "x": x, "y": y})
         return tracks, vias
@@ -638,9 +655,10 @@ class Router:
         return best[1] if best else pt
 
 
-def exact_check(tracks: list, vias: list, via_d: float) -> list[str]:
+def exact_check(tracks: list, vias: list, via_d: float, layer_clearance: dict | None = None) -> list[str]:
     """Clearance between every pair of new items of different nets, measured on the real geometry."""
-    clr = RULES["min_clearance"]
+    layer_clearance = layer_clearance or {}
+    base = RULES["min_clearance"]
     segs = [(t["net"], t["layer"], tuple(a), tuple(b), t["width"]) for t in tracks
             for a, b in zip(t["pts"], t["pts"][1:])]
     out = []
@@ -649,19 +667,19 @@ def exact_check(tracks: list, vias: list, via_d: float) -> list[str]:
             if n1 == n2 or l1 != l2:
                 continue
             gap = seg_dist(a1, b1, a2, b2) - (w1 + w2) / 2
-            if gap < clr - 1e-6:
+            if gap < layer_clearance.get(l1, base) - 1e-6:
                 out.append(f"{n1}/{n2} tracks on {l1}: gap {gap:.3f} mm near {a1}")
         for v in vias:
             if v["net"] == n1:
                 continue
             gap = seg_dist(a1, b1, (v["x"], v["y"]), (v["x"], v["y"])) - (w1 + via_d) / 2
-            if gap < clr - 1e-6:
+            if gap < layer_clearance.get(l1, base) - 1e-6:
                 out.append(f"{n1} track / {v['net']} via: gap {gap:.3f} mm at ({v['x']}, {v['y']})")
     for i, v1 in enumerate(vias):
         for v2 in vias[i + 1:]:
             if v1["net"] != v2["net"]:
                 gap = math.hypot(v1["x"] - v2["x"], v1["y"] - v2["y"]) - via_d
-                if gap < clr - 1e-6:
+                if gap < base - 1e-6:
                     out.append(f"{v1['net']}/{v2['net']} vias: gap {gap:.3f} mm at ({v1['x']}, {v1['y']})")
     return out
 
@@ -786,7 +804,8 @@ def main() -> int:
     if not converged:
         problems.append("routes still in conflict after the last pass")
     problems = [p for p in problems if not any(p.startswith(f"OPEN {n}:") for n in dropped)]
-    problems += [f"CLEARANCE {p}" for p in exact_check(tracks, vias, cfg["via_diameter"])]
+    problems += [f"CLEARANCE {p}" for p in exact_check(tracks, vias, cfg["via_diameter"],
+                                                         {l: board.clearance(l) for l in board.layers})]
     print(f"routed {len(tracks)} track runs and {len(vias)} vias; problems: {len(problems)}")
     for p in problems:
         print("  " + p)

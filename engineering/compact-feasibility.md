@@ -50,6 +50,24 @@ decision or a documented design decision:
    outside (MFG-01). Rules of 0.10/0.13 mm on In2 would add about 30 % routing capacity where it is needed.
 4. **HDI blind vias (DD-16 option).** These remove the both-sides-free condition, at fabrication cost.
 
+**Simulation of options 2 and 3 (2026-10-25).** These runs used the grid router on a copy of the placed
+copper, with no project file changed. U3's and C3's ground fanout vias were also removed, because they sit
+in front of U3 pins 2 and 4.
+
+| Variant | Unreachable pins | Nets still clashing after 10 passes | Nets the router had to leave |
+|---|---|---|---|
+| Today | 2 | 19 | 10-11 |
+| Ground vias moved + pin swap | 0 | 19 | 9 |
+| Ground vias moved + pin swap + In2 0.10/0.13 mm | 0 | 19 | 9 |
+| Ground vias moved + In2 0.10/0.13 mm | 0 | 19 | 10 |
+
+Moving the ground vias removes the hard blocks. Neither the pin swap nor finer inner lines relieves the
+congestion. The board is short of routing capacity, not of a better net order. Completing it needs one of:
+- HDI (blind vias and via-in-pad, as DD-16 already proposes for U1);
+- a placement re-architecture that frees via sites by the MCU, for example the MCU and harness pads on
+  the top side, or fewer bottom test pads;
+- fewer parts on the 22 mm variant.
+
 ## Structural constraint: spring-pad via keep-out
 
 The centre spring pad J1 (B.Cu, radius 2.50 mm) excludes through vias within 2.95 mm of the board centre:
@@ -90,8 +108,8 @@ planes that other nets may cross, and earlier runs did exactly that. Finish dele
 
 ## Next steps
 
-1. Decide which of the options above to take. Options 1 and 2 are the most direct, and option 3 is a rule
-   change only.
+1. Decide the direction: HDI, a placement re-architecture or fewer parts. The simulations show that the pin swap
+   and inner fine lines alone do not finish the board. Moving U3's and C3's ground vias is needed in any case.
 2. Re-run `grid_route.py --rebuild --partial --write`, then place, route, finish, DRC and the layout review.
 3. Accept the variant only when DRC shows 0 unconnected and 0 errors, every power path is connected in the
    current-flow report, and no review screen has worsened without a recorded disposition.
