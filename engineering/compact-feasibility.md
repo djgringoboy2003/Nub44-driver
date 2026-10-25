@@ -71,9 +71,17 @@ planes that other nets may cross, and earlier runs did exactly that. Finish dele
 
 ## Next steps
 
-1. Place PGND and AGND vias as source vias before routing, then confirm the setpoint shift in the review.
+1. Give U1's PGND pins source vias to the plane before routing, then confirm the setpoint shift in the
+   review.
+   - The bottom output capacitor C12 sits directly under pins 9/10. Its VOUT and GND pads block every
+     via position there.
+   - A 2026-10-25 attempt confirmed this, so C12 must move first, for example beside C13.
 2. Close the one-item opens for DR1H, PG, CC_FLAG, FB and the U2 Kelvin pair with source routes, as was
    done for U1's escapes.
+   - U2's Kelvin inputs have no via landing that is free on both sides, because L1's SW2 pad lies above U2's
+     left pins.
+   - Swapping U2 and D1 puts U2 nearer the shunt's Kelvin vias.
+   - FB fits on B.Cu from R9 to R8 at y 4.15 under C9, then 3.85, which clears the ISN Kelvin via.
 3. Reduce MCU-region congestion: group the programming pads and pull the enable FETs nearer the EN via.
    The bottom side is at its placement capacity, which is why the optimiser flips some small parts to the
    top.
