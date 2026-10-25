@@ -101,6 +101,15 @@ class Schematic:
             value = str(lib_props["Value"][2]) if "Value" in lib_props else lib_id.split(":")[1]
         pins = {k: v for k, v in kicad_lib.symbol_pins(sym).items() if v["unit"] in (0, unit)}
         key = f"{ref}#{unit}"
+        # Fields are written horizontal. Library fields drawn vertically (R, L, thermistor) would then
+        # sit across the body and each other, so two-pin parts get stacked labels beside the body.
+        ref_at = child(lib_props["Reference"], "at") if "Reference" in lib_props else None
+        if (ref_offset is None and value_offset is None and len(pins) == 2 and ref_at is not None
+                and len(ref_at) > 3 and round(float(ref_at[3])) % 180 == 90):
+            if round(rot) % 180 == 0:            # vertical body: labels to the right
+                ref_offset, value_offset = (2.54, -1.27), (2.54, 1.27)
+            else:                                # horizontal body: labels above and below
+                ref_offset, value_offset = (-1.27, -2.54), (-1.27, 2.54)
 
         def prop(name, val, offset=None, hide=False):
             if offset is not None:

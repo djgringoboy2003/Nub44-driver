@@ -172,7 +172,7 @@ No protection function was removed. Variant B keeps 0402 parts and the full set 
 - **F.Cu:** power pours (VBAT input, SW1, SW2, VOUT, LD+) and signals.
 - **In1.Cu:** solid GND plane.
 - **In2.Cu:** VBAT pour on the left (Q1 → C1–C3/Q2 current path) and a GND fill elsewhere, leaving the
-  remainder of the layer free for routing.
+  remainder of the layer free for routing. The compact variant has no In2 VBAT pour since DD-25.
 - **B.Cu:** BAT_SPRING (spring → Q1), local VBAT and SW1 pours, and signals.
 - **Vias:** the battery current crosses layers through automatically placed via fields; vias are never in pads.
 - **Kelvin sensing:** sense nets ISP_K and ISN_K are separate nets that start at net-tie sense pads in the
@@ -267,3 +267,33 @@ had U1 directly above it.
 Result: 31 unconnected instead of 43, 0 DRC errors, and every power path connected (VBAT previously
 crossed one via and VOUT was open). The variant stays a routing draft; `engineering/compact-feasibility.md`
 lists the remaining work.
+
+## DD-25 Grid router, MCU relocation and signal-only In2 on the compact board
+FreeRouting stalled at about 45 open connections on the compact board. The MCU and the long cross-board
+signals failed every time.
+- **Grid router** (`automation/placement/grid_route.py`):
+  - Routes on a 0.05 mm grid over F.Cu, In2.Cu and B.Cu with through vias, against the exact copper of the
+    placed board.
+  - Negotiates congestion between nets (PathFinder), and an exact segment check closes every run.
+  - Writes explicit `grid_routes` copper into `placement.yaml`. The build adds it after the via fields and
+    before the GND fanout, so FreeRouting treats it as fixed wiring.
+  - When negotiation cannot converge, `--partial` keeps the conflict-free nets and leaves the clashing
+    ones to FreeRouting.
+- **No In2 VBAT pour.** The battery current runs B pour → via field → F pour; inner copper on those vias is
+  only a side branch, and In2 is the one layer that can cross the board centre. One field via that
+  reached only the B pour now also lands in the extended F pour.
+- **MCU:** moved below C1-C3 to (-6.35, 1.2) and rotated 0°, so its blocked top edge holds the unused
+  PC1-PC3, UPDI and LASER_EN, and the analog pins face the via sites below. A 0.8 mm escape ring is kept
+  free of parts on both sides. The over-voltage FET block (Q6, D3, R20) joined the other EN pull-downs.
+- **Placement and fanout rules:**
+  - `place_opt.py` charges `side_penalty` for a net that needs a via to change side.
+  - Router keep-outs are cut back around vias of other routed nets.
+  - GND fanout vias stay out of other nets' source pours. One had narrowed the LD_P pour to half its
+    width.
+
+Result: 20 unconnected instead of 31, 0 errors.
+- The power paths are equal or better: VOUT 1.46 mΩ, LD_P 0.47 mΩ.
+- Copper loss above the model is +44 mW (was +56 mW).
+- The ground-offset setpoint shift is +0.75 % (was +1.14 %).
+
+The remaining opens are a capacity limit: via sites near the MCU (`engineering/compact-feasibility.md`).

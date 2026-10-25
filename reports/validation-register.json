@@ -211,7 +211,7 @@
    "method": "CAD",
    "status": "FAIL",
    "evidence": "reports/drc-compact-22mm.json",
-   "detail": "31 unconnected items"
+   "detail": "20 unconnected items"
   },
   {
    "id": "VAL-PARITY-compact-22mm",
@@ -227,7 +227,7 @@
    "method": "CAD",
    "status": "FAIL",
    "evidence": "reports/drc-compact-22mm.json",
-   "detail": "0 errors, 6 warnings, 0 exclusions {'via_dangling': 5, 'connection_width': 1}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
+   "detail": "0 errors, 3 warnings, 0 exclusions {'via_dangling': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
   },
   {
    "id": "VAL-LAYOUT-compact-22mm",
@@ -235,7 +235,7 @@
    "method": "CAD",
    "status": "PASS",
    "evidence": "reports/layout-review-compact-22mm.json",
-   "detail": "16 REVIEW / 7 INFO screening results; dispositions in engineering/layout-review.md"
+   "detail": "13 REVIEW / 7 INFO screening results; dispositions in engineering/layout-review.md"
   },
   {
    "id": "VAL-EXPORT-compact-22mm",

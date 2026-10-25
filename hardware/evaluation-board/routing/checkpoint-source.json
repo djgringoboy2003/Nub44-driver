@@ -1,7 +1,7 @@
 {
   "variant": "evaluation-board",
   "captured_date": "2026-10-24",
-  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate. Source hashes describe capture-time inputs, not a release approval. Re-captured 2026-10-25 after finish-only changes (polarity silkscreen labels, PCBWay legend strokes); the DSN/SES are unchanged.",
+  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate. Source hashes describe capture-time inputs, not a release approval. Re-captured 2026-10-25 after finish-only changes (polarity silkscreen labels, PCBWay legend strokes); the DSN/SES are unchanged. Re-captured again 2026-10-25 after schematic field placement and build-pipeline changes (grid-route ordering, fanout pour avoidance); the DSN/SES are unchanged.",
   "archived_files_sha256": {
     "nubm44_driver.dsn": "55c13cc782c6f1abcab7a121f85a98aa2b9ffc28f9d53209ec94a62e4ef341d1",
     "nubm44_driver.ses": "4204cf1b08a2d1becc762af5be74cb139e2df9db386536252744770713a55f29",
@@ -13,14 +13,14 @@
     "hardware/evaluation-board/placement.yaml": "fd9b354e2179df620c4020c44e0f028358ae51c386b2d1a6a0be495c6fd53d1a",
     "hardware/evaluation-board/nubm44_driver.kicad_pcb": "4ad92aefaaab987519aa7aa8424daf0849c4ea27f0b75fd592ea5f5de8e972c8",
     "hardware/evaluation-board/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
-    "hardware/evaluation-board/nubm44_driver.kicad_sch": "45f904772edacb918ba37f2a9b1a52187f3907a4d1cbeef485ffe497a302ea8d",
-    "hardware/evaluation-board/nubm44_driver.net": "7f3e037384cc48a4237d1c92b79a223c9bc2adf207aecc81aa56c61db405f099",
-    "automation/placement/build_pcb.py": "e96da891f3ddf31ae5b934685ce5edabc30ee903dcb609bd43d27262850f9b0a",
-    "automation/placement/pcb_builder.py": "d19c8e53bb5e2d46917c07bad0976cf712f1502d84eb1b8b2b9ec3176b3ae746"
+    "hardware/evaluation-board/nubm44_driver.kicad_sch": "6578c4f31eb5a3d2a2d7be191b4bc5ccdd82ba18c0c8a1b5fa92c560d006872b",
+    "hardware/evaluation-board/nubm44_driver.net": "6a6dfe99f1cedaf12ef27cf2669385e4ba5a3b6c7b8412732838d6e5a4473c60",
+    "automation/placement/build_pcb.py": "842f43498f9c545b09e3e69cff81e50ec5e0aa63688d3cde372c12208e9abfba",
+    "automation/placement/pcb_builder.py": "9de747c31e34d3d1af0b4eaca91e5bc5cce1ff5e802b68800e429478732dadde"
   },
   "validation_at_capture": {
     "report": "reports/drc-evaluation-board.json",
-    "report_sha256": "0042164822009594ec54811e876df8febf4e7c253d8b65276ea069c49b5c941b",
+    "report_sha256": "da39c24382c7f278d441c1a252d99d8cadf7cebe1448f9d723ce4f2c984fc96f",
     "errors": 0,
     "warnings": 0,
     "unconnected": 0,

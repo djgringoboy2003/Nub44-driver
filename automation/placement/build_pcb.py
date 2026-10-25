@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -162,6 +163,8 @@ def make_job(variant: str, mode: str) -> dict:
             auto.append(item)
     order = {r: i for i, r in enumerate(place["parts"])}
     auto.sort(key=lambda it: order[it["ref"]])
+    # copper written by grid_route.py; left out while that tool re-places the board as its own input
+    grid = {} if os.environ.get("NUBM44_NO_GRID_ROUTES") else (place.get("grid_routes") or {})
     build = paths.BUILD / variant
     build.mkdir(parents=True, exist_ok=True)
     return {
@@ -173,6 +176,7 @@ def make_job(variant: str, mode: str) -> dict:
                      for s, boxes in (place.get("keepouts") or {}).items()},
         "footprints": manual + auto,
         "tracks": rename(place.get("tracks")), "vias": rename(place.get("vias")),
+        "grid_tracks": rename(grid.get("tracks")), "grid_vias": rename(grid.get("vias")),
         "texts": place.get("texts", []),
         "via_fields": rename(place.get("via_fields")),
         "fanout_nets": [names.get(n, n) for n in place.get("fanout_nets", [])],

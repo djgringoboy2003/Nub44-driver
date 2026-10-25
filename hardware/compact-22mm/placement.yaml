@@ -22,8 +22,12 @@ board:
 placement_radius: 9.55         # every courtyard corner inside this radius (ring copper starts at 9.8)
 courtyard_gap: 0.02          # courtyards may almost touch (they already include assembly clearance)
 keepouts:                    # automatic placement stays off the via fields (they pass through both sides)
-  B: [[-8.3, -6.6, -6.25, -3.3], [-1.95, -6.95, -1.25, -4.75], [0.15, 7.4, 1.05, 8.7], [2.05, 7.4, 3.65, 8.7],
-      [-4.5, -4.45, -0.55, -1.45]]   # last box: BAT_SPRING corridor from Q1's drain to the spring pad
+  B: [[-8.3, -6.6, -6.25, -3.3], [-1.95, -6.95, -1.25, -4.75], [2.3, 7.4, 3.65, 8.7],
+      [-4.5, -4.45, -0.55, -1.45], [-0.45, 5.85, 1.4, 7.0],   # BAT_SPRING corridor; PGND/VOUT vias under U1
+      [-9.3, -1.75, -3.4, -0.945], [-9.3, 3.345, -3.4, 4.15], [-9.3, -0.945, -8.495, 3.345],
+      [-4.205, -0.945, -3.4, 3.345]]   # 0.8 mm ring around U3 kept free for its pin escapes
+  F: [[-9.3, 3.345, -3.4, 4.15], [-9.3, -0.945, -8.495, 3.345], [-4.205, -0.945, -3.4, 3.345]]   # same ring
+                                   # on top: a via needs both sides free (C1-C3 already cover its top edge)
 
 parts:
   # mechanics and contacts
@@ -49,8 +53,9 @@ parts:
   # power stage, bottom
   Q1: {pos: [-4.02, -5.4, 180], side: B}            # directly under Q2: VBAT changes layer through the via field beside both
   Q3: {pos: [0.79, -6.7, 0], side: B}                # SW1 vias sit between Q1's drain and Q3's drain
-  U3: {pos: [-5.9, -0.9, 0], side: B}               # MCU beside its harness pads, enable chain and the PG/CC vias
-  C12: {pos: [0.3, 5.65, 90], side: B}               # output caps under the VOUT pour, via-connected
+  U3: {pos: [-6.35, 1.2, 0], side: B}               # MCU below C1-C3: its blocked top edge holds the unused PC1-PC3, UPDI and
+                                                    # LASER_EN; the analog pins face down, where vias fit
+  C12: {pos: [-0.4, 8.1, 0], side: B}               # left of C13, below the PGND vias: the area under U1's pins 9/10 stays free
   C13: {pos: [2.4, 5.65, 90], side: B}
   C11: {pos: [4.48, 6.0, 90], side: B}
   U2: {pos: [4.67, -1.6, 0], side: B}               # CSA in the right-hand bottom column: U3, U2, D1, then passives
@@ -67,55 +72,59 @@ parts:
   TP9: {pos: [-6.7, 4.92, 0], side: F}
   TP10: {pos: [-5.35, 6.45, 0], side: F}
   TP12: {pos: [-3.75, 7.45, 0], side: F}
-  TP1: {pos: [-6.669, 5.465, 180], side: B}   # place_opt
-  TP8: {pos: [6.858, -4.488, 90], side: B}   # place_opt
-  TP2: {pos: [-1.402, 7.795, 270], side: B}   # place_opt
-  TP6: {pos: [-5.344, 6.280, 180], side: B}   # place_opt
+  TP1: {pos: [-7.814, -2.458, 180], side: B}   # place_opt
+  TP8: {pos: [7.405, -4.030, 90], side: B}   # place_opt
+  TP2: {pos: [-3.648, 7.291, 90], side: B}   # place_opt
+  TP6: {pos: [-5.959, -2.403, 270], side: B}   # place_opt
   TP7: {pos: [0.205, -3.693, 90], side: B}   # place_opt
 
   # automatically placed parts: anchor = pad of a placed part (+ offset) or a board point
-  C4: {pos: [-4.650, 4.339, 180], side: B}   # place_opt; VIN HF decoupling behind the VIN via
+  C4: {pos: [-1.997, 4.270, 180], side: B}   # place_opt; VIN HF decoupling behind the VIN via
   R8: {pos: [7.224, 4.271, 90], side: B}   # place_opt
-  R5: {pos: [-4.547, 3.592, 270], side: F}   # place_opt; EN divider behind the EN via
-  R6: {pos: [-1.984, 4.280, 180], side: B}   # place_opt
-  C15: {pos: [2.499, -3.226, 180], side: B}   # place_opt
-  R7: {pos: [-0.277, 8.776, 270], side: B}   # place_opt
+  R5: {pos: [-4.403, 4.557, 0], side: F}   # place_opt; EN divider behind the EN via
+  R6: {pos: [-3.395, 5.998, 0], side: F}   # place_opt
+  C15: {pos: [2.503, -3.234, 180], side: B}   # place_opt
+  R7: {pos: [-2.574, 7.708, 270], side: B}   # place_opt
   R1: {pos: [-4.388, -7.653, 180], side: B}   # place_opt
   C16: {pos: [0.280, -7.248, 90], side: F}   # place_opt
-  C17: {pos: [-3.324, -0.408, 90], side: B}   # place_opt
-  D2: {pos: [-4.953, 1.492, 270], side: F}   # place_opt
-  R10: {pos: [-8.498, 0.576, 90], side: B}   # place_opt
-  R11: {pos: [-8.496, -0.981, 90], side: B}   # place_opt
-  R12: {pos: [-2.874, 6.001, 0], side: B}   # place_opt
-  R13: {pos: [-3.921, 5.763, 270], side: F}   # place_opt
+  C17: {pos: [-4.478, 4.905, 270], side: B}   # place_opt
+  D2: {pos: [-4.953, 1.527, 90], side: F}   # place_opt
+  R10: {pos: [-6.743, 1.427, 0], side: F}   # place_opt
+  R11: {pos: [-6.736, 5.371, 0], side: B}   # place_opt
+  R12: {pos: [-5.688, 4.548, 0], side: B}   # place_opt
+  R13: {pos: [-6.369, 2.598, 90], side: F}   # place_opt
   RT1: {pos: [-1.381, -7.687, 0], side: F}   # place_opt
-  R14: {pos: [-6.480, 0.591, 180], side: F}   # place_opt
-  R15: {pos: [-5.185, 5.183, 0], side: B}   # place_opt
-  R16: {pos: [-7.025, 4.394, 180], side: B}   # place_opt
+  R14: {pos: [-6.477, 0.572, 180], side: F}   # place_opt
+  R15: {pos: [-5.348, 5.719, 270], side: B}   # place_opt
+  R16: {pos: [-7.349, 4.550, 180], side: B}   # place_opt
   R17: {pos: [1.863, -6.121, 0], side: F}   # place_opt
   R19: {pos: [-3.168, -8.014, 270], side: B}   # place_opt
   Q4: {pos: [4.477, -3.901, 0], side: B}   # place_opt
   Q5: {pos: [4.162, -6.246, 270], side: B}   # place_opt
-  Q6: {pos: [-5.303, 2.708, 270], side: B}   # place_opt
+  Q6: {pos: [5.734, -4.566, 180], side: F}   # place_opt
   R18: {pos: [-3.205, -7.740, 180], side: F}   # place_opt
-  R20: {pos: [-7.256, 3.296, 0], side: B}   # place_opt
-  D3: {pos: [-7.739, 2.124, 180], side: B}   # place_opt
+  R20: {pos: [4.943, -2.693, 270], side: F}   # place_opt
+  D3: {pos: [4.255, -6.462, 0], side: F}   # place_opt
 
 # Battery polarity labels (REQ-BAT-04, DD-12): centre spring = B+, perimeter ring = B-. The legend meets
 # PCBWay's limits (MFG-01: height >= 0.8 mm, stroke >= 0.15 mm and >= height / 5). Spots were chosen clear
 # of courtyards, pads and vias; the board is too dense for longer words.
 texts:
   - {text: "B+", at: [-2.8, -2.75], layer: B.Silkscreen, size: 0.8, thickness: 0.16}   # beside the spring pad
-  - {text: "B-", at: [6.3, -5.5], layer: B.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring
-  - {text: "B-", at: [6.6, -4.8], layer: F.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring, top
+  - {text: "B-", at: [6.4, -5.4], layer: B.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring
+  - {text: "B-", at: [3.4, -7.8], layer: F.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring, top
 
 # automation/placement/place_opt.py ties these parts to the pin or via they serve
 place_opt:
   near_weight: 3.0
-  near: {C4: [-3.7, 2.9], C15: U2.3, C16: U3.4, C17: U3.4, D2: U3.4, R1: Q1.4, C9: U1.18, R5: [-3.45, 3.65], R6: [-3.45, 3.65]}
+  near: {C4: [-3.7, 2.9], C15: U2.3, C16: U3.4, C17: U3.4, D2: U3.4, R1: Q1.4, C9: U1.18, R5: [-3.45, 3.65], R6: [-3.45, 3.65],
+         R10: U3.9, R11: U3.9, R14: U3.5, R15: U3.5, R16: U3.12, R12: U3.8, R13: U3.8,
+         Q6: Q4.3, D3: Q4.3, R20: Q4.3}   # the over-voltage FET joins the other EN pull-downs
 
 # ---------------------------------------------------------------------------- copper
-# Stack-up roles: F.Cu power + signals, In1.Cu solid GND plane, In2.Cu VBAT plane (left), B.Cu power + signals.
+# Stack-up roles: F.Cu power + signals, In1.Cu solid GND plane, In2.Cu signals (GND pour fills the rest), B.Cu power
+# + signals. In2 carries no VBAT pour: the battery current runs B pour -> via field -> F pour, so inner copper on
+# those vias would only be a side branch, and In2 is the one layer that can cross the board centre.
 # Track widths: 0.15 mm signals, 0.25-0.40 mm drive/supply. Every source item is checked by KiCad DRC.
 
 fanout_nets: [GND]                 # every GND SMD pad gets its own short track + via to In1
@@ -135,8 +144,10 @@ tracks:
   - {net: COMP, layer: F.Cu, width: 0.15, pts: [[2.55, 1.90], [5.00, 1.90], [5.40, 2.30]]}
   - {net: ILIM, layer: F.Cu, width: 0.15, pts: [[2.55, 2.40], [3.20, 2.40], [3.45, 2.65]]}
   - {net: GND, layer: F.Cu, width: 0.20, pts: [[2.55, 3.40], [3.45, 3.40]]}
-  - {net: FB, layer: F.Cu, width: 0.15, pts: [[2.55, 3.90], [3.20, 3.90], [3.45, 4.15], [3.55, 4.15]]}
-  - {net: ISN_K, layer: F.Cu, width: 0.15, pts: [[2.55, 4.70], [4.70, 4.70], [4.99, 4.55]]}
+  - {net: FB, layer: F.Cu, width: 0.15, pts: [[2.55, 3.90], [3.20, 3.90], [3.45, 4.15], [3.65, 4.15]]}
+  - {net: FB, layer: B.Cu, width: 0.15, pts: [[3.65, 4.15], [5.75, 4.15], [6.10, 3.85], [7.22, 3.85]]}   # R9 -> R8 under C9, clear of the ISN via
+  - {net: FB, layer: B.Cu, width: 0.15, pts: [[4.35, 3.76], [4.35, 4.15]]}
+  - {net: ISN_K, layer: F.Cu, width: 0.15, pts: [[2.45, 4.39], [2.55, 4.49], [2.55, 4.70], [4.70, 4.70], [4.99, 4.55]]}
   - {net: ISP_K, layer: F.Cu, width: 0.15, pts: [[1.725, 4.60], [1.725, 5.10], [4.99, 5.10], [4.99, 5.40]]}
   - {net: ISN_K, layer: F.Cu, width: 0.15, pts: [[5.10, 4.40], [6.25, 4.40], [6.25, 4.50]]}
   - {net: ISP_K, layer: F.Cu, width: 0.15, pts: [[5.10, 5.50], [6.25, 5.50]]}
@@ -150,34 +161,39 @@ tracks:
   # bottom edge: GND pin 7 to its via, FSW straight down to R2
   - {net: GND, layer: F.Cu, width: 0.20, pts: [[-1.25, 4.60], [-1.25, 5.20], [-1.55, 5.65]]}
   - {net: FSW, layer: F.Cu, width: 0.15, pts: [[-0.525, 4.60], [-0.525, 5.50]]}
+  # Q2 gate: out of its pocket between the VBAT and SW1 pours to a via (inner layers carry it to U1)
+  - {net: DR1H, layer: F.Cu, width: 0.20, pts: [[-2.585, -6.39], [-2.25, -6.65], [-2.25, -7.10]]}
+  # PGND (pins 9/24, AGND pin 10 beside them) to C14's ground pad and a plane via directly below
+  - {net: GND, layer: F.Cu, width: 0.30, pts: [[0.00, 4.60], [0.00, 5.40]]}
+  - {net: GND, layer: F.Cu, width: 0.30, pts: [[0.20, 5.60], [-0.05, 6.35]]}
 
 vias:
   - {net: DR1L, x: -2.95, y: 1.35}
   - {net: DR1H, x: -3.75, y: 1.90}
+  - {net: DR1H, x: -2.25, y: -7.10}               # beside the Q2 gate
   - {net: VBAT, x: -3.70, y: 2.90}
   - {net: EN_UVLO, x: -3.45, y: 3.65}
   - {net: PG, x: -3.20, y: 4.40}
   - {net: CC_FLAG, x: -2.95, y: 5.15}
   - {net: GND, x: -1.55, y: 5.65}
+  - {net: GND, x: -0.05, y: 6.35}                  # PGND to the In1 plane
   - {net: COMP, x: 5.40, y: 2.30}
   - {net: ILIM, x: 3.45, y: 2.65}
   - {net: GND, x: 3.45, y: 3.40}
-  - {net: FB, x: 3.55, y: 4.15}
+  - {net: FB, x: 3.65, y: 4.15}
   - {net: ISN_K, x: 6.25, y: 4.50}
   - {net: ISP_K, x: 6.25, y: 5.50}
 
 via_fields:
   - {net: VBAT, count: 8, pitch: 0.75, polygon: [[-8.15, -3.45], [-6.4, -3.45], [-6.4, -6.1], [-7.0, -6.5], [-8.15, -4.9]]}   # beside Q1 sources / Q2 drain
   - {net: SW1, count: 3, pitch: 0.75, polygon: [[-1.95, -6.75], [-1.2, -6.75], [-1.2, -5.05], [-1.95, -5.05]]}   # between Q1 and Q3 drains
-  - {net: VOUT, count: 2, pitch: 0.8, polygon: [[0.25, 7.45], [0.95, 7.45], [0.95, 8.65], [0.25, 8.65]]}   # beside C10, below the bottom caps
-  - {net: VOUT, count: 4, pitch: 0.8, polygon: [[2.1, 7.45], [3.6, 7.45], [3.6, 8.65], [2.1, 8.65]]}
+  - {net: VOUT, count: 2, pitch: 0.75, polygon: [[0.55, 6.0], [1.3, 6.0], [1.3, 6.9], [0.55, 6.9]]}   # under U1's VOUT column
+  - {net: VOUT, count: 3, pitch: 0.8, polygon: [[2.35, 7.45], [3.6, 7.45], [3.6, 8.65], [2.35, 8.65]]}
 
 zones_pre:
   - {net: GND, layer: In1.Cu, circle: [0, 0, 10.6], priority: 0, solid: true}
-  - {net: VBAT, layer: In2.Cu, priority: 2, solid: true,   # left region: battery current path Q1 -> C1-C3/Q2 and U1 VIN
-     polygon: [[-2.6, -9.6], [-2.6, 3.4], [-10.4, 3.4], [-10.2, -2.5], [-9.0, -5.5], [-7.0, -7.6], [-4.5, -9.2]]}
   - {net: VBAT, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-5.8, -6.8], [-7.4, -5.4], [-8.9, -3.9]]}
+     polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-6.6, -6.8], [-7.6, -5.8], [-8.9, -3.9]]}
   - {net: VBAT, layer: B.Cu, priority: 2, solid: true,   # Q1 sources and the VBAT via field
      polygon: [[-8.3, -3.35], [-4.85, -3.35], [-4.85, -6.05], [-6.15, -6.05], [-6.15, -6.4], [-7.1, -6.45], [-8.3, -4.9]]}
   - {net: SW1, layer: F.Cu, priority: 2, solid: true,
@@ -189,7 +205,7 @@ zones_pre:
   - {net: VOUT, layer: F.Cu, priority: 2, solid: true,
      polygon: [[0.75, 4.3], [1.5, 4.3], [1.5, 5.35], [3.9, 5.35], [3.9, 5.75], [6.0, 5.75], [6.0, 7.15], [3.9, 7.15], [3.9, 8.2], [3.4, 8.75], [0.15, 8.75], [0.15, 8.5], [0.95, 8.5], [0.95, 6.6], [0.62, 6.6], [0.62, 5.25], [0.75, 5.25]]}
   - {net: VOUT, layer: B.Cu, priority: 2, solid: true,
-     polygon: [[-0.75, 4.3], [5.5, 4.3], [5.5, 7.8], [3.7, 7.8], [3.7, 8.75], [0.15, 8.75], [0.15, 7.8], [-0.75, 7.8]]}
+     polygon: [[-0.75, 4.3], [5.5, 4.3], [5.5, 7.8], [3.7, 7.8], [3.7, 8.75], [-0.3, 8.75], [-0.3, 7.25], [-0.75, 7.25]]}
   - {net: LD_P, layer: F.Cu, priority: 2, solid: true,
      polygon: [[4.0, 2.75], [5.7, 2.75], [6.3, 2.0], [6.3, 0.55], [8.8, 0.55], [8.8, 3.2], [6.9, 3.6], [6.2, 4.15], [4.0, 4.15]]}
   - {net: BAT_SPRING, layer: B.Cu, priority: 2, solid: true,   # Q1 drain straight to the spring pad
@@ -201,15 +217,105 @@ zones_post:
   - {net: GND, layer: B.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
 
 
+# Grid router (automation/placement/grid_route.py): joins the open groups of these nets, in this order,
+# on F.Cu, In2.Cu and B.Cu, and writes the copper to the generated grid_routes section at the end.
+grid_route:
+  nets: [SW_IN, IND_OUT, IND_PAD, UPDI, VBAT_SENSE, VOUT_SENSE, NTC_PWR, NTC_LD, NTC_BRD, INTLK_MCU,
+         CC_FLAG, PG, LASER_EN_N, VMCU, CS_OUT, OV_G, EN_UVLO, INTLK_N, Q1_G, DR1H, DR1L, ISN_K, ISP_K, FB,
+         VBAT, VOUT, COMP, COMP_RC, ILIM, FSW, BOOT1, BOOT2, VCC5, LD_P]   # MCU escapes first
+  widths: {DR1H: 0.2, DR1L: 0.2, VBAT: 0.25, VOUT: 0.25, VMCU: 0.2, LD_P: 0.3}
+  layers: [F.Cu, In2.Cu, B.Cu]
+  layer_cost: {F.Cu: 1.5, B.Cu: 1.5}   # long runs on In2 keep the outer layers free for pin escapes
+
 # Router keep-outs: while routing, other nets may not cross the power copper (the Specctra export
 # treats pours as conduction planes). They exist only in the placed board; finish deletes them.
+# "net" names the protected pour: the build cuts each area back around vias of other routed nets
+# (a via inside a keep-out is unreachable for the router).
 router_keepouts:
-  - {layer: F.Cu, polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-5.8, -6.8], [-7.4, -5.4], [-8.9, -3.9]]}
-  - {layer: F.Cu, polygon: [[-3.25, -5.85], [-1.85, -5.85], [-1.85, -6.95], [-0.5, -6.95], [-0.5, -5.0], [3.85, -5.0], [3.85, -3.55], [-3.25, -3.55]]}
-  - {layer: F.Cu, polygon: [[-1.0, -1.75], [3.85, -1.75], [3.85, -1.35], [5.25, -1.35], [5.25, -0.40], [3.85, -0.40], [3.85, -0.25], [1.33, -0.25], [1.33, 1.0], [0.68, 1.0], [0.68, -0.25], [-1.0, -0.25]]}
-  - {layer: F.Cu, polygon: [[0.75, 4.3], [1.5, 4.3], [1.5, 5.35], [3.9, 5.35], [3.9, 5.75], [6.0, 5.75], [6.0, 7.15], [3.9, 7.15], [3.9, 8.2], [3.4, 8.75], [0.95, 8.75], [0.95, 6.6], [0.62, 6.6], [0.62, 5.25], [0.75, 5.25]]}
-  - {layer: F.Cu, polygon: [[4.0, 2.75], [5.7, 2.75], [6.3, 2.0], [6.3, 0.55], [8.8, 0.55], [8.8, 3.2], [6.9, 3.6], [6.2, 4.15], [4.0, 4.15]]}
-  - {layer: B.Cu, polygon: [[-4.45, -6.75], [-2.05, -6.75], [-2.05, -4.4], [-0.6, -2.9], [-0.6, -1.5], [-2.7, -1.5], [-4.45, -3.6]]}
-  - {layer: B.Cu, polygon: [[-1.95, -7.95], [1.2, -7.95], [1.2, -5.4], [-0.9, -5.4], [-0.9, -4.75], [-1.95, -4.75]]}
-  - {layer: B.Cu, polygon: [[-8.3, -3.35], [-4.85, -3.35], [-4.85, -6.05], [-6.15, -6.05], [-6.15, -6.4], [-7.1, -6.45], [-8.3, -4.9]]}
-  - {layer: In2.Cu, polygon: [[-8.3, -3.2], [-2.7, -3.2], [-2.7, -7.2], [-4.5, -8.6], [-7.0, -7.0], [-8.6, -4.8]]}
+  - {layer: F.Cu, net: VBAT, polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-6.6, -6.8], [-7.6, -5.8], [-8.9, -3.9]]}
+  - {layer: F.Cu, net: SW1, polygon: [[-3.25, -5.85], [-1.85, -5.85], [-1.85, -6.95], [-0.5, -6.95], [-0.5, -5.0], [3.85, -5.0], [3.85, -3.55], [-3.25, -3.55]]}
+  - {layer: F.Cu, net: SW2, polygon: [[-1.0, -1.75], [3.85, -1.75], [3.85, -1.35], [5.25, -1.35], [5.25, -0.40], [3.85, -0.40], [3.85, -0.25], [1.33, -0.25], [1.33, 1.0], [0.68, 1.0], [0.68, -0.25], [-1.0, -0.25]]}
+  - {layer: F.Cu, net: VOUT, polygon: [[0.75, 4.3], [1.5, 4.3], [1.5, 5.35], [3.9, 5.35], [3.9, 5.75], [6.0, 5.75], [6.0, 7.15], [3.9, 7.15], [3.9, 8.2], [3.4, 8.75], [0.95, 8.75], [0.95, 6.6], [0.62, 6.6], [0.62, 5.25], [0.75, 5.25]]}
+  - {layer: F.Cu, net: LD_P, polygon: [[4.0, 2.75], [5.7, 2.75], [6.3, 2.0], [6.3, 0.55], [8.8, 0.55], [8.8, 3.2], [6.9, 3.6], [6.2, 4.15], [4.0, 4.15]]}
+  - {layer: B.Cu, net: BAT_SPRING, polygon: [[-4.45, -6.75], [-2.05, -6.75], [-2.05, -4.4], [-0.6, -2.9], [-0.6, -1.5], [-2.7, -1.5], [-4.45, -3.6]]}
+  - {layer: B.Cu, net: SW1, polygon: [[-1.95, -7.95], [1.2, -7.95], [1.2, -5.4], [-0.9, -5.4], [-0.9, -4.75], [-1.95, -4.75]]}
+  - {layer: B.Cu, net: VBAT, polygon: [[-8.3, -3.35], [-4.85, -3.35], [-4.85, -6.05], [-6.15, -6.05], [-6.15, -6.4], [-7.1, -6.45], [-8.3, -4.9]]}
+
+# ---- grid routes (generated by automation/placement/grid_route.py; rerun it, do not edit)
+grid_routes:
+  tracks:
+    - {net: IND_PAD, layer: F.Cu, width: 0.15, pts: [[-6.85, 4.45], [-6.9, 4.45], [-6.9, 4.25], [-6.95, 4.2], [-6.95, 4], [-6.9, 3.95]]}
+    - {net: IND_PAD, layer: B.Cu, width: 0.15, pts: [[-6.9, 3.95], [-6.9, 4.35]]}
+    - {net: UPDI, layer: B.Cu, width: 0.15, pts: [[-5.8, -2.05], [-5.5, -1.75], [-5.5, -1.7], [-5.8, -1.4], [-5.85, -1.4], [-5.9, -1.35], [-5.9, -1.2], [-5.95, -1.15], [-5.9, -1.1], [-5.9, -0.65]]}
+    - {net: VOUT_SENSE, layer: F.Cu, width: 0.15, pts: [[-6.2, 3], [-5.95, 3], [-5.75, 3.2], [-6.05, 3.5], [-6.05, 3.55], [-6.1, 3.6]]}
+    - {net: VOUT_SENSE, layer: B.Cu, width: 0.15, pts: [[-6.1, 3.6], [-6.1, 3.7], [-6, 3.8], [-6, 4.35]]}
+    - {net: VOUT_SENSE, layer: B.Cu, width: 0.15, pts: [[-6.1, 3.6], [-6.25, 3.15], [-6.35, 3.05]]}
+    - {net: NTC_LD, layer: F.Cu, width: 0.15, pts: [[-5.8, 6.5], [-6.15, 6.5]]}
+    - {net: NTC_LD, layer: B.Cu, width: 0.15, pts: [[-6.15, 6.5], [-5.85, 6.2], [-5.5, 6.2]]}
+    - {net: NTC_LD, layer: In2.Cu, width: 0.15, pts: [[-6.15, 6.5], [-6.95, 6.65], [-8.5, 5.1], [-8.5, 4.1]]}
+    - {net: NTC_LD, layer: B.Cu, width: 0.15, pts: [[-8.5, 4.1], [-8.5, 3.6], [-8.55, 3.55], [-8.05, 3.05], [-7.2, 3.05]]}
+    - {net: NTC_BRD, layer: B.Cu, width: 0.15, pts: [[-5.45, 2.9], [-5.1, 2.9], [-5, 3]]}
+    - {net: NTC_BRD, layer: In2.Cu, width: 0.15, pts: [[-5, 3], [-5.2, 2.8], [-5.25, 2.8], [-5.95, 2.1], [-5.95, 1.85], [-7.45, 0.35], [-7.45, -1.55], [-7.15, -1.85], [-7.1, -1.85], [-2.8, -6.15], [-2.8, -7.7], [-2.3, -8.2]]}
+    - {net: NTC_BRD, layer: F.Cu, width: 0.15, pts: [[-2.3, -8.2], [-1.9, -7.8]]}
+    - {net: NTC_BRD, layer: F.Cu, width: 0.15, pts: [[-5, 3], [-5.4, 2.85], [-5.65, 2.6], [-5.65, 2.1], [-5.55, 2], [-5.55, 1.65], [-5.5, 1.6], [-5.5, 1.15], [-5.6, 1.05], [-5.6, 0.4], [-5.9, 0.1], [-6.45, 0.1], [-6.65, 0.3], [-6.65, 0.4]]}
+    - {net: INTLK_MCU, layer: B.Cu, width: 0.15, pts: [[-3.35, -7.85], [-3.45, -7.85], [-3.95, -8.35]]}
+    - {net: INTLK_MCU, layer: In2.Cu, width: 0.15, pts: [[-3.95, -8.35], [-3.95, -5.5], [-7.25, -2.2], [-7.3, -2.2], [-7.85, -1.65], [-7.85, 0.1], [-8.45, 0.7], [-8.9, 0.7], [-9.45, 0.15], [-9.5, 0.15], [-9.85, -0.2], [-9.85, -0.6], [-9.05, -1.4]]}
+    - {net: INTLK_MCU, layer: B.Cu, width: 0.15, pts: [[-9.05, -1.4], [-7.9, -1.4], [-6.25, -3.05], [-5.65, -3.05], [-5.15, -2.55], [-5.15, 0.35]]}
+    - {net: CC_FLAG, layer: B.Cu, width: 0.15, pts: [[-2.95, 5.15], [-3.8, 6], [-4.5, 6], [-5.5, 7], [-5.5, 7.4]]}
+    - {net: CC_FLAG, layer: In2.Cu, width: 0.15, pts: [[-5.5, 7.4], [-5.5, 6.2], [-9.15, 2.55], [-9.15, 2]]}
+    - {net: CC_FLAG, layer: B.Cu, width: 0.15, pts: [[-9.15, 2], [-9.2, 1.95], [-8.75, 1.5], [-8.6, 1.5], [-8.35, 1.25], [-8.15, 1.25]]}
+    - {net: OV_G, layer: F.Cu, width: 0.15, pts: [[5.25, -6.25], [6.3, -6.25], [6.9, -5.65], [6.9, -4.6], [6.55, -4.25]]}
+    - {net: OV_G, layer: F.Cu, width: 0.15, pts: [[6.15, -3.95], [5.6, -3.95], [5.1, -3.45], [5.1, -3.2]]}
+    - {net: EN_UVLO, layer: F.Cu, width: 0.15, pts: [[-3.45, 3.65], [-3.9, 4.2], [-3.9, 4.4]]}
+    - {net: EN_UVLO, layer: F.Cu, width: 0.15, pts: [[-4.2, 4.75], [-4.45, 5], [-4.45, 5.5], [-4.1, 5.85], [-3.9, 5.85]]}
+    - {net: EN_UVLO, layer: In2.Cu, width: 0.15, pts: [[-3.45, 3.65], [-0.1, 0.2], [1.55, 0.2], [4.2, -2.45], [4.2, -3.35], [4.25, -3.4]]}
+    - {net: EN_UVLO, layer: B.Cu, width: 0.15, pts: [[4.25, -3.4], [4.05, -3.6], [4.05, -3.75]]}
+    - {net: EN_UVLO, layer: F.Cu, width: 0.15, pts: [[4.25, -3.4], [4.9, -4.15], [4.9, -4.4]]}
+    - {net: EN_UVLO, layer: F.Cu, width: 0.15, pts: [[4.9, -4.75], [4.55, -5.1], [4.55, -5.15]]}
+    - {net: EN_UVLO, layer: B.Cu, width: 0.15, pts: [[4.55, -5.15], [4.3, -5.4]]}
+    - {net: INTLK_N, layer: F.Cu, width: 0.15, pts: [[-8.5, 1.05], [-8.9, 0.65], [-8.95, 0.65], [-9.2, 0.4], [-9.2, 0.35], [-9.25, 0.3], [-9.25, -0.4]]}
+    - {net: INTLK_N, layer: In2.Cu, width: 0.15, pts: [[-9.25, -0.4], [-8.2, -1.45], [-8.2, -1.8], [-6.2, -3.8], [-6.15, -3.8], [-5.35, -4.6], [-5.35, -7.25]]}
+    - {net: INTLK_N, layer: F.Cu, width: 0.15, pts: [[-5.35, -7.25], [-4.15, -7.25], [-3.75, -7.65]]}
+    - {net: INTLK_N, layer: F.Cu, width: 0.15, pts: [[-3.4, -7.9], [-3.4, -8.2], [-2.85, -8.75], [-2.85, -8.85]]}
+    - {net: INTLK_N, layer: B.Cu, width: 0.15, pts: [[-2.85, -8.85], [-3.05, -8.65], [-3.05, -8.55]]}
+    - {net: INTLK_N, layer: In2.Cu, width: 0.15, pts: [[-2.85, -8.85], [-1.8, -8.95], [-1.3, -9.45], [0.15, -9.45], [0.55, -9.05], [2.2, -9.05], [2.85, -8.4], [3.15, -8.4], [3.65, -7.9]]}
+    - {net: INTLK_N, layer: B.Cu, width: 0.15, pts: [[3.65, -7.9], [3.65, -7.1]]}
+    - {net: Q1_G, layer: B.Cu, width: 0.15, pts: [[-5, -6.55], [-5, -6.8], [-4.75, -7.05], [-4.75, -7.5]]}
+    - {net: DR1H, layer: In2.Cu, width: 0.2, pts: [[-3.75, 1.9], [-3.6, 1.5], [-3.55, 1.45], [-3.55, 1], [-1.7, -0.85], [-2.3, -1.45], [-2.25, -7.1]]}
+    - {net: DR1L, layer: In2.Cu, width: 0.2, pts: [[-2.95, 1.35], [-1.05, -0.65], [-1.05, -1.35], [0.1, -2.5], [0.15, -2.5], [0.7, -3.05], [0.8, -3.05]]}
+    - {net: DR1L, layer: B.Cu, width: 0.2, pts: [[0.8, -3.05], [1.4, -3.65], [1.4, -5.2], [1.75, -5.55]]}
+    - {net: VOUT, layer: In2.Cu, width: 0.25, pts: [[0.85, 6.3], [0.2, 6.95], [-0.8, 6.95], [-1.45, 7.6], [-2.05, 7.6], [-2.6, 7.05], [-2.6, 6.85]]}
+    - {net: VOUT, layer: B.Cu, width: 0.25, pts: [[-2.6, 6.85], [-2.6, 7.2]]}
+    - {net: VOUT, layer: B.Cu, width: 0.25, pts: [[-2.6, 6.85], [-3.15, 7], [-3.3, 7.15]]}
+    - {net: VOUT, layer: F.Cu, width: 0.25, pts: [[6.2, 6.65], [6.2, 6.65]]}
+    - {net: VOUT, layer: In2.Cu, width: 0.25, pts: [[6.2, 6.65], [6.7, 6.65], [7.7, 5.65], [7.7, 3.6], [9, 2.3], [9, -2.3], [6.3, -5], [5.7, -5], [5.3, -5.4]]}
+    - {net: VOUT, layer: F.Cu, width: 0.25, pts: [[5.3, -5.4], [4.9, -5.8], [4.3, -5.8], [3.85, -6.25]]}
+    - {net: VOUT, layer: In2.Cu, width: 0.25, pts: [[-2.6, 6.85], [-3.6, 5.95], [-4.1, 5.95], [-4.9, 5.15], [-4.9, 4.35], [-5.3, 3.95]]}
+    - {net: VOUT, layer: B.Cu, width: 0.25, pts: [[-5.3, 3.95], [-5.3, 4.35]]}
+    - {net: COMP, layer: B.Cu, width: 0.15, pts: [[5.4, 2.3], [5.25, 2.75]]}
+    - {net: COMP, layer: B.Cu, width: 0.15, pts: [[5.4, 2.3], [3.7, 2.15], [3.65, 2.1], [2, 2.1], [0.9, 3.2]]}
+    - {net: COMP_RC, layer: B.Cu, width: 0.15, pts: [[-0.75, 3.15], [-0.15, 3.15]]}
+    - {net: ILIM, layer: B.Cu, width: 0.15, pts: [[3.45, 2.65], [2.8, 3.2]]}
+    - {net: LD_P, layer: B.Cu, width: 0.3, pts: [[6.6, 1.3], [6.35, 1.3], [5.8, 0.75]]}
+  vias:
+    - {net: IND_PAD, x: -6.9, y: 3.95}
+    - {net: VOUT_SENSE, x: -6.1, y: 3.6}
+    - {net: NTC_LD, x: -6.15, y: 6.5}
+    - {net: NTC_LD, x: -8.5, y: 4.1}
+    - {net: NTC_BRD, x: -5, y: 3}
+    - {net: NTC_BRD, x: -2.3, y: -8.2}
+    - {net: INTLK_MCU, x: -3.95, y: -8.35}
+    - {net: INTLK_MCU, x: -9.05, y: -1.4}
+    - {net: CC_FLAG, x: -5.5, y: 7.4}
+    - {net: CC_FLAG, x: -9.15, y: 2}
+    - {net: EN_UVLO, x: 4.25, y: -3.4}
+    - {net: EN_UVLO, x: 4.55, y: -5.15}
+    - {net: INTLK_N, x: -9.25, y: -0.4}
+    - {net: INTLK_N, x: -5.35, y: -7.25}
+    - {net: INTLK_N, x: -2.85, y: -8.85}
+    - {net: INTLK_N, x: 3.65, y: -7.9}
+    - {net: DR1L, x: 0.8, y: -3.05}
+    - {net: VOUT, x: -2.6, y: 6.85}
+    - {net: VOUT, x: 6.2, y: 6.65}
+    - {net: VOUT, x: 5.3, y: -5.4}
+    - {net: VOUT, x: -5.3, y: 3.95}

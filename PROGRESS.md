@@ -2,15 +2,15 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-25 (Claude continuation; polarity decision recorded and marked on both boards)._
+_Last updated: 2026-10-25 (Claude continuation; polarity marked on both boards; compact grid-routed to 20 open items)._
 
 | Gate | Status | Evidence |
 |---|---|---|
 | A Research | PASS | Research/requirement documents; computed register |
 | B Electrical design | PASS | Both schematics: ERC 0 errors / 0 warnings; exact connectivity comparison |
 | C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
-| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 31 unconnected items (was 43) |
-| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 6 / 31 / 0 |
+| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 20 unconnected items (was 31, 43) |
+| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 3 / 20 / 0 |
 | F Manufacturing files | Evaluation PASS (automated checks); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release or order |
 | G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
@@ -19,7 +19,7 @@ and mirrored into the requirement register by the validator.
 
 - `scripts/validate.ps1` returns 1 for three known reasons: the efficiency target, compact routing and compact
   DRC.
-- All 142 Python tests pass.
+- All 147 Python tests pass.
 - `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
 
 **Battery polarity (owner decision 2026-10-25).** Either orientation is acceptable provided the board marks
@@ -55,7 +55,28 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
   to about 94.1 %, and REQ-PWR-02 stays AT-RISK. Copper allowances moved into `parameters.yaml`, and the
   calculation output is now deterministic: the same values with sorted keys.
 
-**Compact re-floorplan (new this session, DD-24).** See
+**Compact grid-routed revision (new this session, DD-25).** See
+[engineering/compact-feasibility.md](engineering/compact-feasibility.md).
+
+- **Tool:** `automation/placement/grid_route.py` is a negotiated-congestion grid router. It writes the
+  generated `grid_routes` copper into `placement.yaml`, and FreeRouting routes what remains.
+- **Layout changes:**
+  - In2 carries signals only (no VBAT pour).
+  - The MCU moved below C1-C3 and is rotated 0°, with a part-free escape ring on both sides.
+  - The over-voltage FET block joined the enable pull-downs (top right).
+  - C12 moved off U1's ground pins, which now have a plane via.
+  - The GND fanout keeps out of other nets' pours.
+- **Result:**
+  - 20 unconnected (was 31), 0 errors, 3 dangling-via warnings belonging to open nets.
+  - Power paths are equal or better: VBAT 0.49, VOUT 1.46, LD_P 0.47 mΩ.
+  - Copper loss above the model is +44 mW; the ground-offset setpoint shift is +0.75 % (was +1.14 %).
+- **Why the rest does not route:** a capacity limit. A through via needs F, In2 and B free at once,
+  and no such site exists beside the MCU. Four options are listed in compact-feasibility.md: plated harness
+  pads, an MCU pin swap, inner-layer fine lines, or HDI.
+- **Schematic:** reference/value labels of vertical resistors, inductors and thermistors no longer overlap
+  the body.
+
+**Compact re-floorplan (DD-24).** See
 [engineering/compact-feasibility.md](engineering/compact-feasibility.md).
 
 - **Root cause:** the centre spring pad forbids through vias within 2.95 mm of the centre, and U1 sat
@@ -102,9 +123,12 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 
 ## Next actions (in order)
 
-1. Owner decisions: decide on the current setpoint, the efficiency deviation and the HDI via-in-pad
-   option. No part value or requirement has been silently
-   relaxed.
+1. Owner decisions:
+   - the current setpoint, the efficiency deviation and the HDI via-in-pad option;
+   - for the compact board, which routing-capacity option to take (`engineering/compact-feasibility.md`):
+     plated harness pads, an MCU pin swap, inner-layer fine lines, or HDI.
+
+   No part value or requirement has been silently relaxed.
 2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
    and fresh post-route selectors:
    - move the DR1H via off the SW1 junction;
@@ -114,14 +138,14 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 3. After CAD/owner release, assemble an evaluation prototype and execute
    `documentation/testing/test-plan.md`, starting with a rated dummy load. Record measured data; only bench
    evidence can close Gate G.
-4. Continue the compact re-floorplan using the next steps in `engineering/compact-feasibility.md`:
-   - source PGND/AGND vias before routing;
-   - source routes for the DR1H, PG, CC_FLAG, FB and U2 Kelvin opens;
-   - less MCU-region congestion;
-   - then re-route.
+4. After that decision, re-run the compact chain:
+   - `grid_route.py --variant compact-22mm --rebuild --partial --write`;
+   - then `place`, `route`, `finish` and `drc`;
+   - then `power_layout.py`.
+
    Accept it only with 0 unconnected, 0 DRC errors and every power path connected in the current-flow
-   report. Restore the routed draft from `hardware/compact-22mm/routing/`, because `--stage place`
-   overwrites the board.
+   report. To return to the committed routed state, restore the checkpoint in
+   `hardware/compact-22mm/routing/`, because `--stage place` overwrites the board.
 5. Verify supplier stock/prices and proposed alternatives; keep UNKNOWN until evidence is available.
 
 **Commands and routing replay:**
@@ -142,6 +166,29 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: compact board grid-routed to 20 open items
+- **Grid router:**
+  - `grid_route.py`: A* on a 0.05 mm grid over F/In2/B with through vias, against the exact placed copper.
+  - Negotiates congestion between nets (PathFinder) and finishes with an exact segment clearance check.
+  - `--partial` keeps the conflict-free nets; the generated `grid_routes` section is applied after the
+    via fields.
+  - Five tests.
+- **Compact layout:**
+  - No In2 VBAT pour; the F VBAT pour now covers every field via.
+  - The MCU moved and rotated, with a part-free escape ring on both sides. Q6/D3/R20 sit by Q4/Q5.
+  - C12 moved and U1's PGND has a plane via.
+  - `place_opt` charges for nets that change side.
+  - Router keep-outs are cut back around other nets' vias, and GND fanout vias stay out of other pours.
+- **Result:**
+  - DRC 0 errors / 3 warnings / 20 unconnected (was 0/6/31).
+  - VOUT 1.46 mΩ, LD_P 0.47 mΩ.
+  - Copper loss above the model +44 mW; ground-offset shift +0.75 %.
+- **Schematic:** field placement for R/L/thermistor symbols fixed; both schematics regenerated (ERC 0/0).
+- **Evidence:**
+  - Evaluation DRC 0/0/0/0; both layout reviews and DRAFT exports PASS.
+  - Compact routing checkpoint archived and evaluation manifest re-captured.
+  - Validation: 147 tests, the same 3 known failures. No order placed.
 
 ### 2026-10-25: battery polarity decided and marked on the boards
 - **Owner decision:** polarity does not matter provided the board marks it. The definition stays centre spring = B+,

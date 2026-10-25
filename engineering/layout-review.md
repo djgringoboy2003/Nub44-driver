@@ -71,24 +71,24 @@ matched, and KiCad DRC remained 0 errors, 0 warnings, 0 unconnected and 0 parity
 
 ## Compact board (routing draft)
 
-After the 2026-10-25 re-floorplan (DD-24, `engineering/compact-feasibility.md`), the review shows every
-power path connected:
+In the grid-routed revision (DD-25, `engineering/compact-feasibility.md`), the review shows every power
+path connected:
 
-- VBAT: 0.50 mΩ through an 8-via field.
-- VOUT: 1.69 mΩ.
+- VBAT: 0.49 mΩ through an 8-via field.
+- VOUT: 1.46 mΩ.
 - SW1: 0.30 mΩ.
 - SW2: 1.23 mΩ (package-limited).
 - BAT_SPRING: 0.60 mΩ.
-- LD_P: 0.78 mΩ.
+- LD_P: 0.47 mΩ.
 
-The previous draft had VOUT open and VBAT crossing one via.
+Copper loss above the model is +44 mW at 4.0 V (estimate 94.37 %).
 
 Items still open:
 
-- 31 unconnected low-speed and sense items.
-- U1's PGND reaches the plane with a 15 mV drop at the worst point. AGND shares that copper, so the
-  current setpoint shifts by +1.14 % (+0.22 % at 4.0 V). Source GND vias placed before routing are the
-  next step.
+- 20 unconnected items, mostly MCU signals.
+- PGND now has a plane via under C14 and C12 has moved away from U1's ground pins. The worst-case
+  setpoint shift from ground offsets fell from +1.14 % to +0.75 %. It is still above the evaluation
+  board's +0.28 %.
 
 The evaluation-board lessons still apply:
 

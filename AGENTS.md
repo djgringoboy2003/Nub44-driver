@@ -56,6 +56,7 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | `automation/nubm44/` | Python package: S-expression I/O, KiCad library access, symbol/footprint generators, schematic writer, calculators |
 | `automation/review/` | Power-layout review: copper extractor (KiCad Python), raster model, DC current-flow solver, report (`power_layout.py`) |
 | `automation/placement/place_opt.py` | Simulated-annealing optimiser for small-part positions; writes explicit `pos` entries to `placement.yaml` |
+| `automation/placement/grid_route.py` | Negotiated-congestion grid router; writes the generated `grid_routes` section of `placement.yaml` |
 | `hardware/libraries/` | Project symbol library (`nubm44.kicad_sym`, generated from `symbols/*.yaml`) and footprints (`nubm44.pretty`, generated) |
 | `hardware/compact-22mm/`, `hardware/evaluation-board/` | KiCad projects for Variant A (22 mm) and Variant B (larger evaluation board) |
 | `scripts/` | PowerShell entry points (`setup.ps1` exists; see PROGRESS.md for the others) |
@@ -88,6 +89,11 @@ Evidence is hash-bound to its sources. After editing `parameters.yaml`, `connect
 
 Running the layout review before DRC leaves it stale, because DRC rewrites the board bytes.
 
+The compact board's `grid_routes` section is generated. After a placement change, rerun
+`grid_route.py --variant compact-22mm --rebuild --partial --write`, then `place`, `route`, `finish` and `drc`.
+`--rebuild` re-places the board without the old grid routes (environment variable `NUBM44_NO_GRID_ROUTES`)
+and extracts its copper as the router's input.
+
 ## Known pitfalls
 
 - The FreeRouting 2.5.0 **native** `freerouting-cli.exe` crashes with a GraalVM serialization error. Use the jar on
@@ -110,6 +116,10 @@ Running the layout review before DRC leaves it stale, because DRC rewrites the b
   `engineering/compact-feasibility.md`.
 - The repository mixes LF and CRLF per file and stores bytes unnormalised (`* -text`). Preserve each
   file's line endings when editing.
+- `grid_routes` copper is added after the via fields and before the GND fanout, so the via fields stay as
+  the router saw them. Do not hand-edit that section; it is replaced on every `--write`.
+- On the compact board, through vias are scarce: a via needs free copper on F.Cu, In2.Cu and B.Cu at once.
+  The grid router's legality map shows where they can go; check it before moving parts.
 - A pour-only change can be applied to the archived router session (restore DSN/SES/evidence, then
   `--stage finish` and `--stage drc`) without re-routing. Unmatched `remove_*_post` selectors are skipped
   silently, so check the printed `matches` counts.

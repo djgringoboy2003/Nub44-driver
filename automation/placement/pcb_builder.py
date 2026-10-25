@@ -180,9 +180,24 @@ def fanout(board, job, net_name, report, max_dist=1.6, width=0.25, clr=0.15, via
     tracks = list(board.GetTracks())
     done = failed = 0
     r = via_d / 2
+    # source pours of other nets: a through via there would cut a hole into power copper
+    pours = [[(px + ox, py + oy) for px, py in z["polygon"]] for z in job.get("zones_pre", [])
+             if "polygon" in z and z["net"] != net_name]
+
+    def in_pour(x, y):
+        for poly in pours:
+            inside = False
+            for (x1, y1), (x2, y2) in zip(poly, poly[1:] + poly[:1]):
+                if (y1 > y) != (y2 > y) and x < x1 + (y - y1) * (x2 - x1) / (y2 - y1):
+                    inside = not inside
+            if inside or min(_seg_dist(x, y, *a, *b) for a, b in zip(poly, poly[1:] + poly[:1])) < r + clr:
+                return True
+        return False
 
     def free(px, py, x, y, layer):
         pt = pcbnew.VECTOR2I(MM(x), MM(y))
+        if in_pour(x, y):
+            return False
         for pad in foreign_pads:
             if pad.HitTest(pt, MM(r + clr)):
                 return False
@@ -713,6 +728,12 @@ def mode_place(job):
     via_report = []
     for vf in job.get("via_fields", []):
         add_via_field(board, job, vf, via_report)
+    # grid_route.py copper comes after the via fields it was routed around and before the fanout,
+    # which then keeps clear of it
+    for t in job.get("grid_tracks", []):
+        add_track(board, job, t)
+    for v in job.get("grid_vias", []):
+        add_via(board, job, v)
     for net_name in job.get("fanout_nets", []):
         fanout(board, job, net_name, via_report)
     for z in job.get("zones_pre", []):

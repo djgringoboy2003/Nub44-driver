@@ -1,17 +1,16 @@
 {
  "route": {
   "rc": 0,
-  "seconds": 304.4,
-  "summary": "2026-10-25 11:36:25.401 INFO   [569729\\59020D] Skipping optimization stage: the board has 50 unrouted connection(s) (optimizer only runs on completely routed boards)."
+  "seconds": 214.1,
+  "summary": "2026-10-25 16:15:19.993 INFO   [22C487\\DA9736] Skipping optimization stage: the board has 41 unrouted connection(s) (optimizer only runs on completely routed boards)."
  },
  "drc": {
   "errors": 0,
-  "warnings": 6,
-  "unconnected": 31,
+  "warnings": 3,
+  "unconnected": 20,
   "parity": 0,
   "by_type": {
-   "via_dangling": 5,
-   "connection_width": 1
+   "via_dangling": 3
   }
  }
 }

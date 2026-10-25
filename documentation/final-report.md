@@ -12,14 +12,15 @@ automated checks since the 2026-10-25 polarity decision (REQ-BAT-04), and no phy
 | Connectivity differences from specification | 0 | 0 |
 | PCB footprints | 65 | 68 |
 | DRC errors / warnings | 0 / 3 | 0 / 0 |
-| Unconnected items / schematic parity findings | 43 / 0 | 0 / 0 |
+| Unconnected items / schematic parity findings | 20 / 0 | 0 / 0 |
 | Export internal consistency | PASS (DRAFT) | PASS (DRAFT) |
 | BOM lines / BOM parts / centroid rows | 48 / 53 / 52 | 48 / 53 / 52 |
 
 The generated [validation register](../reports/validation-register.md) controls the gate state. DRC and export
 manifests bind the authoritative placement, connectivity and parameter sources to actual CAD bytes; exported
 files carry their own hashes. The two documented DRC omissions are explained in DD-20.
-All 120 Python tests pass, including actual KiCad geometry tests and failure/stale-evidence regressions.
+All 147 Python tests pass, including actual KiCad geometry tests and failure/stale-evidence regressions
+(figures updated 2026-10-25).
 Firmware builds for ATtiny1616 and passes 26 host checks. Eleven averaged behavioural simulations pass;
 those models do not replace switching-waveform or fault measurements. Twenty of twenty-one engineering
 calculation checks pass; estimated efficiency at 4 V is 94.5883%, below the specified greater-than-95% target.
@@ -41,8 +42,9 @@ post-route corrections. The editable native projects and placement sources remai
 
 - Battery polarity (REQ-BAT-04) is decided and marked on both boards; check the host against the labels (T3.3).
 - Review evaluation gate-drive/bootstrap loops, Kelvin sense isolation, power necks and thermal current paths.
-- Rework compact placement/fanout; retain its three connection-width warnings and 43 incomplete connections
-  as open findings. See [the compact routing assessment](../engineering/compact-feasibility.md).
+- Choose a routing-capacity option for the compact board (plated harness pads, MCU pin swap, inner fine
+  lines or HDI); its 20 incomplete connections remain open findings. See
+  [the compact routing assessment](../engineering/compact-feasibility.md).
 - Resolve the documented default-current risk and efficiency miss; verify sourcing data without inventing
   stock or prices.
 - Follow [assembly instructions](assembly.md) and the [bench plan](testing/test-plan.md), beginning with a rated

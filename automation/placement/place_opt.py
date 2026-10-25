@@ -13,6 +13,8 @@ Parts named in --flip may also change side. Courtyards also stay off the source 
 
 placement.yaml may add "place_opt: {near: {REF: [x, y] | "REF.PAD", ...}, near_weight: 3}" to tie parts such as
 decoupling capacitors to the pin or via they serve (cost = weight x centre distance to the target).
+A net whose pads end up on both sides costs ``side_penalty`` (default 3 mm) unless a source via or a
+plated pad already joins the layers, because the router would need a via for it.
 
 Without --write it prints the result and the score change. With --write the parts become manual "pos"
 entries in placement.yaml (tagged "place_opt"), so the outcome stays explicit and reviewable; rerun the
@@ -41,6 +43,7 @@ POUR_NETS = ("VBAT", "VOUT")               # reached at their zones_pre pours (d
 WEIGHT = {"FB": 4.0, "COMP": 4.0, "COMP_RC": 3.0, "ILIM": 3.0, "FSW": 3.0, "ISP_K": 3.0, "ISN_K": 3.0,
           "EN_UVLO": 1.5, "CS_OUT": 1.5}
 VIA_R = 0.30
+SIDE_PENALTY = 3.0                         # mm-equivalent cost of a net that needs a via to change side
 
 
 def norm(n: str) -> str:
@@ -112,7 +115,8 @@ class Model:
         self.r_max = self.place.get("placement_radius", 1e9)
         clr = 0.15
         self.blocks = {"F": [], "B": []}       # keep-out boxes per side
-        for v in self.place.get("vias") or []:
+        grid = self.place.get("grid_routes") or {}             # copper written by grid_route.py
+        for v in (self.place.get("vias") or []) + (grid.get("vias") or []):
             r = VIA_R + clr
             for s in "FB":
                 self.blocks[s].append((v["x"] - r, v["y"] - r, v["x"] + r, v["y"] + r))
@@ -125,7 +129,8 @@ class Model:
             self.blocks[s].extend(tuple(b) for b in boxes)
         layer_side = {"F.Cu": "F", "B.Cu": "B"}
         self.track_blocks = {"F": [], "B": []}       # (a, b, keep-away distance)
-        for t in (self.place.get("tracks") or []) + (self.place.get("tracks_post") or []):
+        for t in ((self.place.get("tracks") or []) + (self.place.get("tracks_post") or [])
+                  + (grid.get("tracks") or [])):
             if t["layer"] in layer_side:
                 for a, b in zip(t["pts"], t["pts"][1:]):
                     self.track_blocks[layer_side[t["layer"]]].append((tuple(a), tuple(b), t["width"] / 2 + clr))
@@ -144,6 +149,7 @@ class Model:
                       for r in refs}
         opt = self.place.get("place_opt") or {}
         self.near_weight = opt.get("near_weight", 3.0)
+        self.side_penalty = opt.get("side_penalty", SIDE_PENALTY)
         self.near = {}
         for ref, target in (opt.get("near") or {}).items():
             if isinstance(target, str):
@@ -215,7 +221,16 @@ class Model:
             return 0.0
         xs = [p[0] for p in pts]
         ys = [p[1] for p in pts]
-        return WEIGHT.get(net, 1.0) * ((max(xs) - min(xs)) + (max(ys) - min(ys)))
+        cost = WEIGHT.get(net, 1.0) * ((max(xs) - min(xs)) + (max(ys) - min(ys)))
+        # pads on both sides need a via unless a source via or a plated pad already changes layer
+        sides, changer = set(), bool(self.via_points.get(net))
+        for ref in self.nets.get(net, ()):
+            s = self.sides(ref)
+            changer |= len(s) == 2
+            sides |= s
+        if len(sides) == 2 and not changer:
+            cost += self.side_penalty
+        return cost
 
     def nets_of(self, ref):
         return {n for n, members in self.nets.items() if ref in members} | ({f"near:{ref}"} if ref in self.near else set())

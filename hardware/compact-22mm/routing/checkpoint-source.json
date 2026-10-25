@@ -1,29 +1,30 @@
 {
   "variant": "compact-22mm",
   "captured_date": "2026-10-25",
-  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate (re-floorplan around the spring-pad via keep-out, router keep-outs). Source hashes describe capture-time inputs, not a release approval. Re-captured 2026-10-25 after finish-only changes (polarity silkscreen labels, PCBWay legend strokes); the DSN/SES are unchanged.",
+  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate: grid-routed source copper (grid_route.py, negotiated congestion, conflicting nets left to FreeRouting), MCU moved and rotated, no In2 VBAT pour. Source hashes describe capture-time inputs, not a release approval.",
   "archived_files_sha256": {
-    "nubm44_driver.dsn": "02e1b50643467b4d9cbb0aec53a5e124c31f0ccc9bf30a707909c99306af0fc5",
-    "nubm44_driver.ses": "8b90ddb14d52fca77f57b8bc7ee9aa4e8e69b4f8da2ad5490604b44d1762b313",
-    "routing-evidence.json": "d017f2fddad657e0c594498cfb5b0a19b1619c376d1c6651eb5767ca3b8b50f0"
+    "nubm44_driver.dsn": "4ab85b4a55fc6d689a3142d5cf91ab610f52f6d1d6c8e5940a507bc6442ccbc9",
+    "nubm44_driver.ses": "894e88fb3d01411214386636cccd7eb2a873abee7d3203d94dfdeefab62d33f8",
+    "routing-evidence.json": "a2f7cbd88841c30b3c12870fff968c94b523cda137caa02082fed1e1bec8eb3f"
   },
   "source_files_sha256": {
     "engineering/design/parameters.yaml": "04918072f65d415e6c74e2f54085cdeadec53a199f263f570c6cd686db15a2cd",
     "engineering/design/connectivity.yaml": "014683a41ef2a722bf12220071c5bd83dea44e9c400736aac224241645fe8dab",
-    "hardware/compact-22mm/placement.yaml": "7ae6b9ddcea16991cb84581fcc6a24aa7bd1da1481c7bab8d2fabebb4cfd7f6f",
-    "hardware/compact-22mm/nubm44_driver.kicad_pcb": "305ee2e013784c289e4f00f91c476a158dc7eb959ca441f940fc442da5d78de5",
+    "hardware/compact-22mm/placement.yaml": "5012e14c1a9939a0c5081151a3025a457df035547f3e9b2263aea549cbde5645",
+    "hardware/compact-22mm/nubm44_driver.kicad_pcb": "5a490259d28300ed58a4bdc64fcdcef5467a80632929468183d222dfdf87b443",
     "hardware/compact-22mm/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
-    "hardware/compact-22mm/nubm44_driver.kicad_sch": "46e4d602661f1851a75b687ff00dc4e6a037e896fb9196ba27b371e972e9f6fb",
-    "hardware/compact-22mm/nubm44_driver.net": "7c2291c7bc359937318400b07a9f08eda987839a17d41f3a1ea4706584e1efc1",
-    "automation/placement/build_pcb.py": "e96da891f3ddf31ae5b934685ce5edabc30ee903dcb609bd43d27262850f9b0a",
-    "automation/placement/pcb_builder.py": "d19c8e53bb5e2d46917c07bad0976cf712f1502d84eb1b8b2b9ec3176b3ae746"
+    "hardware/compact-22mm/nubm44_driver.kicad_sch": "e346e598a3521193d14681a28a6c0ae0a6ef646567f5b60e40db3f3f7b6a56d9",
+    "hardware/compact-22mm/nubm44_driver.net": "d37284e029ad9d6cb04dd9db5a1bff524200427d3a75a6a4f44c85847bfa7621",
+    "automation/placement/build_pcb.py": "842f43498f9c545b09e3e69cff81e50ec5e0aa63688d3cde372c12208e9abfba",
+    "automation/placement/pcb_builder.py": "9de747c31e34d3d1af0b4eaca91e5bc5cce1ff5e802b68800e429478732dadde",
+    "automation/placement/grid_route.py": "ef248ab9032d752e5231d6d93a0c3f5a2b42bc4b65a2b32264bfc6ff8fc8740f"
   },
   "validation_at_capture": {
     "report": "reports/drc-compact-22mm.json",
-    "report_sha256": "fd5278f01ac13744702388aeeda9b2290bd7fa212530433fa4b6e8d820a36b95",
+    "report_sha256": "e9b7ec995009a3cecadb18f1869197225ccf08f11131dc8d8f194171d31244d8",
     "errors": 0,
-    "warnings": 6,
-    "unconnected": 31,
+    "warnings": 3,
+    "unconnected": 20,
     "schematic_parity": 0
   }
 }

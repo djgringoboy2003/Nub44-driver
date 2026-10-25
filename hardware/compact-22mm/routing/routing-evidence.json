@@ -1,6 +1,6 @@
 {
- "dsn_sha256": "02e1b50643467b4d9cbb0aec53a5e124c31f0ccc9bf30a707909c99306af0fc5",
- "ses_sha256": "8b90ddb14d52fca77f57b8bc7ee9aa4e8e69b4f8da2ad5490604b44d1762b313",
+ "dsn_sha256": "4ab85b4a55fc6d689a3142d5cf91ab610f52f6d1d6c8e5940a507bc6442ccbc9",
+ "ses_sha256": "894e88fb3d01411214386636cccd7eb2a873abee7d3203d94dfdeefab62d33f8",
  "command": [
   "C:\\NUBM44 driver\\tools\\jre25\\jdk-25.0.4.1+1-jre\\bin\\java.exe",
   "-jar",
@@ -9,7 +9,7 @@
   "C:\\NUBM44 driver\\build\\compact-22mm\\nubm44_driver.dsn",
   "-do",
   "C:\\NUBM44 driver\\build\\compact-22mm\\nubm44_driver.ses",
-  "--router.autorouter.max_passes=30",
+  "--router.autorouter.max_passes=40",
   "-mt",
   "1",
   "--router.automatic_neckdown=false",

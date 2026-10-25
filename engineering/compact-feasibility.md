@@ -3,33 +3,52 @@
 Status: routing draft; Gates D/E/F remain open. This reflects the present placement and automated routing,
 not proof that the electrical design is impossible on a 22 mm board.
 
-## Current state (2026-10-25 re-floorplan)
+## Current state (2026-10-25, grid-routed revision)
 
-The compact board was re-floorplanned around its structural constraint (below) and routed again. These are
-the KiCad counts and the layout-review results (`reports/layout-review-compact-22mm.md`).
+These are the KiCad counts and the layout-review results (`reports/layout-review-compact-22mm.md`).
 
-| Measure | Previous draft | Re-floorplan |
-|---|---|---|
-| KiCad DRC errors / warnings | 0 / 3 | 0 / 6 (5 dangling vias, 1 connection width) |
-| Unconnected items | 43 | 31 |
-| VBAT, Q1 to Q2 | one via carrying 7.4 A | 0.50 mΩ; 8-via field, max 1.9 A per via |
-| VOUT, U1 to shunt | not connected | 1.69 mΩ, equivalent width 0.81 mm |
-| SW1, Q2 to L1 | 2.49 mm equivalent | 0.30 mΩ, 2.07 mm |
-| SW2, L1 to U1 | 1.20 mm | 1.23 mΩ, 0.65 mm (package-limited, DD-16) |
-| BAT_SPRING, LD_P | — | connected; 0.60 / 0.78 mΩ |
+| Measure | First draft | Re-floorplan (DD-24) | Grid-routed (DD-25) |
+|---|---|---|---|
+| KiCad DRC errors / warnings | 0 / 3 | 0 / 6 | 0 / 3 (dangling vias of open nets) |
+| Unconnected items | 43 | 31 | 20 |
+| VBAT, Q1 to Q2 | one via carrying 7.4 A | 0.50 mΩ | 0.49 mΩ; 8-via field |
+| VOUT, U1 to shunt | not connected | 1.69 mΩ | 1.46 mΩ |
+| SW1 / SW2 | 2.49 / 1.20 mm equivalent | 0.30 / 1.23 mΩ | 0.30 / 1.23 mΩ (SW2 package-limited, DD-16) |
+| BAT_SPRING, LD_P | — | 0.60 / 0.78 mΩ | 0.60 / 0.47 mΩ |
+| Copper loss above the model, 4.0 V | — | +56 mW | +44 mW |
+| Ground-offset setpoint shift, worst point | — | +1.14 % | +0.75 % |
 
-What remains open:
+What remains open (20 items):
 
-- 31 unconnected items, almost all low-speed signals: MCU, harness, enable chain and sense lines.
-- One-item opens on DR1H, PG, CC_FLAG, FB, ISP_K and ISN_K, where a source via is not yet joined to its
-  destination.
-- Five dangling source vias.
-- Weak PGND link: at the worst operating point, U1's PGND reaches the plane with a 15 mV drop. AGND shares
-  that copper, so the review reports a +1.14 % shift of the current setpoint (+0.22 % at 4.0 V). Adding GND
-  vias at the finish stage collided with routed copper. They must become source vias placed before
-  routing.
+- MCU nets: VMCU (4), NTC_PWR (2), VBAT_SENSE (2), SW_IN, PG, IND_OUT, LASER_EN_N and CS_OUT.
+- VBAT to its small loads (R10, R18, TP1 and the U1 VIN feed): 4.
+- U2's Kelvin inputs ISP_K and ISN_K: 2. One GND pad (R1.2).
 
 The validation register therefore keeps `VAL-ROUTE`/`VAL-DRC` for this variant at FAIL.
+
+## Why the rest does not route: via sites around the MCU
+
+A through via needs free copper on F.Cu, In2.Cu and B.Cu at once. The power pours, C1-C3, L1, U1's escape
+vias and the harness pads leave about 15 mm² of the board where a signal via can go at all
+(`grid_route.py` legality map). The MCU sits below C1-C3, so none of those sites is next to its pins.
+Every MCU signal must first run on B.Cu to a via site, and the
+remaining nets compete for the same few corridors. In2 is the only layer that crosses the board centre,
+and DR1H (Q2 gate to U1) plus the column of U1 escape vias divides it.
+
+With the negotiated router (DD-25), about 19 nets keep clashing at 0.15 mm track and space no matter how
+long they negotiate. This is a capacity limit, not a routing-order effect. Options, each needing an owner
+decision or a documented design decision:
+
+1. **Plated wire pads for the harness (TP9-TP13).** They are SMD pads today. Plated holes, as on the evaluation
+   board, would make each pad a layer change for its own net next to the MCU, and give the wires
+   better strain relief.
+2. **MCU pin swap.** The firmware polls every digital MCU pin; only the ADC and comparator inputs and UPDI are
+   fixed. Placing PG/CC, SW/INTLK and LASER_EN on the package side that faces their destinations removes
+   most crossings. The pin map is shared with the evaluation board, so this needs either a re-route there
+   or a variant-specific map and firmware build.
+3. **Inner-layer fine lines.** PCBWay's normal process allows 4/5 mil on 1 oz inner copper against 5/6 mil
+   outside (MFG-01). Rules of 0.10/0.13 mm on In2 would add about 30 % routing capacity where it is needed.
+4. **HDI blind vias (DD-16 option).** These remove the both-sides-free condition, at fabrication cost.
 
 ## Structural constraint: spring-pad via keep-out
 
@@ -71,22 +90,11 @@ planes that other nets may cross, and earlier runs did exactly that. Finish dele
 
 ## Next steps
 
-1. Give U1's PGND pins source vias to the plane before routing, then confirm the setpoint shift in the
-   review.
-   - The bottom output capacitor C12 sits directly under pins 9/10. Its VOUT and GND pads block every
-     via position there.
-   - A 2026-10-25 attempt confirmed this, so C12 must move first, for example beside C13.
-2. Close the one-item opens for DR1H, PG, CC_FLAG, FB and the U2 Kelvin pair with source routes, as was
-   done for U1's escapes.
-   - U2's Kelvin inputs have no via landing that is free on both sides, because L1's SW2 pad lies above U2's
-     left pins.
-   - Swapping U2 and D1 puts U2 nearer the shunt's Kelvin vias.
-   - FB fits on B.Cu from R9 to R8 at y 4.15 under C9, then 3.85, which clears the ISN Kelvin via.
-3. Reduce MCU-region congestion: group the programming pads and pull the enable FETs nearer the EN via.
-   The bottom side is at its placement capacity, which is why the optimiser flips some small parts to the
-   top.
-4. Re-route. Accept the result only when DRC shows 0 unconnected and 0 errors, the current-flow report
-   shows every power path connected, and no review screen has worsened without a recorded disposition.
+1. Decide which of the options above to take. Options 1 and 2 are the most direct, and option 3 is a rule
+   change only.
+2. Re-run `grid_route.py --rebuild --partial --write`, then place, route, finish, DRC and the layout review.
+3. Accept the variant only when DRC shows 0 unconnected and 0 errors, every power path is connected in the
+   current-flow report, and no review screen has worsened without a recorded disposition.
 
 Any relaxation of the 22 mm envelope, via technology or layer strategy needs a documented design decision
 and renewed fabrication review. Assembly yield, power-path temperature rise and host heat transfer are

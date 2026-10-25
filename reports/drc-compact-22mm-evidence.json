@@ -1,10 +1,10 @@
 {
- "report_sha256": "fd5278f01ac13744702388aeeda9b2290bd7fa212530433fa4b6e8d820a36b95",
+ "report_sha256": "e9b7ec995009a3cecadb18f1869197225ccf08f11131dc8d8f194171d31244d8",
  "inputs": {
-  "hardware/compact-22mm/nubm44_driver.kicad_pcb": "305ee2e013784c289e4f00f91c476a158dc7eb959ca441f940fc442da5d78de5",
-  "hardware/compact-22mm/nubm44_driver.kicad_sch": "46e4d602661f1851a75b687ff00dc4e6a037e896fb9196ba27b371e972e9f6fb",
+  "hardware/compact-22mm/nubm44_driver.kicad_pcb": "5a490259d28300ed58a4bdc64fcdcef5467a80632929468183d222dfdf87b443",
+  "hardware/compact-22mm/nubm44_driver.kicad_sch": "e346e598a3521193d14681a28a6c0ae0a6ef646567f5b60e40db3f3f7b6a56d9",
   "hardware/compact-22mm/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
-  "hardware/compact-22mm/placement.yaml": "7ae6b9ddcea16991cb84581fcc6a24aa7bd1da1481c7bab8d2fabebb4cfd7f6f",
+  "hardware/compact-22mm/placement.yaml": "5012e14c1a9939a0c5081151a3025a457df035547f3e9b2263aea549cbde5645",
   "engineering/design/connectivity.yaml": "014683a41ef2a722bf12220071c5bd83dea44e9c400736aac224241645fe8dab",
   "engineering/design/parameters.yaml": "04918072f65d415e6c74e2f54085cdeadec53a199f263f570c6cd686db15a2cd"
  },

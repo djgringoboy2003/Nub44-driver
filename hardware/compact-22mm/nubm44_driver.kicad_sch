@@ -8191,23 +8191,25 @@
 		(dnp no)
 		(uuid "05372cca-f513-55a2-b4bd-239f8bab41ca")
 		(property "Reference" "R17"
-			(at 286.512 254 0)
+			(at 287.02 252.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 284.48 254 0)
+			(at 287.02 255.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -8625,23 +8627,25 @@
 		(dnp no)
 		(uuid "0daca010-bf66-58c0-a76c-5c391b65e04d")
 		(property "Reference" "R12"
-			(at 438.912 116.84 0)
+			(at 439.42 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 436.88 116.84 0)
+			(at 439.42 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -8823,23 +8827,25 @@
 		(dnp no)
 		(uuid "165a3fb8-2897-5afe-b576-e1fc27168a3e")
 		(property "Reference" "R6"
-			(at 90.932 243.84 0)
+			(at 91.44 242.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "33.2k"
-			(at 88.9 243.84 0)
+			(at 91.44 245.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -9589,23 +9595,25 @@
 		(dnp no)
 		(uuid "2d8947db-648e-542d-a347-c3f7f847ea2b")
 		(property "Reference" "R16"
-			(at 347.472 139.7 0)
+			(at 347.98 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "220"
-			(at 345.44 139.7 0)
+			(at 347.98 140.97 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -10378,23 +10386,25 @@
 		(dnp no)
 		(uuid "3a591f59-6add-5f2b-a04b-0fc0a8d33d92")
 		(property "Reference" "R4"
-			(at 212.852 220.98 0)
+			(at 213.36 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "1.2k"
-			(at 210.82 220.98 0)
+			(at 213.36 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -10496,23 +10506,25 @@
 		(dnp no)
 		(uuid "3aa98f72-eac8-5634-a550-4c58f2667617")
 		(property "Reference" "R2"
-			(at 151.892 220.98 0)
+			(at 152.4 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "33.2k"
-			(at 149.86 220.98 0)
+			(at 152.4 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -11445,23 +11457,25 @@
 		(dnp no)
 		(uuid "518b98eb-c224-55d1-9984-f97247c0b9fd")
 		(property "Reference" "R9"
-			(at 90.932 386.08 0)
+			(at 91.44 384.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "10.0k"
-			(at 88.9 386.08 0)
+			(at 91.44 387.35 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
@@ -11770,23 +11784,25 @@
 		(dnp no)
 		(uuid "53c75629-0de6-5793-8799-0a74ccac9187")
 		(property "Reference" "R7"
-			(at 29.972 266.7 0)
+			(at 30.48 265.43 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "4.7k"
-			(at 27.94 266.7 0)
+			(at 30.48 267.97 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -12338,23 +12354,25 @@
 		(dnp no)
 		(uuid "63c770a9-36c6-5c2e-9e53-99342694427d")
 		(property "Reference" "R19"
-			(at 347.472 254 0)
+			(at 347.98 252.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "47k"
-			(at 345.44 254 0)
+			(at 347.98 255.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -12890,23 +12908,25 @@
 		(dnp no)
 		(uuid "6d250677-29cc-5bf7-9db8-a299c4879cbc")
 		(property "Reference" "R13"
-			(at 469.392 116.84 0)
+			(at 469.9 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "20k"
-			(at 467.36 116.84 0)
+			(at 469.9 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -13088,23 +13108,25 @@
 		(dnp no)
 		(uuid "6e31feec-0867-5b5a-9726-8d25727e5458")
 		(property "Reference" "R10"
-			(at 377.952 116.84 0)
+			(at 378.46 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 375.92 116.84 0)
+			(at 378.46 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -13206,23 +13228,25 @@
 		(dnp no)
 		(uuid "74e8e20b-a833-5665-b73e-2ff4a4c0c039")
 		(property "Reference" "R8"
-			(at 60.452 386.08 0)
+			(at 60.96 384.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "6.65k"
-			(at 58.42 386.08 0)
+			(at 60.96 387.35 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
@@ -13324,23 +13348,25 @@
 		(dnp no)
 		(uuid "7546f4db-33e4-5d7b-9211-c0ff0c7a0145")
 		(property "Reference" "RT1"
-			(at 493.395 116.84 0)
+			(at 500.38 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "10k"
-			(at 501.015 116.84 0)
+			(at 500.38 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -15558,23 +15584,25 @@
 		(dnp no)
 		(uuid "af09ca3e-3fdb-56ed-b4af-aa1b68c6744b")
 		(property "Reference" "R1"
-			(at 29.972 81.28 0)
+			(at 30.48 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 27.94 81.28 0)
+			(at 30.48 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -15676,23 +15704,25 @@
 		(dnp no)
 		(uuid "af108c77-aae3-52a9-b0d6-53865bb079cc")
 		(property "Reference" "L1"
-			(at 26.67 220.98 0)
+			(at 30.48 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "1.0u"
-			(at 29.845 220.98 0)
+			(at 30.48 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_Coilcraft_XAL5030-XXX"
@@ -15954,23 +15984,25 @@
 		(dnp no)
 		(uuid "b4e947e5-cc6c-5b92-926e-6001d2d79673")
 		(property "Reference" "R11"
-			(at 408.432 116.84 0)
+			(at 408.94 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 406.4 116.84 0)
+			(at 408.94 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -16187,23 +16219,25 @@
 		(dnp no)
 		(uuid "bc181bb3-5442-53d7-8457-c5eacec8f344")
 		(property "Reference" "R20"
-			(at 408.432 254 0)
+			(at 408.94 252.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "4.7k"
-			(at 406.4 254 0)
+			(at 408.94 255.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -16305,23 +16339,25 @@
 		(dnp no)
 		(uuid "c0c15c06-be7f-5061-afd3-013a2baaf0f3")
 		(property "Reference" "R5"
-			(at 60.452 243.84 0)
+			(at 60.96 242.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "49.9k"
-			(at 58.42 243.84 0)
+			(at 60.96 245.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -16854,23 +16890,25 @@
 		(dnp no)
 		(uuid "c9a6a535-4f86-5ae4-8f5a-78b89f0ec24d")
 		(property "Reference" "R18"
-			(at 316.992 254 0)
+			(at 317.5 252.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100k"
-			(at 314.96 254 0)
+			(at 317.5 255.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -18358,23 +18396,25 @@
 		(dnp no)
 		(uuid "e93bbe0f-3c7f-5946-a2e3-de1488d8c986")
 		(property "Reference" "R14"
-			(at 286.512 139.7 0)
+			(at 287.02 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "10k"
-			(at 284.48 139.7 0)
+			(at 287.02 140.97 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -18671,23 +18711,25 @@
 		(dnp no)
 		(uuid "ee62910b-3eeb-509e-9a44-3d7482cc479c")
 		(property "Reference" "R3"
-			(at 182.372 220.98 0)
+			(at 182.88 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "27.4k"
-			(at 180.34 220.98 0)
+			(at 182.88 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
@@ -18789,23 +18831,25 @@
 		(dnp no)
 		(uuid "eeb650f2-27b2-505a-947d-3c5731023802")
 		(property "Reference" "R15"
-			(at 316.992 139.7 0)
+			(at 317.5 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "10k"
-			(at 314.96 139.7 0)
+			(at 317.5 140.97 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
