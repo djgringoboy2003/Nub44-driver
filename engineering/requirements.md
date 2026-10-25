@@ -39,7 +39,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
 | REQ-PWR-01 | Prefer a high-efficiency boost topology; compare at least three architectures numerically. | BRIEF | CALC | VERIFIED-CALC | Four architectures compared (`research/architecture-comparison.md`). |
-| REQ-PWR-02 | Efficiency target > 95 % at 4.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | AT-RISK | Current design estimates 94.6 % at 4.0 V, below target. Rework/loss review and bench confirmation remain open; this is not proof of an absolute efficiency limit. |
+| REQ-PWR-02 | Efficiency target > 95 % at 4.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | AT-RISK | Loss model estimates 94.6 % at 4.0 V, below target; substituting the routed evaluation-board copper (including switch-node copper the model omits) gives about 94.1 % (`reports/layout-review-evaluation-board.md`). Owner decision or loss rework and bench confirmation remain open; this is not proof of an absolute efficiency limit. |
 | REQ-PWR-03 | Efficiency target ≥ 86 % at 3.0 V input, 4 A output. | BRIEF (target) | CALC, TEST | VERIFIED-CALC | Estimated 91.3 % at 3.0 V (worst diode). Bench confirmation needed. |
 | REQ-PWR-04 | Converter components operate with margin: switch/inductor peak current ≥ 20 % below the minimum rated limit at worst case (minimum battery, maximum Vf, maximum current). | DERIVED | CALC | VERIFIED-CALC | Worst average inductor current 8.9 A including a 20 % margin against the 10.2 A minimum ILIM; 8.5 A peak against 14 A Isat. |
 | REQ-PWR-05 | Input and output filtering. | BRIEF | CALC, SIM | DESIGNED | 3 × 22 µF input, 4 × 22 µF output; ripple 8.9 % p-p worst corner. |
@@ -80,7 +80,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | DESIGNED | J3 PTH laser pads placed; routing incomplete. |
 | REQ-MECH-04 | Evaluate 2-layer and 4-layer stack-ups. | BRIEF | CALC | VERIFIED-CALC | 4-layer chosen; 2-layer rejected for density and current paths (DD-14). |
 | REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | VERIFIED-CAD | Variant B four-layer 45 x 40 mm board has 68 parts, 13 labelled test points and repeated DRC 0/0/0/0; power-layout and bench review remain open. |
-| REQ-PCB-01 | Layout priorities: small switching loops, input caps near switches, Kelvin sensing, quiet feedback, thermal copper, grounding strategy. | BRIEF | INSPECT, CAD | OPEN | |
+| REQ-PCB-01 | Layout priorities: small switching loops, input caps near switches, Kelvin sensing, quiet feedback, thermal copper, grounding strategy. | BRIEF | INSPECT, CAD | DESIGNED | Evaluation board: power-layout review with copper current-flow analysis (`engineering/layout-review.md`); SW1/VOUT/LD_P pours corrected; package-limited SW2/PGND/AGND items (DD-16) and buck-leg drive loops documented with bench checks T2.9–T2.12. Compact draft: open review items feed its rework. |
 | REQ-TEST-01 | Test points where practical. | BRIEF | CAD | VERIFIED-CAD | 10 compact test/connection pads and 13 evaluation test points placed; evaluation probe labels are source-defined. |
 
 ## 7. Tooling, manufacturing, documentation

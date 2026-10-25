@@ -1,12 +1,12 @@
 {
- "report_sha256": "0d59aadb38307cd3a5ab643949e18b74852b319868a979afdb89ba6eabf108e4",
+ "report_sha256": "8d5e745e193c0c99dde6844320ac92855a59d02536d70d8a9a8facd812e01480",
  "inputs": {
   "hardware/compact-22mm/nubm44_driver.kicad_pcb": "61279c0ab326fa7fd3ec5db04bda010d51defdc5105efc4369b3d7e59abeef1e",
   "hardware/compact-22mm/nubm44_driver.kicad_sch": "f8f282c61e43a77ba077d45ed5aa53a6875ff4ee051fa9b96d9e4b45138005d3",
   "hardware/compact-22mm/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
   "hardware/compact-22mm/placement.yaml": "18965e6d835c421aeb5c63bee329cc497cc71dfa8fae26503186cce7654f87f7",
   "engineering/design/connectivity.yaml": "b80c9267673edf22928ebd718007709d8122ca2c6c8c6d713375031d69f184f8",
-  "engineering/design/parameters.yaml": "25279b2cca0fce78669794cd59992ce0d4cbd7be70d68050600958d28d85cf00"
+  "engineering/design/parameters.yaml": "04918072f65d415e6c74e2f54085cdeadec53a199f263f570c6cd686db15a2cd"
  },
  "schematic_parity": true,
  "severity_all": true

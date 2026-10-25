@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\evaluation-board\\nubm44_driver.kicad_sch")
-		(date "2026-10-24T22:55:21")
+		(date "2026-10-25T03:43:11")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")

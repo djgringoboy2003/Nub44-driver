@@ -108,7 +108,7 @@ def bb_params(v_in: float) -> buckboost.BuckBoostParams:
     cout = cm["c_out"]
     cin = cm["c_in"]
     return buckboost.BuckBoostParams(
-        r_input_path=rev_fet_rds(v_in) + 0.0015,               # FET + copper
+        r_input_path=rev_fet_rds(v_in) + P["pcb"]["model_copper_input_ohm"],   # FET + copper
         l_h=cm["inductor"]["l_h"],
         dcr=cm["inductor"]["dcr_typ_ohm"] * 1.2,               # copper at ~75 C
         core_loss_w=0.06,                                      # vendor calculator value UNKNOWN; estimate
@@ -120,7 +120,7 @@ def bb_params(v_in: float) -> buckboost.BuckBoostParams:
         c_oss_leg=1.5e-9, t_deadtime=20e-9, vf_body=0.7,
         q_gate_buck=2 * cm["q_buck"]["qg_c"], q_gate_boost=15e-9, v_drive=5.0,
         i_q=cv["iq_a"], f_sw=cv["f_sw_hz"],
-        r_shunt=cm["shunt"]["r_ohm"], r_output_path=0.002,
+        r_shunt=cm["shunt"]["r_ohm"], r_output_path=P["pcb"]["model_copper_output_ohm"],
         esr_out=cout["esr_each_ohm"] / cout["count"], esr_in=cin["esr_each_ohm"] / cin["count"],
         p_aux=0.006, band=0.05)
 

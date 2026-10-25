@@ -168,16 +168,21 @@ zones_pre:
      polygon: [[-13.8, -14.0], [-5.8, -14.0], [-5.8, -2.2], [-13.8, -2.2]]}
   - {net: VBAT, layer: F.Cu, priority: 2, solid: true,
      polygon: [[-13.8, -13.8], [-9.4, -13.8], [-9.4, -11.6], [-5.9, -11.6], [-5.9, -8.3], [-9.4, -8.3], [-9.4, -4.0], [-13.8, -4.0]]}
+  # SW1 joins the Q2 source pins to the L1 strip along their full height (layout review: the
+  # earlier 0.55 mm junction beside the DR1H via carried the whole inductor current).
   - {net: SW1, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[-5.7, -10.55], [-4.3, -10.55], [-4.3, -11.9], [3.4, -11.9], [3.4, -10.0], [-4.3, -10.0], [-4.3, -4.0], [-7.0, -4.0], [-7.0, -6.8], [-5.7, -6.8]]}
+     polygon: [[-5.7, -10.55], [-4.3, -10.55], [-4.3, -11.9], [3.4, -11.9], [3.4, -10.0], [-2.2, -10.0], [-2.2, -8.9], [-4.3, -8.9], [-4.3, -4.0], [-7.0, -4.0], [-7.0, -6.8], [-5.7, -6.8]]}
   - {net: SW2, layer: F.Cu, priority: 2, solid: true,
      polygon: [[-1.6, -8.6], [3.1, -8.6], [3.1, -6.3], [0.7, -6.3], [0.7, -5.9], [0.1, -5.9], [0.1, -6.3], [-1.6, -6.3]]}
   - {net: VOUT, layer: F.Cu, priority: 2, solid: true,
      polygon: [[0.1, -2.7], [1.3, -2.7], [1.3, -0.1], [7.9, -0.1], [7.9, 4.6], [0.25, 4.6], [0.25, 0.1], [0.1, 0.1]]}
+  # The In2 finger under U1's output column parallels the F.Cu neck through the column VOUT via.
+  # That via (0.596, -1.555) is router-placed in the archived session; before any new route, add a
+  # VOUT via there to `vias` so the finger stays connected (check with automation/review/power_layout.py).
   - {net: VOUT, layer: In2.Cu, priority: 2, solid: true,
-     polygon: [[0.25, -0.1], [7.9, -0.1], [7.9, 4.6], [0.25, 4.6]]}
+     polygon: [[0.25, -2.0], [1.3, -2.0], [1.3, -0.1], [7.9, -0.1], [7.9, 4.6], [0.25, 4.6]]}
   - {net: LD_P, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[9.0, -0.2], [19.2, -0.2], [19.2, 2.3], [9.0, 2.3]]}
+     polygon: [[9.0, -0.2], [19.2, -0.2], [19.2, 4.0], [10.6, 4.0], [10.6, 2.3], [9.0, 2.3]]}
   - {net: BAT_SPRING, layer: F.Cu, priority: 2, solid: true,
      polygon: [[-20.8, -9.4], [-14.0, -9.4], [-14.0, -6.6], [-20.8, -6.6]]}
 

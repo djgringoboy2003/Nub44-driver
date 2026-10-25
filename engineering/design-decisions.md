@@ -217,3 +217,25 @@ Routing sessions are bound to the exact DSN and SES hashes. DRC evidence is boun
 PCB, schematic, project rules and report hashes. Export evidence includes source and artifact hashes,
 required output inventory and independent BOM/centroid checks. Failed exports retain a separate draft
 for inspection. A successful export check establishes internal package consistency, not Gate F release.
+
+
+## DD-23 Power-layout review from the routed copper
+Layout priorities (REQ-PCB-01, SLVSFC5 §10.1) are reviewed from the routed copper, not by eye.
+`automation/review/power_layout.py` solves the DC current flow through every power net at the calculated
+operating points, measures the guideline geometry and writes a report per variant. The validator only
+checks that the report is current for the board; dispositions live in `engineering/layout-review.md`.
+- **Evaluation board:** the SW1 pour now meets the Q2 source pins along their full height (1.91 → 0.98 mΩ).
+  An In2 finger parallels U1's output column (VOUT 3.01 → 2.27 mΩ) and the LD_P pour is larger. These are
+  source pours re-applied to the archived router session, so routing, post-route corrections and DRC are
+  unchanged.
+- **Not changed:** moving C7 (VCC) or C6 (BOOT2) trades one top-right-corner loop for the other because L1
+  and U1 courtyards are 0.12 mm apart. Pairing U1's ISP/ISN on one layer needs a new router session for
+  FB and the sense nets. Both are documented with bench checks instead.
+- **Package limit (reinforces DD-16):** without via-in-pad, PGND, VOUT and SW2 each leave U1 through one
+  0.25 mm pin. AGND (pin 10) sits between PGND and VOUT, so it cannot join PGND only at the VCC capacitor
+  while C14 closes the boost loop. The measured consequences are a 0.75 mm SW2 equivalent width and a
+  DC ground offset of +0.28 % on the current setpoint at the worst point. HDI via-in-pad remains the
+  production remedy.
+- **Efficiency:** routed copper adds about 96 mW over the loss model at 4.0 V (estimate 94.1 %). The
+  calculation keeps its copper allowances (`model_copper_*`), so REQ-PWR-02 stays AT-RISK for an owner
+  decision rather than being silently re-based.

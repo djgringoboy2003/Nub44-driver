@@ -28,6 +28,20 @@ all-layer clearance. The ring radius and C10/C11 spacing were corrected in sourc
 fields and native project symbol filters now agree with PCB parity checks. Imported subminimum widths
 are restored before actual DRC; failures remain visible.
 
+## Power-layout review of the draft
+
+`automation/review/power_layout.py --variant compact-22mm` runs on the draft and reports missing copper
+rather than estimating it (`reports/layout-review-compact-22mm.md`). At this revision:
+- VOUT has no copper path from U1 to the shunt;
+- the whole VBAT input current crosses one via;
+- U1 pin 15 is isolated from ground;
+- FSW and COMP_RC are 0.15 mm from switching copper;
+- the ISP/ISN pair separates by up to 2.7 mm.
+
+`engineering/layout-review.md` lists the placement priorities taken from the evaluation-board review. The
+rework is accepted only when the current-flow report shows every power path connected with no
+single-via transitions.
+
 ## Remaining engineering work
 
 Use the larger evaluation board to establish accessible measurement and fault-test coverage, then

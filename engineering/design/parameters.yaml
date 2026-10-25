@@ -77,3 +77,12 @@ pcb:                                # engineering geometry choices; DD-21
   ring_segment_gap_mm: 0.70
   via_diameter_mm: 0.60
   via_drill_mm: 0.30
+  # Stack-up used by the copper current-flow review (automation/review/power_layout.py).
+  copper_oz: 1.0                    # DD-14 target on all four layers; finished thickness UNKNOWN until PCBWay confirms
+  board_thickness_mm: 1.6           # DD-14
+  prepreg_mm: 0.1855                # DD-14 PCBWay standard 4-layer example (7628); outer layer to inner plane
+  via_plating_um: 20                # assumption (copper.py default); fabricator barrel plating UNKNOWN
+  # Copper allowances of the loss model (power_stage.py). Engineering estimates, compared with the
+  # routed copper by automation/review/power_layout.py (input includes the ground return).
+  model_copper_input_ohm: 0.0015
+  model_copper_output_ohm: 0.002

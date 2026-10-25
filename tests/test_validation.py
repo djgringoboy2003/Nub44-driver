@@ -317,3 +317,34 @@ def test_export_gate_rejects_stale_or_incomplete_manifest(validation, fault):
     write_json(report, data)
     v.exports("compact-22mm")
     assert statuses(v)["VAL-EXPORT-compact-22mm"] == "FAIL"
+
+
+def test_layout_review_must_match_current_board_and_inputs(validation):
+    v = validation
+    variant = "evaluation-board"
+    board = v.paths.HARDWARE / variant / "nubm44_driver.kicad_pcb"
+    params = v.ROOT / "engineering/design/parameters.yaml"
+    calc = v.ROOT / "engineering/calculations/power-stage-results.json"
+    for p, text in ((board, "board"), (params, "params"), (calc, "{}")):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(text, encoding="utf-8")
+    v.layout_review(variant)
+    assert statuses(v)[f"VAL-LAYOUT-{variant}"] == "NOT RUN"
+
+    def sha(p):
+        return hashlib.sha256(p.read_bytes()).hexdigest()
+    report = v.REP / f"layout-review-{variant}.json"
+    write_json(report, {"inputs": {"board_sha256": sha(board), "parameters_sha256": sha(params),
+                                   "calculations_sha256": sha(calc)},
+                        "findings": [{"level": "REVIEW"}, {"level": "INFO"}]})
+    v.entries.clear()
+    v.layout_review(variant)
+    entry = v.entries[0]
+    assert entry["status"] == "PASS"
+    assert "1 REVIEW / 1 INFO" in entry["detail"]           # findings are reported, never a gate input
+
+    board.write_text("board edited after the review", encoding="utf-8")
+    v.entries.clear()
+    v.layout_review(variant)
+    assert v.entries[0]["status"] == "FAIL"
+    assert "stale layout review" in v.entries[0]["detail"]

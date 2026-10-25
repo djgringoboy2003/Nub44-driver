@@ -48,10 +48,12 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | `engineering/design/parameters.yaml` | Authoritative numeric design parameters |
 | `engineering/design/connectivity.yaml` | Authoritative parts list and pin-to-net connectivity (drives schematic and netlist checks) |
 | `engineering/design-decisions.md` | Decision log DD-01 onward |
+| `engineering/layout-review.md` | Power-layout review dispositions (generated numbers in `reports/layout-review-<variant>.md`) |
 | `engineering/calculations/` | `power_stage.py` and its generated results (`.md`, `.json`, plots) |
 | `engineering/previous-design-audit.md` | Audit of the earlier concept (every part rejected, with evidence) |
 | `research/` | Topic reports, source tables (`sources/`), local datasheet copies (`datasheets/`, git-ignored) |
 | `automation/nubm44/` | Python package: S-expression I/O, KiCad library access, symbol/footprint generators, schematic writer, calculators |
+| `automation/review/` | Power-layout review: copper extractor (KiCad Python), raster model, DC current-flow solver, report (`power_layout.py`) |
 | `hardware/libraries/` | Project symbol library (`nubm44.kicad_sym`, generated from `symbols/*.yaml`) and footprints (`nubm44.pretty`, generated) |
 | `hardware/compact-22mm/`, `hardware/evaluation-board/` | KiCad projects for Variant A (22 mm) and Variant B (larger evaluation board) |
 | `scripts/` | PowerShell entry points (`setup.ps1` exists; see PROGRESS.md for the others) |
@@ -71,6 +73,19 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 Paths are resolved in code by `automation/nubm44/paths.py`. Run `scripts\setup.ps1` on a fresh machine;
 it is idempotent and verifies SHA-256 hashes.
 
+## Regenerating evidence
+
+Evidence is hash-bound to its sources. After editing `parameters.yaml`, `connectivity.yaml` or a
+`placement.yaml`, regenerate it in this order:
+
+1. `automation/schematic/build_schematic.py` (ERC and netlist).
+2. `build_pcb.py --stage drc` per variant. DRC refills and re-saves the board.
+3. `automation/review/power_layout.py --variant <v>`.
+4. `scripts/export-pcbway.ps1`.
+5. `scripts/validate.ps1`.
+
+Running the layout review before DRC leaves it stale, because DRC rewrites the board bytes.
+
 ## Known pitfalls
 
 - The FreeRouting 2.5.0 **native** `freerouting-cli.exe` crashes with a GraalVM serialization error. Use the jar on
@@ -82,6 +97,11 @@ it is idempotent and verifies SHA-256 hashes.
 - The workspace path contains a space (`C:\NUBM44 driver`). Quote it everywhere. Some shell wrappers refuse
   `Remove-Item` and `git rm` on such paths, so use Bash for those.
 - KiCad's `Vishay_PowerPAK_1212-8_Single` footprint has 5 pads: 1–3 S, 4 G, 5 D (merged drain pad).
+- Pillow's `ImageDraw.polygon` rounds vertices and fills inclusively, which widens every shape by a cell.
+  Copper analysis uses the exact scanline fill in `automation/review/raster.py`.
+- A pour-only change can be applied to the archived router session (restore DSN/SES/evidence, then
+  `--stage finish` and `--stage drc`) without re-routing. Unmatched `remove_*_post` selectors are skipped
+  silently, so check the printed `matches` counts.
 
 ## Commit conventions
 

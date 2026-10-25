@@ -52,7 +52,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T1.4 | Regulation accuracy | Steady current at 3.0/3.3/3.7/4.0/4.2 V × dummy loads with low/high Vf | 4.0 A ± 5 % (design ± 3.6 %) | REQ-OUT-02/03 (SIM-03) |
 | T1.5 | Vf below Vbat (buck mode) | Dummy load with Vf ≈ 3.8 V at 4 A, supply 4.2 V | Current still regulated | REQ-OUT-02 |
 | T1.6 | Ripple | Laser-current ripple at 3.0 V and 4.2 V | ≤ 10 % p-p (prediction 8.9 % at 2.83 V) | power-stage calc |
-| T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; targets > 95 % at 4.0 V (predicted 94.6 %, AT-RISK) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
+| T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; targets > 95 % at 4.0 V (predicted 94.6 % by the loss model, about 94.1 % with the evaluation-board copper; AT-RISK) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
 | T1.8 | Flash mode | Short supply interruption (< 0.5 s) via the relay; check 2 Hz / 50 % | Mode advances; no overshoot at each flash; off < 1 ms to < 50 mA | REQ-MODE-02/04 (SIM-06) |
 | T1.9 | Mode memory timing | Interruptions of 0.1 / 0.3 / 0.6 / 1.0 s | < 0.5 s advances mode, > 1 s resets (record the actual threshold) | firmware |
 | T1.10 | CC pin polarity | Force the backup limit (lower R_FB_TOP temporarily, or a light test load with a CSA fault injected) | Confirm the firmware's active-low assumption | firmware README |
@@ -69,6 +69,10 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T2.6 | UVLO | Ramp the supply down and up slowly | Converter off at 2.83 V ± 3 %, on at 3.08 V ± 3 %; firmware warns at 3.1 V and latches at 2.9 V | REQ-BAT-05 |
 | T2.7 | Thermal | 4 A continuous at 3.0 V. Board clamped in an aluminium pill (or a heat-sunk ring fixture) and also in still air. Thermocouples on U1, L1, Q1, RS1 | Record steady temperatures; U1 Tj estimate < 125 °C; firmware stops at 85 °C board | REQ-SAFE-08, DD-15/16 |
 | T2.8 | Hot insertion | Connect a charged cell through a spring contact (no laser) | VIN/VMCU overshoot below 6 V (MCU abs max) | — |
+| T2.9 | Switch-node and gate waveforms | Ground-spring probe on SW2 (boost mode, 3.0 V) and on SW1, DR1H and DR1L (transition, 4.2 V with a low-Vf dummy load) | Record overshoot and ringing; SW2 peak below the TPS552882 abs max; no shoot-through signature | `engineering/layout-review.md` (DRIVE-*, NECK-SW2) |
+| T2.10 | VCC ripple | Short-ground probe across C7 and at U1 pin 19, 3.0 V and 4.2 V at 4 A | Record ripple; VCC stays above the TPS552882 VCC UVLO | layout review DRIVE-VCC5 |
+| T2.11 | Control-node noise and current jitter | Probe FB, COMP and CS at 3.0 V / 4 A; scope laser-current ripple spectrum; compare the measured current with the CS reading | Record; regulated-current offset within the ± 5 % budget (layout DC estimate + 0.28 %) | layout review GND-OFFSET, SPACE-COMP |
+| T2.12 | U1 power-pin temperature | Thermal camera on U1's top edge (SW2 pin 21) and the SW1/VOUT necks at 4 A, 2.9 V, steady state | Record; compare with T2.7 thermocouples | DD-16, layout review NECK-SW2 |
 
 **Stage 3: battery operation (dummy load).**
 

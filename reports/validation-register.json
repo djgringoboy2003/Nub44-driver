@@ -1,5 +1,5 @@
 {
- "date": "2026-10-24",
+ "date": "2026-10-25",
  "gates": {
   "A": "PASS",
   "B": "PASS",
@@ -230,6 +230,14 @@
    "detail": "0 errors, 3 warnings, 0 exclusions {'connection_width': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
   },
   {
+   "id": "VAL-LAYOUT-compact-22mm",
+   "item": "Power-layout review current for the board (compact-22mm)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/layout-review-compact-22mm.json",
+   "detail": "14 REVIEW / 6 INFO screening results; dispositions in engineering/layout-review.md"
+  },
+  {
    "id": "VAL-EXPORT-compact-22mm",
    "item": "PCBWay export package internally consistent (compact-22mm)",
    "method": "CAD",
@@ -276,6 +284,14 @@
    "status": "PASS",
    "evidence": "reports/drc-evaluation-board.json",
    "detail": "0 errors, 0 warnings, 0 exclusions {}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20)"
+  },
+  {
+   "id": "VAL-LAYOUT-evaluation-board",
+   "item": "Power-layout review current for the board (evaluation-board)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "reports/layout-review-evaluation-board.json",
+   "detail": "16 REVIEW / 5 INFO screening results; dispositions in engineering/layout-review.md"
   },
   {
    "id": "VAL-EXPORT-evaluation-board",

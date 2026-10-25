@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-24 (Codex continuation; evaluation CAD and review exports complete)._
+_Last updated: 2026-10-25 (Claude continuation; power-layout review of the routed copper)._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -15,64 +15,133 @@ _Last updated: 2026-10-24 (Codex continuation; evaluation CAD and review exports
 | G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
 The authoritative gate statuses are generated in [reports/validation-register.md](reports/validation-register.md)
-and mirrored into the requirement register by the validator. `scripts/validate.ps1` currently returns 1
-because the efficiency target and compact routing/DRC checks are unresolved, while all 120 Python tests pass.
+and mirrored into the requirement register by the validator.
 
-**Design and deliverables:**
+- `scripts/validate.ps1` returns 1 for three known reasons: the efficiency target, compact routing and compact
+  DRC.
+- All 131 Python tests pass.
+- `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
+
+**Power-layout review (new this session).**
+
+The tool `automation/review/power_layout.py` reads the routed copper. It solves the DC current flow per
+power net at the calculated operating points and measures the SLVSFC5 §10.1 layout geometry. It writes
+`reports/layout-review-<variant>.md/.json` and figures. Dispositions and lessons are in
+[engineering/layout-review.md](engineering/layout-review.md) (DD-23).
+
+- **Evaluation board pours corrected.** Three source pours were re-applied to the archived router session.
+  DRC is still 0/0/0/0 and every post-route selector matched.
+  - SW1: the old 0.55 mm junction now meets the Q2 source pins along their height (1.91 → 0.98 mΩ).
+  - VOUT: an In2 finger runs under U1's output column (3.01 → 2.27 mΩ).
+  - LD_P: the pour is larger (1.28 → 0.88 mΩ).
+- **Accepted with bench checks T2.9–T2.12:**
+  - the package-limited SW2 entry (0.75 mm equivalent) and AGND/PGND arrangement (+0.28 % DC setpoint
+    shift), both under DD-16;
+  - the buck-leg DR1H/BOOT1 loops, which switch only in the transition region;
+  - C7 (VCC) reached through In2;
+  - the U1 branch of ISP/ISN.
+- **Efficiency.** Routed copper adds about 96 mW over the loss model at 4.0 V. The estimate falls from 94.6 %
+  to about 94.1 %, and REQ-PWR-02 stays AT-RISK. Copper allowances moved into `parameters.yaml`, and the
+  calculation output is now deterministic: the same values with sorted keys.
+- **Compact draft.** The review lists the gaps that the rework must close:
+  - VOUT is not connected from U1 to the shunt;
+  - the whole VBAT input current crosses one via;
+  - U1 pin 15 is isolated from ground;
+  - FSW and COMP_RC sit 0.15 mm from switching copper.
+
+**Design and deliverables (unchanged unless noted):**
 - TPS552882 constant-current architecture and all hardware protections retained; default setpoint remains 4 A.
-- Both native KiCad projects are committed. The evaluation board is 45 x 40 mm, four layers, 68 footprints
-  and 13 labelled test points. Repeated finishing/DRC preserves its clean result.
-- The compact board has 65 footprints. Its corrected geometry has no DRC errors or parity findings,
-  but three connection-width warnings and 43 incomplete connections remain. See
-  [the compact assessment](engineering/compact-feasibility.md).
-- Firmware: 26 host checks pass; ATtiny1616 target build succeeds with warnings treated as errors
-  (approximately 2.4 kB flash image).
-- Calculations: 20 of 21 pass. Current estimated efficiency is 94.5883% at 4 V against a greater-than-95% target;
-  actual efficiency remains unmeasured.
-- Both `manufacturing/pcbway/<variant>/` review packages pass source/artifact hash, output inventory,
-  BOM/centroid and ZIP checks. Each has 31 artifacts, 48 BOM lines / 53 BOM parts and 52 centroid rows.
-  All PDFs open; all PNGs verify. Renders show board geometry without resolved component bodies.
-- Assembly instructions, stack-up note, dummy-load-first bench plan and final review report are under
-  `documentation/`. Source-defined routing checkpoints (DSN/SES/manifests/instructions) are archived in
-  `hardware/<variant>/routing/` so the exact current route can be restored from Git.
-- `doctor`, `build`, `validate`, `export-pcbway` and DRAFT `package` entry points exist. The toolchain doctor passes.
+- Evaluation board: 45 x 40 mm, four layers, 68 footprints, 13 labelled test points. Compact board:
+  65 footprints, routing draft (`engineering/compact-feasibility.md`).
+- Firmware: 26 host checks pass; ATtiny1616 target build succeeds with warnings treated as errors.
+- Calculations: 20 of 21 pass. The efficiency check fails (94.5883 % against > 95 %); actual efficiency is
+  unmeasured.
+- Both `manufacturing/pcbway/<variant>/` DRAFT review packages were regenerated from the current boards.
+  Each passes its source/artifact hash, inventory, BOM/centroid and ZIP checks.
+- Assembly instructions, stack-up note, dummy-load-first bench plan (now with T2.9–T2.12) and final review
+  report are under `documentation/`. The routing checkpoints in `hardware/<variant>/routing/` restore the
+  exact sessions; the evaluation checkpoint records the 2026-10-25 pour revision.
 
 **Owner decisions / open limitations:**
-1. REQ-BAT-04 remains BLOCKED: working contact polarity is centre spring B+, ring B-. Evaluation Gate F is held.
-2. Default 4 A remains the brief's setpoint and the documented diode-life risk (DD-13); alternate selection
-   requires an owner decision and the matching divider/calculation update.
-3. The current efficiency estimate misses its target; review losses/rework or document an accepted deviation.
-4. Supplier availability, unverified prices and physical measurements remain UNKNOWN.
-5. Evaluation power-layout review and bench validation remain open. Clean DRC does not verify switching
-   waveforms, power-neck temperature, thermal coupling or host fit.
-6. No Git remote is configured. Commits are local; a GitHub destination was requested asynchronously.
+1. REQ-BAT-04 remains BLOCKED: the working contact polarity is centre spring B+, ring B-. Evaluation Gate F is
+   held.
+2. Default 4 A remains the brief's setpoint and the documented diode-life risk (DD-13). An alternate setpoint
+   needs an owner decision and the matching divider/calculation update.
+3. Efficiency misses its target: model 94.6 %, with routed copper about 94.1 %. The owner must accept a
+   deviation, or loss rework is needed (lower-Rds reverse FET, copper, HDI via-in-pad).
+4. HDI via-in-pad for the RPM0026A centre pads (DD-16) is the remedy for the package-limited SW2/PGND/AGND
+   items. It needs a fabrication quote and an owner decision.
+5. Supplier availability, unverified prices and physical measurements remain UNKNOWN.
+6. No Git remote is configured. Commits are local.
 
 ## Next actions (in order)
 
-1. Confirm owner polarity before any Gate F release. Resolve the current/efficiency decisions as appropriate;
-   no part value or requirement has been silently relaxed.
-2. Review evaluation gate/boot loops, Kelvin/feedback isolation, power necks and thermal paths against the
-   source datasheets. Use `hardware/evaluation-board/LAYOUT.md` and the actual CAD/assembly package.
-3. After CAD/owner release, assemble an evaluation prototype and execute `documentation/testing/test-plan.md`
-   using a rated dummy load first. Record measured data; only bench evidence can close Gate G.
-4. Rework compact placement and explicit fanout using `engineering/compact-feasibility.md`. Do not rerun the
-   same autoroute expecting a different conclusion or waive its remaining findings.
-5. Verify supplier stock/prices and proposed alternatives; retain UNKNOWN until evidence is available.
+1. Owner decisions: confirm polarity before any Gate F release; decide on the current setpoint, the
+   efficiency deviation and the HDI via-in-pad option. No part value or requirement has been silently
+   relaxed.
+2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
+   and fresh post-route selectors:
+   - move the DR1H via off the SW1 junction;
+   - route U1's ISP/ISN as a same-layer pair;
+   - move C5 nearer U1.
+   Re-check every result with `power_layout.py`.
+3. After CAD/owner release, assemble an evaluation prototype and execute
+   `documentation/testing/test-plan.md`, starting with a rated dummy load. Record measured data; only bench
+   evidence can close Gate G.
+4. Rework the compact placement and explicit fanout using `engineering/compact-feasibility.md` and the
+   priorities in `engineering/layout-review.md`. It is accepted only when the current-flow report shows every
+   power path connected and no single-via power transitions.
+5. Verify supplier stock/prices and proposed alternatives; keep UNKNOWN until evidence is available.
 
 **Commands and routing replay:**
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\doctor.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\validate.ps1
+.venv\Scripts\python.exe automation\review\power_layout.py --variant evaluation-board
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\export-pcbway.ps1 -Variant evaluation-board
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\package.ps1
 ```
 
 The per-process PowerShell flag is needed on this machine; no system policy was changed.
-For exact route restoration, follow `hardware/<variant>/routing/README.md`. A new `build.ps1` or
-`build_pcb.py --stage all` reroutes and may change geometry; exact post-route selectors then need fresh
-DRC and power-path inspection. Successful exports and review ZIPs never place orders.
+- After editing any source file, regenerate evidence in the order given in `AGENTS.md`: schematics, DRC,
+  layout review, exports, validation.
+- For exact route restoration, follow `hardware/<variant>/routing/README.md`.
+- A new `build.ps1` or `build_pcb.py --stage all` run reroutes and may change geometry. Exact post-route
+  selectors then need fresh DRC and power-path inspection.
+- Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: power-layout review from the routed copper
+- New `automation/review/`:
+  - KiCad-side copper extractor;
+  - exact scanline raster model (Pillow's fill widened every shape by a cell);
+  - DC current-flow solver checked against analytic cases (strip, parallel layers, barrel formula, necks,
+    open paths);
+  - review report covering power paths, ground offsets and setpoint error, hot loops, gate/boot/VCC loops,
+    Kelvin pair, sensitive-net spacing and vias near power pins.
+- The validator adds `VAL-LAYOUT-<variant>`, a freshness check only. Findings are dispositioned in
+  `engineering/layout-review.md` (DD-23).
+- Evaluation board:
+  - Found a 0.55 mm SW1 junction carrying the whole inductor current, plus VOUT and LD_P necks.
+  - Corrected the pours in source and re-applied them to the archived session; DRC still 0/0/0/0.
+  - SW1 1.91 → 0.98 mΩ, VOUT 3.01 → 2.27 mΩ, LD_P 1.28 → 0.88 mΩ; copper loss above the model fell from
+    142 to 96 mW.
+- Documented with bench checks T2.9–T2.12:
+  - package-limited items (DD-16: SW2 entry, AGND/PGND +0.28 % DC setpoint shift);
+  - buck-leg drive loops;
+  - VCC through In2;
+  - the U1 ISP/ISN branch.
+- Compact draft review recorded its gaps: open VOUT path, single-via VBAT transition, isolated U1 pin 15,
+  FSW/COMP_RC 0.15 mm from switching copper.
+- Copper allowances of the loss model moved to `parameters.yaml`. The loss dict merge is now sorted, so
+  `power-stage-results.json` is identical across hash seeds; values are unchanged.
+- Regenerated the evidence:
+  - schematics: ERC 0/0, netlists exact;
+  - both DRCs: evaluation 0/0/0/0, compact 0/3/43/0;
+  - both layout reviews;
+  - both DRAFT exports: PASS.
+- Validation: 131 tests pass; 3 known failures (efficiency, compact routing/DRC). No order placed.
 
 ### 2026-10-24: completed evaluation CAD, hardened evidence and generated review packages
 - Evaluation board: all 68 footprints placed, all nets connected, repeated KiCad DRC 0/0/0/0. Explicit

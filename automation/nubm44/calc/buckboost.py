@@ -131,7 +131,7 @@ def solve(v_in: float, i_out: float, laser: LaserModel, p: BuckBoostParams,
         else:
             lb, rb, pb = _boost_cycle(v_sw, v_o, i_out, max(i_in, i_out * 1.0001), p, p.f_sw / 2)
             lk, rk, pk = _buck_cycle(v_sw, v_o, i_out, p, p.f_sw / 2)
-            loss = {k: 0.5 * lb.get(k, 0) + 0.5 * lk.get(k, 0) for k in set(lb) | set(lk)}
+            loss = {k: 0.5 * lb.get(k, 0) + 0.5 * lk.get(k, 0) for k in sorted(set(lb) | set(lk))}
             # each leg switches every other cycle at the full-frequency edge rate
             ripple, i_pk, i_l = max(rb, rk), max(pb, pk), 0.5 * (i_in + i_out)
         loss = dict(loss)

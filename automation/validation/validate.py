@@ -289,6 +289,30 @@ def exports(variant):
                f"manufacturing/pcbway/{variant}/reports/export-check.json", "; ".join(map(str, problems)))
 
 
+def layout_review(variant):
+    """The power-layout review must have been generated from the current board, parameters and
+    calculations. Its screening results are review items for a human disposition, not a gate input."""
+    report = REP / f"layout-review-{variant}.json"
+    eid, item = f"VAL-LAYOUT-{variant}", f"Power-layout review current for the board ({variant})"
+    if not report.exists():
+        return add(eid, item, "CAD", "NOT RUN", "")
+    d = load_json(report)
+    inputs = d.get("inputs") if isinstance(d, dict) else None
+    if not isinstance(inputs, dict) or not isinstance(d.get("findings"), list):
+        return add(eid, item, "CAD", "FAIL", report.relative_to(ROOT).as_posix(), "missing or malformed review report")
+    problems = []
+    for key, p in (("board_sha256", paths.HARDWARE / variant / "nubm44_driver.kicad_pcb"),
+                   ("parameters_sha256", ROOT / "engineering/design/parameters.yaml"),
+                   ("calculations_sha256", ROOT / "engineering/calculations/power-stage-results.json")):
+        if not p.is_file() or inputs.get(key) != hashlib.sha256(p.read_bytes()).hexdigest():
+            problems.append(f"stale layout review: {p.relative_to(ROOT).as_posix()} hash differs")
+    levels = [f.get("level") for f in d["findings"]]
+    detail = "; ".join(problems) if problems else (
+        f"{levels.count('REVIEW')} REVIEW / {levels.count('INFO')} INFO screening results; "
+        "dispositions in engineering/layout-review.md")
+    return add(eid, item, "CAD", "FAIL" if problems else "PASS", report.relative_to(ROOT).as_posix(), detail)
+
+
 def requirement_blocks():
     t = (ROOT / "engineering/requirements.md").read_text(encoding="utf-8")
     blocked = re.findall(r"^\| (REQ-[A-Z0-9-]+) \|[^|]*\|[^|]*\|[^|]*\| BLOCKED \|", t, re.M)
@@ -345,6 +369,7 @@ def main() -> int:
     for v in spec.VARIANTS:
         schematic(v)
         drc(v)
+        layout_review(v)
         exports(v)
     simulation()
     firmware()
