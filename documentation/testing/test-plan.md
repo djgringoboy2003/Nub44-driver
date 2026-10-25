@@ -52,7 +52,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T1.4 | Regulation accuracy | Steady current at 3.0/3.3/3.7/4.0/4.2 V × dummy loads with low/high Vf | 4.0 A ± 5 % (design ± 3.6 %) | REQ-OUT-02/03 (SIM-03) |
 | T1.5 | Vf below Vbat (buck mode) | Dummy load with Vf ≈ 3.8 V at 4 A, supply 4.2 V | Current still regulated | REQ-OUT-02 |
 | T1.6 | Ripple | Laser-current ripple at 3.0 V and 4.2 V | ≤ 10 % p-p (prediction 8.9 % at 2.83 V) | power-stage calc |
-| T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; targets > 95 % at 4.0 V (predicted 94.6 % by the loss model, about 94.1 % with the evaluation-board copper; AT-RISK) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
+| T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; target ≥ 94 % at 4.0 V (owner deviation from > 95 %, DD-26) (predicted 94.6 % by the loss model, about 94.1 % with the evaluation-board copper) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
 | T1.8 | Flash mode | Short supply interruption (< 0.5 s) via the relay; check 2 Hz / 50 % | Mode advances; no overshoot at each flash; off < 1 ms to < 50 mA | REQ-MODE-02/04 (SIM-06) |
 | T1.9 | Mode memory timing | Interruptions of 0.1 / 0.3 / 0.6 / 1.0 s | < 0.5 s advances mode, > 1 s resets (record the actual threshold) | firmware |
 | T1.10 | CC pin polarity | Force the backup limit (lower R_FB_TOP temporarily, or a light test load with a CSA fault injected) | Confirm the firmware's active-low assumption | firmware README |

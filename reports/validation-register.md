@@ -29,7 +29,7 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-CALC-04 | Average inductor current vs ILIM minimum (20 % margin) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 8.8715 A (limit max 10.213138686131387) |
 | VAL-CALC-05 | Peak inductor current vs Isat (30 % drop rating) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 8.4579 A (limit max 14.0) |
 | VAL-CALC-06 | Inductor RMS current vs Irms (20 C rise) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 7.3929 A (limit max 12.8) |
-| VAL-CALC-07 | Efficiency at 4.0 V, typical diode (REQ-PWR-02 target > 95 %) | CALC | **FAIL** | engineering/calculations/power-stage-results.md | 94.5883 % (limit min 95.0) |
+| VAL-CALC-07 | Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 94.5883 % (limit min 94.0) |
 | VAL-CALC-08 | Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 91.2684 % (limit min 86.0) |
 | VAL-CALC-09 | Boost off-time vs minimum off-time | CALC | **PASS** | engineering/calculations/power-stage-results.md | 909.3389 ns (limit min 145.0) |
 | VAL-CALC-10 | Reverse-polarity FET dissipation (worst point) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 0.5085 W (limit max 0.6) |
@@ -72,6 +72,6 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-FW-TEST | Firmware state-machine unit tests (host) | TEST(host) | **PASS** | firmware/tests/test_app.c | 26 checks, 0 failures |
 | VAL-FW-BUILD | Firmware builds for ATtiny1616 with -Werror | BUILD | **PASS** | firmware/build.ps1 |  |
 | VAL-REQ-BLOCKED | Requirements awaiting owner decisions | INSPECT | **PASS** | engineering/requirements.md | none |
-| VAL-REQ-RISK | Requirements at risk (documented, not blocking CAD) | INSPECT | **PASS** | engineering/requirements.md | REQ-OUT-01, REQ-PWR-02 |
+| VAL-REQ-RISK | Requirements at risk (documented, not blocking CAD) | INSPECT | **PASS** | engineering/requirements.md | none |
 
 Physical verification still required (Gate G): see documentation/testing/test-plan.md.

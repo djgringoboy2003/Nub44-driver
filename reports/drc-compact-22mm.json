@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-25T16:15:34",
+    "date": "2026-10-25T17:26:48",
     "ignored_checks": [
         {
             "description": "Tuning profile track geometries",
@@ -163,12 +163,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/VBAT] on F.Cu, length 0.4717 mm",
+                    "description": "Pad 2 [/VBAT] of D2 on F.Cu",
                     "pos": {
                         "x": 95.047,
-                        "y": 101.2987
+                        "y": 100.827
                     },
-                    "uuid": "5587ae37-fc9f-486b-850d-ff2a93dcdf52"
+                    "uuid": "3583bae4-1004-4834-8598-2cd235438cbb"
                 },
                 {
                     "description": "Pad 1 [/VBAT] of C2 on F.Cu",
@@ -186,12 +186,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/VBAT] on F.Cu, length 0.9564 mm",
+                    "description": "Track [/VBAT] on F.Cu, length 0.4717 mm",
                     "pos": {
-                        "x": 95.7233,
-                        "y": 101.975
+                        "x": 95.047,
+                        "y": 101.2987
                     },
-                    "uuid": "e5a92cf4-5a5f-4d1e-a487-c31ca400ddb7"
+                    "uuid": "5587ae37-fc9f-486b-850d-ff2a93dcdf52"
                 },
                 {
                     "description": "Pad 1 [/VBAT] of R10 on F.Cu",
@@ -370,12 +370,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/LASER_EN_N] on F.Cu, length 0.8910 mm",
+                    "description": "Pad 2 [/LASER_EN_N] of R17 on F.Cu",
                     "pos": {
-                        "x": 102.813,
-                        "y": 94.509
+                        "x": 102.183,
+                        "y": 93.879
                     },
-                    "uuid": "e63d3f1d-adb0-4f09-ab36-696785c8f0e7"
+                    "uuid": "4ae2dbdd-357a-4588-a314-a3e7d72e617c"
                 },
                 {
                     "description": "Pad 20 [/LASER_EN_N] of U3 on B.Cu",
@@ -439,12 +439,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/CS_OUT] on B.Cu, length 2.6048 mm",
+                    "description": "Track [/CS_OUT] on B.Cu, length 0.3050 mm",
                     "pos": {
-                        "x": 102.9153,
-                        "y": 100.891
+                        "x": 103.131,
+                        "y": 101.1067
                     },
-                    "uuid": "ca536788-ecbd-447e-b73c-1580c062784d"
+                    "uuid": "377ae5f8-d02a-4e03-b2d7-ac9ba23949c8"
                 },
                 {
                     "description": "Pad 7 [/CS_OUT] of U3 on B.Cu",

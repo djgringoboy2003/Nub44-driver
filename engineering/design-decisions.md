@@ -131,6 +131,9 @@ The default build is 4.0 A as specified. 4.0 A exceeds the NUBM44's typical 3.0 
 units exceed the 6.0 W optical maximum there. 3.5 A and 3.0 A builds need only R_FB_TOP changed.
 Recommendation to the owner: consider 3.5 A for diode life.
 
+**Owner decision (2026-10-25):** keep 4.0 A. The owner accepts the diode-life risk. The 3.5 A and 3.0 A
+builds stay available through R_FB_TOP alone.
+
 ## DD-14 PCB stack-up
 4 layers, 1.6 mm, 1 oz on all layers, ENIG finish (PCBWay standard 4-layer: 7628 prepreg 0.1855 mm, 1.03 mm core).
 - **Why not 2 layers:** about 50 parts (VQFN-HR-26 and VQFN-20 included) on a 22 mm disc need inner planes for
@@ -297,3 +300,13 @@ Result: 20 unconnected instead of 31, 0 errors.
 - The ground-offset setpoint shift is +0.75 % (was +1.14 %).
 
 The remaining opens are a capacity limit: via sites near the MCU (`engineering/compact-feasibility.md`).
+
+## DD-26 Efficiency target relaxed to 94 % (owner deviation)
+The brief asks for more than 95 % at 4.0 V input and 4 A output. The loss model gives 94.6 %. Substituting the
+routed copper gives about 94.1 % on the evaluation board and 94.4 % on the compact board. Its largest
+losses are the TPS552882's internal boost high-side switch, the input path and the 10 mΩ shunt; the shunt
+sets the 5 A backup limit.
+
+**Owner decision (2026-10-25):** accept the deviation. REQ-PWR-02 becomes ≥ 94 %
+(`parameters.yaml` `current.efficiency_target_pct`), which the calculation checks. The bench measurement
+(test plan T1.7) remains the evidence of record.

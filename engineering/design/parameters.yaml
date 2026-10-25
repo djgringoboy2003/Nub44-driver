@@ -16,9 +16,10 @@ laser:
   wiring_resistance_ohm: 0.010      # 2 x ~60 mm of 20 AWG plus joints (estimate)
 
 current:
-  i_set_a: 4.0                      # REQ-OUT-01 (brief). Exceeds NUBM44 typical 3.0 A; see REQ register.
+  i_set_a: 4.0                      # REQ-OUT-01 (brief). Exceeds NUBM44 typical 3.0 A; owner keeps it (DD-13).
   alternates_a: [3.0, 3.5]          # BOM options via R_FB_TOP only
   accuracy_target_pct: 5.0          # REQ-OUT-03
+  efficiency_target_pct: 94.0       # REQ-PWR-02 at 4.0 V, 4 A: owner deviation from the brief's > 95 % (DD-26)
 
 battery:
   v_full: 4.20

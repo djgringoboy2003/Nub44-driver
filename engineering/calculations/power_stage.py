@@ -147,8 +147,9 @@ eff = {(p["corner"], p["v_in"]): p["efficiency"] for p in points}
 eta_4v = eff[("typ_25C", 4.0)]
 eta_3v = eff[("typ_25C", 3.0)]
 eta_3v_worst = min(eff[(c, 3.0)] for c in LASER_CORNERS)
-check("Efficiency at 4.0 V, typical diode (REQ-PWR-02 target > 95 %)", eta_4v * 100, 95.0, "min", "%",
-      "board-input to laser; estimate from loss model")
+ETA_TARGET = P["current"]["efficiency_target_pct"]
+check(f"Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= {ETA_TARGET:g} %, owner deviation DD-26)",
+      eta_4v * 100, ETA_TARGET, "min", "%", "board-input to laser; estimate from loss model; brief asked > 95 %")
 check("Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %)", eta_3v_worst * 100, 86.0, "min", "%")
 
 # switching-time constraints
@@ -258,7 +259,7 @@ try:
         vs = [p["v_in"] for p in points if p["corner"] == corner]
         es = [100 * p["efficiency"] for p in points if p["corner"] == corner]
         ax.plot(vs, es, marker="o", label=f"diode {corner}")
-    ax.axhline(95, ls="--", lw=0.8, color="grey"); ax.axhline(86, ls=":", lw=0.8, color="grey")
+    ax.axhline(ETA_TARGET, ls="--", lw=0.8, color="grey"); ax.axhline(86, ls=":", lw=0.8, color="grey")
     ax.set_xlabel("Board input voltage (V)"); ax.set_ylabel("Efficiency (%)")
     ax.set_title(f"Estimated efficiency, TPS552882 buck-boost, {I_SET:.1f} A")
     ax.grid(alpha=0.3); ax.legend(); fig.tight_layout()

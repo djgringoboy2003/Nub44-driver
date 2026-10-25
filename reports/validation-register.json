@@ -71,11 +71,11 @@
   },
   {
    "id": "VAL-CALC-07",
-   "item": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target > 95 %)",
+   "item": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26)",
    "method": "CALC",
-   "status": "FAIL",
+   "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "94.5883 % (limit min 95.0)"
+   "detail": "94.5883 % (limit min 94.0)"
   },
   {
    "id": "VAL-CALC-08",
@@ -419,7 +419,7 @@
    "method": "INSPECT",
    "status": "PASS",
    "evidence": "engineering/requirements.md",
-   "detail": "REQ-OUT-01, REQ-PWR-02"
+   "detail": "none"
   }
  ]
 }

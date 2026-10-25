@@ -108,8 +108,12 @@ planes that other nets may cross, and earlier runs did exactly that. Finish dele
 
 ## Next steps
 
-1. Decide the direction: HDI, a placement re-architecture or fewer parts. The simulations show that the pin swap
-   and inner fine lines alone do not finish the board. Moving U3's and C3's ground vias is needed in any case.
+**Owner decision (2026-10-25): evaluation board first.** The compact board stays a routing draft. It is
+revisited after the evaluation prototype has produced bench data.
+
+1. Then decide the direction: HDI, a placement re-architecture or fewer parts. The simulations show that
+   the pin swap and inner fine lines alone do not finish the board. Moving U3's and C3's ground vias is
+   needed in any case.
 2. Re-run `grid_route.py --rebuild --partial --write`, then place, route, finish, DRC and the layout review.
 3. Accept the variant only when DRC shows 0 unconnected and 0 errors, every power path is connected in the
    current-flow report, and no review screen has worsened without a recorded disposition.

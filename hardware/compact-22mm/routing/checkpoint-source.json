@@ -1,27 +1,27 @@
 {
   "variant": "compact-22mm",
   "captured_date": "2026-10-25",
-  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate: grid-routed source copper (grid_route.py, negotiated congestion, conflicting nets left to FreeRouting), MCU moved and rotated, no In2 VBAT pour. Source hashes describe capture-time inputs, not a release approval.",
+  "description": "Generated routing checkpoint copied byte-for-byte from the observed DSN/SES/evidence used for the current committed-board candidate: grid-routed source copper (grid_route.py, negotiated congestion, conflicting nets left to FreeRouting), MCU moved and rotated, no In2 VBAT pour. Source hashes describe capture-time inputs, not a release approval. Re-captured 2026-10-25 after the owner decisions (parameters.yaml efficiency target); the DSN/SES are unchanged.",
   "archived_files_sha256": {
     "nubm44_driver.dsn": "4ab85b4a55fc6d689a3142d5cf91ab610f52f6d1d6c8e5940a507bc6442ccbc9",
     "nubm44_driver.ses": "894e88fb3d01411214386636cccd7eb2a873abee7d3203d94dfdeefab62d33f8",
     "routing-evidence.json": "a2f7cbd88841c30b3c12870fff968c94b523cda137caa02082fed1e1bec8eb3f"
   },
   "source_files_sha256": {
-    "engineering/design/parameters.yaml": "04918072f65d415e6c74e2f54085cdeadec53a199f263f570c6cd686db15a2cd",
+    "engineering/design/parameters.yaml": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220",
     "engineering/design/connectivity.yaml": "014683a41ef2a722bf12220071c5bd83dea44e9c400736aac224241645fe8dab",
     "hardware/compact-22mm/placement.yaml": "5012e14c1a9939a0c5081151a3025a457df035547f3e9b2263aea549cbde5645",
     "hardware/compact-22mm/nubm44_driver.kicad_pcb": "5a490259d28300ed58a4bdc64fcdcef5467a80632929468183d222dfdf87b443",
     "hardware/compact-22mm/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
     "hardware/compact-22mm/nubm44_driver.kicad_sch": "e346e598a3521193d14681a28a6c0ae0a6ef646567f5b60e40db3f3f7b6a56d9",
-    "hardware/compact-22mm/nubm44_driver.net": "d37284e029ad9d6cb04dd9db5a1bff524200427d3a75a6a4f44c85847bfa7621",
+    "hardware/compact-22mm/nubm44_driver.net": "edc4789dd7560adeff0a278e0ac2af83f513cd5248228f80647409fcb71d3a85",
     "automation/placement/build_pcb.py": "842f43498f9c545b09e3e69cff81e50ec5e0aa63688d3cde372c12208e9abfba",
     "automation/placement/pcb_builder.py": "9de747c31e34d3d1af0b4eaca91e5bc5cce1ff5e802b68800e429478732dadde",
-    "automation/placement/grid_route.py": "ef248ab9032d752e5231d6d93a0c3f5a2b42bc4b65a2b32264bfc6ff8fc8740f"
+    "automation/placement/grid_route.py": "d9694af53c3017489a556c971acb38fd606b5fea1dc7c8f16193bf3e4719fc5e"
   },
   "validation_at_capture": {
     "report": "reports/drc-compact-22mm.json",
-    "report_sha256": "e9b7ec995009a3cecadb18f1869197225ccf08f11131dc8d8f194171d31244d8",
+    "report_sha256": "3b2cc1a8bcdc98e5199e5e3c40ed671a0fcbdf305e45643442b939eed5c1c14a",
     "errors": 0,
     "warnings": 3,
     "unconnected": 20,

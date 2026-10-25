@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-25 (Claude continuation; polarity marked on both boards; compact grid-routed to 20 open items)._
+_Last updated: 2026-10-25 (Claude continuation; owner decisions recorded: polarity, 4.0 A, efficiency deviation, evaluation board first)._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -17,10 +17,17 @@ _Last updated: 2026-10-25 (Claude continuation; polarity marked on both boards; 
 The authoritative gate statuses are generated in [reports/validation-register.md](reports/validation-register.md)
 and mirrored into the requirement register by the validator.
 
-- `scripts/validate.ps1` returns 1 for three known reasons: the efficiency target, compact routing and compact
-  DRC.
+- `scripts/validate.ps1` returns 1 for two known reasons: compact routing and compact DRC. The compact board
+  is a parked routing draft by owner decision.
 - All 147 Python tests pass.
 - `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
+
+**Owner decisions (2026-10-25).**
+- **Evaluation board first.** The compact 22 mm board stays a routing draft until the evaluation prototype has
+  produced bench data.
+- **Efficiency.** The deviation is accepted: REQ-PWR-02 is ≥ 94 % at 4.0 V and 4 A (DD-26). The calculation passes
+  at 94.6 %; routed copper gives 94.1 % (evaluation) and 94.4 % (compact). T1.7 measures it.
+- **Setpoint.** It stays at 4.0 A, and the owner accepts the diode-life risk (DD-13); REQ-OUT-01 is VERIFIED-SIM.
 
 **Battery polarity (owner decision 2026-10-25).** Either orientation is acceptable provided the board marks
 it clearly. The definition stays centre spring = B+, ring = B− (DD-12), and both boards now carry it on the
@@ -101,8 +108,8 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 - Evaluation board: 45 x 40 mm, four layers, 68 footprints, 13 labelled test points. Compact board:
   65 footprints, routing draft (`engineering/compact-feasibility.md`).
 - Firmware: 26 host checks pass; ATtiny1616 target build succeeds with warnings treated as errors.
-- Calculations: 20 of 21 pass. The efficiency check fails (94.5883 % against > 95 %); actual efficiency is
-  unmeasured.
+- Calculations: 21 of 21 pass. The efficiency check uses the owner's ≥ 94 % deviation target (DD-26):
+  94.5883 %. Actual efficiency is unmeasured (T1.7).
 - Both `manufacturing/pcbway/<variant>/` DRAFT review packages were regenerated from the current boards.
   Each passes its source/artifact hash, inventory, BOM/centroid and ZIP checks.
 - Assembly instructions, stack-up note, dummy-load-first bench plan (now with T2.9–T2.12) and final review
@@ -123,23 +130,22 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 
 ## Next actions (in order)
 
-1. Owner decisions:
-   - the current setpoint, the efficiency deviation and the HDI via-in-pad option;
-   - for the compact board, the direction (`engineering/compact-feasibility.md`): HDI, a placement
-     re-architecture, or fewer parts. Router simulations show that the pin swap and inner fine lines alone
-     do not finish it.
-
-   No part value or requirement has been silently relaxed.
+1. Evaluation prototype (owner, manual order).
+   - Review `manufacturing/pcbway/evaluation-board/` (gerbers, drill, BOM, centroid, assembly PDFs, iBOM)
+     and `reports/validation-register.md`. Evaluation Gate F passes its automated checks.
+   - Confirm the UNKNOWN stock and prices.
+   - Place the order manually; no tool places orders.
 2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
    and fresh post-route selectors:
    - move the DR1H via off the SW1 junction;
    - route U1's ISP/ISN as a same-layer pair;
    - move C5 nearer U1.
    Re-check every result with `power_layout.py`.
-3. After CAD/owner release, assemble an evaluation prototype and execute
-   `documentation/testing/test-plan.md`, starting with a rated dummy load. Record measured data; only bench
-   evidence can close Gate G.
-4. After that decision, re-run the compact chain:
+3. Assemble the evaluation prototype and execute `documentation/testing/test-plan.md`, starting with a
+   rated dummy load. Record measured data, including T1.7 efficiency; only bench evidence can close Gate G.
+4. After the bench data, decide the compact direction (`engineering/compact-feasibility.md`): HDI, a
+   placement re-architecture or fewer parts. Router simulations show that the pin swap and inner fine
+   lines alone do not finish it. Then re-run the compact chain:
    - `grid_route.py --variant compact-22mm --rebuild --partial --write`;
    - then `place`, `route`, `finish` and `drc`;
    - then `power_layout.py`.
@@ -167,6 +173,20 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: owner decisions recorded
+- **Owner choices:** evaluation board first (compact parked as a routing draft); efficiency deviation
+  accepted (REQ-PWR-02 ≥ 94 %, DD-26); 4.0 A kept (DD-13).
+- **Changes:**
+  - `parameters.yaml` gains `current.efficiency_target_pct`, which the calculation reads; the efficiency
+    check now passes (94.59 %).
+  - REQ-OUT-01 is VERIFIED-SIM and REQ-PWR-02 is VERIFIED-CALC.
+  - The T1.7 target was updated.
+- **Evidence regenerated:**
+  - ERC 0/0 on both schematics.
+  - DRC: compact 0/3/20/0, evaluation 0/0/0/0.
+  - Layout reviews, exports and checkpoint manifests regenerated.
+  - Validation: the 2 remaining failures are compact routing and DRC. No order placed.
 
 ### 2026-10-25: compact routing options simulated
 - **Router:** `grid_route.py` accepts optional per-layer rules (`layer_rules`: clearance, maximum width).
