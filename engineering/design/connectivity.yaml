@@ -12,7 +12,7 @@ meta:
   title: NUBM44 laser diode driver
   revision: A
   date: 2026-10-24
-  polarity: {centre_spring: B+, perimeter_ring: B-, confirmed: false, ref: REQ-BAT-04 / DD-12}
+  polarity: {centre_spring: B+, perimeter_ring: B-, confirmed: true, ref: REQ-BAT-04 / DD-12}   # owner 2026-10-25: either orientation, marked on the silkscreen
 
 blocks:
   power_in: "Battery input and reverse-polarity protection"

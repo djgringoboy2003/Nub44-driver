@@ -9,7 +9,7 @@
   "F (compact-22mm)": "OPEN",
   "D (evaluation-board)": "PASS",
   "E (evaluation-board)": "PASS",
-  "F (evaluation-board)": "HELD (owner decisions: REQ-BAT-04)",
+  "F (evaluation-board)": "PASS",
   "G": "OPEN: requires assembled-prototype testing (cannot be closed by software)"
  },
  "entries": [
@@ -409,9 +409,9 @@
    "id": "VAL-REQ-BLOCKED",
    "item": "Requirements awaiting owner decisions",
    "method": "INSPECT",
-   "status": "FAIL",
+   "status": "PASS",
    "evidence": "engineering/requirements.md",
-   "detail": "REQ-BAT-04"
+   "detail": "none"
   },
   {
    "id": "VAL-REQ-RISK",

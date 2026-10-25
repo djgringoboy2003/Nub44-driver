@@ -15,7 +15,7 @@ Statuses come from tool reports; none are hard-coded.
 | F (compact-22mm) | OPEN |
 | D (evaluation-board) | PASS |
 | E (evaluation-board) | PASS |
-| F (evaluation-board) | HELD (owner decisions: REQ-BAT-04) |
+| F (evaluation-board) | PASS |
 | G | OPEN: requires assembled-prototype testing (cannot be closed by software) |
 
 ## Register
@@ -71,7 +71,7 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-SIM-11 | Control-loop response (linearised model, 12 corners) | SIM | **PASS** | simulation/results/results.md | {"min_phase_margin_deg": 111.72886450565349, "min_gain_margin_db": 12.092440233441394} |
 | VAL-FW-TEST | Firmware state-machine unit tests (host) | TEST(host) | **PASS** | firmware/tests/test_app.c | 26 checks, 0 failures |
 | VAL-FW-BUILD | Firmware builds for ATtiny1616 with -Werror | BUILD | **PASS** | firmware/build.ps1 |  |
-| VAL-REQ-BLOCKED | Requirements awaiting owner decisions | INSPECT | **FAIL** | engineering/requirements.md | REQ-BAT-04 |
+| VAL-REQ-BLOCKED | Requirements awaiting owner decisions | INSPECT | **PASS** | engineering/requirements.md | none |
 | VAL-REQ-RISK | Requirements at risk (documented, not blocking CAD) | INSPECT | **PASS** | engineering/requirements.md | REQ-OUT-01, REQ-PWR-02 |
 
 Physical verification still required (Gate G): see documentation/testing/test-plan.md.

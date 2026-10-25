@@ -100,3 +100,22 @@ def test_geometry_cache_rejects_changed_or_missing_sources(tmp_path):
     source.unlink()
     assert not geometry_cache_is_current(geo)
     assert not geometry_cache_is_current({})
+
+
+@pytest.mark.parametrize("variant", ["compact-22mm", "evaluation-board"])
+def test_board_labels_meet_pcbway_legend_limits(variant):
+    """PCBWay standard legend (MFG-01): height >= 0.8 mm, stroke >= 0.15 mm, stroke:height >= 1:5."""
+    import yaml
+    place = yaml.safe_load((ROOT / "hardware" / variant / "placement.yaml").read_text(encoding="utf-8"))
+    for t in place.get("texts") or []:
+        size, stroke = t.get("size", 1.0), t.get("thickness", 0.15)
+        assert size >= 0.8 and stroke >= 0.15 and stroke >= size / 5 - 1e-9, t
+
+
+@pytest.mark.parametrize("variant", ["compact-22mm", "evaluation-board"])
+def test_battery_polarity_is_marked_on_the_board(variant):
+    """REQ-BAT-04: both battery terminals carry a B+ / B- legend."""
+    import yaml
+    place = yaml.safe_load((ROOT / "hardware" / variant / "placement.yaml").read_text(encoding="utf-8"))
+    words = " ".join(t["text"] for t in place.get("texts") or [] if "Silkscreen" in t["layer"])
+    assert "B+" in words and "B-" in words

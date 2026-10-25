@@ -45,7 +45,8 @@ The entry points are available:
 
 `build.ps1 -SkipRouting` reuses a session only when its DSN/SES hashes match. Read the actual gate state in
 [the validation register](reports/validation-register.md). Export consistency and review packaging do not
-release a board for manufacturing. The owner battery-polarity decision and physical tests remain open.
+release a board for manufacturing. Physical tests remain open. Battery polarity (centre spring B+, ring B−)
+is marked on both boards' silkscreen.
 See [assembly instructions](documentation/assembly.md) and [the bench plan](documentation/testing/test-plan.md).
 
 If local PowerShell execution policy blocks a script, invoke it for that process with

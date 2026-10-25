@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-25 (Claude continuation; power-layout review, compact re-floorplan)._
+_Last updated: 2026-10-25 (Claude continuation; polarity decision recorded and marked on both boards)._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -11,7 +11,7 @@ _Last updated: 2026-10-25 (Claude continuation; power-layout review, compact re-
 | C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
 | D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 31 unconnected items (was 43) |
 | E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 6 / 31 / 0 |
-| F Manufacturing files | Evaluation HELD (REQ-BAT-04); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release |
+| F Manufacturing files | Evaluation PASS (automated checks); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release or order |
 | G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
 The authoritative gate statuses are generated in [reports/validation-register.md](reports/validation-register.md)
@@ -19,10 +19,21 @@ and mirrored into the requirement register by the validator.
 
 - `scripts/validate.ps1` returns 1 for three known reasons: the efficiency target, compact routing and compact
   DRC.
-- All 137 Python tests pass.
+- All 142 Python tests pass.
 - `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
 
-**Power-layout review (new this session).**
+**Battery polarity (owner decision 2026-10-25).** Either orientation is acceptable provided the board marks
+it clearly. The definition stays centre spring = B+, ring = B− (DD-12), and both boards now carry it on the
+silkscreen:
+- compact: "B+" beside the spring pad and "B-" beside the ring on the bottom, plus "B-" on top;
+- evaluation: "B+ INPUT"/"B- INPUT".
+
+The labels sat at 0.12 mm stroke on the evaluation board, below PCBWay's 0.15 mm / height-÷-5 legend limit
+(MFG-01). All labels now meet it, and a test enforces it. REQ-BAT-04 is DESIGNED, VAL-REQ-BLOCKED passes, and
+evaluation Gate F is computed PASS. That gate means the files are internally checked; it is not a
+manufacturing release, and no order is placed.
+
+**Power-layout review.**
 
 The tool `automation/review/power_layout.py` reads the routed copper. It solves the DC current flow per
 power net at the calculated operating points and measures the SLVSFC5 §10.1 layout geometry. It writes
@@ -78,8 +89,8 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
   exact sessions; the evaluation checkpoint records the 2026-10-25 pour revision.
 
 **Owner decisions / open limitations:**
-1. REQ-BAT-04 remains BLOCKED: the working contact polarity is centre spring B+, ring B-. Evaluation Gate F is
-   held.
+1. Battery polarity: decided (owner, 2026-10-25) and marked on both boards; check the host against the labels
+   before first power (T3.3).
 2. Default 4 A remains the brief's setpoint and the documented diode-life risk (DD-13). An alternate setpoint
    needs an owner decision and the matching divider/calculation update.
 3. Efficiency misses its target: model 94.6 %, with routed copper about 94.1 %. The owner must accept a
@@ -91,8 +102,8 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 
 ## Next actions (in order)
 
-1. Owner decisions: confirm polarity before any Gate F release; decide on the current setpoint, the
-   efficiency deviation and the HDI via-in-pad option. No part value or requirement has been silently
+1. Owner decisions: decide on the current setpoint, the efficiency deviation and the HDI via-in-pad
+   option. No part value or requirement has been silently
    relaxed.
 2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
    and fresh post-route selectors:
@@ -131,6 +142,27 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: battery polarity decided and marked on the boards
+- **Owner decision:** polarity does not matter provided the board marks it. The definition stays centre spring = B+,
+  ring = B− (DD-12); REQ-BAT-04 is DESIGNED (was BLOCKED).
+- **Silkscreen:**
+  - compact: new `texts:` "B+" beside the spring pad and "B-" beside the ring (bottom), plus "B-" on top;
+  - evaluation: label strokes raised from 0.12 mm to PCBWay's legend minimum (MFG-01).
+  - Both were applied by finish on the archived router sessions, so no copper changed. Checkpoint
+    manifests were re-captured.
+- **Pipeline:**
+  - `add_texts` now replaces board labels, so a changed stroke takes effect.
+  - Router keep-outs take a `net` and are cut back around vias of other routed nets. A via inside a
+    keep-out was an unfixable router violation.
+- **Docs:** schematic title block, assembly instructions, stack-up note, export README text, AGENTS.md rule 4
+  and the test plan (T3.3) updated.
+- **Evidence:**
+  - ERC 0/0 on both schematics.
+  - DRC: evaluation 0/0/0/0; compact 0/6/31/0 (unchanged).
+  - Both layout reviews and both DRAFT exports PASS.
+  - Validation: 142 tests. Evaluation Gate F is PASS; the 3 known failures remain (efficiency, compact
+    routing/DRC). No order placed.
 
 ### 2026-10-25: compact re-floorplan around the spring-pad via keep-out
 - **Placement (DD-24):**

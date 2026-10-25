@@ -80,7 +80,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 |---|---|---|---|---|
 | T3.1 | Real cells | 18650 (≥ 15 A CDR) and 21700, full to cut-off, through spring and ring contacts | Regulation held to cut-off; cut-off at ≥ 2.83 V loaded; record run time | REQ-BAT-01..05 |
 | T3.2 | Contact resistance | 4-wire across spring and ring at 8 A | Total ≤ 20 mΩ (bypass the springs) | battery research |
-| T3.3 | Polarity confirmation | Owner's host: verify spring = B+, ring = B− | Confirms REQ-BAT-04 (unblocks Gate F) | REQ-BAT-04 |
+| T3.3 | Polarity confirmation | Owner's host: verify spring = B+, ring = B−, as marked on the silkscreen | Host matches the board labels before first power | REQ-BAT-04 |
 
 **Stage 4: laser diode (controlled area only, all section 1 measures in place).**
 

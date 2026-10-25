@@ -1,8 +1,8 @@
 # Design review report - 2026-10-24
 
 The larger evaluation board is fully routed and passes the current CAD checks. The 22 mm compact board
-remains a routing draft. Both manufacturing file sets are review artifacts; evaluation Gate F is held by
-REQ-BAT-04, and no physical-validation evidence exists.
+remains a routing draft. Both manufacturing file sets are review artifacts. Evaluation Gate F passes its
+automated checks since the 2026-10-25 polarity decision (REQ-BAT-04), and no physical-validation evidence exists.
 
 ## Verified evidence
 
@@ -39,7 +39,7 @@ post-route corrections. The editable native projects and placement sources remai
 
 ## Remaining decisions and validation
 
-- Confirm battery polarity (REQ-BAT-04) before evaluation manufacturing release.
+- Battery polarity (REQ-BAT-04) is decided and marked on both boards; check the host against the labels (T3.3).
 - Review evaluation gate-drive/bootstrap loops, Kelvin sense isolation, power necks and thermal current paths.
 - Rework compact placement/fanout; retain its three connection-width warnings and 43 incomplete connections
   as open findings. See [the compact routing assessment](../engineering/compact-feasibility.md).

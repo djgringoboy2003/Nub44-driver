@@ -31,7 +31,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | REQ-BAT-01 | Single-cell lithium-ion input, 3.7 V nominal. | BRIEF | INSPECT | DESIGNED | Source architecture and input protection support one cell; hardware tests remain open. |
 | REQ-BAT-02 | Operating input range to be determined by research (expected about 2.8–4.2 V under load). | BRIEF | CALC | VERIFIED-CALC | 2.83 V (hardware UVLO off) to 4.20 V at the board; firmware cut-off 2.9 V loaded. |
 | REQ-BAT-03 | Evaluate 16340, 14500, 18500, 18650 and 21700 cells; separate "fits" from "electrically suitable". | BRIEF | CALC | VERIFIED-CALC | 18650/21700 cells with ≥ 15 A CDR are suitable; 16340 and 14500 are unsuitable; 18350/18500 marginal (`research/battery-and-mechanics.md`). |
-| REQ-BAT-04 | One explicit battery polarity definition (centre spring and perimeter contact) used everywhere: schematic, PCB, silkscreen, drawings, instructions. | BRIEF | INSPECT, CAD | BLOCKED | Interpretation adopted: spring = B+, ring = B− (DD-12). Owner must confirm before Gate F release. |
+| REQ-BAT-04 | One explicit battery polarity definition (centre spring and perimeter contact) used everywhere: schematic, PCB, silkscreen, drawings, instructions. | BRIEF | INSPECT, CAD | DESIGNED | Owner decision 2026-10-25 (DD-12): either orientation is acceptable provided the board marks it clearly. Definition used: centre spring = B+, ring = B−. Silkscreen: compact "B+" beside the spring pad and "B-" beside the ring (both sides); evaluation "B+ INPUT"/"B- INPUT" at the wire pads. `tests/test_placement.py` checks that both boards carry the labels within PCBWay legend limits. Host check: T3.3. |
 | REQ-BAT-05 | Battery undervoltage lockout prevents over-discharge of the cell. | BRIEF | CALC, TEST | DESIGNED | Hardware UVLO via EN/UVLO divider (3.08 V on / 2.83 V off) plus firmware cut-off. |
 
 ## 3. Power conversion
@@ -76,7 +76,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
 | REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | DESIGNED | Circle of radius 11 mm in placement.yaml; full DRC remains open. |
-| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; ring radius corrected in source for edge margin (DD-21). Polarity blocked by REQ-BAT-04. |
+| REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; ring radius corrected in source for edge margin (DD-21). Polarity defined and marked on the board (REQ-BAT-04). |
 | REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | DESIGNED | J3 PTH laser pads placed; routing incomplete. |
 | REQ-MECH-04 | Evaluate 2-layer and 4-layer stack-ups. | BRIEF | CALC | VERIFIED-CALC | 4-layer chosen; 2-layer rejected for density and current paths (DD-14). |
 | REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | VERIFIED-CAD | Variant B four-layer 45 x 40 mm board has 68 parts, 13 labelled test points and repeated DRC 0/0/0/0; power-layout and bench review remain open. |
@@ -106,7 +106,7 @@ Statuses are updated as work proceeds; see the change history in git.
 | C | Simulations executed and limitations documented. | PASS |
 | D | PCB complete: all components placed, all nets routed. | D (compact-22mm): OPEN; D (evaluation-board): PASS |
 | E | ERC and DRC pass with no unresolved critical issues. | E (compact-22mm): OPEN; E (evaluation-board): PASS |
-| F | PCBWay files generated and internally checked. | F (compact-22mm): OPEN; F (evaluation-board): HELD (owner decisions: REQ-BAT-04) |
+| F | PCBWay files generated and internally checked. | F (compact-22mm): OPEN; F (evaluation-board): PASS |
 | G | Physical validation on an assembled prototype (thermal, electrical, fault). Cannot be closed by software. | OPEN: requires assembled-prototype testing (cannot be closed by software) |
 
 Gate status is computed by `scripts/validate.ps1` from the validation register, not hard-coded.

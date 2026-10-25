@@ -44,5 +44,5 @@ Do not run `place` between restoring the three files and `finish`: it regenerate
 and additive corrections may conflict with new copper. Every new autorouter result requires fresh full DRC
 and inspection of the intended power paths before replacing this checkpoint.
 
-No checkpoint closes the physical-validation gate or authorizes manufacturing. The battery-polarity owner
-decision and all other repository release blockers remain applicable.
+No checkpoint closes the physical-validation gate or authorizes manufacturing. All repository release
+blockers in the validation register remain applicable.

@@ -114,8 +114,17 @@ The diode must never be hot-plugged. The 4.7 kΩ bleeder doubles as the static b
 
 ## DD-12 Battery polarity interpretation
 Centre spring = B+, perimeter ring = B− (via the host body), labelled B+/B− everywhere and never
-"cathode/anode". This is about 90 % confidence from host conventions; owner confirmation is required.
-Gate F release is blocked until then. Reverse-polarity protection limits a wrong guess to "does not work".
+"cathode/anode". This is about 90 % confidence from host conventions. Reverse-polarity protection limits a
+wrong guess to "does not work".
+
+**Owner decision (2026-10-25):** polarity does not matter to the owner, provided the board marks it clearly;
+the owner adapts the host. The definition above therefore stands. Both boards carry it on the silkscreen:
+- compact: "B+" beside the centre spring pad and "B-" beside the ring on the bottom (battery) side, plus
+  "B-" beside the ring on the top;
+- evaluation: "B+ INPUT" and "B- INPUT" beside the wire pads.
+
+All labels meet PCBWay's legend limits (MFG-01). The 22 mm board has no room for longer words. REQ-BAT-04
+is no longer blocked. T3.3 still checks the host before first power.
 
 ## DD-13 Laser current setpoint
 The default build is 4.0 A as specified. 4.0 A exceeds the NUBM44's typical 3.0 A operating current, and most

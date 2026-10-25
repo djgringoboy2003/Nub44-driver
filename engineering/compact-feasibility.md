@@ -90,5 +90,6 @@ planes that other nets may cross, and earlier runs did exactly that. Finish dele
 
 Any relaxation of the 22 mm envelope, via technology or layer strategy needs a documented design decision
 and renewed fabrication review. Assembly yield, power-path temperature rise and host heat transfer are
-UNKNOWN until fabrication review and prototype measurements. Gate G remains open, REQ-BAT-04 still needs
-owner confirmation, and no manufacturing order has been placed.
+UNKNOWN until fabrication review and prototype measurements. Gate G remains open and no manufacturing
+order has been placed. Battery polarity is marked on the silkscreen ("B+" beside the spring pad, "B-" beside
+the ring; REQ-BAT-04).

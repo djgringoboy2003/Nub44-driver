@@ -158,7 +158,7 @@ def build(variant: str, spec: dict) -> Path:
     sch = Schematic(PROJECT, cfg["title"], paper="A2", rev=str(meta["revision"]), date=str(meta["date"]),
                     company="NUBM44 driver project",
                     comments=("Generated from engineering/design/connectivity.yaml - do not edit by hand",
-                              "Battery polarity: centre spring = B+, ring = B- (REQ-BAT-04, owner confirmation pending)",
+                              "Battery polarity: centre spring = B+, ring = B- (REQ-BAT-04/DD-12; marked on the silkscreen)",
                               "Class 4 laser product: see documentation/testing for safety requirements"))
 
     by_block: dict[str, list] = {}

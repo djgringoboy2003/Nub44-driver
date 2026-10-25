@@ -19,7 +19,7 @@ The per-variant placement source and generated PCB define the outline and layer 
 Exact laminate materials, dielectric thicknesses, finished copper tolerances, solder mask,
 impedance requirements and approved stack-up drawing are UNKNOWN until the fabricator confirms them.
 No controlled-impedance claim is made. The research stack-up example in DD-14 is not a fabrication
-approval. Do not manufacture while Gate F is open or battery polarity remains blocked.
+approval. Do not manufacture while Gate F is open.
 
 Gerber/drill and centroid coordinates use the board auxiliary origin. Bottom centroid X coordinates
 retain their sign; side and rotation are checked against native KiCad position export. Assembly PDFs,

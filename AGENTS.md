@@ -23,8 +23,9 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 2. **Never hard-code a passing result.** Validation status comes from tools: ERC, DRC, netlist comparison,
    calculation checks. Do not silence ERC/DRC violations without documenting the cause in the validation register.
 3. **Gate G (physical validation) can only be closed by bench data.** CAD success never means "production ready".
-4. **Battery polarity is an open owner decision.** The working interpretation is centre spring = B+ and
-   ring = B− (DD-12, REQ-BAT-04). Do not mark Gate F released while REQ-BAT-04 is `BLOCKED`.
+4. **Battery polarity is defined and must stay marked on the board.** Centre spring = B+, ring = B− (DD-12,
+   REQ-BAT-04). The owner accepts either orientation provided the silkscreen states it, so keep the B+/B−
+   labels in each `placement.yaml` `texts:` section whenever contacts move.
 5. **No manufacturing order is ever placed automatically.**
 6. **Single source of truth:**
    - Numeric design values: `engineering/design/parameters.yaml`.

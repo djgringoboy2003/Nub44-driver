@@ -88,26 +88,26 @@ parts:
   TP12: {pos: [-17.0, 9.0, 0], side: F, both_sides: true}
   TP13: {pos: [-17.0, 5.0, 0], side: F, both_sides: true}
 
-texts:
-  - {text: "NUBM44 EVALUATION", at: [0.0, -18.2], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
-  - {text: "DUMMY LOAD FIRST", at: [0.0, -16.8], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "B+ INPUT", at: [-18.0, -11.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "B- INPUT", at: [-18.0, 0.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "LD+", at: [18.0, 3.5], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
-  - {text: "LD-", at: [18.0, -5.5], layer: F.Silkscreen, size: 1.0, thickness: 0.15}
-  - {text: "VBAT", at: [-19.5, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "VOUT", at: [7.0, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "EN", at: [-14.0, 0.7], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "CS", at: [15.0, -8.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "FB", at: [15.0, -4.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "UPDI", at: [0.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "VMCU", at: [4.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "GND", at: [8.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "IND", at: [14.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "NTC", at: [14.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "SW", at: [-13.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "SGND", at: [-13.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
-  - {text: "INTLK", at: [-13.5, 5.0], layer: F.Silkscreen, size: 0.8, thickness: 0.12}
+texts:                       # PCBWay legend (MFG-01): height >= 0.8 mm, stroke >= 0.15 mm and >= height / 5
+  - {text: "NUBM44 EVALUATION", at: [0.0, -18.2], layer: F.Silkscreen, size: 1.0, thickness: 0.2}
+  - {text: "DUMMY LOAD FIRST", at: [0.0, -16.8], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "B+ INPUT", at: [-18.0, -11.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "B- INPUT", at: [-18.0, 0.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "LD+", at: [18.0, 3.5], layer: F.Silkscreen, size: 1.0, thickness: 0.2}
+  - {text: "LD-", at: [18.0, -5.5], layer: F.Silkscreen, size: 1.0, thickness: 0.2}
+  - {text: "VBAT", at: [-19.5, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "VOUT", at: [7.0, -15.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "EN", at: [-14.0, 0.7], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "CS", at: [15.0, -8.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "FB", at: [15.0, -4.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "UPDI", at: [0.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "VMCU", at: [4.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "GND", at: [8.0, 18.3], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "IND", at: [14.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "NTC", at: [14.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "SW", at: [-13.5, 13.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "SGND", at: [-13.5, 9.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
+  - {text: "INTLK", at: [-13.5, 5.0], layer: F.Silkscreen, size: 0.8, thickness: 0.16}
 
 # GND pads escape onto the first inner layer. Power copper is explicitly limited
 # to the core and input path; lower control/feedback regions use GND beneath.

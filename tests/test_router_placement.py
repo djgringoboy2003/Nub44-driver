@@ -110,3 +110,35 @@ def test_repair_moves_an_overlapping_start_to_a_feasible_spot(synthetic):
     assert not model.feasible("B", model.state["B"])
     assert place_opt.repair(model, seed=1) == []
     assert model.feasible("B", model.state["B"])
+
+
+def test_router_keepout_is_cut_back_around_vias_of_other_routed_nets(tmp_path):
+    """A through via of a routed net inside a keep-out is unreachable for the router: cut the area there."""
+    try:
+        python = paths.kicad_python()
+    except FileNotFoundError:
+        pytest.skip("KiCad Python is required for pcbnew integration tests")
+    script = r'''
+import json,sys
+from pathlib import Path
+sys.path.insert(0,str(Path(sys.argv[1])/'automation/placement'))
+import pcbnew
+import pcb_builder as h
+b=pcbnew.BOARD();b.SetCopperLayerCount(4)
+for name in ('S','P','GND'):
+    b.Add(pcbnew.NETINFO_ITEM(b,name))
+def via(net,x,y):
+    v=pcbnew.PCB_VIA(b);v.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(x),pcbnew.FromMM(y)))
+    v.SetWidth(pcbnew.FromMM(0.6));v.SetDrill(pcbnew.FromMM(0.3));v.SetNet(b.FindNet(net));b.Add(v)
+via('S',0.5,0.5);via('P',2.5,2.5);via('GND',2.5,0.5)
+job={'origin':[0,0],'rules':{'min_clearance':0.15},'fanout_nets':['GND']}
+area=h.add_router_keepout(b,job,{'layer':'F.Cu','net':'P','polygon':[[0,0],[3,0],[3,3],[0,3]]})
+inside=lambda x,y:area.Outline().Contains(pcbnew.VECTOR2I(pcbnew.FromMM(x),pcbnew.FromMM(y)))
+print(json.dumps({'S':inside(0.5,0.5),'S_edge':inside(0.5,0.5+0.45),'P':inside(2.5,2.5),'GND':inside(2.5,0.5),
+                  'far':inside(1.5,1.5)}))
+'''
+    completed = subprocess.run([str(python), "-I", "-c", script, str(ROOT)], capture_output=True, text=True,
+                               timeout=60)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    got = json.loads(completed.stdout.splitlines()[-1])
+    assert got == {"S": False, "S_edge": False, "P": True, "GND": True, "far": True}

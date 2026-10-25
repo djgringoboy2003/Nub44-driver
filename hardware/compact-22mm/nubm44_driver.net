@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
-		(date "2026-10-25T08:43:44")
+		(date "2026-10-25T11:33:50")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -20,7 +20,7 @@
 				)
 				(comment
 					(number "2")
-					(value "Battery polarity: centre spring = B+, ring = B- (REQ-BAT-04, owner confirmation pending)")
+					(value "Battery polarity: centre spring = B+, ring = B- (REQ-BAT-04/DD-12; marked on the silkscreen)")
 				)
 				(comment
 					(number "3")

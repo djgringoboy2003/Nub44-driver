@@ -63,7 +63,7 @@ The remaining items are dispositioned there, with bench checks T2.9–T2.12:
 DRC and DC current flow cannot establish transient performance or operating temperature. Loop inductance,
 switching waveforms and operating temperatures remain `UNKNOWN`, and no bench measurements were generated
 by this CAD work. Gate G requires bench measurements, beginning with a dummy load and the hardware interlock.
-The repository's polarity decision and other release blockers remain applicable; no manufacturing release
+The repository's release blockers remain applicable; no manufacturing release
 or order is implied by this evaluation layout.
 
 ## Rebuild

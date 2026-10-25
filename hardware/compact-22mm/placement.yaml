@@ -101,6 +101,14 @@ parts:
   R20: {pos: [-7.256, 3.296, 0], side: B}   # place_opt
   D3: {pos: [-7.739, 2.124, 180], side: B}   # place_opt
 
+# Battery polarity labels (REQ-BAT-04, DD-12): centre spring = B+, perimeter ring = B-. The legend meets
+# PCBWay's limits (MFG-01: height >= 0.8 mm, stroke >= 0.15 mm and >= height / 5). Spots were chosen clear
+# of courtyards, pads and vias; the board is too dense for longer words.
+texts:
+  - {text: "B+", at: [-2.8, -2.75], layer: B.Silkscreen, size: 0.8, thickness: 0.16}   # beside the spring pad
+  - {text: "B-", at: [6.3, -5.5], layer: B.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring
+  - {text: "B-", at: [6.6, -4.8], layer: F.Silkscreen, size: 0.8, thickness: 0.16}    # beside the ring, top
+
 # automation/placement/place_opt.py ties these parts to the pin or via they serve
 place_opt:
   near_weight: 3.0

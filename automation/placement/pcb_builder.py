@@ -419,7 +419,12 @@ def reserve_source_vias(job, occupied):
 def add_router_keepout(board, job, k):
     """Specctra exports pours as conduction planes that the router may cross with other nets. A router
     keep-out (tracks and vias barred, pours allowed) protects power copper during routing only: the
-    finish stage deletes every zone, these rule areas included, before rebuilding the source pours."""
+    finish stage deletes every zone, these rule areas included, before rebuilding the source pours.
+
+    With ``net`` given (the pour the keep-out protects), the area is cut back around every via already on
+    the board that belongs to another routed net: a through via inside a keep-out on any layer is an
+    unfixable violation for the router, which then leaves that via's connection unrouted. Vias of the
+    pour's own net and of plane nets (``fanout_nets``) need no router access and keep the area intact."""
     area = pcbnew.ZONE(board)
     area.SetIsRuleArea(True)
     area.SetLayer(layer_id(board, k["layer"]))
@@ -433,6 +438,20 @@ def add_router_keepout(board, job, k):
     for x, y in k["polygon"]:
         p = P(job, x, y)
         outline.Append(p.x, p.y)
+    if k.get("net"):
+        keep = {k["net"].lstrip("/")} | {n.lstrip("/") for n in job.get("fanout_nets", [])}
+        clr = job["rules"]["min_clearance"] + 0.05
+        cut = pcbnew.SHAPE_POLY_SET()
+        for t in board.GetTracks():
+            if t.GetClass() != "PCB_VIA" or t.GetNetname().lstrip("/") in keep:
+                continue
+            c, r = t.GetPosition(), t.GetWidth(pcbnew.F_Cu) / 2 + MM(clr)
+            cut.NewOutline()
+            for i in range(24):
+                a = 2 * math.pi * i / 24
+                cut.Append(int(c.x + r * math.cos(a)), int(c.y + r * math.sin(a)))
+        if cut.OutlineCount():
+            outline.BooleanSubtract(cut)
     board.Add(area)
     return area
 
@@ -573,15 +592,16 @@ def remove_dangling(board, job):
 
 # ---------------------------------------------------------------------------------- modes
 def add_texts(board, job):
-    """Place explicit labels from the placement source; repeatable across finish runs."""
-    existing = {(t.GetText(), t.GetLayer(), t.GetPosition().x, t.GetPosition().y)
-                for t in board.GetDrawings() if isinstance(t, pcbnew.PCB_TEXT)}
+    """Replace the board-level labels with the placement source's; repeatable across finish runs.
+
+    Every board-level text comes from placement.yaml (footprint texts are separate), so the old ones are
+    removed first: a changed size, stroke or position then takes effect instead of being skipped.
+    """
+    for t in [t for t in board.GetDrawings() if isinstance(t, pcbnew.PCB_TEXT)]:
+        board.Remove(t)
     for item in job.get("texts", []):
         position = P(job, *item["at"])
         layer = layer_id(board, item.get("layer", "F.Silkscreen"))
-        key = (item["text"], layer, position.x, position.y)
-        if key in existing:
-            continue
         text = pcbnew.PCB_TEXT(board)
         text.SetText(item["text"])
         text.SetPosition(position)
@@ -590,7 +610,6 @@ def add_texts(board, job):
         text.SetTextThickness(MM(item.get("thickness", 0.15)))
         text.SetMirrored(layer == pcbnew.B_SilkS)
         board.Add(text)
-        existing.add(key)
 
 
 def mode_place(job):

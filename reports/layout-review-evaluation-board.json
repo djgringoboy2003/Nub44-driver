@@ -2,7 +2,7 @@
  "variant": "evaluation-board",
  "inputs": {
   "board": "hardware/evaluation-board/nubm44_driver.kicad_pcb",
-  "board_sha256": "dd80866fa7ec4aac337c96e9333cefe2a4e21a2efa71c1f7b1cd55c8c8599951",
+  "board_sha256": "4ad92aefaaab987519aa7aa8424daf0849c4ea27f0b75fd592ea5f5de8e972c8",
   "parameters_sha256": "04918072f65d415e6c74e2f54085cdeadec53a199f263f570c6cd686db15a2cd",
   "calculations_sha256": "6cd091dbc44852d4c235e25ee90cd9c448e7c611d261635c6a5b04ff64ccc2fa"
  },
@@ -105,7 +105,7 @@
     ]
    },
    "r_mohm_25c": 0.881,
-   "r_mohm_75c": 1.055,
+   "r_mohm_75c": 1.054,
    "neck_location_mm": [
     -12.35,
     -8.65
@@ -113,7 +113,7 @@
    "neck_layer": "F.Cu",
    "worst": {
     "current_a": 7.393,
-    "loss_mw": 57.64,
+    "loss_mw": 57.63,
     "neck_k_a_per_mm": 4.71,
     "k_max_a_per_mm": 10.17,
     "equivalent_width_mm": 1.571,
@@ -132,7 +132,7 @@
     "screen_width_mm": 1.669,
     "screen_k_a_per_mm": 2.81,
     "neck_vs_screen": 1.06,
-    "max_via_current_a": 0.415,
+    "max_via_current_a": 0.414,
     "vias_over_screen": 0
    }
   },
@@ -335,7 +335,7 @@
     "R9.2": -3344.7,
     "R2.2": -3191.7,
     "R3.2": -3323.0,
-    "C8.2": -3291.0,
+    "C8.2": -3291.1,
     "C9.2": -3246.6,
     "U2.1": -3304.6,
     "U2.2": -3305.1,
@@ -373,7 +373,7 @@
     "R6.2": -775.7,
     "R11.2": -614.9,
     "R13.2": -457.8,
-    "U3.3": -757.7
+    "U3.3": -757.8
    },
    "neck_k_a_per_mm": 0.52,
    "setpoint_error": {
@@ -713,7 +713,7 @@
    "F.Cu": 9.199
   },
   "SW1": {
-   "F.Cu": 28.091
+   "F.Cu": 28.072
   }
  },
  "findings": [

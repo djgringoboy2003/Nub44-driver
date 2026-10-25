@@ -1,8 +1,7 @@
 # Assembly and bring-up instructions
 
 This is an engineering review design. Use reports/validation-register.md for the actual release state.
-Gate F remains open until PCB routing, electrical checks, complete exports and the owner polarity
-confirmation all pass. Gate G requires measured prototype results. No manufacturing order is automated.
+Gate F remains open until PCB routing, electrical checks and complete exports all pass. Gate G requires measured prototype results. No manufacturing order is automated.
 
 ## Select and review the variant
 
@@ -16,8 +15,10 @@ confirmation all pass. Gate G requires measured prototype results. No manufactur
 
 ## Before fabrication or assembly
 
-1. Confirm the battery contact polarity (REQ-BAT-04/DD-12). The current source interpretation is
-   centre spring B+, perimeter ring B-. The evaluation input pads retain those electrical net names.
+1. Battery contact polarity (REQ-BAT-04/DD-12): centre spring B+, perimeter ring B-. The owner accepts
+   either orientation provided the board states it, and both boards do: "B+" beside the spring pad and
+   "B-" beside the ring on the compact board, "B+ INPUT"/"B- INPUT" on the evaluation board. Check the host
+   against these labels before first power (T3.3).
 2. Resolve routing, DRC and schematic-parity findings in the validation register. Inspect the gate-drive,
    bootstrap, switching-current loops, Kelvin sense paths and thermal connections against the cited
    converter and amplifier datasheets. Automated route completion alone does not close REQ-PCB-01.
