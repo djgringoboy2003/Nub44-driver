@@ -88,9 +88,14 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 3. After CAD/owner release, assemble an evaluation prototype and execute
    `documentation/testing/test-plan.md`, starting with a rated dummy load. Record measured data; only bench
    evidence can close Gate G.
-4. Rework the compact placement and explicit fanout using `engineering/compact-feasibility.md` and the
-   priorities in `engineering/layout-review.md`. It is accepted only when the current-flow report shows every
-   power path connected and no single-via power transitions.
+4. Rework the compact placement using `engineering/compact-feasibility.md` and the priorities in
+   `engineering/layout-review.md`.
+   - Start with the structural constraint recorded there: 23 of U1's 26 pads, 13 of them needing a via,
+     lie inside the 2.95 mm through-via keep-out of the centre spring pad.
+   - Preferred fix: move the L1/U1 column 2–2.5 mm off the spring pad, then add explicit U1 escapes
+     before autorouting.
+   - Accept the rework only when the current-flow report shows every power path connected and no
+     single-via power transitions.
 5. Verify supplier stock/prices and proposed alternatives; keep UNKNOWN until evidence is available.
 
 **Commands and routing replay:**
@@ -134,6 +139,8 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
   - the U1 ISP/ISN branch.
 - Compact draft review recorded its gaps: open VOUT path, single-via VBAT transition, isolated U1 pin 15,
   FSW/COMP_RC 0.15 mm from switching copper.
+- Root cause for the compact draft: 23 of U1's 26 pads lie inside the spring-pad via keep-out. The
+  placement options are recorded in `engineering/compact-feasibility.md`; the compact CAD is unchanged.
 - Copper allowances of the loss model moved to `parameters.yaml`. The loss dict merge is now sorted, so
   `power-stage-results.json` is identical across hash seeds; values are unchanged.
 - Regenerated the evidence:

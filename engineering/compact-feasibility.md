@@ -42,6 +42,42 @@ rather than estimating it (`reports/layout-review-compact-22mm.md`). At this rev
 rework is accepted only when the current-flow report shows every power path connected with no
 single-via transitions.
 
+## Structural constraint: spring-pad via keep-out under U1
+
+The centre spring pad J1 (B.Cu, radius 2.50 mm) excludes through vias within 2.95 mm of the board centre:
+pad radius, plus 0.15 mm clearance, plus the 0.30 mm via radius. U1 sits directly above it at (0.6, 0.9).
+At this revision 23 of its 26 pads lie inside that radius. Thirteen of them need a layer change:
+
+- DR1L to Q3 on the bottom;
+- PG, CC_FLAG and EN to bottom-side parts;
+- VBAT;
+- SW1;
+- VOUT;
+- five ground pins.
+
+So every U1 escape must first travel on F.Cu past the ring of passives around U1. In the routed draft, the
+autorouter's FSW trace wrapped around U1's left pin column and sealed it in, and most of the 43
+unconnected items are U1 or U3 escapes. Rerunning the same autoroute cannot remove this constraint.
+
+Moving U1 away from the spring pad reduces the via-needing pads inside the keep-out from 13 to 7, 6, 4
+and 2 for shifts of 1.0, 1.5, 2.0 and 2.5 mm, measured from the extracted copper.
+
+Options, in order of preference:
+
+1. **Shift the L1/U1 power column 2–2.5 mm away from the spring pad.** L1 then sits partly over J1. Its
+   two pads are top-layer power copper and need no vias there. The output-capacitor stack below U1 loses
+   one 0805 position, so C11 moves beside U1 or to the bottom side with via-connected VOUT/GND, like C13.
+2. **Put L1 entirely over the spring pad with U1 beside it.** This clears the keep-out completely. A
+   courtyard check leaves room for only one 0805 output capacitor at the VOUT pins near the board edge.
+3. **Use a smaller spring pad.** This is a mechanical choice tied to the spring part (MPN UNKNOWN), so it
+   needs the owner's host details.
+4. **Use HDI blind vias (F.Cu to In2).** These need the same fabrication quote as the DD-16 via-in-pad
+   option.
+
+Whichever option is chosen, U1 should get explicit source-defined escapes for every pin before
+autorouting (`fanout_skip: [U1]` plus `tracks`/`vias`, as on the evaluation board). C7 (VCC), C14 (boost
+HF) and C6 (BOOT2) get first claim on the U1 corners, and the review report decides acceptance.
+
 ## Remaining engineering work
 
 Use the larger evaluation board to establish accessible measurement and fault-test coverage, then
