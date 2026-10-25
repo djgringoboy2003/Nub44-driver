@@ -2,8 +2,18 @@
 # Coordinates: mm relative to the board centre, +x right, +y down, viewed from the TOP side.
 # rot is applied before flipping for bottom-side parts. Bottom-native footprints (spring pad,
 # bottom test pads) are not flipped.
-# Manual entries ("pos") fix the power stage and mechanics; "auto" entries are placed by
+# Manual entries ("pos") fix the power stage, U1's satellites and mechanics; "auto" entries are placed by
 # pcb_builder.auto_place at the nearest collision-free spot to the anchor, scored by net proximity.
+#
+# Layout rules from engineering/compact-feasibility.md and engineering/layout-review.md:
+# - The centre spring pad J1 (B.Cu, r 2.50) forbids through vias within r 2.95 of the centre. L1 sits
+#   over it (its pads need no vias); U1 is 2 mm below, so its via-needing pins clear the keep-out.
+# - Every U1 pin has a source-defined escape before autorouting (fanout_skip U1).
+# - BOOT1 (pin 22) and SW1 (pin 23) leave the top edge in parallel lanes that never cross: BOOT1 ends at
+#   C5's upper pad, SW1 passes C5's lower pad and climbs left of C5 to the SW1 pour.
+# - BOOT2 runs above C7 to C6, whose SW2 pad joins an extension of the SW2 pour. VCC is 0.6 mm long.
+# - COMP, ILIM and FB passives sit on the bottom behind vias right of U1; the left column fans out to
+#   staggered vias (DR1L, DR1H, VIN, EN, PG, CC).
 
 board:
   outline: {type: circle, radius: 11.0}
@@ -11,128 +21,187 @@ board:
   thickness: 1.6
 placement_radius: 9.55         # every courtyard corner inside this radius (ring copper starts at 9.8)
 courtyard_gap: 0.02          # courtyards may almost touch (they already include assembly clearance)
+keepouts:                    # automatic placement stays off the via fields (they pass through both sides)
+  B: [[-8.3, -6.6, -6.25, -3.3], [-1.95, -6.95, -1.25, -4.75], [0.15, 7.4, 1.05, 8.7], [2.05, 7.4, 3.65, 8.7],
+      [-4.5, -4.45, -0.55, -1.45]]   # last box: BAT_SPRING corridor from Q1's drain to the spring pad
 
 parts:
   # mechanics and contacts
   J1: {pos: [0.0, 0.0, 0], side: B}                 # centre spring pad (bottom-native)
   J2: {pos: [0.0, 0.0, 0], side: F, no_courtyard: true}
-  J3: {pos: [7.2, 0.3, 90], side: F, both_sides: true}   # LD+ at (7.2, 2.3), LD- at (7.2, -1.7)
+  J3: {pos: [7.59, 0.0, 90], side: F, both_sides: true}  # 3.5 mm pads: LD+ (1) at (7.58, 1.75), LD- (2) at (7.58, -1.75)
 
   # power stage, top
-  U1: {pos: [0.6, 0.9, 0], side: F}
-  L1: {pos: [1.37, -4.55, 270], side: F}             # pad 2 (SW2) near U1, pad 1 (SW1) at the top
-  Q2: {pos: [-4.0, -5.4, 180], side: F}             # sources face L1 pad 1, drain faces the input caps
-  C1: {pos: [-7.48, -1.8, 270], side: F}             # pad 1 (VBAT) up, pad 2 (GND) down
-  C2: {pos: [-5.44, -1.8, 270], side: F}
-  C3: {pos: [-3.40, -1.8, 270], side: F}
-  C14: {pos: [0.6, 3.75, 180], side: F}             # VOUT pin 11 <-> PGND pin 9, tightest boost loop
-  C10: {pos: [0.6, 5.2, 180], side: F}
-  C11: {pos: [0.6, 7.3, 180], side: F}
-  RS1: {pos: [4.7, 4.9, 0], side: F}
+  L1: {pos: [1.37, -2.65, 270], side: F}            # over the spring pad: pad 1 (SW1) top, pad 2 (SW2) toward U1
+  U1: {pos: [0.6, 2.9, 0], side: F}                 # top-edge pins face L1 pad 2
+  Q2: {pos: [-4.02, -5.4, 180], side: F}            # sources face L1 pad 1, drain faces the input caps
+  C1: {pos: [-7.905, -1.6, 270], side: F}            # pad 1 (VBAT) up, pad 2 (GND) down
+  C2: {pos: [-5.83, -1.6, 270], side: F}
+  C3: {pos: [-3.76, -1.6, 270], side: F}            # leaves the SW1 lane at x -2.77 clear
+  C14: {pos: [0.6, 5.57, 180], side: F}             # VOUT pin 11 <-> PGND pin 9, tightest boost loop
+  C10: {pos: [0.6, 7.74, 180], side: F}
+  RS1: {pos: [4.98, 4.95, 90], side: F}             # LD_P (pad 4) up toward J3 LD+, VOUT (pad 1) down
+  C5: {pos: [-2.315, 0.45, 270], side: F}            # BOOT1 pad up (lane y 0.1), SW1 pad down (lane y 0.7)
+  C6: {pos: [4.93, -0.36, 90], side: F}             # BOOT2 pad down (lane y 0.45), SW2 pad up to the pour
+  C7: {pos: [4.645, 1.2, 0], side: F}                # VCC pad 0.6 mm from pin 19
+  R2: {pos: [-0.6, 5.95, 270], side: F}             # FSW pad directly under pin 8, GND pad toward C10
 
   # power stage, bottom
-  Q1: {pos: [-5.1, -2.4, 180], side: B}
-  Q3: {pos: [-1.0, -6.7, 0], side: B}          # drain pad clear of the SW1 via column at x -1.76
-  U3: {pos: [3.6, -5.0, 0], side: B}
-  C13: {pos: [2.4, 5.6, 90], side: B}            # output cap under the VOUT area, via-connected
+  Q1: {pos: [-4.02, -5.4, 180], side: B}            # directly under Q2: VBAT changes layer through the via field beside both
+  Q3: {pos: [0.79, -6.7, 0], side: B}                # SW1 vias sit between Q1's drain and Q3's drain
+  U3: {pos: [-5.9, -0.9, 0], side: B}               # MCU beside its harness pads, enable chain and the PG/CC vias
+  C12: {pos: [0.3, 5.65, 90], side: B}               # output caps under the VOUT pour, via-connected
+  C13: {pos: [2.4, 5.65, 90], side: B}
+  C11: {pos: [4.48, 6.0, 90], side: B}
+  U2: {pos: [4.67, -1.6, 0], side: B}               # CSA in the right-hand bottom column: U3, U2, D1, then passives
+  D1: {pos: [4.52, 0.6, 0], side: B}                # laser clamp; LD_P pad reaches J3 LD+ (PTH) on B.Cu
+  C9: {pos: [5.4, 3.25, 270], side: B}              # Cp directly behind the COMP via
+  R9: {pos: [4.35, 3.25, 90], side: B}             # FB divider bottom resistor behind the FB via
+  C8: {pos: [-1.5, 3.33, 0], side: B}              # Cc / Rc / ILIM in the strip between J1 and the output caps
+  R4: {pos: [0.35, 3.3, 0], side: B}
+  R3: {pos: [2.3, 3.3, 0], side: B}
 
   # external connection pads (top) and test/programming pads (bottom)
   TP13: {pos: [-8.3, 1.5, 0], side: F}
   TP11: {pos: [-7.8, 3.4, 0], side: F}
-  TP9: {pos: [-6.7, 4.8, 0], side: F}
-  TP10: {pos: [-5.4, 6.2, 0], side: F}
-  TP12: {pos: [-3.8, 7.4, 0], side: F}
-  TP1: {pos: [-7.61, 3.55, 0], side: B}
-  TP8: {pos: [-6.43, 5.40, 0], side: B}
-  TP2: {pos: [-4.82, 6.88, 0], side: B}
-  TP6: {pos: [-2.87, 7.89, 0], side: B}
-  TP7: {pos: [-0.73, 8.37, 0], side: B}
+  TP9: {pos: [-6.7, 4.92, 0], side: F}
+  TP10: {pos: [-5.35, 6.45, 0], side: F}
+  TP12: {pos: [-3.75, 7.45, 0], side: F}
+  TP1: {pos: [-6.669, 5.465, 180], side: B}   # place_opt
+  TP8: {pos: [6.858, -4.488, 90], side: B}   # place_opt
+  TP2: {pos: [-1.402, 7.795, 270], side: B}   # place_opt
+  TP6: {pos: [-5.344, 6.280, 180], side: B}   # place_opt
+  TP7: {pos: [0.205, -3.693, 90], side: B}   # place_opt
 
   # automatically placed parts: anchor = pad of a placed part (+ offset) or a board point
-  C12: {auto: {anchor: [3.0, 7.2], side: F}}
-  C4: {auto: {anchor: {ref: U1, pad: "3", offset: [-1.7, 0.0]}, side: F}}
-  C5: {auto: {anchor: {ref: U1, pad: "22", offset: [-1.8, -0.6]}, side: F}}
-  C6: {auto: {anchor: {ref: U1, pad: "20", offset: [1.7, -0.6]}, side: F}}
-  C7: {auto: {anchor: {ref: U1, pad: "19", offset: [1.4, 0.0]}, side: F}}
-  R3: {auto: {anchor: {ref: U1, pad: "17", offset: [1.5, 0.0]}, side: F}}
-  R4: {auto: {anchor: {ref: U1, pad: "18", offset: [1.6, -0.4]}, side: F}}
-  C8: {auto: {anchor: {ref: U1, pad: "18", offset: [2.6, -0.4]}, side: F}}
-  C9: {auto: {anchor: {ref: U1, pad: "18", offset: [1.6, 0.6]}, side: F}}
-  R8: {auto: {anchor: {ref: U1, pad: "14", offset: [1.5, 0.3]}, side: F}}
-  R9: {auto: {anchor: {ref: U1, pad: "14", offset: [1.5, 1.2]}, side: F}}
-  R2: {auto: {anchor: {ref: U1, pad: "8", offset: [-1.6, 0.9]}, side: F}}
-  R5: {auto: {anchor: {ref: U1, pad: "4", offset: [-2.4, 0.4]}, side: F}}
-  R6: {auto: {anchor: {ref: U1, pad: "4", offset: [-2.4, 1.4]}, side: F}}
-  D1: {auto: {anchor: [5.8, 2.4], side: B}}
-  U2: {auto: {anchor: [4.4, 6.0], side: B}}
-  C15: {auto: {anchor: [3.0, 6.4], side: B}}
-  R7: {auto: {anchor: [3.3, 3.9], side: B}}
-  R1: {auto: {anchor: {ref: Q1, pad: "4", offset: [-0.8, 0.0]}, side: B}}
-  C16: {auto: {anchor: {ref: U3, pad: "4", offset: [-1.5, 0.0]}, side: B}}
-  C17: {auto: {anchor: {ref: U3, pad: "4", offset: [-1.5, 1.0]}, side: B}}
-  D2: {auto: {anchor: {ref: U3, pad: "4", offset: [-2.6, 1.6]}, side: B}}
-  R10: {auto: {anchor: {ref: U3, pad: "9", offset: [0.0, 1.6]}, side: B}}
-  R11: {auto: {anchor: {ref: U3, pad: "9", offset: [1.0, 1.6]}, side: B}}
-  R12: {auto: {anchor: {ref: U3, pad: "8", offset: [0.0, 1.6]}, side: B}}
-  R13: {auto: {anchor: {ref: U3, pad: "8", offset: [-1.0, 1.6]}, side: B}}
-  RT1: {auto: {anchor: [3.6, 1.6], side: B}}
-  R14: {auto: {anchor: {ref: U3, pad: "6", offset: [-1.2, 0.0]}, side: B}}
-  R15: {auto: {anchor: {ref: U3, pad: "10", offset: [0.0, 1.4]}, side: B}}
-  R16: {auto: {anchor: {ref: U3, pad: "12", offset: [1.2, 0.0]}, side: B}}
-  R17: {auto: {anchor: [-3.2, 2.8], side: B}}
-  R19: {auto: {anchor: {ref: U3, pad: "1", offset: [-1.2, 0.0]}, side: B}}
-  Q4: {auto: {anchor: [-4.0, 3.4], side: B}}
-  Q5: {auto: {anchor: [-4.6, 2.0], side: B}}
-  Q6: {auto: {anchor: [-3.0, 4.6], side: B}}
-  R18: {auto: {anchor: [-5.6, 3.0], side: B}}
-  R20: {auto: {anchor: [-2.0, 5.2], side: B}}
-  D3: {auto: {anchor: [-1.2, 4.4], side: B}}
+  C4: {pos: [-4.650, 4.339, 180], side: B}   # place_opt; VIN HF decoupling behind the VIN via
+  R8: {pos: [7.224, 4.271, 90], side: B}   # place_opt
+  R5: {pos: [-4.547, 3.592, 270], side: F}   # place_opt; EN divider behind the EN via
+  R6: {pos: [-1.984, 4.280, 180], side: B}   # place_opt
+  C15: {pos: [2.499, -3.226, 180], side: B}   # place_opt
+  R7: {pos: [-0.277, 8.776, 270], side: B}   # place_opt
+  R1: {pos: [-4.388, -7.653, 180], side: B}   # place_opt
+  C16: {pos: [0.280, -7.248, 90], side: F}   # place_opt
+  C17: {pos: [-3.324, -0.408, 90], side: B}   # place_opt
+  D2: {pos: [-4.953, 1.492, 270], side: F}   # place_opt
+  R10: {pos: [-8.498, 0.576, 90], side: B}   # place_opt
+  R11: {pos: [-8.496, -0.981, 90], side: B}   # place_opt
+  R12: {pos: [-2.874, 6.001, 0], side: B}   # place_opt
+  R13: {pos: [-3.921, 5.763, 270], side: F}   # place_opt
+  RT1: {pos: [-1.381, -7.687, 0], side: F}   # place_opt
+  R14: {pos: [-6.480, 0.591, 180], side: F}   # place_opt
+  R15: {pos: [-5.185, 5.183, 0], side: B}   # place_opt
+  R16: {pos: [-7.025, 4.394, 180], side: B}   # place_opt
+  R17: {pos: [1.863, -6.121, 0], side: F}   # place_opt
+  R19: {pos: [-3.168, -8.014, 270], side: B}   # place_opt
+  Q4: {pos: [4.477, -3.901, 0], side: B}   # place_opt
+  Q5: {pos: [4.162, -6.246, 270], side: B}   # place_opt
+  Q6: {pos: [-5.303, 2.708, 270], side: B}   # place_opt
+  R18: {pos: [-3.205, -7.740, 180], side: F}   # place_opt
+  R20: {pos: [-7.256, 3.296, 0], side: B}   # place_opt
+  D3: {pos: [-7.739, 2.124, 180], side: B}   # place_opt
+
+# automation/placement/place_opt.py ties these parts to the pin or via they serve
+place_opt:
+  near_weight: 3.0
+  near: {C4: [-3.7, 2.9], C15: U2.3, C16: U3.4, C17: U3.4, D2: U3.4, R1: Q1.4, C9: U1.18, R5: [-3.45, 3.65], R6: [-3.45, 3.65]}
 
 # ---------------------------------------------------------------------------- copper
-# Stack-up roles: F.Cu power + signals, In1.Cu solid GND plane, In2.Cu VBAT plane, B.Cu power + signals.
-# Polygons were drawn against the extracted pad map (see PROGRESS.md log); zone fill keeps clearances.
+# Stack-up roles: F.Cu power + signals, In1.Cu solid GND plane, In2.Cu VBAT plane (left), B.Cu power + signals.
+# Track widths: 0.15 mm signals, 0.25-0.40 mm drive/supply. Every source item is checked by KiCad DRC.
 
 fanout_nets: [GND]                 # every GND SMD pad gets its own short track + via to In1
-fanout_skip: [J2]                  # ring contact has its own stitching vias
+fanout_skip: [J2, U1]              # ring contact has stitching vias; U1 GND pins use the explicit escapes below
 
 tracks:
-  # RPM0026A centre pads cannot hold vias at PCBWay (0.15 mm annular ring needs > 0.375 mm pads),
-  # so each centre pad is bridged to the edge pin of the same net that sits directly beside it (DD-16).
-  - {net: SW2, layer: F.Cu, width: 0.25, pts: [[0.85, -0.50], [0.60, 0.25]]}     # pin 21 -> pad 25
-  - {net: VOUT, layer: F.Cu, width: 0.30, pts: [[1.225, 1.55], [1.225, 2.30]]}   # pad 26 -> pin 11
-  - {net: GND, layer: F.Cu, width: 0.30, pts: [[-0.025, 1.55], [-0.025, 2.30]]}  # pad 24 -> pin 9
+  # RPM0026A centre pads cannot hold vias at PCBWay (DD-16): each is bridged to the edge pin beside it.
+  - {net: SW2, layer: F.Cu, width: 0.25, pts: [[0.85, 1.50], [0.60, 2.25]]}      # pin 21 -> pad 25
+  - {net: VOUT, layer: F.Cu, width: 0.30, pts: [[1.225, 3.55], [1.225, 4.30]]}   # pad 26 -> pin 11
+  - {net: GND, layer: F.Cu, width: 0.30, pts: [[-0.025, 3.55], [-0.025, 4.30]]}  # pad 24 -> pin 9
+  # top edge: BOOT1 lane above the SW1 lane; SW1 continues left of C5 up to the SW1 pour
+  - {net: BOOT1, layer: F.Cu, width: 0.25, pts: [[0.35, 1.20], [0.35, 0.10], [-2.15, 0.10]]}
+  - {net: SW1, layer: F.Cu, width: 0.20, pts: [[-0.45, 1.20], [-0.45, 0.68], [-2.77, 0.68], [-2.77, -3.60]]}
+  - {net: BOOT2, layer: F.Cu, width: 0.25, pts: [[1.65, 1.20], [1.65, 0.45], [4.93, 0.45], [4.93, 0.10]]}
+  - {net: VCC5, layer: F.Cu, width: 0.40, pts: [[2.45, 1.24], [3.50, 1.24]]}
+  # right column: COMP, ILIM, GND (MODE), FB to vias; ISN/ISP pair to the shunt sense pads
+  - {net: COMP, layer: F.Cu, width: 0.15, pts: [[2.55, 1.90], [5.00, 1.90], [5.40, 2.30]]}
+  - {net: ILIM, layer: F.Cu, width: 0.15, pts: [[2.55, 2.40], [3.20, 2.40], [3.45, 2.65]]}
+  - {net: GND, layer: F.Cu, width: 0.20, pts: [[2.55, 3.40], [3.45, 3.40]]}
+  - {net: FB, layer: F.Cu, width: 0.15, pts: [[2.55, 3.90], [3.20, 3.90], [3.45, 4.15], [3.55, 4.15]]}
+  - {net: ISN_K, layer: F.Cu, width: 0.15, pts: [[2.55, 4.70], [4.70, 4.70], [4.99, 4.55]]}
+  - {net: ISP_K, layer: F.Cu, width: 0.15, pts: [[1.725, 4.60], [1.725, 5.10], [4.99, 5.10], [4.99, 5.40]]}
+  - {net: ISN_K, layer: F.Cu, width: 0.15, pts: [[5.10, 4.40], [6.25, 4.40], [6.25, 4.50]]}
+  - {net: ISP_K, layer: F.Cu, width: 0.15, pts: [[5.10, 5.50], [6.25, 5.50]]}
+  # left column fans out to staggered vias outside the spring-pad keep-out
+  - {net: DR1L, layer: F.Cu, width: 0.20, pts: [[-1.30, 1.35], [-2.95, 1.35]]}
+  - {net: DR1H, layer: F.Cu, width: 0.20, pts: [[-1.30, 1.90], [-3.75, 1.90]]}
+  - {net: VBAT, layer: F.Cu, width: 0.20, pts: [[-1.30, 2.40], [-3.20, 2.40], [-3.70, 2.90]]}
+  - {net: EN_UVLO, layer: F.Cu, width: 0.15, pts: [[-1.30, 2.90], [-2.70, 2.90], [-3.45, 3.65]]}
+  - {net: PG, layer: F.Cu, width: 0.15, pts: [[-1.30, 3.40], [-2.20, 3.40], [-3.20, 4.40]]}
+  - {net: CC_FLAG, layer: F.Cu, width: 0.15, pts: [[-1.30, 3.90], [-1.70, 3.90], [-2.95, 5.15]]}
+  # bottom edge: GND pin 7 to its via, FSW straight down to R2
+  - {net: GND, layer: F.Cu, width: 0.20, pts: [[-1.25, 4.60], [-1.25, 5.20], [-1.55, 5.65]]}
+  - {net: FSW, layer: F.Cu, width: 0.15, pts: [[-0.525, 4.60], [-0.525, 5.50]]}
+
+vias:
+  - {net: DR1L, x: -2.95, y: 1.35}
+  - {net: DR1H, x: -3.75, y: 1.90}
+  - {net: VBAT, x: -3.70, y: 2.90}
+  - {net: EN_UVLO, x: -3.45, y: 3.65}
+  - {net: PG, x: -3.20, y: 4.40}
+  - {net: CC_FLAG, x: -2.95, y: 5.15}
+  - {net: GND, x: -1.55, y: 5.65}
+  - {net: COMP, x: 5.40, y: 2.30}
+  - {net: ILIM, x: 3.45, y: 2.65}
+  - {net: GND, x: 3.45, y: 3.40}
+  - {net: FB, x: 3.55, y: 4.15}
+  - {net: ISN_K, x: 6.25, y: 4.50}
+  - {net: ISP_K, x: 6.25, y: 5.50}
 
 via_fields:
-  - {net: VBAT, count: 10, pitch: 0.9, polygon: [[-8.7, -5.6], [-6.0, -6.7], [-6.0, -3.45], [-8.7, -3.45]]}
-  - {net: VBAT, count: 8, pitch: 0.9, polygon: [[-9.1, -2.4], [-7.25, -2.4], [-7.25, 0.9], [-9.1, 0.9]]}
-  - {net: VBAT, count: 4, pitch: 0.9, polygon: [[-7.2, -1.15], [-5.6, -1.15], [-5.6, 0.9], [-7.2, 0.9]]}
-  - {net: SW1, count: 6, pitch: 0.9, polygon: [[-1.75, -5.3], [1.5, -5.3], [1.5, -4.0], [-1.75, -4.0]]}   # under the L1 body
-  - {net: GND, count: 6, pitch: 0.9, polygon: [[-1.9, 3.3], [0.0, 3.3], [0.0, 6.4], [-1.9, 6.4]]}
+  - {net: VBAT, count: 8, pitch: 0.75, polygon: [[-8.15, -3.45], [-6.4, -3.45], [-6.4, -6.1], [-7.0, -6.5], [-8.15, -4.9]]}   # beside Q1 sources / Q2 drain
+  - {net: SW1, count: 3, pitch: 0.75, polygon: [[-1.95, -6.75], [-1.2, -6.75], [-1.2, -5.05], [-1.95, -5.05]]}   # between Q1 and Q3 drains
+  - {net: VOUT, count: 2, pitch: 0.8, polygon: [[0.25, 7.45], [0.95, 7.45], [0.95, 8.65], [0.25, 8.65]]}   # beside C10, below the bottom caps
+  - {net: VOUT, count: 4, pitch: 0.8, polygon: [[2.1, 7.45], [3.6, 7.45], [3.6, 8.65], [2.1, 8.65]]}
 
 zones_pre:
   - {net: GND, layer: In1.Cu, circle: [0, 0, 10.6], priority: 0, solid: true}
-  - {net: VBAT, layer: In2.Cu, priority: 2, solid: true,   # left region only: battery current path Q1 -> C1-C3/Q2
-     polygon: [[-2.5, -9.6], [-2.5, 1.5], [-10.4, 1.5], [-10.2, -2.5], [-9.0, -5.5], [-7.0, -7.6], [-4.5, -9.2]]}
+  - {net: VBAT, layer: In2.Cu, priority: 2, solid: true,   # left region: battery current path Q1 -> C1-C3/Q2 and U1 VIN
+     polygon: [[-2.6, -9.6], [-2.6, 3.4], [-10.4, 3.4], [-10.2, -2.5], [-9.0, -5.5], [-7.0, -7.6], [-4.5, -9.2]]}
   - {net: VBAT, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[-8.55, -2.15], [-2.45, -2.15], [-2.45, -3.45], [-3.62, -3.45], [-3.62, -6.80], [-5.8, -6.80], [-7.4, -5.4], [-8.55, -4.0]]}
-  - {net: VBAT, layer: B.Cu, priority: 2, solid: true,
-     polygon: [[-9.1, 0.95], [-5.85, 0.95], [-5.85, -2.98], [-7.30, -2.98], [-7.30, -2.45], [-9.1, -2.45]]}
+     polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-5.8, -6.8], [-7.4, -5.4], [-8.9, -3.9]]}
+  - {net: VBAT, layer: B.Cu, priority: 2, solid: true,   # Q1 sources and the VBAT via field
+     polygon: [[-8.3, -3.35], [-4.85, -3.35], [-4.85, -6.05], [-6.15, -6.05], [-6.15, -6.4], [-7.1, -6.45], [-8.3, -4.9]]}
   - {net: SW1, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[-3.15, -4.0], [1.60, -4.0], [1.60, -5.52], [3.85, -5.52], [3.85, -6.95], [-1.85, -6.95], [-1.85, -6.05], [-3.15, -6.05]]}
-  - {net: SW1, layer: B.Cu, priority: 2, solid: true,
-     polygon: [[-3.0, -3.95], [1.6, -3.95], [1.6, -5.25], [-0.75, -5.25], [-0.75, -8.0], [-3.0, -8.0]]}
+     polygon: [[-3.25, -6.0], [-1.85, -6.0], [-1.85, -6.95], [-0.5, -6.95], [-0.5, -5.0], [3.85, -5.0], [3.85, -3.55], [-3.25, -3.55]]}
+  - {net: SW1, layer: B.Cu, priority: 2, solid: true,   # Q3 drain and the SW1 vias
+     polygon: [[-1.95, -7.95], [1.2, -7.95], [1.2, -5.4], [-0.9, -5.4], [-0.9, -4.75], [-1.95, -4.75]]}
   - {net: SW2, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[-0.98, -3.55], [3.77, -3.55], [3.77, -1.30], [1.30, -1.30], [1.30, -1.00], [0.70, -1.00], [0.70, -1.30], [-0.98, -1.30]]}
+     polygon: [[-1.0, -1.75], [3.85, -1.75], [3.85, -1.35], [5.25, -1.35], [5.25, -0.40], [3.85, -0.40], [3.85, -0.25], [1.33, -0.25], [1.33, 1.0], [0.68, 1.0], [0.68, -0.25], [-1.0, -0.25]]}
   - {net: VOUT, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[0.75, 3.0], [3.0, 3.0], [3.0, 2.2], [4.95, 2.2], [4.95, 3.4], [3.85, 3.4], [3.85, 6.7], [2.2, 6.7], [2.2, 7.95], [0.95, 7.95], [0.95, 4.4], [0.75, 4.4]]}
+     polygon: [[0.75, 4.3], [1.5, 4.3], [1.5, 5.35], [3.9, 5.35], [3.9, 5.75], [6.0, 5.75], [6.0, 7.15], [3.9, 7.15], [3.9, 8.2], [3.4, 8.75], [0.15, 8.75], [0.15, 8.5], [0.95, 8.5], [0.95, 6.6], [0.62, 6.6], [0.62, 5.25], [0.75, 5.25]]}
   - {net: VOUT, layer: B.Cu, priority: 2, solid: true,
-     polygon: [[1.55, 5.9], [3.9, 5.9], [3.9, 7.3], [1.55, 7.3]]}
+     polygon: [[-0.75, 4.3], [5.5, 4.3], [5.5, 7.8], [3.7, 7.8], [3.7, 8.75], [0.15, 8.75], [0.15, 7.8], [-0.75, 7.8]]}
   - {net: LD_P, layer: F.Cu, priority: 2, solid: true,
-     polygon: [[5.55, 3.95], [6.35, 3.95], [6.35, 1.55], [8.45, 1.55], [8.45, 3.8], [7.05, 5.9], [5.55, 5.9]]}
-  - {net: BAT_SPRING, layer: B.Cu, priority: 2, solid: true,
-     polygon: [[-5.40, -3.70], [-2.30, -3.70], [-1.30, -2.10], [-1.30, 0.80], [-2.60, 0.80], [-5.40, -1.10]]}
+     polygon: [[4.0, 2.75], [5.7, 2.75], [6.3, 2.0], [6.3, 0.55], [8.8, 0.55], [8.8, 3.2], [6.9, 3.6], [6.2, 4.15], [4.0, 4.15]]}
+  - {net: BAT_SPRING, layer: B.Cu, priority: 2, solid: true,   # Q1 drain straight to the spring pad
+     polygon: [[-4.45, -6.75], [-2.05, -6.75], [-2.05, -4.4], [-0.6, -2.9], [-0.6, -1.5], [-2.7, -1.5], [-4.45, -3.6]]}
 
 zones_post:
   - {net: GND, layer: In2.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
   - {net: GND, layer: F.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
   - {net: GND, layer: B.Cu, circle: [0, 0, 10.6], priority: 1, clearance: 0.2, thermal_gap: 0.2, spoke: 0.25}
+
+
+# Router keep-outs: while routing, other nets may not cross the power copper (the Specctra export
+# treats pours as conduction planes). They exist only in the placed board; finish deletes them.
+router_keepouts:
+  - {layer: F.Cu, polygon: [[-8.9, -1.85], [-3.0, -1.85], [-3.0, -3.5], [-3.4, -3.5], [-3.4, -6.8], [-5.8, -6.8], [-7.4, -5.4], [-8.9, -3.9]]}
+  - {layer: F.Cu, polygon: [[-3.25, -5.85], [-1.85, -5.85], [-1.85, -6.95], [-0.5, -6.95], [-0.5, -5.0], [3.85, -5.0], [3.85, -3.55], [-3.25, -3.55]]}
+  - {layer: F.Cu, polygon: [[-1.0, -1.75], [3.85, -1.75], [3.85, -1.35], [5.25, -1.35], [5.25, -0.40], [3.85, -0.40], [3.85, -0.25], [1.33, -0.25], [1.33, 1.0], [0.68, 1.0], [0.68, -0.25], [-1.0, -0.25]]}
+  - {layer: F.Cu, polygon: [[0.75, 4.3], [1.5, 4.3], [1.5, 5.35], [3.9, 5.35], [3.9, 5.75], [6.0, 5.75], [6.0, 7.15], [3.9, 7.15], [3.9, 8.2], [3.4, 8.75], [0.95, 8.75], [0.95, 6.6], [0.62, 6.6], [0.62, 5.25], [0.75, 5.25]]}
+  - {layer: F.Cu, polygon: [[4.0, 2.75], [5.7, 2.75], [6.3, 2.0], [6.3, 0.55], [8.8, 0.55], [8.8, 3.2], [6.9, 3.6], [6.2, 4.15], [4.0, 4.15]]}
+  - {layer: B.Cu, polygon: [[-4.45, -6.75], [-2.05, -6.75], [-2.05, -4.4], [-0.6, -2.9], [-0.6, -1.5], [-2.7, -1.5], [-4.45, -3.6]]}
+  - {layer: B.Cu, polygon: [[-1.95, -7.95], [1.2, -7.95], [1.2, -5.4], [-0.9, -5.4], [-0.9, -4.75], [-1.95, -4.75]]}
+  - {layer: B.Cu, polygon: [[-8.3, -3.35], [-4.85, -3.35], [-4.85, -6.05], [-6.15, -6.05], [-6.15, -6.4], [-7.1, -6.45], [-8.3, -4.9]]}
+  - {layer: In2.Cu, polygon: [[-8.3, -3.2], [-2.7, -3.2], [-2.7, -7.2], [-4.5, -8.6], [-7.0, -7.0], [-8.6, -4.8]]}

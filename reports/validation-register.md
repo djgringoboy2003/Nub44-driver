@@ -46,10 +46,10 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-CALC-21 | Crossover below CSA bandwidth / 3 | CALC | **PASS** | engineering/calculations/power-stage-results.md | 4858.1463 Hz (limit max 12333.333333333334) |
 | VAL-ERC-compact-22mm | ERC (compact-22mm) | CAD | **PASS** | reports/erc-compact-22mm.json | 0 unresolved findings |
 | VAL-NET-compact-22mm | Netlist equals connectivity.yaml (compact-22mm) | CAD | **PASS** | reports/schematic-compact-22mm.json | 0 differences |
-| VAL-ROUTE-compact-22mm | PCB placed and fully routed (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 43 unconnected items |
+| VAL-ROUTE-compact-22mm | PCB placed and fully routed (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 31 unconnected items |
 | VAL-PARITY-compact-22mm | PCB matches schematic (compact-22mm) | CAD | **PASS** | reports/drc-compact-22mm.json | 0 parity issues |
-| VAL-DRC-compact-22mm | Unresolved DRC findings (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 0 errors, 3 warnings, 0 exclusions {'connection_width': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20) |
-| VAL-LAYOUT-compact-22mm | Power-layout review current for the board (compact-22mm) | CAD | **PASS** | reports/layout-review-compact-22mm.json | 14 REVIEW / 6 INFO screening results; dispositions in engineering/layout-review.md |
+| VAL-DRC-compact-22mm | Unresolved DRC findings (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 0 errors, 6 warnings, 0 exclusions {'via_dangling': 5, 'connection_width': 1}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20), lib_footprint_mismatch (density silkscreen removal; DD-20) |
+| VAL-LAYOUT-compact-22mm | Power-layout review current for the board (compact-22mm) | CAD | **PASS** | reports/layout-review-compact-22mm.json | 16 REVIEW / 7 INFO screening results; dispositions in engineering/layout-review.md |
 | VAL-EXPORT-compact-22mm | PCBWay export package internally consistent (compact-22mm) | CAD | **PASS** | manufacturing/pcbway/compact-22mm/reports/export-check.json |  |
 | VAL-ERC-evaluation-board | ERC (evaluation-board) | CAD | **PASS** | reports/erc-evaluation-board.json | 0 unresolved findings |
 | VAL-NET-evaluation-board | Netlist equals connectivity.yaml (evaluation-board) | CAD | **PASS** | reports/schematic-evaluation-board.json | 0 differences |

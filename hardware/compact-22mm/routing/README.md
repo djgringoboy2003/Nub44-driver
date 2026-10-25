@@ -9,7 +9,7 @@ These are generated handoff artifacts copied byte-for-byte from the observed rou
 - `checkpoint-source.json`: archive hashes, capture-time placement/connectivity/parameter/CAD/tool-script
   hashes, and the associated DRC report hash and counts.
 
-The archived compact-board session remains incomplete: at capture, KiCad reported 0 errors, 3 warnings, 43 unconnected items and 0 schematic-parity findings. An exported router session by itself is not a passing validation result.
+The archived compact-board session remains incomplete: at capture, KiCad reported 0 errors, 6 warnings, 31 unconnected items and 0 schematic-parity findings (2026-10-25 re-floorplan; previous session 43 unconnected). An exported router session by itself is not a passing validation result.
 
 ## Restore the existing session
 

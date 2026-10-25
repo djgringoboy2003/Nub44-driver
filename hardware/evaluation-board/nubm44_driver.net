@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\evaluation-board\\nubm44_driver.kicad_sch")
-		(date "2026-10-25T03:43:11")
+		(date "2026-10-25T08:43:57")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -1692,7 +1692,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+				(value "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
 			)
 			(sheetpath
 				(names "/")
@@ -5638,6 +5638,7 @@
 			(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			(footprints
 				(fp "Connector*:*_1x??_*")
+				(fp "nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm")
 				(fp "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
 			)
 			(fields

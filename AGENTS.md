@@ -54,6 +54,7 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | `research/` | Topic reports, source tables (`sources/`), local datasheet copies (`datasheets/`, git-ignored) |
 | `automation/nubm44/` | Python package: S-expression I/O, KiCad library access, symbol/footprint generators, schematic writer, calculators |
 | `automation/review/` | Power-layout review: copper extractor (KiCad Python), raster model, DC current-flow solver, report (`power_layout.py`) |
+| `automation/placement/place_opt.py` | Simulated-annealing optimiser for small-part positions; writes explicit `pos` entries to `placement.yaml` |
 | `hardware/libraries/` | Project symbol library (`nubm44.kicad_sym`, generated from `symbols/*.yaml`) and footprints (`nubm44.pretty`, generated) |
 | `hardware/compact-22mm/`, `hardware/evaluation-board/` | KiCad projects for Variant A (22 mm) and Variant B (larger evaluation board) |
 | `scripts/` | PowerShell entry points (`setup.ps1` exists; see PROGRESS.md for the others) |
@@ -99,6 +100,15 @@ Running the layout review before DRC leaves it stale, because DRC rewrites the b
 - KiCad's `Vishay_PowerPAK_1212-8_Single` footprint has 5 pads: 1–3 S, 4 G, 5 D (merged drain pad).
 - Pillow's `ImageDraw.polygon` rounds vertices and fills inclusively, which widens every shape by a cell.
   Copper analysis uses the exact scanline fill in `automation/review/raster.py`.
+- The Specctra export treats pours as conduction planes, so FreeRouting will route other nets straight
+  through power copper. Protect power pours with `router_keepouts` in `placement.yaml`: these are rule
+  areas that exist only in the placed board, and `finish` deletes them.
+- `build_pcb.py --stage place` overwrites the board file with an unrouted one. To return to a routed
+  state, restore the archived DSN/SES/evidence and run `finish`.
+- On the compact board, the centre spring pad forbids through vias within 2.95 mm of the centre; see
+  `engineering/compact-feasibility.md`.
+- The repository mixes LF and CRLF per file and stores bytes unnormalised (`* -text`). Preserve each
+  file's line endings when editing.
 - A pour-only change can be applied to the archived router session (restore DSN/SES/evidence, then
   `--stage finish` and `--stage drc`) without re-routing. Unmatched `remove_*_post` selectors are skipped
   silently, so check the printed `matches` counts.

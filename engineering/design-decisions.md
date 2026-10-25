@@ -239,3 +239,22 @@ checks that the report is current for the board; dispositions live in `engineeri
 - **Efficiency:** routed copper adds about 96 mW over the loss model at 4.0 V (estimate 94.1 %). The
   calculation keeps its copper allowances (`model_copper_*`), so REQ-PWR-02 stays AT-RISK for an owner
   decision rather than being silently re-based.
+
+## DD-24 Compact re-floorplan around the spring-pad via keep-out
+The centre spring pad forbids through vias within 2.95 mm of the board centre. The previous compact draft
+had U1 directly above it.
+- **Power column:** L1 now covers the spring pad (its pads need no vias) and U1 is 2 mm below. Every U1
+  pin has a source-defined escape. Non-crossing BOOT1/SW1 lanes go to C5, BOOT2 goes above C7 to C6, and
+  VCC reaches C7 in 0.6 mm.
+- **Laser pads:** this needs J3 at 3.5 mm pitch on the compact variant only. The 2.2 mm pads leave a
+  1.3 mm gap for the 20 AWG leads, and the evaluation board keeps 4.0 mm.
+- **Bottom power stage:** Q1 is under Q2 with an 8-via VBAT field. Q3 moved right so SW1 vias fit between
+  the drains.
+- **MCU block:** moved to the bottom lower left with its harness pads and enable chain.
+- **Router keep-outs:** temporary rule areas, removed at finish, protect the power pours from the
+  autorouter.
+- **Small-part placement:** comes from `place_opt.py`, written as explicit positions.
+
+Result: 31 unconnected instead of 43, 0 DRC errors, and every power path connected (VBAT previously
+crossed one via and VOUT was open). The variant stays a routing draft; `engineering/compact-feasibility.md`
+lists the remaining work.

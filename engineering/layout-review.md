@@ -71,25 +71,34 @@ matched, and KiCad DRC remained 0 errors, 0 warnings, 0 unconnected and 0 parity
 
 ## Compact board (routing draft)
 
-The review runs on the draft and reports what is missing instead of inventing values. At this revision:
+After the 2026-10-25 re-floorplan (DD-24, `engineering/compact-feasibility.md`), the review shows every
+power path connected:
 
-- VOUT has no copper path from U1 to the shunt.
-- The whole VBAT input current (7.4 A) crosses a single via.
-- U1 pin 15 (GND) is isolated from the ground copper.
-- FSW and COMP_RC lie 0.15 mm from switching copper.
-- The ISP/ISN pair separates by up to 2.7 mm.
+- VBAT: 0.50 mΩ through an 8-via field.
+- VOUT: 1.69 mΩ.
+- SW1: 0.30 mΩ.
+- SW2: 1.23 mΩ (package-limited).
+- BAT_SPRING: 0.60 mΩ.
+- LD_P: 0.78 mΩ.
 
-These, with the evaluation-board lessons below, are the requirements for the compact placement rework in
-`engineering/compact-feasibility.md`:
+The previous draft had VOUT open and VBAT crossing one via.
+
+Items still open:
+
+- 31 unconnected low-speed and sense items.
+- U1's PGND reaches the plane with a 15 mV drop at the worst point. AGND shares that copper, so the
+  current setpoint shifts by +1.14 % (+0.22 % at 4.0 V). Source GND vias placed before routing are the
+  next step.
+
+The evaluation-board lessons still apply:
 
 1. Give C7 (VCC) and C14 (boost HF) the U1 corner positions first, then C6 (BOOT2).
-2. Join the Q2 source pins to the inductor pad along their full height. Keep switch-node copper away from FSW,
-   COMP and EN.
-3. Size every power transition for 8 A. Use several vias per layer change, and confirm with the current-flow
-   report rather than by eye.
+2. Join the Q2 source pins to the inductor pad along their full height. Keep switch-node copper away from
+   FSW, COMP and EN.
+3. Size every power transition for 8 A, using several vias per layer change. Confirm with the
+   current-flow report rather than by eye.
 4. Route ISP/ISN as one same-layer pair from the shunt sense pads.
-5. Quote HDI via-in-pad for the RPM0026A centre pads (DD-16). Without it, PGND, VOUT and SW2 each leave the
-   package through a single 0.25 mm pin.
+5. Quote HDI via-in-pad for the RPM0026A centre pads (DD-16).
 
 ## Bench checks added
 

@@ -2,15 +2,15 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-25 (Claude continuation; power-layout review of the routed copper)._
+_Last updated: 2026-10-25 (Claude continuation; power-layout review, compact re-floorplan)._
 
 | Gate | Status | Evidence |
 |---|---|---|
 | A Research | PASS | Research/requirement documents; computed register |
 | B Electrical design | PASS | Both schematics: ERC 0 errors / 0 warnings; exact connectivity comparison |
 | C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
-| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 43 unconnected items |
-| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 3 / 43 / 0 |
+| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 31 unconnected items (was 43) |
+| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 6 / 31 / 0 |
 | F Manufacturing files | Evaluation HELD (REQ-BAT-04); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release |
 | G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
@@ -19,7 +19,7 @@ and mirrored into the requirement register by the validator.
 
 - `scripts/validate.ps1` returns 1 for three known reasons: the efficiency target, compact routing and compact
   DRC.
-- All 131 Python tests pass.
+- All 137 Python tests pass.
 - `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
 
 **Power-layout review (new this session).**
@@ -43,11 +43,26 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 - **Efficiency.** Routed copper adds about 96 mW over the loss model at 4.0 V. The estimate falls from 94.6 %
   to about 94.1 %, and REQ-PWR-02 stays AT-RISK. Copper allowances moved into `parameters.yaml`, and the
   calculation output is now deterministic: the same values with sorted keys.
-- **Compact draft.** The review lists the gaps that the rework must close:
-  - VOUT is not connected from U1 to the shunt;
-  - the whole VBAT input current crosses one via;
-  - U1 pin 15 is isolated from ground;
-  - FSW and COMP_RC sit 0.15 mm from switching copper.
+
+**Compact re-floorplan (new this session, DD-24).** See
+[engineering/compact-feasibility.md](engineering/compact-feasibility.md).
+
+- **Root cause:** the centre spring pad forbids through vias within 2.95 mm of the centre, and U1 sat
+  above it.
+- **Power column:** L1 now covers the spring pad and U1 is 2 mm below, with explicit escapes for every U1
+  pin. VCC reaches C7 in 0.6 mm, using J3 at 3.5 mm pitch on this variant only.
+- **Bottom power stage:** Q1 is under Q2 with an 8-via VBAT field.
+- **MCU block:** moved to the bottom lower left.
+- **New tools:** router keep-outs protect the power pours during autorouting, and `place_opt.py` places
+  the small parts.
+- **Result:**
+  - 31 unconnected (was 43), 0 DRC errors, 6 warnings.
+  - Every power path is connected: VBAT 0.50 mΩ, VOUT 1.69 mΩ, SW1 0.30 mΩ. Before, VOUT was open and VBAT
+    crossed one via.
+- **Still open:**
+  - low-speed and sense opens;
+  - five dangling source vias;
+  - a weak PGND link to the plane (15 mV drop, +1.14 % worst-case setpoint shift in the review).
 
 **Design and deliverables (unchanged unless noted):**
 - TPS552882 constant-current architecture and all hardware protections retained; default setpoint remains 4 A.
@@ -88,14 +103,14 @@ power net at the calculated operating points and measures the SLVSFC5 §10.1 lay
 3. After CAD/owner release, assemble an evaluation prototype and execute
    `documentation/testing/test-plan.md`, starting with a rated dummy load. Record measured data; only bench
    evidence can close Gate G.
-4. Rework the compact placement using `engineering/compact-feasibility.md` and the priorities in
-   `engineering/layout-review.md`.
-   - Start with the structural constraint recorded there: 23 of U1's 26 pads, 13 of them needing a via,
-     lie inside the 2.95 mm through-via keep-out of the centre spring pad.
-   - Preferred fix: move the L1/U1 column 2–2.5 mm off the spring pad, then add explicit U1 escapes
-     before autorouting.
-   - Accept the rework only when the current-flow report shows every power path connected and no
-     single-via power transitions.
+4. Continue the compact re-floorplan using the next steps in `engineering/compact-feasibility.md`:
+   - source PGND/AGND vias before routing;
+   - source routes for the DR1H, PG, CC_FLAG, FB and U2 Kelvin opens;
+   - less MCU-region congestion;
+   - then re-route.
+   Accept it only with 0 unconnected, 0 DRC errors and every power path connected in the current-flow
+   report. Restore the routed draft from `hardware/compact-22mm/routing/`, because `--stage place`
+   overwrites the board.
 5. Verify supplier stock/prices and proposed alternatives; keep UNKNOWN until evidence is available.
 
 **Commands and routing replay:**
@@ -116,6 +131,29 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-25: compact re-floorplan around the spring-pad via keep-out
+- **Placement (DD-24):**
+  - L1 now covers the spring pad and U1 sits 2 mm below, with source escapes for every pin: non-crossing
+    BOOT1/SW1 lanes, BOOT2 over C7, VCC 0.6 mm to C7.
+  - J3 uses 3.5 mm pads on the compact variant only.
+  - Q1 sits under Q2 with an 8-via VBAT field, and Q3 moved right for the SW1 vias.
+  - The MCU moved to the bottom lower left.
+- **Pipeline:**
+  - Source vias are reserved on both sides during automatic placement.
+  - `router_keepouts` add rule areas that keep the autorouter off the power pours; finish deletes them.
+  - `place_opt.py` is a new simulated-annealing small-part placer.
+  - Six tests cover keep-outs, via reservation and the optimiser.
+- **Result:**
+  - Compact KiCad DRC is 0 errors, 6 warnings, 31 unconnected (was 0/3/43). Every power path is connected
+    (VBAT 0.50 mΩ, VOUT 1.69 mΩ).
+  - The PGND link remains weak: the review shows a +1.14 % worst-case setpoint shift.
+  - A finish-stage GND via fix collided with routed copper and was reverted.
+- **Evidence:**
+  - Routing checkpoint archived.
+  - Both schematics ERC 0/0; evaluation DRC 0/0/0/0.
+  - Both layout reviews and both DRAFT exports PASS.
+  - Validation: 137 tests; the same 3 known failures. No order placed.
 
 ### 2026-10-25: power-layout review from the routed copper
 - New `automation/review/`:

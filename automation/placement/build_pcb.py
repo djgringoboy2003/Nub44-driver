@@ -182,6 +182,7 @@ def make_job(variant: str, mode: str) -> dict:
         "remove_vias_post": rename(place.get("remove_vias_post")),
         "remove_tracks_post": rename(place.get("remove_tracks_post")),
         "zones_pre": rename(place.get("zones_pre")), "zones_post": rename(place.get("zones_post")),
+        "router_keepouts": place.get("router_keepouts") or [],
         **project_rules(names), "drc_report": str(paths.REPORTS / f"drc-{variant}.json"),
         "board": str(vdir / f"{PROJECT}.kicad_pcb"), "dsn": str(build / f"{PROJECT}.dsn"),
         "ses": str(build / f"{PROJECT}.ses"), "report": str(build / "placement-report.json"),

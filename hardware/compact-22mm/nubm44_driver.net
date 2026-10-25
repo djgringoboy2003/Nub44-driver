@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
-		(date "2026-10-25T03:42:59")
+		(date "2026-10-25T08:43:44")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -1641,7 +1641,7 @@
 		(comp
 			(ref "J3")
 			(value "LASER LD+/LD-")
-			(footprint "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+			(footprint "nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm")
 			(description "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)")
 			(fields
 				(field
@@ -1651,7 +1651,7 @@
 				(field
 					(name "Block") "sense")
 				(field
-					(name "Footprint") "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+					(name "Footprint") "nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm")
 				(field
 					(name "Datasheet")
 				)
@@ -1692,7 +1692,7 @@
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
+				(value "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
 			)
 			(sheetpath
 				(names "/")
@@ -5422,6 +5422,7 @@
 			(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			(footprints
 				(fp "Connector*:*_1x??_*")
+				(fp "nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm")
 				(fp "nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm")
 			)
 			(fields

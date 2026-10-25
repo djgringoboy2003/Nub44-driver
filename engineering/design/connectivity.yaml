@@ -125,7 +125,7 @@ parts:
      mpn: "PMEG4010CEJ,115", mfr: Nexperia, desc: "40 V 1 A Schottky, reverse/ESD clamp across laser output",
      pins: {1: LD_P, 2: GND}}
   - {ref: J3, block: sense, lib: nubm44:Laser_Connector, value: "LASER LD+/LD-", in_bom: false,
-     footprint: nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm, mpn: "-", mfr: "-",
+     footprint: nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm, footprint_eval: nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm, mpn: "-", mfr: "-",
      desc: "Laser diode wire pads: 1 LD+ anode, 2 LD- cathode (GND)", pins: {1: LD_P, 2: GND}}
   - {ref: TP4, block: sense, variants: [evaluation-board], lib: nubm44:TestPoint, value: CS, in_bom: false,
      footprint: nubm44:Pad_SMD_D0.8mm_B, footprint_eval: TestPoint:TestPoint_Pad_D2.0mm, mpn: "-", mfr: "-",

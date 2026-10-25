@@ -405,6 +405,38 @@ def add_zone(board, job, z):
     board.Add(zone)
 
 
+def reserve_source_vias(job, occupied):
+    """Source vias are added after placement but pass through both sides: reserve each one (via radius
+    plus clearance) on both sides so automatically placed courtyards cannot land on it."""
+    ox, oy = job["origin"]
+    for v in job.get("vias", []):
+        r = v.get("size", 0.6) / 2 + job["rules"]["min_clearance"]
+        box = (ox + v["x"] - r, oy + v["y"] - r, ox + v["x"] + r, oy + v["y"] + r)
+        occupied["F"].append(box)
+        occupied["B"].append(box)
+
+
+def add_router_keepout(board, job, k):
+    """Specctra exports pours as conduction planes that the router may cross with other nets. A router
+    keep-out (tracks and vias barred, pours allowed) protects power copper during routing only: the
+    finish stage deletes every zone, these rule areas included, before rebuilding the source pours."""
+    area = pcbnew.ZONE(board)
+    area.SetIsRuleArea(True)
+    area.SetLayer(layer_id(board, k["layer"]))
+    area.SetDoNotAllowTracks(True)
+    area.SetDoNotAllowVias(True)
+    area.SetDoNotAllowZoneFills(False)
+    area.SetDoNotAllowPads(False)
+    area.SetDoNotAllowFootprints(False)
+    outline = area.Outline()
+    outline.NewOutline()
+    for x, y in k["polygon"]:
+        p = P(job, x, y)
+        outline.Append(p.x, p.y)
+    board.Add(area)
+    return area
+
+
 def replace_source_zones(board, job):
     """Replace prior/imported pours so repeated finish uses current source polygons."""
     for zone in list(board.Zones()):
@@ -626,6 +658,7 @@ def mode_place(job):
 
     manual = [it for it in job["footprints"] if "pos" in it]
     auto = sorted((it for it in job["footprints"] if "pos" not in it), key=area, reverse=True)
+    reserve_source_vias(job, occupied)
     for item in manual + auto:
         fp = fps[item["ref"]]
         if "pos" in item:
@@ -667,6 +700,8 @@ def mode_place(job):
         add_zone(board, job, z)
     if job.get("zones_pre"):
         pcbnew.ZONE_FILLER(board).Fill(board.Zones())
+    for k in job.get("router_keepouts", []):
+        add_router_keepout(board, job, k)
 
     add_texts(board, job)
     pcbnew.SaveBoard(job["board"], board)

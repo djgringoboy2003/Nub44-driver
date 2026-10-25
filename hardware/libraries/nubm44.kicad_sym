@@ -413,7 +413,7 @@
 				)
 			)
 		)
-		(property "ki_fp_filters" "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm"
+		(property "ki_fp_filters" "Connector*:*_1x??_* nubm44:Laser_Pads_2x_PTH_P3.5mm_D1.1mm nubm44:Laser_Pads_2x_PTH_P4.0mm_D1.1mm"
 			(at 0 0 0)
 			(show_name no)
 			(do_not_autoplace no)

@@ -1,5 +1,21 @@
 {
- "dsn_sha256": "a7a659df5e50d965ccb1b59e6388bb64dda8177c23f56ccc807b03a9ea6feee5",
- "ses_sha256": "74feb42665b8330aa14cc4a4826b5ad516120212af0953a08c63973f8fa54a4c",
- "provenance": "Bound observed outputs of the successful 15-pass run (590 s, rc 0) that began before manifest emission was added; DSN was not regenerated during this run."
+ "dsn_sha256": "02e1b50643467b4d9cbb0aec53a5e124c31f0ccc9bf30a707909c99306af0fc5",
+ "ses_sha256": "8b90ddb14d52fca77f57b8bc7ee9aa4e8e69b4f8da2ad5490604b44d1762b313",
+ "command": [
+  "C:\\NUBM44 driver\\tools\\jre25\\jdk-25.0.4.1+1-jre\\bin\\java.exe",
+  "-jar",
+  "C:\\NUBM44 driver\\tools\\freerouting\\freerouting-2.5.0.jar",
+  "-de",
+  "C:\\NUBM44 driver\\build\\compact-22mm\\nubm44_driver.dsn",
+  "-do",
+  "C:\\NUBM44 driver\\build\\compact-22mm\\nubm44_driver.ses",
+  "--router.autorouter.max_passes=30",
+  "-mt",
+  "1",
+  "--router.automatic_neckdown=false",
+  "--router.neck_width_um=150",
+  "--router.fanout.enabled=false",
+  "--router.layers.routable=true,false,true,true",
+  "--gui.enabled=false"
+ ]
 }

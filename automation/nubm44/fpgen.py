@@ -277,7 +277,9 @@ def build_all(out_dir: Path) -> list[str]:
     ring = ring_contact(r_mid=pcb["ring_mid_radius_mm"], width=pcb["ring_width_mm"],
                         n_seg=pcb["ring_segments"], segment_gap=pcb["ring_segment_gap_mm"],
                         via_size=pcb["via_diameter_mm"], via_drill=pcb["via_drill_mm"])
-    fps = [tps552882_rpm0026a(), kelvin_1206(), spring_pad(5.0, "B"), ring, laser_pads(),
+    # 4.0 mm laser pads on the evaluation board; 3.5 mm on the 22 mm board so the pads fit beside U1's VCC
+    # capacitor inside the placement radius (engineering/layout-review.md, compact priorities).
+    fps = [tps552882_rpm0026a(), kelvin_1206(), spring_pad(5.0, "B"), ring, laser_pads(), laser_pads(3.5),
            wire_pad(1.3, 2.6), smd_pad(1.0, "F"), smd_pad(1.0, "B"), smd_pad(1.4, "F"), smd_pad(0.8, "B")]
     names = []
     for fp in fps:
