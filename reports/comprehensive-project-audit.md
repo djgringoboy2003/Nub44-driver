@@ -303,6 +303,23 @@ side effects; dependencies; tests; status; validation outcome.
 - **Correction:** `DAC_RUNSTDBY_bm`; asserted by the register-model test. Hold-up current impact UNKNOWN until T1.9.
 - **Status:** FIXED. **Validation:** `test_hal.c`; mutant killed. Bench: T1.9 (hold-up current).
 
+#### Firmware review notes (checked; no further defect)
+- **Blocking loops.** `hal_avr.c` waits on the ADC result flag, on `WDT.STATUS.SYNCBUSY` and on `RTC.STATUS` at
+  start-up. After `timers_init()` every wait is covered by the 64 ms watchdog, which `fw_poll()` no longer clears
+  without a completed cycle; a stuck ADC therefore ends in a watchdog reset and a latched FAULT_INTERNAL. An RTC
+  synchronisation hang during start-up happens after `gpio_init()`, so the converter stays disabled. The hold-up loop
+  sleeps only while the supply is absent and polls under a 1 s guard watchdog otherwise.
+- **Tick budget.** Seven ADC0 conversions and one ADC1 conversion at 312.5 kHz ADC clock with SAMPLEN 2 take about
+  0.45 ms of the 1 ms tick (estimate; datasheet timing, not measured). An overrun is counted and latches a fault.
+- **Low voltage and power loss.** 5 MHz is within the 1.8 V speed grade; BOD 1.8 V (fuse BODCFG 0x06, now checked at
+  start-up); the references in use (INT11V from 1.8 V, INT15V from 1.9 V) stay specified down to the BOD level;
+  VBAT measurement is ratiometric to VDD, so the 2.9/3.1/3.2 V thresholds remain measurable when VMCU is 0.2-0.35 V
+  below VBAT; the watchdog is off only while the MCU sleeps on the C16 charge.
+- **Default-off and polarity.** PA1 is driven high before it becomes an output (register-model test); R17 holds Q4 on
+  during reset; LASER_EN_N low = enable, INTLK low = closed, CC low = backup limit (assumption, T1.10).
+- **Independence.** Interlock (Q5), over-voltage Zener (Q6), the ISP/ISN ceiling and the hardware UVLO act without
+  firmware; firmware adds the AC0 trip, latching, sensor and regulation checks and the output-while-off cross-check.
+
 ### Validation and evidence
 
 #### AUD-VAL-01 Calculation evidence not bound to inputs (high, defect)
