@@ -317,6 +317,10 @@ This matches the earlier documentation and the industry convention. **Confidence
 
 ### 5.4 Residual ambiguity: owner must confirm
 
+**Outcome (2026-10-25):** the owner accepts either orientation provided the board marks it, so the
+convention above stands (DD-12). Both boards carry B+/B− silkscreen labels. The host facts below remain
+UNKNOWN, and bench test T3.3 checks the host against the labels before first power.
+
 **UNKNOWN for the owner's host:**
 
 - Whether the host is reverse-polarity (cell positive toward the tail). Such hosts exist but were not documented here.
@@ -427,7 +431,7 @@ This matches the earlier documentation and the industry convention. **Confidence
 
 ## 9. Open questions / UNKNOWNs
 
-1. **Owner's host polarity and topology** (§5.4): spring polarity, which path the tail switch breaks, body isolation, and LD case-to-pin connection (NUBM44 case polarity UNKNOWN). These must be measured.
+1. **Owner's host polarity and topology** (§5.4): spring polarity (decided by the board labels, DD-12), which path the tail switch breaks, body isolation, and LD case-to-pin connection (NUBM44 case polarity UNKNOWN). These must be measured.
 2. **Host mechanical drawing.** Pill bore (exactly 22.0 mm?), shoulder depth, retaining-ring thread, ring ID/OD, maximum battery-side component height, spring free/compressed height, and cell type (flat or button) are all UNKNOWN.
 3. **Real R_path.** Springs, tail switch and threads are assumed at 20 to 60 mΩ; measure with a 4-wire method at ≥ 5 A.
 4. **Mooch ratings not retrieved:**

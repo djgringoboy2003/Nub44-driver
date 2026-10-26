@@ -55,8 +55,9 @@ as a wired AND:
 
 ## DD-07 Microcontroller: ATtiny1616-MNR
 - VQFN-20 3 × 3 mm, 1.8–5.5 V, two ADCs, three analog comparators, DAC, 1-wire UPDI.
-- Supplied from VBAT through a BAT54WS Schottky into 10 µF. While the MCU sleeps, this hold-up keeps RAM and the
-  RTC alive through short power interruptions, which is how a clicky tail switch changes mode.
+- Supplied from VBAT through a Schottky (D2, RB521S30 in SOD-523 since DD-17) into 10 µF (C16). While the MCU
+  sleeps, this hold-up keeps RAM and the RTC alive through short power interruptions, which is how a clicky
+  tail switch changes mode.
 - Pin map (verified against Table 5-1 of the datasheet):
 
 | Pin | Port | Function |
@@ -67,12 +68,12 @@ as a wired AND:
 | 2 | PA3 | SW e-switch |
 | 5 | PA4 | NTC_PWR: bias supply for both NTC dividers, on only while measuring |
 | 6 | PA5 | NTC board (ADC0 AIN5) |
-| 7 | PA6 | CS_OUT current monitor (ADC1 AIN2, AC1 AINP1) |
+| 7 | PA6 | CS_OUT current monitor (ADC0 AIN6, as read by the firmware) |
 | 8 | PA7 | VOUT_SENSE (ADC1 AIN3, AC0 AINP0) |
 | 9 | PB5 | VBAT_SENSE (ADC0 AIN8, AC2 AINP2: instant power-loss detection) |
 | 14 | PB0 | PG (TPS552882 power good; internal pull-up) |
 | 13 | PB1 | CC (TPS552882 backup limit active; internal pull-up) |
-| 12 | PB2 | IND indicator output (TCA0 WO2) |
+| 12 | PB2 | IND indicator output (plain GPIO; TCA0 WO2 would allow PWM later) |
 | 10 | PB4 | NTC_LD external thermistor (ADC0 AIN9) |
 
   Unused: PB3, PC0–PC3.
@@ -249,8 +250,8 @@ checks that the report is current for the board; dispositions live in `engineeri
   DC ground offset of +0.28 % on the current setpoint at the worst point. HDI via-in-pad remains the
   production remedy.
 - **Efficiency:** routed copper adds about 96 mW over the loss model at 4.0 V (estimate 94.1 %). The
-  calculation keeps its copper allowances (`model_copper_*`), so REQ-PWR-02 stays AT-RISK for an owner
-  decision rather than being silently re-based.
+  calculation keeps its copper allowances (`model_copper_*`) rather than being silently re-based. The owner
+  later accepted a ≥ 94 % target (DD-26).
 
 ## DD-24 Compact re-floorplan around the spring-pad via keep-out
 The centre spring pad forbids through vias within 2.95 mm of the board centre. The previous compact draft
@@ -262,7 +263,8 @@ had U1 directly above it.
   1.3 mm gap for the 20 AWG leads, and the evaluation board keeps 4.0 mm.
 - **Bottom power stage:** Q1 is under Q2 with an 8-via VBAT field. Q3 moved right so SW1 vias fit between
   the drains.
-- **MCU block:** moved to the bottom lower left with its harness pads and enable chain.
+- **MCU block:** moved to the bottom lower left with its harness pads and enable chain (superseded by DD-25,
+  which moved the MCU below C1-C3 and the enable FETs to the top right).
 - **Router keep-outs:** temporary rule areas, removed at finish, protect the power pours from the
   autorouter.
 - **Small-part placement:** comes from `place_opt.py`, written as explicit positions.
@@ -310,3 +312,14 @@ sets the 5 A backup limit.
 **Owner decision (2026-10-25):** accept the deviation. REQ-PWR-02 becomes ≥ 94 %
 (`parameters.yaml` `current.efficiency_target_pct`), which the calculation checks. The bench measurement
 (test plan T1.7) remains the evidence of record.
+
+## DD-27 Evaluation board first; compact board parked
+The compact board ends at 20 open signal connections. The grid router and simulations show a routing-capacity
+limit near the MCU, not a net-order problem: an MCU pin swap and finer inner-layer rules do not finish it
+(`engineering/compact-feasibility.md`). Completing it needs HDI, a placement re-architecture or fewer parts,
+each with cost or scope consequences that bench data should inform.
+
+**Owner decision (2026-10-25):** prototype the evaluation board first; it carries the same circuit and is
+complete in CAD.
+- The compact board stays a routing draft, and its Gates D/E/F stay open.
+- Revisit it after the evaluation prototype has produced bench data (efficiency, temperatures, waveforms).

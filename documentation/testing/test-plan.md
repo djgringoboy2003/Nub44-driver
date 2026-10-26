@@ -71,7 +71,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T2.8 | Hot insertion | Connect a charged cell through a spring contact (no laser) | VIN/VMCU overshoot below 6 V (MCU abs max) | — |
 | T2.9 | Switch-node and gate waveforms | Ground-spring probe on SW2 (boost mode, 3.0 V) and on SW1, DR1H and DR1L (transition, 4.2 V with a low-Vf dummy load) | Record overshoot and ringing; SW2 peak below the TPS552882 abs max; no shoot-through signature | `engineering/layout-review.md` (DRIVE-*, NECK-SW2) |
 | T2.10 | VCC ripple | Short-ground probe across C7 and at U1 pin 19, 3.0 V and 4.2 V at 4 A | Record ripple; VCC stays above the TPS552882 VCC UVLO | layout review DRIVE-VCC5 |
-| T2.11 | Control-node noise and current jitter | Probe FB, COMP and CS at 3.0 V / 4 A; scope laser-current ripple spectrum; compare the measured current with the CS reading | Record; regulated-current offset within the ± 5 % budget (layout DC estimate + 0.28 %) | layout review GND-OFFSET, SPACE-COMP |
+| T2.11 | Control-node noise and current jitter | Probe FB, COMP and CS at 3.0 V / 4 A; scope laser-current ripple spectrum; compare the measured current with the CS reading | Record; regulated-current offset within the ± 5 % budget (layout DC estimate +0.28 % evaluation, +0.75 % compact) | layout review GND-OFFSET, SPACE-COMP |
 | T2.12 | U1 power-pin temperature | Thermal camera on U1's top edge (SW2 pin 21) and the SW1/VOUT necks at 4 A, 2.9 V, steady state | Record; compare with T2.7 thermocouples | DD-16, layout review NECK-SW2 |
 
 **Stage 3: battery operation (dummy load).**
@@ -87,8 +87,8 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | ID | Test | Method | Pass criterion |
 |---|---|---|---|
 | T4.1 | Diode check | Confirm the NUBM44 case is isolated from both pins (DMM) | Open circuit case–pin |
-| T4.2 | First light at reduced current | Build with R8 for 3.0 A first | Stable output; case temperature logged |
-| T4.3 | Full current | 4.0 A (or the owner-chosen setpoint) with the diode in a copper module | Case < 65 °C at the intended duty cycle; optical power recorded |
+| T4.2 | First light at reduced current | Build with R8 (R_FB_TOP) = 2.49 kΩ for 3.0 A first | Stable output; case temperature logged |
+| T4.3 | Full current | 4.0 A (owner decision, DD-13; R8 = 6.65 kΩ) with the diode in a copper module | Case < 65 °C at the intended duty cycle; optical power recorded |
 
 ## 4. Recording
 

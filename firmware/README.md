@@ -19,7 +19,7 @@ The MCU decides **when** emission is allowed. It never sets **how much** current
 | Mode change | A short power interruption (< 0.5 s, timed by the RTC while C16 holds the MCU up) advances the mode. A long one returns to continuous. The optional switch pad also advances the mode. |
 | Battery < 3.1 V loaded | Indicator blinks 4 Hz during emission. (The current cannot be reduced in firmware: it is set in hardware.) |
 | Battery < 2.9 V loaded for 200 ms | Latched off (FAULT_LOW_BATTERY). Hardware UVLO stops the converter at 2.83 V anyway. |
-| VOUT > 5.6 V (AC0 comparator, interrupt) | Disabled within microseconds, latched (FAULT_OVERVOLTAGE). Zener backstop near 6.5 V acts without firmware. |
+| VOUT > 5.6 V (AC0 comparator, interrupt) | Disabled within microseconds, latched (FAULT_OVERVOLTAGE). The Zener backstop (about 6.4–7.3 V, DD-05) acts without firmware. |
 | Open load / short / regulation error / backup-limit flag | Latched fault after 2 / 5 / 50 / 1 ms (checked only after the 20 ms soft-start window). |
 | Board > 85 °C or laser NTC > 60 °C | Latched fault. |
 
@@ -50,9 +50,9 @@ Last build: avr-gcc 15.2.0, 2.4 kB flash of 16 kB, 33 B RAM, no warnings with `-
 .\firmware\build.ps1 -Flash COM5
 ```
 
-**Disconnect the laser diode before programming or bench work.** Use a dummy load (power resistor or diode
-string, see `documentation/testing/`). Supply the board from a current-limited bench supply at 3.7–4.2 V on the
-battery contacts, not from the programmer.
+**Disconnect the laser diode before programming or bench work.** Use the diode-string dummy load described in
+`documentation/testing/test-plan.md` (a resistor alone does not reproduce the diode knee). Supply the board
+from a current-limited bench supply at 3.7–4.2 V on the battery contacts, not from the programmer.
 
 ## Not yet verified (Gate G)
 

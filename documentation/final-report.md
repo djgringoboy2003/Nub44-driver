@@ -1,8 +1,16 @@
-# Design review report - 2026-10-24
+# Design review report (2026-10-26)
 
-The larger evaluation board is fully routed and passes the current CAD checks. The 22 mm compact board
-remains a routing draft. Both manufacturing file sets are review artifacts. Evaluation Gate F passes its
-automated checks since the 2026-10-25 polarity decision (REQ-BAT-04), and no physical-validation evidence exists.
+## Summary
+
+| Board | Status |
+|---|---|
+| Evaluation board (Variant B, 45 × 40 mm) | Fully routed, passes its CAD checks. First prototype (DD-27) |
+| Compact 22 mm board (Variant A) | Parked routing draft with 20 open signal connections |
+
+- Both manufacturing file sets are DRAFT review artifacts.
+- Gate F for the evaluation board passes its automated checks. That means the files are internally
+  consistent; it is not a manufacturing release.
+- No physical-validation evidence exists (Gate G open), and no manufacturing order has been placed.
 
 ## Verified evidence
 
@@ -13,41 +21,57 @@ automated checks since the 2026-10-25 polarity decision (REQ-BAT-04), and no phy
 | PCB footprints | 65 | 68 |
 | DRC errors / warnings | 0 / 3 | 0 / 0 |
 | Unconnected items / schematic parity findings | 20 / 0 | 0 / 0 |
+| Power paths connected (current-flow review) | all | all |
 | Export internal consistency | PASS (DRAFT) | PASS (DRAFT) |
 | BOM lines / BOM parts / centroid rows | 48 / 53 / 52 | 48 / 53 / 52 |
 
 The generated [validation register](../reports/validation-register.md) controls the gate state. DRC and export
-manifests bind the authoritative placement, connectivity and parameter sources to actual CAD bytes; exported
-files carry their own hashes. The two documented DRC omissions are explained in DD-20.
-All 147 Python tests pass, including actual KiCad geometry tests and failure/stale-evidence regressions
-(figures updated 2026-10-25).
-Firmware builds for ATtiny1616 and passes 26 host checks. Eleven averaged behavioural simulations pass;
-those models do not replace switching-waveform or fault measurements. Twenty of twenty-one engineering
-calculation checks pass; estimated efficiency at 4 V is 94.5883%, below the specified greater-than-95% target.
+manifests bind the placement, connectivity and parameter sources to the actual CAD bytes, and exported files
+carry their own hashes. The two documented DRC omissions are explained in DD-20.
+
+Other checks, all passing:
+- 147 Python tests, including real KiCad geometry tests and failure/stale-evidence regressions.
+- Firmware: the ATtiny1616 build and 26 host checks.
+- 11 behavioural simulations. These models do not replace switching-waveform or fault measurements.
+- 21 engineering calculation checks. Estimated efficiency at 4.0 V is 94.59 %, against the owner's ≥ 94 % target
+  (DD-26).
+
+## Owner decisions (2026-10-25)
+
+- **Battery polarity:** centre spring = B+, ring = B−, marked on both boards' silkscreen (DD-12). T3.3 checks
+  the host.
+- **Laser current:** 4.0 A kept; the diode-life risk is accepted (DD-13).
+- **Efficiency:** ≥ 94 % accepted as a deviation from the brief's > 95 % (DD-26).
+- **Evaluation board first:** the compact board stays a draft until bench data exists (DD-27).
 
 ## Review artifacts
 
-Each `manufacturing/pcbway/<variant>/` package contains eleven layer Gerbers, separate PTH/NPTH drills and
-maps, two BOM formats, centroid data, iBOM, schematic/assembly/fabrication PDFs, three board views, stack-up
-note, review marker, fabrication ZIP and export evidence. All generated PDFs open and images verify.
-Renders currently show board geometry without resolved component bodies, so height/enclosure validation
-remains open. The stack-up is an engineering target awaiting fabricator confirmation.
+Each `manufacturing/pcbway/<variant>/` package contains:
+- eleven layer Gerbers;
+- separate PTH/NPTH drills and drill maps;
+- two BOM formats, centroid data and an iBOM;
+- schematic, assembly and fabrication PDFs, and three board renders;
+- a stack-up note, a review marker, a fabrication ZIP and the export evidence.
 
-The exact router input/session and source hashes are archived under `hardware/<variant>/routing/`.
-Replaying those checkpoints is documented there; a new autoroute requires renewed validation of source-defined
-post-route corrections. The editable native projects and placement sources remain the engineering record.
-`package.ps1` creates an explicitly DRAFT review archive with a source/evidence inventory and recorded gates.
+The renders show KiCad library 3D bodies and a generated TPS552882 placeholder. The PowerPAK MOSFETs have no
+3D model, so height and enclosure validation remains open. The stack-up is an engineering target awaiting
+fabricator confirmation.
 
-## Remaining decisions and validation
+The exact router inputs and sessions, with their source hashes, are archived under
+`hardware/<variant>/routing/`. The editable native projects and placement sources remain the engineering
+record. `package.ps1` creates an explicitly DRAFT review archive with a source/evidence inventory and the
+recorded gates.
 
-- Battery polarity (REQ-BAT-04) is decided and marked on both boards; check the host against the labels (T3.3).
-- Review evaluation gate-drive/bootstrap loops, Kelvin sense isolation, power necks and thermal current paths.
-- Choose a routing-capacity option for the compact board (plated harness pads, MCU pin swap, inner fine
-  lines or HDI); its 20 incomplete connections remain open findings. See
-  [the compact routing assessment](../engineering/compact-feasibility.md).
-- Resolve the documented default-current risk and efficiency miss; verify sourcing data without inventing
-  stock or prices.
-- Follow [assembly instructions](assembly.md) and the [bench plan](testing/test-plan.md), beginning with a rated
-  dummy load. Gate G needs measured electrical, fault and thermal results on assembled hardware.
+## Remaining work
 
-No manufacturing order has been placed. This report does not claim production readiness.
+1. **Order the evaluation prototype (owner, manually).**
+   - Review the package and `engineering/layout-review.md`.
+   - Confirm supplier stock and prices, which are partly UNKNOWN.
+2. **Bench testing.** Follow the [assembly instructions](assembly.md) and the [bench plan](testing/test-plan.md),
+   beginning with a rated dummy load. Gate G needs measured electrical, fault and thermal results on
+   assembled hardware.
+3. **Compact board.** With the bench data, choose HDI, a placement re-architecture or fewer parts
+   ([compact routing assessment](../engineering/compact-feasibility.md)).
+4. **HDI via-in-pad for the TPS552882 centre pads (DD-16).** This needs a fabrication quote and an owner decision.
+
+This report does not claim production readiness.

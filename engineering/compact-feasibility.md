@@ -1,13 +1,14 @@
 # Compact 22 mm routing assessment
 
-Status: routing draft; Gates D/E/F remain open. This reflects the present placement and automated routing,
-not proof that the electrical design is impossible on a 22 mm board.
+**Status: parked routing draft (owner decision 2026-10-25, DD-27).** The evaluation board is prototyped
+first. This board is revisited with bench data. Gates D/E/F stay open for this variant. The results reflect the
+present placement and routing tools. They are not proof that the circuit cannot fit a 22 mm board.
 
-## Current state (2026-10-25, grid-routed revision)
+## Current state
 
-These are the KiCad counts and the layout-review results (`reports/layout-review-compact-22mm.md`).
+KiCad counts and layout-review results (`reports/layout-review-compact-22mm.md`) for each revision:
 
-| Measure | First draft | Re-floorplan (DD-24) | Grid-routed (DD-25) |
+| Measure | First draft | Re-floorplan (DD-24) | Grid-routed, current (DD-25) |
 |---|---|---|---|
 | KiCad DRC errors / warnings | 0 / 3 | 0 / 6 | 0 / 3 (dangling vias of open nets) |
 | Unconnected items | 43 | 31 | 20 |
@@ -18,108 +19,102 @@ These are the KiCad counts and the layout-review results (`reports/layout-review
 | Copper loss above the model, 4.0 V | — | +56 mW | +44 mW |
 | Ground-offset setpoint shift, worst point | — | +1.14 % | +0.75 % |
 
-What remains open (20 items):
+The 20 open items:
 
-- MCU nets: VMCU (4), NTC_PWR (2), VBAT_SENSE (2), SW_IN, PG, IND_OUT, LASER_EN_N and CS_OUT.
-- VBAT to its small loads (R10, R18, TP1 and the U1 VIN feed): 4.
-- U2's Kelvin inputs ISP_K and ISN_K: 2. One GND pad (R1.2).
+- **MCU nets:** VMCU (4), NTC_PWR (2), VBAT_SENSE (2), SW_IN, PG, IND_OUT, LASER_EN_N and CS_OUT.
+- **VBAT to its small loads:** R10, R18, TP1 and the U1 VIN feed (4).
+- **U2's Kelvin inputs:** ISP_K and ISN_K (2).
+- **One GND pad:** R1.2.
 
 The validation register therefore keeps `VAL-ROUTE`/`VAL-DRC` for this variant at FAIL.
 
-## Why the rest does not route: via sites around the MCU
+## Why the rest does not route
 
-A through via needs free copper on F.Cu, In2.Cu and B.Cu at once. The power pours, C1-C3, L1, U1's escape
-vias and the harness pads leave about 15 mm² of the board where a signal via can go at all
-(`grid_route.py` legality map). The MCU sits below C1-C3, so none of those sites is next to its pins.
-Every MCU signal must first run on B.Cu to a via site, and the
-remaining nets compete for the same few corridors. In2 is the only layer that crosses the board centre,
-and DR1H (Q2 gate to U1) plus the column of U1 escape vias divides it.
+A through via needs free copper on F.Cu, In2.Cu and B.Cu at once. The grid router's legality map shows
+about 15 mm² of the board where a signal via can go at all. The rest is taken by:
+- the power pours, C1-C3 and L1;
+- U1's escape vias;
+- the harness pads.
 
-With the negotiated router (DD-25), about 19 nets keep clashing at 0.15 mm track and space no matter how
-long they negotiate. This is a capacity limit, not a routing-order effect. Options, each needing an owner
-decision or a documented design decision:
+The MCU sits below C1-C3, so none of those sites is next to its pins. Every MCU signal must first run on B.Cu
+to a via site, and the nets compete for the same few corridors. In2 is the only layer that crosses the board
+centre, and two things divide it:
+- DR1H (Q2 gate to U1);
+- the column of U1 escape vias.
 
-1. **Plated wire pads for the harness (TP9-TP13).** They are SMD pads today. Plated holes, as on the evaluation
-   board, would make each pad a layer change for its own net next to the MCU, and give the wires
-   better strain relief.
-2. **MCU pin swap.** The firmware polls every digital MCU pin; only the ADC and comparator inputs and UPDI are
-   fixed. Placing PG/CC, SW/INTLK and LASER_EN on the package side that faces their destinations removes
-   most crossings. The pin map is shared with the evaluation board, so this needs either a re-route there
-   or a variant-specific map and firmware build.
-3. **Inner-layer fine lines.** PCBWay's normal process allows 4/5 mil on 1 oz inner copper against 5/6 mil
-   outside (MFG-01). Rules of 0.10/0.13 mm on In2 would add about 30 % routing capacity where it is needed.
-4. **HDI blind vias (DD-16 option).** These remove the both-sides-free condition, at fabrication cost.
+With the negotiated router (DD-25), about 19 nets keep clashing at 0.15 mm track and space, however long
+they negotiate. Two pins (U3 pins 2 and 4) are also unreachable, because the automatic ground vias of U3
+pin 3 and C3 sit in front of them.
 
-**Simulation of options 2 and 3 (2026-10-25).** These runs used the grid router on a copy of the placed
-copper, with no project file changed. U3's and C3's ground fanout vias were also removed, because they sit
-in front of U3 pins 2 and 4.
+## Options evaluated
 
-| Variant | Unreachable pins | Nets still clashing after 10 passes | Nets the router had to leave |
-|---|---|---|---|
-| Today | 2 | 19 | 10-11 |
-| Ground vias moved + pin swap | 0 | 19 | 9 |
-| Ground vias moved + pin swap + In2 0.10/0.13 mm | 0 | 19 | 9 |
-| Ground vias moved + In2 0.10/0.13 mm | 0 | 19 | 10 |
+These simulations ran the grid router on a copy of the placed copper (2026-10-25); no project file changed.
 
-Moving the ground vias removes the hard blocks. Neither the pin swap nor finer inner lines relieves the
-congestion. The board is short of routing capacity, not of a better net order. Completing it needs one of:
-- HDI (blind vias and via-in-pad, as DD-16 already proposes for U1);
-- a placement re-architecture that frees via sites by the MCU, for example the MCU and harness pads on
-  the top side, or fewer bottom test pads;
-- fewer parts on the 22 mm variant.
+| Option | Result |
+|---|---|
+| Move U3's and C3's ground fanout vias | Removes the two unreachable pins; needed in any case |
+| MCU pin swap (the firmware polls every digital pin; only the ADC/comparator inputs and UPDI are fixed) | Still 19 nets clashing after 10 passes; would also change the evaluation board and firmware |
+| In2 fine lines, 0.10 / 0.13 mm (PCBWay normal process for 1 oz inner copper, MFG-01) | Still 19 nets clashing |
+| Pin swap and fine lines together | Still 19 nets clashing |
 
-## Structural constraint: spring-pad via keep-out
+The board is short of routing capacity, not of a better net order. Directions that can finish it:
 
-The centre spring pad J1 (B.Cu, radius 2.50 mm) excludes through vias within 2.95 mm of the board centre:
-pad radius, plus 0.15 mm clearance, plus the 0.30 mm via radius. In the previous draft, U1 sat directly
-above it, with 23 of its 26 pads inside that radius and 13 of them needing a layer change. The
-autorouter's FSW trace then sealed U1's left pin column. Moving U1 away left only 7, 6, 4 or 2 such pads
-for shifts of 1.0, 1.5, 2.0 or 2.5 mm.
+- **HDI blind vias and via-in-pad** (as DD-16 already proposes for U1). This removes the both-sides-free
+  condition, at fabrication cost (UNKNOWN until quoted).
+- **A placement re-architecture that creates via sites by the MCU.** Not yet simulated. Possible moves:
+  - the MCU and harness pads on the top side;
+  - plated wire pads for the harness, so each pad is a layer change for its own net;
+  - fewer bottom test pads.
+- **Fewer parts on the 22 mm variant.**
 
-## Re-floorplan (DD-24)
+## Current layout
 
-**Power column.** L1 now sits over the spring pad: its pads are top-layer power copper and need no vias.
-U1 is 2 mm below it. Only pins 1 (DR1L) and 23 (SW1) remain inside the keep-out, and both escape on F.Cu.
+**Structural constraint.** The centre spring pad J1 (B.Cu, radius 2.50 mm) excludes through vias within
+2.95 mm of the board centre: pad radius, plus 0.15 mm clearance, plus the 0.30 mm via radius. In the
+first draft, U1 sat directly above it, and 23 of its 26 pads lay inside that radius.
 
-**U1 escapes.** Every U1 pin has a source-defined escape (`fanout_skip: [U1]`):
-- BOOT1 and SW1 leave the top edge in parallel lanes to C5 and never cross; SW1 climbs left of C5 to the
-  SW1 pour.
-- BOOT2 runs above C7 to C6, whose SW2 pad joins the SW2 pour.
-- VCC reaches C7 in 0.6 mm on F.Cu. This needed J3's laser pads at 3.5 mm pitch on this variant (the
-  evaluation board keeps 4.0 mm).
-- The left column fans out to staggered vias.
-- COMP, ILIM, FB and the MODE ground drop through vias right of U1 to bottom-side Cp, Rc/Cc, ILIM and FB
-  resistors.
+**Power column (DD-24).**
+- L1 sits over the spring pad: its pads are top-layer power copper and need no vias.
+- U1 is 2 mm below L1. Every U1 pin has a source-defined escape (`fanout_skip: [U1]`):
+  - BOOT1 and SW1 leave the top edge in parallel lanes to C5;
+  - BOOT2 runs above C7 to C6;
+  - VCC reaches C7 in 0.6 mm;
+  - the left column fans out to staggered vias;
+  - COMP, ILIM, FB and the MODE ground drop through vias to the bottom-side passives.
+- J3's laser pads use a 3.5 mm pitch on this variant only; the evaluation board keeps 4.0 mm.
+- U1's PGND has a plane via under C14. C12 sits away from U1's ground pins.
 
-**Bottom power stage.**
-- Q1 sits directly under Q2, so VBAT changes layer through an 8-via field beside both.
+**Bottom power stage (DD-24).**
+- Q1 sits directly under Q2, and VBAT changes layer through an 8-via field beside both.
 - BAT_SPRING runs from Q1's drain straight to the spring pad.
-- Q3 moved right, so SW1 vias fit between the two bottom MOSFET drains.
+- SW1 vias sit between the Q1 and Q3 drains.
 
-**MCU and small parts.** The MCU moved to the bottom lower left, beside its harness pads, the enable
-chain and the PG/CC vias. U2 and D1 form a column on the bottom right. `automation/placement/place_opt.py`
-placed the remaining small parts (simulated annealing on net length, affinity to the pins they serve,
-side flips allowed for listed parts). Its hard rules match the build: courtyards, radius, source vias and
-tracks, power pours and keep-outs.
+**MCU and small parts (DD-25).**
+- The MCU (U3) sits below C1-C3 at (-6.35, 1.2), rotated 0°. Its blocked top edge holds the unused PC1-PC3,
+  UPDI and LASER_EN, and its analog pins face the via sites below.
+- A 0.8 mm ring around it is kept free of parts on both sides.
+- The enable FETs and the over-voltage block (Q4, Q5, Q6, D3, R20) sit at the top right.
+- `place_opt.py` placed the small parts. Its hard rules match the build, and it charges for nets that change
+  side.
 
-**Router keep-outs.** These temporary rule areas over the power pours, on F.Cu and B.Cu plus the In2
-battery path, stop the router from cutting power copper. The Specctra export treats pours as conduction
-planes that other nets may cross, and earlier runs did exactly that. Finish deletes the keep-outs.
+**Layers and routing (DD-25).**
+- In2 carries signals only, with GND fill elsewhere. There is no In2 VBAT pour; the battery current runs
+  B pour → via field → F pour.
+- Router keep-outs over the F.Cu and B.Cu power pours stop FreeRouting from cutting power copper. They are
+  cut back around other nets' vias, and finish deletes them.
+- `grid_route.py` writes the conflict-free routes (`grid_routes` in `placement.yaml`); FreeRouting tries the
+  rest.
 
-## Next steps
+## Next steps (after the evaluation bench data)
 
-**Owner decision (2026-10-25): evaluation board first.** The compact board stays a routing draft. It is
-revisited after the evaluation prototype has produced bench data.
-
-1. Then decide the direction: HDI, a placement re-architecture or fewer parts. The simulations show that
-   the pin swap and inner fine lines alone do not finish the board. Moving U3's and C3's ground vias is
-   needed in any case.
-2. Re-run `grid_route.py --rebuild --partial --write`, then place, route, finish, DRC and the layout review.
+1. Choose the direction: HDI, a placement re-architecture or fewer parts. Move U3's and C3's ground vias in
+   any case.
+2. Re-run `grid_route.py --variant compact-22mm --rebuild --partial --write`, then `place`, `route`,
+   `finish`, `drc` and the layout review.
 3. Accept the variant only when DRC shows 0 unconnected and 0 errors, every power path is connected in the
    current-flow report, and no review screen has worsened without a recorded disposition.
 
 Any relaxation of the 22 mm envelope, via technology or layer strategy needs a documented design decision
-and renewed fabrication review. Assembly yield, power-path temperature rise and host heat transfer are
-UNKNOWN until fabrication review and prototype measurements. Gate G remains open and no manufacturing
-order has been placed. Battery polarity is marked on the silkscreen ("B+" beside the spring pad, "B-" beside
-the ring; REQ-BAT-04).
+and a renewed fabrication review. Assembly yield, power-path temperature rise and host heat transfer are
+UNKNOWN until fabrication review and prototype measurements. Battery polarity is marked on the silkscreen:
+"B+" beside the spring pad and "B-" beside the ring (REQ-BAT-04).

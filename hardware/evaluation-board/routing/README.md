@@ -11,10 +11,15 @@ These are generated handoff artifacts copied byte-for-byte from the observed rou
 
 The evaluation-board candidate made from this session plus its source-defined corrections passed KiCad with 0 errors, 0 warnings, 0 unconnected items and 0 schematic-parity findings at capture. An exported router session by itself is not a passing validation result.
 
-Post-capture revision (2026-10-25): the power-layout review changed three source pours in `placement.yaml`
-(SW1 junction, In2 VOUT finger, LD_P). They were re-applied to this unchanged DSN/SES by the finish stage. All
-post-route selectors matched, and DRC remained 0/0/0/0. `checkpoint-source.json` lists both the capture-time
-hashes and the revised `source_revisions` hashes. Compare against the latest revision before restoring.
+Later source changes were re-applied to this unchanged DSN/SES by the finish stage. All post-route selectors
+matched, and DRC remained 0/0/0/0 after each change:
+- the power-layout review's three source pours (SW1 junction, In2 VOUT finger, LD_P);
+- the polarity-label strokes;
+- the schematic field placement and pipeline changes;
+- the efficiency-target parameter.
+
+`checkpoint-source.json` keeps the capture-time hashes and lists each change under `source_revisions`,
+newest last, with its source hashes. Compare against the newest revision before restoring.
 
 ## Restore the existing session
 

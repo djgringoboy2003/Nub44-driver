@@ -7,7 +7,8 @@ Authoritative list of requirements for the NUBM44 driver. Every design artefact 
 - **Verify** is how the requirement is checked: `CALC` (engineering calculation), `SIM` (simulation),
   `CAD` (ERC/DRC or a scripted CAD check), `INSPECT` (design review), `TEST` (physical test on hardware).
 - **Status** values: `OPEN` (not yet addressed), `DESIGNED` (implemented in the design, not yet verified),
-  `VERIFIED-CALC`, `VERIFIED-SIM`, `VERIFIED-CAD`, `NEEDS-TEST` (only hardware testing can close it),
+  `VERIFIED-CALC`, `VERIFIED-SIM`, `VERIFIED-CAD`, `VERIFIED-TEST` (measured on an assembled prototype),
+  `NEEDS-TEST` (only hardware testing can close it),
   `AT-RISK` (evidence suggests it may not be met), `INFEASIBLE` (evidence shows it cannot be met as written),
   `BLOCKED` (needs an owner decision).
 
@@ -75,11 +76,11 @@ Statuses are updated as work proceeds; see the change history in git.
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
-| REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | DESIGNED | Circle of radius 11 mm in placement.yaml; full DRC remains open. |
+| REQ-MECH-01 | Circular PCB, 22.0 mm outside diameter (Variant A). | BRIEF | CAD | DESIGNED | Circle of radius 11 mm in placement.yaml. Variant A is a parked routing draft (20 open connections, DD-27). |
 | REQ-MECH-02 | Centre spring contact and perimeter battery contact. | BRIEF | CAD | DESIGNED | Contacts placed; ring radius corrected in source for edge margin (DD-21). Polarity defined and marked on the board (REQ-BAT-04). |
-| REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | DESIGNED | J3 PTH laser pads placed; routing incomplete. |
+| REQ-MECH-03 | External laser diode connection pads. | BRIEF | CAD | VERIFIED-CAD | J3 PTH laser pads (4.0 mm pitch on the evaluation board, 3.5 mm on the compact board) are connected on both boards; no J3 item is open in either DRC. |
 | REQ-MECH-04 | Evaluate 2-layer and 4-layer stack-ups. | BRIEF | CALC | VERIFIED-CALC | 4-layer chosen; 2-layer rejected for density and current paths (DD-14). |
-| REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | VERIFIED-CAD | Variant B four-layer 45 x 40 mm board has 68 parts, 13 labelled test points and repeated DRC 0/0/0/0; power-layout and bench review remain open. |
+| REQ-MECH-05 | Larger evaluation board (Variant B) with the same electrical architecture if 22 mm cannot carry full test access. | BRIEF | INSPECT | VERIFIED-CAD | Variant B four-layer 45 x 40 mm board has 68 parts, 13 labelled test points and repeated DRC 0/0/0/0; its power-layout review is done (DD-23). It is the first prototype (DD-27); bench validation remains open. |
 | REQ-PCB-01 | Layout priorities: small switching loops, input caps near switches, Kelvin sensing, quiet feedback, thermal copper, grounding strategy. | BRIEF | INSPECT, CAD | DESIGNED | Evaluation board: power-layout review with copper current-flow analysis (`engineering/layout-review.md`); SW1/VOUT/LD_P pours corrected; package-limited SW2/PGND/AGND items (DD-16) and buck-leg drive loops documented with bench checks T2.9–T2.12. Compact draft: every power path connected and reviewed; 20 signal connections open on a via-capacity limit (`engineering/compact-feasibility.md`). |
 | REQ-TEST-01 | Test points where practical. | BRIEF | CAD | VERIFIED-CAD | 10 compact test/connection pads and 13 evaluation test points placed; evaluation probe labels are source-defined. |
 
@@ -88,14 +89,14 @@ Statuses are updated as work proceeds; see the change history in git.
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
 | REQ-CAD-01 | Native, editable KiCad schematic and PCB. | BRIEF | CAD | VERIFIED-CAD | Both native KiCad 10 projects open in the toolchain. Evaluation routing/DRC clean; compact routing remains open. |
-| REQ-CAD-02 | EasyEDA compatibility where practical. | BRIEF | INSPECT | OPEN | |
-| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | VERIFIED-CAD | Entry scripts run ERC/DRC and reject missing, malformed or stale evidence; strict gate-dependency and tool-failure regressions added. Two documented non-electrical DRC omissions are recorded in DD-20; current DRC findings remain open. |
+| REQ-CAD-02 | EasyEDA compatibility where practical. | BRIEF | INSPECT | OPEN | Not evaluated. The native KiCad files are the design record. |
+| REQ-CAD-03 | ERC and DRC run automatically; no violations silenced without a documented cause. | BRIEF | CAD | VERIFIED-CAD | Entry scripts run ERC/DRC and reject missing, malformed or stale evidence; strict gate-dependency and tool-failure regressions added. Two documented non-electrical DRC omissions are recorded in DD-20. Evaluation DRC is clean; the compact board's 3 dangling-via warnings and 20 unconnected items remain open. |
 | REQ-CAD-04 | Netlist cross-checked against a machine-readable connectivity specification. | BRIEF | CAD | VERIFIED-CAD | Netlist equals connectivity.yaml pin-for-pin (reports/schematic-*.json); checker sensitivity tested. |
 | REQ-MFG-01 | PCBWay fabrication and assembly package generated from the real CAD files by one command. | BRIEF | CAD | VERIFIED-CAD | Both review packages pass internal checks with source/artifact hashes; 31 artifacts per variant. Gate F passes its automated checks for the evaluation board and stays open for the compact board; neither is a manufacturing release. |
 | REQ-MFG-02 | BOM and placement data validated against the placed footprints. | BRIEF | CAD | VERIFIED-CAD | Exporter independently re-reads BOM/CPL and checks refs, counts, signed positions, rotation and side against actual board/native KiCad data. Both actual exports pass: 48 BOM lines / 53 parts and 52 centroid rows per variant. |
 | REQ-MFG-03 | No manufacturing order is placed automatically. | BRIEF | INSPECT | DESIGNED | Scripts only generate local files; no ordering integration or order action. |
 | REQ-SRC-01 | Component database with sourcing data; unverified data recorded as UNKNOWN. | BRIEF | INSPECT | DESIGNED | Existing sourcing/components.csv and generator; supplier availability and price unverified. |
-| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | DESIGNED | Assembly/stack-up notes, bench plan and CAD exports are present. Renders show board geometry without resolved component bodies; enclosure/height validation remains open. |
+| REQ-DOC-01 | CAD-derived documentation: schematic PDF, PCB views, 3D render, drawings, BOM, assembly and test instructions. | BRIEF | INSPECT | DESIGNED | Assembly/stack-up notes, bench plan, design review report and CAD exports are present. Renders show KiCad library 3D bodies and a generated placeholder for the TPS552882; the PowerPAK MOSFETs have no 3D model, so enclosure/height validation remains open. |
 
 ## 8. Release gates
 

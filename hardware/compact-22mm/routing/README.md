@@ -11,6 +11,10 @@ These are generated handoff artifacts copied byte-for-byte from the observed rou
 
 The archived compact-board session remains incomplete: at capture, KiCad reported 0 errors, 3 warnings, 20 unconnected items and 0 schematic-parity findings (2026-10-25 grid-routed revision; earlier sessions 31 and 43 unconnected). The DSN already contains the `grid_routes` copper from `placement.yaml` as fixed wiring. An exported router session by itself is not a passing validation result.
 
+Later source changes that leave the DSN/SES unchanged are listed in `checkpoint-source.json` under
+`source_revisions` (newest last, each with its source hashes and DRC result). Compare against the newest
+revision before restoring.
+
 ## Restore the existing session
 
 Use the board, placement source, connectivity, parameters and helper scripts from the same Git commit as this

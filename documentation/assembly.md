@@ -1,17 +1,21 @@
 # Assembly and bring-up instructions
 
-This is an engineering review design. Use reports/validation-register.md for the actual release state.
-Gate F remains open until PCB routing, electrical checks and complete exports all pass. Gate G requires measured prototype results. No manufacturing order is automated.
+This is an engineering review design. Use reports/validation-register.md for the actual release state:
+- Gate F passes its automated checks for the evaluation board and stays open for the compact board.
+- Gate G requires measured prototype results.
+
+No manufacturing order is automated; the owner places any order manually.
 
 ## Select and review the variant
 
-- Variant A is the 22 mm round, double-sided compact board. Its small passives and centre-pad bridges
-  need assembly review (DD-16/DD-17); the spring and host contact are owner-specific.
-- Variant B is the larger four-layer evaluation board with separate battery wire pads and the full set
-  of test points. Use it for accessible measurements after the CAD release checks pass.
-- The circuit setpoint is the source value in engineering/design/parameters.yaml. The default 4 A
-  remains an owner risk decision (REQ-OUT-01/DD-13). Alternate setpoints require the documented divider
-  change and regenerated calculation/schematic evidence.
+- **Variant B** is the larger four-layer evaluation board, with separate battery wire pads and the full
+  set of test points. Its CAD checks pass, and it is the first prototype (DD-27).
+- **Variant A** is the 22 mm round, double-sided compact board, a parked routing draft (DD-27). Its small
+  passives and centre-pad bridges need assembly review (DD-16/DD-17), and the spring and host contact are
+  owner-specific.
+- **Setpoint:** the circuit setpoint is the source value in engineering/design/parameters.yaml. The owner
+  kept 4.0 A and accepts the diode-life risk (REQ-OUT-01/DD-13). An alternate setpoint needs the documented
+  divider change and regenerated calculation and schematic evidence.
 
 ## Before fabrication or assembly
 
@@ -19,9 +23,11 @@ Gate F remains open until PCB routing, electrical checks and complete exports al
    either orientation provided the board states it, and both boards do: "B+" beside the spring pad and
    "B-" beside the ring on the compact board, "B+ INPUT"/"B- INPUT" on the evaluation board. Check the host
    against these labels before first power (T3.3).
-2. Resolve routing, DRC and schematic-parity findings in the validation register. Inspect the gate-drive,
-   bootstrap, switching-current loops, Kelvin sense paths and thermal connections against the cited
-   converter and amplifier datasheets. Automated route completion alone does not close REQ-PCB-01.
+2. Confirm that the validation register shows no open routing, DRC or schematic-parity findings for the
+   chosen variant (true for the evaluation board). Review the gate-drive, bootstrap and switching-current
+   loops, the Kelvin sense paths and the thermal connections against the cited converter and amplifier
+   datasheets; `engineering/layout-review.md` records the evaluation-board dispositions. Automated route
+   completion alone does not close REQ-PCB-01.
 3. Regenerate the package with scripts/export-pcbway.ps1 for the chosen variant. Review the actual BOM,
    signed centroid positions, rotations, assembly PDFs, drill maps, stack-up and iBOM. Stock, prices and
    unverified substitutions remain UNKNOWN; confirm them with the assembler before any order.

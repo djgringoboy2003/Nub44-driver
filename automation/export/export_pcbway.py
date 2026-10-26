@@ -229,8 +229,8 @@ def generate_outputs(out: Path, pcb: Path, sch: Path, variant: str, check: dict)
     (out / "REVIEW_ONLY.md").write_text(
         "# DRAFT - review only\n\nThis package has not been released for manufacturing.\n"
         "`reports/export-check.json` checks exported file completeness and consistency; it does not close a release gate.\n"
-        "Review the project's current `reports/validation-register.md`, including CAD findings and Gate G\n"
-        "assembled-prototype bench tests, before any release decision.\n"
+        "Review the project's current `reports/validation-register.md` and its CAD findings before ordering a\n"
+        "prototype. A production release additionally needs the Gate G bench results from an assembled prototype.\n"
         "This tool does not place manufacturing orders.\n", encoding="utf-8")
     shutil.copyfile(ROOT / "documentation/stack-up.md", out / "drawings/stack-up.md")
     cli("pcb", "export", "gerbers", "--no-x2", "--no-netlist", "--subtract-soldermask", "--check-zones",

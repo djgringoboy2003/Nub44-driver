@@ -1,7 +1,8 @@
 # Power-layout review
 
 Status: evaluation board reviewed and corrected where the routed session allowed; compact board reviewed as a
-routing draft. Physical behaviour (switching waveforms, temperatures, loop inductance) remains a Gate G item.
+parked routing draft (DD-27). Physical behaviour (switching waveforms, temperatures, loop inductance) remains a
+Gate G item.
 
 The numbers come from `automation/review/power_layout.py`, which reads the routed KiCad copper and writes
 `reports/layout-review-<variant>.md/.json` plus figures in `reports/layout-review/<variant>/`. The validator
@@ -60,7 +61,7 @@ matched, and KiCad DRC remained 0 errors, 0 warnings, 0 unconnected and 0 parity
 | NECK-SW1: 1.30 mm after correction | **Accepted for evaluation.** The remaining crowding sits beside Q2 pad 3 and the DR1H via. Widening further means moving that via, which needs a new router session. |
 | NECK-VOUT: 1.16 mm; VIA-VOUT: the column via carries 1.68 A | **Accepted.** Corner crowding beside C14 remains. Barrel loss is about 3 mW (1.2 mΩ between F.Cu and In2). The 1 A screen is a conservative rule of thumb. C14 must stay where it is because it closes the boost hot loop. |
 | NECK-VBAT 1.57 mm, NECK-BAT_SPRING 2.61 mm | **Accepted.** This is crowding at the Q1 source pins and the J1 wire pad, set by the part terminals. Q1 and J1 temperatures are covered in T2.7. |
-| COPPER-LOSS: +96 mW | **Owner input (REQ-PWR-02).** Routed copper, including switch-node copper that the model omits, lowers the 4.0 V estimate from 94.59 % to about 94.1 %. The calculation keeps the model allowances (`model_copper_*` in `parameters.yaml`); the target was already missed, and nothing is silently changed. |
+| COPPER-LOSS: +96 mW | **Accepted (DD-26).** Routed copper, including switch-node copper that the model omits, lowers the 4.0 V estimate from 94.59 % to about 94.1 %. That meets the owner's ≥ 94 % deviation target with about 0.1 % margin. The calculation keeps the model allowances (`model_copper_*` in `parameters.yaml`); bench test T1.7 measures the real value. |
 | GND-OFFSET: +11 mA (+0.28 %) at the worst point | **Accepted for evaluation; bench check T2.11.** AGND pin 10 shares copper with PGND pin 9, so it sits about 3.3 mV above the quiet references at 3.4 A of PGND current. SLVSFC5 asks for AGND to join PGND at the VCC capacitor. On this package, PGND, AGND and VOUT are adjacent pins (9/10/11). The HF output capacitor C14 must straddle pin 10 to close the boost loop, and DD-16 leaves pin 9 as PGND's only exit. The DC shift sits inside the 5 % budget (worst-case stack 3.58 % + 0.28 %). The AC effect is UNKNOWN. A production option is a separate AGND net with a net tie at C7, combined with HDI vias. |
 | DRIVE-DR1H, DRIVE-DR1L, DRIVE-BOOT1 | **Accepted for evaluation; bench check T2.9.** These belong to the external buck leg, which switches only in the transition region (low-Vf hot diode at 4.0–4.2 V). In boost mode Q2 stays on. TI's layout example (SLVSFC5 Fig. 10-1) also takes the gate traces to the bottom layer. The BOOT1/DR1H loop (about 15 + 11 mm, loop-area estimates 18 and 12 mm²) is the largest drive loop on the board. |
 | DRIVE-VCC5: C7 reached through In2 and two vias, 7.8 mm | **Accepted for evaluation; bench check T2.10.** VCC (pin 19) and BOOT2 (pin 20) share U1's top-right corner. L1's courtyard is 0.12 mm from U1's, so neither capacitor fits above the IC. A C7 to the right of pin 19 blocks the COMP/ILIM/FB escapes, and moving it costs BOOT2 loop area. The loop-area estimate against ground is 1.5 mm² because In2 lies over B.Cu ground. On the compact board C7 must have priority. |

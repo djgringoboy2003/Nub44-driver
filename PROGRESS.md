@@ -2,158 +2,90 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-25 (Claude continuation; owner decisions recorded: polarity, 4.0 A, efficiency deviation, evaluation board first)._
+_Last updated: 2026-10-26 (documentation audit; the design is unchanged since 2026-10-25)._
 
 | Gate | Status | Evidence |
 |---|---|---|
 | A Research | PASS | Research/requirement documents; computed register |
 | B Electrical design | PASS | Both schematics: ERC 0 errors / 0 warnings; exact connectivity comparison |
 | C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
-| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 20 unconnected items (was 31, 43) |
+| D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 20 unconnected items |
 | E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 3 / 20 / 0 |
 | F Manufacturing files | Evaluation PASS (automated checks); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release or order |
 | G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
 
-The authoritative gate statuses are generated in [reports/validation-register.md](reports/validation-register.md)
-and mirrored into the requirement register by the validator.
-
-- `scripts/validate.ps1` returns 1 for two known reasons: compact routing and compact DRC. The compact board
-  is a parked routing draft by owner decision.
+`scripts/validate.ps1` computes the gates into [reports/validation-register.md](reports/validation-register.md),
+which the validator also mirrors into the requirement register.
+- It exits 1 for two known reasons, compact routing and compact DRC, because the compact board is parked.
+- No requirement is blocked or at risk.
 - All 147 Python tests pass.
-- `VAL-LAYOUT-<variant>` checks that each power-layout review was generated from the current board.
+- The firmware passes its 26 host checks and its target build.
+- All 21 calculation checks and all 11 simulations pass (model-level).
 
 **Owner decisions (2026-10-25).**
-- **Evaluation board first.** The compact 22 mm board stays a routing draft until the evaluation prototype has
+- **Battery polarity:** either orientation is acceptable provided the board marks it. The definition stays
+  centre spring = B+, ring = B− (DD-12). Both boards carry it on the silkscreen within PCBWay's legend limits:
+  - compact: "B+" by the spring pad, "B-" by the ring;
+  - evaluation: "B+ INPUT"/"B- INPUT".
+
+  T3.3 checks the host before first power.
+- **Setpoint:** 4.0 A is kept, and the owner accepts the diode-life risk (DD-13).
+- **Efficiency:** the deviation is accepted; REQ-PWR-02 is ≥ 94 % at 4.0 V and 4 A (DD-26). Estimates: 94.6 %
+  from the loss model, 94.1 % with the evaluation copper, 94.4 % with the compact copper. T1.7 measures it.
+- **Evaluation board first:** the compact board stays a routing draft until the evaluation prototype has
   produced bench data.
-- **Efficiency.** The deviation is accepted: REQ-PWR-02 is ≥ 94 % at 4.0 V and 4 A (DD-26). The calculation passes
-  at 94.6 %; routed copper gives 94.1 % (evaluation) and 94.4 % (compact). T1.7 measures it.
-- **Setpoint.** It stays at 4.0 A, and the owner accepts the diode-life risk (DD-13); REQ-OUT-01 is VERIFIED-SIM.
 
-**Battery polarity (owner decision 2026-10-25).** Either orientation is acceptable provided the board marks
-it clearly. The definition stays centre spring = B+, ring = B− (DD-12), and both boards now carry it on the
-silkscreen:
-- compact: "B+" beside the spring pad and "B-" beside the ring on the bottom, plus "B-" on top;
-- evaluation: "B+ INPUT"/"B- INPUT".
+**Evaluation board (Variant B: 45 × 40 mm, 68 footprints, 13 labelled test points).**
+- **Routing:** KiCad DRC is 0/0/0/0. `hardware/evaluation-board/routing/` restores the exact router session.
+- **Power-layout review** (`engineering/layout-review.md`, DD-23): the SW1, VOUT and LD_P pours were corrected
+  (0.98 / 2.27 / 0.88 mΩ). The package-limited and drive-loop items are accepted with bench checks T2.9–T2.12.
+- **Review package** (`manufacturing/pcbway/evaluation-board/`): Gerbers, drills, BOM, centroid, PDFs, iBOM
+  and renders. Some supplier stock and prices are UNKNOWN.
 
-The labels sat at 0.12 mm stroke on the evaluation board, below PCBWay's 0.15 mm / height-÷-5 legend limit
-(MFG-01). All labels now meet it, and a test enforces it. REQ-BAT-04 is DESIGNED, VAL-REQ-BLOCKED passes, and
-evaluation Gate F is computed PASS. That gate means the files are internally checked; it is not a
-manufacturing release, and no order is placed.
+**Compact board (Variant A: Ø 22 mm, 65 footprints): parked routing draft.**
+- **DRC:** 0 errors, 3 warnings (dangling vias of open nets), 20 unconnected, 0 parity.
+- **Power paths:** all connected. VBAT 0.49, VOUT 1.46, SW1 0.30, SW2 1.23, BAT_SPRING 0.60 and LD_P 0.47 mΩ.
+  Copper loss is +44 mW above the model, and the ground-offset setpoint shift is +0.75 %.
+- **Why 20 items stay open:** they are mostly MCU signals, blocked by a routing-capacity limit. No through-via
+  site exists beside the MCU. Simulations show that an MCU pin swap and finer inner lines do not finish the
+  board. The real directions are HDI, a placement re-architecture or fewer parts
+  (`engineering/compact-feasibility.md`).
+- **Tools:**
+  - `automation/placement/grid_route.py`: negotiated-congestion grid router; writes the `grid_routes` section.
+  - `automation/placement/place_opt.py`: small-part placement optimiser.
+  - Router keep-outs.
 
-**Power-layout review.**
-
-The tool `automation/review/power_layout.py` reads the routed copper. It solves the DC current flow per
-power net at the calculated operating points and measures the SLVSFC5 §10.1 layout geometry. It writes
-`reports/layout-review-<variant>.md/.json` and figures. Dispositions and lessons are in
-[engineering/layout-review.md](engineering/layout-review.md) (DD-23).
-
-- **Evaluation board pours corrected.** Three source pours were re-applied to the archived router session.
-  DRC is still 0/0/0/0 and every post-route selector matched.
-  - SW1: the old 0.55 mm junction now meets the Q2 source pins along their height (1.91 → 0.98 mΩ).
-  - VOUT: an In2 finger runs under U1's output column (3.01 → 2.27 mΩ).
-  - LD_P: the pour is larger (1.28 → 0.88 mΩ).
-- **Accepted with bench checks T2.9–T2.12:**
-  - the package-limited SW2 entry (0.75 mm equivalent) and AGND/PGND arrangement (+0.28 % DC setpoint
-    shift), both under DD-16;
-  - the buck-leg DR1H/BOOT1 loops, which switch only in the transition region;
-  - C7 (VCC) reached through In2;
-  - the U1 branch of ISP/ISN.
-- **Efficiency.** Routed copper adds about 96 mW over the loss model at 4.0 V. The estimate falls from 94.6 %
-  to about 94.1 %, and REQ-PWR-02 stays AT-RISK. Copper allowances moved into `parameters.yaml`, and the
-  calculation output is now deterministic: the same values with sorted keys.
-
-**Compact grid-routed revision (new this session, DD-25).** See
-[engineering/compact-feasibility.md](engineering/compact-feasibility.md).
-
-- **Tool:** `automation/placement/grid_route.py` is a negotiated-congestion grid router. It writes the
-  generated `grid_routes` copper into `placement.yaml`, and FreeRouting routes what remains.
-- **Layout changes:**
-  - In2 carries signals only (no VBAT pour).
-  - The MCU moved below C1-C3 and is rotated 0°, with a part-free escape ring on both sides.
-  - The over-voltage FET block joined the enable pull-downs (top right).
-  - C12 moved off U1's ground pins, which now have a plane via.
-  - The GND fanout keeps out of other nets' pours.
-- **Result:**
-  - 20 unconnected (was 31), 0 errors, 3 dangling-via warnings belonging to open nets.
-  - Power paths are equal or better: VBAT 0.49, VOUT 1.46, LD_P 0.47 mΩ.
-  - Copper loss above the model is +44 mW; the ground-offset setpoint shift is +0.75 % (was +1.14 %).
-- **Why the rest does not route:** a capacity limit. A through via needs F, In2 and B free at once,
-  and no such site exists beside the MCU. Four options are listed in compact-feasibility.md: plated harness
-  pads, an MCU pin swap, inner-layer fine lines, or HDI.
-- **Schematic:** reference/value labels of vertical resistors, inductors and thermistors no longer overlap
-  the body.
-
-**Compact re-floorplan (DD-24).** See
-[engineering/compact-feasibility.md](engineering/compact-feasibility.md).
-
-- **Root cause:** the centre spring pad forbids through vias within 2.95 mm of the centre, and U1 sat
-  above it.
-- **Power column:** L1 now covers the spring pad and U1 is 2 mm below, with explicit escapes for every U1
-  pin. VCC reaches C7 in 0.6 mm, using J3 at 3.5 mm pitch on this variant only.
-- **Bottom power stage:** Q1 is under Q2 with an 8-via VBAT field.
-- **MCU block:** moved to the bottom lower left.
-- **New tools:** router keep-outs protect the power pours during autorouting, and `place_opt.py` places
-  the small parts.
-- **Result:**
-  - 31 unconnected (was 43), 0 DRC errors, 6 warnings.
-  - Every power path is connected: VBAT 0.50 mΩ, VOUT 1.69 mΩ, SW1 0.30 mΩ. Before, VOUT was open and VBAT
-    crossed one via.
-- **Still open:**
-  - low-speed and sense opens;
-  - five dangling source vias;
-  - a weak PGND link to the plane (15 mV drop, +1.14 % worst-case setpoint shift in the review).
-
-**Design and deliverables (unchanged unless noted):**
-- TPS552882 constant-current architecture and all hardware protections retained; default setpoint remains 4 A.
-- Evaluation board: 45 x 40 mm, four layers, 68 footprints, 13 labelled test points. Compact board:
-  65 footprints, routing draft (`engineering/compact-feasibility.md`).
-- Firmware: 26 host checks pass; ATtiny1616 target build succeeds with warnings treated as errors.
-- Calculations: 21 of 21 pass. The efficiency check uses the owner's ≥ 94 % deviation target (DD-26):
-  94.5883 %. Actual efficiency is unmeasured (T1.7).
-- Both `manufacturing/pcbway/<variant>/` DRAFT review packages were regenerated from the current boards.
-  Each passes its source/artifact hash, inventory, BOM/centroid and ZIP checks.
-- Assembly instructions, stack-up note, dummy-load-first bench plan (now with T2.9–T2.12) and final review
-  report are under `documentation/`. The routing checkpoints in `hardware/<variant>/routing/` restore the
-  exact sessions; the evaluation checkpoint records the 2026-10-25 pour revision.
-
-**Owner decisions / open limitations:**
-1. Battery polarity: decided (owner, 2026-10-25) and marked on both boards; check the host against the labels
-   before first power (T3.3).
-2. Default 4 A remains the brief's setpoint and the documented diode-life risk (DD-13). An alternate setpoint
-   needs an owner decision and the matching divider/calculation update.
-3. Efficiency misses its target: model 94.6 %, with routed copper about 94.1 %. The owner must accept a
-   deviation, or loss rework is needed (lower-Rds reverse FET, copper, HDI via-in-pad).
-4. HDI via-in-pad for the RPM0026A centre pads (DD-16) is the remedy for the package-limited SW2/PGND/AGND
-   items. It needs a fabrication quote and an owner decision.
-5. Supplier availability, unverified prices and physical measurements remain UNKNOWN.
-6. No Git remote is configured. Commits are local.
+**Open limitations.**
+1. HDI via-in-pad for the RPM0026A centre pads (DD-16) is the remedy for the package-limited SW2, PGND and
+   AGND items. It needs a fabrication quote and an owner decision.
+2. Some supplier stock and prices are UNKNOWN (`sourcing/components.csv`). Confirm them at order time.
+3. Waveforms, temperatures, efficiency and fault response are unmeasured until Gate G.
+4. No Git remote is configured. Commits are local.
 
 ## Next actions (in order)
 
-1. Evaluation prototype (owner, manual order).
-   - Review `manufacturing/pcbway/evaluation-board/` (gerbers, drill, BOM, centroid, assembly PDFs, iBOM)
-     and `reports/validation-register.md`. Evaluation Gate F passes its automated checks.
-   - Confirm the UNKNOWN stock and prices.
+1. **Evaluation prototype (owner).**
+   - **Optional, before ordering:** each change needs a new router session, DRC, the layout review and fresh
+     post-route selectors.
+     - Move the DR1H via off the SW1 junction.
+     - Route U1's ISP/ISN as a same-layer pair.
+     - Move C5 nearer U1.
+   - Review `manufacturing/pcbway/evaluation-board/` and `reports/validation-register.md`, and confirm stock
+     and prices.
    - Place the order manually; no tool places orders.
-2. Optional evaluation improvements, each needing a new router session followed by DRC, the layout review
-   and fresh post-route selectors:
-   - move the DR1H via off the SW1 junction;
-   - route U1's ISP/ISN as a same-layer pair;
-   - move C5 nearer U1.
-   Re-check every result with `power_layout.py`.
-3. Assemble the evaluation prototype and execute `documentation/testing/test-plan.md`, starting with a
-   rated dummy load. Record measured data, including T1.7 efficiency; only bench evidence can close Gate G.
-4. After the bench data, decide the compact direction (`engineering/compact-feasibility.md`): HDI, a
-   placement re-architecture or fewer parts. Router simulations show that the pin swap and inner fine
-   lines alone do not finish it. Then re-run the compact chain:
-   - `grid_route.py --variant compact-22mm --rebuild --partial --write`;
-   - then `place`, `route`, `finish` and `drc`;
-   - then `power_layout.py`.
+2. **Bench testing.** Assemble the prototype and run `documentation/testing/test-plan.md`, starting with a rated
+   dummy load. Record results under `documentation/testing/results/<serial>/`; only bench evidence can close
+   Gate G.
+3. **Compact board.** With the bench data, decide its direction (`engineering/compact-feasibility.md`), then
+   re-run the compact chain in this order:
+   1. `grid_route.py --variant compact-22mm --rebuild --partial --write`;
+   2. `place`, `route`, `finish` and `drc`;
+   3. `power_layout.py`.
 
-   Accept it only with 0 unconnected, 0 DRC errors and every power path connected in the current-flow
-   report. To return to the committed routed state, restore the checkpoint in
-   `hardware/compact-22mm/routing/`, because `--stage place` overwrites the board.
-5. Verify supplier stock/prices and proposed alternatives; keep UNKNOWN until evidence is available.
+   Accept the board only with 0 unconnected, 0 DRC errors and every power path connected. `--stage place`
+   overwrites the board; to return to the committed routed state, restore the checkpoint in
+   `hardware/compact-22mm/routing/`.
+4. **Sourcing.** Verify supplier stock, prices and alternatives; keep UNKNOWN until evidence is available.
 
 **Commands and routing replay:**
 ```powershell
@@ -173,6 +105,20 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-26: documentation audit
+- **Current state:** status and next actions rewritten so they describe only the present. Superseded blocks
+  and the duplicated polarity text were removed (the log keeps the history).
+- **Stale statements corrected:**
+  - Owner decisions now recorded everywhere they are discussed, including efficiency (DD-26).
+  - Evaluation-first status recorded.
+  - Compact routing options updated to match the simulation results.
+  - DD-07 corrected: MCU supply diode RB521S30, CS_OUT on ADC0 AIN6, IND as plain GPIO.
+  - Render and requirement notes updated.
+- **Routing checkpoints:** the manifests again keep their capture-time hashes, with later changes as
+  `source_revisions` entries (newest last). A re-capture had overwritten the capture block.
+- **New decision:** DD-27 (evaluation board first).
+
 
 ### 2026-10-25: owner decisions recorded
 - **Owner choices:** evaluation board first (compact parked as a routing draft); efficiency deviation

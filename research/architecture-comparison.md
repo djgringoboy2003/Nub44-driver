@@ -73,7 +73,7 @@ Common assumptions: 4.0 A out; typical diode (Vf 4.43 V at 4 A); high-side rever
 
 | Target | Result (estimate) | Status |
 |---|---|---|
-| > 95 % at 4.0 V (REQ-PWR-02) | 94.6 % (typical diode) | **Not met. AT-RISK, likely infeasible with the required protection** |
+| > 95 % at 4.0 V (REQ-PWR-02 as briefed) | 94.6 % (typical diode) | **Not met**, likely infeasible with the required protection; see the outcome note below |
 | ≥ 86 % at 3.0 V (REQ-PWR-03) | 91.3 % (worst diode) | Met by estimate; NEEDS-TEST |
 
 At 4.0 V about 1.0 W is lost in total. The protection elements alone account for about 0.30 W (1.6 %):
@@ -83,6 +83,9 @@ robustness and the independent current ceiling. That trade is not acceptable for
 
 **Achievable alternative stated:** ≥ 94 % at 4.0 V and ≥ 90 % at 3.0 V (typical diode, 25 °C), to be
 confirmed by measurement (documentation/testing/test-plan.md).
+
+**Outcome (2026-10-25):** the owner accepted ≥ 94 % at 4.0 V as REQ-PWR-02 (DD-26). Bench test T1.7
+measures it.
 
 ## 6. Rejected options (short)
 
