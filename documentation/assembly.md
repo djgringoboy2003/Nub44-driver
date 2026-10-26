@@ -28,10 +28,14 @@ No manufacturing order is automated; the owner places any order manually.
    loops, the Kelvin sense paths and the thermal connections against the cited converter and amplifier
    datasheets; `engineering/layout-review.md` records the evaluation-board dispositions. Automated route
    completion alone does not close REQ-PCB-01.
-3. Regenerate the package with scripts/export-pcbway.ps1 for the chosen variant. Review the actual BOM,
+3. Check reports/release-readiness.md: order a prototype only at the PROTOTYPE_CANDIDATE level, which needs the
+   human footprint and orientation reviews recorded in engineering/release/design-reviews.yaml (FP-U1, FP-L1,
+   FP-POWERPAK, FP-RS1, ORIENT). A package classed DRAFT_REVIEW_INCOMPLETE_BOARD (it carries DO_NOT_FABRICATE.txt in
+   its fabrication ZIP) must never be ordered.
+4. Regenerate the package with scripts/export-pcbway.ps1 for the chosen variant. Review the actual BOM,
    signed centroid positions, rotations, assembly PDFs, drill maps, stack-up and iBOM. Stock, prices and
    unverified substitutions remain UNKNOWN; confirm them with the assembler before any order.
-4. Treat placeholder 3D bodies as mechanical illustrations. The custom TPS552882 body is generated,
+5. Treat placeholder 3D bodies as mechanical illustrations. The custom TPS552882 body is generated,
    not a supplier-certified package model.
 
 ## Assembly
@@ -45,7 +49,9 @@ Keep the laser diode disconnected during inspection and electrical bring-up.
 ## Bring-up and evidence
 
 Follow documentation/testing/test-plan.md in order, starting with unpowered inspection and a current-limited
-supply. Use a thermally rated dummy load for the electrical and fault tests. Record the board revision,
-BOM, firmware, instruments, conditions and waveforms under documentation/testing/results/.
+supply. Program the firmware and the fuses (firmware/README.md; the firmware refuses to run with other fuse values
+and blinks fault 15), then read the fuses back (T0.4). Use a thermally rated dummy load for the electrical and
+fault tests. Record each test with automation/bench/bench.py (board serial, revision, firmware hash, instruments,
+conditions, raw data and captures) under documentation/testing/results/<serial>/; see the README there.
 Advance to laser testing only after the dummy-load tests and the plan's controlled-area arrangements
 are satisfied. Gate G remains open until the required measured results have been reviewed.

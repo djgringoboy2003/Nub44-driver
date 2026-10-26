@@ -96,5 +96,8 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 ## 4. Recording
 
 For each test, record the date, board serial, firmware hash, instrument list, raw scope captures and a PASS/FAIL
-against the criterion. Save these in `documentation/testing/results/<serial>/` and update `engineering/requirements.md`
-from `NEEDS-TEST` to `VERIFIED-TEST`. Then run `scripts/validate.ps1`.
+against the criterion with `automation/bench/bench.py` (see `documentation/testing/results/README.md`). The pass
+criteria in machine-readable form are in `documentation/testing/bench-tests.yaml`; the tool judges each record, keeps
+the raw data hashed, shows the design prediction beside each measurement and refuses anything that is not a
+measurement. Then update `engineering/requirements.md` from `NEEDS-TEST` to `VERIFIED-TEST` and run
+`scripts/validate.ps1`; Gate G closes for a board only when every test marked for it has a PASS record.

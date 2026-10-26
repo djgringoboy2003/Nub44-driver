@@ -2,110 +2,114 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-26 (documentation audit; the design is unchanged since 2026-10-25)._
+_Last updated: 2026-10-26, after the independent audit on branch `audit/comprehensive-improvements` (not merged,
+not pushed). The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
+unchanged; firmware, evidence handling, release controls and tooling changed._
 
 | Gate | Status | Evidence |
 |---|---|---|
-| A Research | PASS | Research/requirement documents; computed register |
-| B Electrical design | PASS | Both schematics: ERC 0 errors / 0 warnings; exact connectivity comparison |
-| C Simulation | PASS (model-level) | SIM-01 through SIM-11; behavioural averaged model, no vendor model |
+| A Research | PASS | Research/requirement documents |
+| B Electrical design | PASS | Both schematics: ERC 0/0; exact connectivity comparison; hash-bound evidence |
+| C Simulation | PASS (model-level) | SIM-01…11 pass in the averaged ngspice model; SIM-11 is now a frequency-response analysis. SIM-12 (tolerance sweep, outside Gate C) has one open finding |
 | D Routing | Evaluation PASS; compact OPEN | Evaluation fully connected; compact has 20 unconnected items |
-| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0 errors / 0 warnings / 0 unconnected / 0 parity; compact 0 / 3 / 20 / 0 |
-| F Manufacturing files | Evaluation PASS (automated checks); compact OPEN | Both DRAFT review exports internally PASS; no manufacturing release or order |
-| G Physical validation | OPEN | Requires assembled-prototype measurements; cannot be closed by software |
+| E ERC/DRC | Evaluation PASS; compact OPEN | Evaluation 0/0/0/0; compact 0 errors / 3 warnings / 20 unconnected / 0 parity |
+| F Manufacturing files | Evaluation PASS (internal consistency); compact OPEN | DRAFT packages only; the compact ZIP carries DO_NOT_FABRICATE.txt |
+| G Physical validation | OPEN | No bench records (`reports/bench-report.md`); only measured data can close it |
 
-`scripts/validate.ps1` computes the gates into [reports/validation-register.md](reports/validation-register.md),
-which the validator also mirrors into the requirement register.
-- It exits 1 for two known reasons, compact routing and compact DRC, because the compact board is parked.
-- No requirement is blocked or at risk.
-- All 147 Python tests pass.
-- The firmware passes its 26 host checks and its target build.
-- All 21 calculation checks and all 11 simulations pass (model-level).
+**Release readiness** (`reports/release-readiness.md`): both boards **DRAFT_REVIEW**. The evaluation board becomes a
+PROTOTYPE_CANDIDATE when five human reviews are recorded in `engineering/release/design-reviews.yaml` (FP-U1 TPS552882
+land pattern, FP-L1 XGL5030 on the XAL5030 pattern, FP-POWERPAK pad mapping, FP-RS1 Kelvin shunt, ORIENT pin-1 and
+polarity). Everything else for that level passes.
 
-**Owner decisions (2026-10-25).**
-- **Battery polarity:** either orientation is acceptable provided the board marks it. The definition stays
-  centre spring = B+, ring = B− (DD-12). Both boards carry it on the silkscreen within PCBWay's legend limits:
-  - compact: "B+" by the spring pad, "B-" by the ring;
-  - evaluation: "B+ INPUT"/"B- INPUT".
+**Validation:** `validate.py` exits 0 with 56 entries, 53 PASS and 3 known, unchanged failures listed in
+`engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
+owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-  T3.3 checks the host before first power.
-- **Setpoint:** 4.0 A is kept, and the owner accepts the diode-life risk (DD-13).
-- **Efficiency:** the deviation is accepted; REQ-PWR-02 is ≥ 94 % at 4.0 V and 4 A (DD-26). Estimates: 94.6 %
-  from the loss model, 94.1 % with the evaluation copper, 94.4 % with the compact copper. T1.7 measures it.
-- **Evaluation board first:** the compact board stays a routing draft until the evaluation prototype has
-  produced bench data.
+**Tests (actual, 2026-10-26):** 202 Python tests pass (181 pass and 18 skip with KiCad hidden, as on CI). Firmware:
+six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
+`-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
+WARN. CI workflow written but not yet run on GitHub.
 
-**Evaluation board (Variant B: 45 × 40 mm, 68 footprints, 13 labelled test points).**
-- **Routing:** KiCad DRC is 0/0/0/0. `hardware/evaluation-board/routing/` restores the exact router session.
-- **Power-layout review** (`engineering/layout-review.md`, DD-23): the SW1, VOUT and LD_P pours were corrected
-  (0.98 / 2.27 / 0.88 mΩ). The package-limited and drive-loop items are accepted with bench checks T2.9–T2.12.
-- **Review package** (`manufacturing/pcbway/evaluation-board/`): Gerbers, drills, BOM, centroid, PDFs, iBOM
-  and renders. Some supplier stock and prices are UNKNOWN.
+**Audit outcome** (`reports/comprehensive-project-audit.md`): 54 findings (9 high, 29 medium, 15 low, 1 info; none critical); 40 fixed, 2 mitigated, 11 documented risks or owner decisions, 1 open (AUD-PCB-03 footprint reviews, now a release blocker).
+- **Firmware (DD-28):** fixed a board-NTC failure that silently disabled thermal protection, a watchdog cleared even
+  when the tick stopped, watchdog resets that re-armed emission, the 2.5 V reference used below its VDD minimum, the
+  AC2 power-loss reference written to the wrong register (the click mode change could not work), missing debounce,
+  hold-up races and more. The firmware is untested on hardware.
+- **Evidence:** calculations, simulations and schematics are now hash-bound with tool versions; stale or edited
+  evidence fails.
+- **Release controls:** DRAFT_REVIEW / PROTOTYPE_CANDIDATE / MANUFACTURING_RELEASE levels with human reviews, bench
+  evidence and signed approvals; incomplete boards are marked inside their fabrication ZIP.
+- **New tooling:** sourcing verification, bench-test recording (`automation/bench/bench.py`), status dashboard
+  (`reports/dashboard/index.html`), CI.
 
-**Compact board (Variant A: Ø 22 mm, 65 footprints): parked routing draft.**
-- **DRC:** 0 errors, 3 warnings (dangling vias of open nets), 20 unconnected, 0 parity.
-- **Power paths:** all connected. VBAT 0.49, VOUT 1.46, SW1 0.30, SW2 1.23, BAT_SPRING 0.60 and LD_P 0.47 mΩ.
-  Copper loss is +44 mW above the model, and the ground-offset setpoint shift is +0.75 %.
-- **Why 20 items stay open:** they are mostly MCU signals, blocked by a routing-capacity limit. No through-via
-  site exists beside the MCU. Simulations show that an MCU pin swap and finer inner lines do not finish the
-  board. The real directions are HDI, a placement re-architecture or fewer parts
-  (`engineering/compact-feasibility.md`).
-- **Tools:**
-  - `automation/placement/grid_route.py`: negotiated-congestion grid router; writes the `grid_routes` section.
-  - `automation/placement/place_opt.py`: small-part placement optimiser.
-  - Router keep-outs.
+**Owner decisions in force:** battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
+(DD-13); efficiency target ≥ 94 % (DD-26); evaluation board first, compact parked (DD-27).
+
+**Decisions now required from the owner:**
+1. **AUD-SIM-04 / VAL-SIM-12:** the averaged model shows 9.5 dB gain margin (< 10 dB) when four tolerances stack.
+   Either accept and measure the loop on the prototype, or change R4 (Rc) 1.2 → 1.0 kΩ (exploratory simulation:
+   11.1 dB worst case). A hardware change; not applied.
+2. **AUD-SRC-04:** R16 (indicator resistor) is overloaded if the external LED pad is shorted; consider a larger
+   package or value.
+3. **AUD-PCB-04:** optional gate clamp for Q6 (VGSS ±6 V) in a later revision.
+4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
+   (`engineering/pcb-review-2026-10-26.md`).
+5. Merge of `audit/comprehensive-improvements` into `main` and the push to GitHub.
 
 **Open limitations.**
-1. HDI via-in-pad for the RPM0026A centre pads (DD-16) is the remedy for the package-limited SW2, PGND and
-   AGND items. It needs a fabrication quote and an owner decision.
-2. Some supplier stock and prices are UNKNOWN (`sourcing/components.csv`). Confirm them at order time.
-3. Waveforms, temperatures, efficiency and fault response are unmeasured until Gate G.
-4. The code is on GitHub: remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver,
-   and local `main` tracks `origin/main`.
+1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
+   items; it needs a fabrication quote and an owner decision.
+2. Supplier stock and prices are partly UNKNOWN; compact BOM descriptions contradict their 0201 MPNs (AUD-MFG-03,
+   fix deferred to the next CAD regeneration because it invalidates the DRC/export evidence of both boards).
+3. Waveforms, temperatures, efficiency, fault response, the firmware's hold-up timing and its measurement chain are
+   unmeasured until Gate G.
+4. The averaged simulation model has no switching ripple, saturation or dead time; its inner-loop gain is an
+   assumption.
+5. Remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver; the audit branch exists
+   only locally.
 
 ## Next actions (in order)
 
-1. **Evaluation prototype (owner).**
-   - **Optional, before ordering:** each change needs a new router session, DRC, the layout review and fresh
-     post-route selectors.
-     - Move the DR1H via off the SW1 junction.
-     - Route U1's ISP/ISN as a same-layer pair.
-     - Move C5 nearer U1.
-   - Review `manufacturing/pcbway/evaluation-board/` and `reports/validation-register.md`, and confirm stock
-     and prices.
-   - Place the order manually; no tool places orders.
-2. **Bench testing.** Assemble the prototype and run `documentation/testing/test-plan.md`, starting with a rated
-   dummy load. Record results under `documentation/testing/results/<serial>/`; only bench evidence can close
-   Gate G.
-3. **Compact board.** With the bench data, decide its direction (`engineering/compact-feasibility.md`), then
-   re-run the compact chain in this order:
-   1. `grid_route.py --variant compact-22mm --rebuild --partial --write`;
-   2. `place`, `route`, `finish` and `drc`;
-   3. `power_layout.py`.
+1. **Owner review of the audit branch:** read `reports/comprehensive-project-audit.md` and the dashboard; decide the
+   items above; merge `audit/comprehensive-improvements` into `main` and push (no push was made in this session).
+2. **Human reviews for the evaluation board:** record FP-U1, FP-L1, FP-POWERPAK, FP-RS1 and ORIENT in
+   `engineering/release/design-reviews.yaml`; rerun `validate.py` until the board shows PROTOTYPE_CANDIDATE.
+3. **Evaluation prototype (owner, by hand):** follow `documentation/release-checklist.md` sections A and B. No tool
+   places orders.
+4. **Bench testing:** program firmware and fuses (T0.4), then run `documentation/testing/test-plan.md` with a rated
+   dummy load, recording each test with `automation/bench/bench.py`. Watch especially T1.8/T1.9 (hold-up and mode
+   change, never tested before), T1.10 (CC polarity), T1.11 (measurement chain), T2.11 (loop, AUD-SIM-04) and nuisance
+   fault 6 (R-22).
+5. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
+   the compact chain (`grid_route.py --variant compact-22mm --rebuild --partial --write`; `place`, `route`, `finish`,
+   `drc`; `power_layout.py`). Accept it only with 0 unconnected, 0 DRC errors and every power path connected.
+6. **Next CAD regeneration:** variant-specific BOM descriptions (AUD-MFG-03); rerun the full chain.
 
-   Accept the board only with 0 unconnected, 0 DRC errors and every power path connected. `--stage place`
-   overwrites the board; to return to the committed routed state, restore the checkpoint in
-   `hardware/compact-22mm/routing/`.
-4. **Sourcing.** Verify supplier stock, prices and alternatives; keep UNKNOWN until evidence is available.
-
-**Commands and routing replay:**
+**Commands:**
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\doctor.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\validate.ps1
-.venv\Scripts\python.exe automation\review\power_layout.py --variant evaluation-board
+.venv\Scripts\python.exe -m pytest tests -q
+.venv\Scripts\python.exe firmware\build.py --mutation
+.venv\Scripts\python.exe automation\validation\validate.py            # full; add --mode fast without KiCad
+.venv\Scripts\python.exe automation\bench\bench.py check
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\export-pcbway.ps1 -Variant evaluation-board
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\package.ps1
 ```
 
 The per-process PowerShell flag is needed on this machine; no system policy was changed.
-- After editing any source file, regenerate evidence in the order given in `AGENTS.md`: schematics, DRC,
-  layout review, exports, validation.
+- After editing any source file, regenerate evidence in the order given in `AGENTS.md`.
 - For exact route restoration, follow `hardware/<variant>/routing/README.md`.
 - A new `build.ps1` or `build_pcb.py --stage all` run reroutes and may change geometry. Exact post-route
   selectors then need fresh DRC and power-path inspection.
-- Successful exports and review ZIPs never place orders.
+- See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-26: audit follow-up: sourcing checks, bench framework, dashboard, CI, documentation (same branch)
+- `sourcing/check_sourcing.py` (0 FAIL, 29 WARN; new finding AUD-SRC-04 on R16); `automation/bench/bench.py` with
+  `documentation/testing/bench-tests.yaml` (MEASURED records only; Gate G NO DATA); `reports/dashboard/index.html`;
+  `.github/workflows/ci.yml` (not yet run on GitHub); hash-bound schematic evidence.
+- Documentation: developer guide, release checklist, PCB review (`engineering/pcb-review-2026-10-26.md`), README,
+  AGENTS.md (map, regeneration order, pitfalls incl. the heredoc backslash hazard), requirements, assembly, test plan.
+- 202 Python tests pass; validator exit 0 (3 known items); firmware PASS with 15/15 mutants. No order, no push.
 
 ### 2026-10-26: independent audit, firmware fixes, evidence binding and release levels (branch `audit/comprehensive-improvements`)
 - **Audit:** `reports/comprehensive-project-audit.md` (single issue register), `engineering/risk-register.md`,

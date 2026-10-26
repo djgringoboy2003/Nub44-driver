@@ -9,14 +9,20 @@ targeting a 22 mm round PCB (plus a larger evaluation board) for PCBWay fabricat
 
 ## Status
 
-- **Evaluation board (Variant B, 45 × 40 mm):** CAD complete. Routed with 0 DRC findings, power-layout
-  reviewed, PCBWay review package generated. Next step is a prototype order, placed manually by the owner.
+- **Evaluation board (Variant B, 45 × 40 mm):** CAD complete (DRC 0/0/0/0), power-layout reviewed, DRAFT PCBWay
+  review package generated. Release readiness: **DRAFT_REVIEW**; it becomes a PROTOTYPE_CANDIDATE once five human
+  footprint/orientation reviews are recorded (`engineering/release/design-reviews.yaml`). Orders are placed by the
+  owner by hand.
 - **Compact board (Variant A, Ø 22 mm):** routing draft with 20 open signal connections, parked until the
-  evaluation prototype has produced bench data (owner decision; `engineering/compact-feasibility.md`).
-- **Physical validation (Gate G):** not started; it needs an assembled prototype.
+  evaluation prototype has produced bench data (owner decision DD-27; strategy in
+  `engineering/pcb-review-2026-10-26.md`). Its fabrication ZIP carries `DO_NOT_FABRICATE.txt`.
+- **Physical validation (Gate G):** not started; it needs an assembled prototype and recorded bench data.
+- **Firmware:** reworked after an independent audit (DD-28); 531 host checks, register-model tests of the hardware
+  layer and a mutation check; not yet run on hardware.
 
-[PROGRESS.md](PROGRESS.md) has the live state, gate status and next actions. Agents should start with
-[AGENTS.md](AGENTS.md).
+Live state: [PROGRESS.md](PROGRESS.md) and the generated dashboard `reports/dashboard/index.html` (open it in a
+browser). Agents start with [AGENTS.md](AGENTS.md); people with the
+[developer guide](documentation/developer-guide.md). Audit: [reports/comprehensive-project-audit.md](reports/comprehensive-project-audit.md).
 
 ## Key specifications (design targets; see `engineering/requirements.md` for status)
 
@@ -35,8 +41,10 @@ targeting a 22 mm round PCB (plus a larger evaluation board) for PCBWay fabricat
 
 ```powershell
 .\scripts\setup.ps1          # installs/repairs the toolchain (no admin rights needed)
-.venv\Scripts\python.exe engineering\calculations\power_stage.py   # re-run engineering calculations
-.venv\Scripts\python.exe -m pytest tests                           # unit tests
+.venv\Scripts\python.exe -m pytest tests                               # unit tests
+.venv\Scripts\python.exe firmware\build.py --mutation                  # firmware host tests, ATtiny1616 build, mutation check
+.venv\Scripts\python.exe automation\validation\validate.py            # register, readiness, dashboard (exit 1 = new or changed failure)
+.venv\Scripts\python.exe automation\validation\validate.py --mode fast  # same checks without KiCad/ngspice/avr-gcc
 ```
 
 Entry points:
@@ -50,8 +58,11 @@ Entry points:
 ```
 
 `build.ps1 -SkipRouting` reuses a session only when its DSN/SES hashes match. Read the actual gate state in
-[the validation register](reports/validation-register.md). Export consistency and review packaging do not
-release a board for manufacturing. Physical tests remain open. Battery polarity (centre spring B+, ring B−)
+[the validation register](reports/validation-register.md) and the per-board level in
+[release readiness](reports/release-readiness.md) (DRAFT_REVIEW, PROTOTYPE_CANDIDATE, MANUFACTURING_RELEASE; see the
+[release checklist](documentation/release-checklist.md)). Export consistency and review packaging do not
+release a board for manufacturing. CI (`.github/workflows/ci.yml`) runs the portable checks on Linux and the firmware
+target build on Windows. Physical tests remain open. Battery polarity (centre spring B+, ring B−)
 is marked on both boards' silkscreen.
 See [assembly instructions](documentation/assembly.md) and [the bench plan](documentation/testing/test-plan.md).
 

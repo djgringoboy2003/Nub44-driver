@@ -51,6 +51,8 @@ paths without HDI via-in-pad (DD-16); supplier stock and prices UNKNOWN; average
 
 ## 3. Summary register
 
+**Status on 2026-10-26 (end of session):** 54 findings: 9 high, 29 medium, 15 low, 1 info; none critical. 40 FIXED, 2 MITIGATED (AUD-FW-16 fuses, AUD-MFG-03 BOM descriptions), 11 DOCUMENTED (risks and owner decisions), 1 OPEN (AUD-PCB-03, a human review now enforced as a PROTOTYPE_CANDIDATE blocker). The 8 fixed high findings: AUD-FW-01, FW-03, FW-04, FW-19, VAL-01, VAL-02, VAL-05, MFG-01; the remaining high item, AUD-PCB-02 (compact routing capacity), awaits the owner's direction.
+
 Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed, residual noted), DOCUMENTED
 (accepted limitation or owner decision needed), DEFERRED (needs CAD regeneration or owner approval).
 

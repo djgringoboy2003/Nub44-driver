@@ -110,3 +110,18 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
 - `firmware/tests/hal_mock.c`: loop counter made 32-bit (found by an avr-gcc warning proxy for gcc).
 - **Results (actual):** 202 Python tests pass; with KiCad hidden 181 pass and 18 skip; `validate.py --mode fast`
   exit 0; avr-gcc `-O1 -Wall -Wextra -Werror` proxy compile of every host source clean.
+
+## 2026-10-26: PCB review and documentation (roadmap phase 5)
+
+- `engineering/pcb-review-2026-10-26.md`: independent review of the evaluation-board items (DR1H via, U1 ISP/ISN pair,
+  C5, VCC, SW2 entry, AGND/PGND, package-limited heat) with options, trade-offs and the recommendation to order the
+  first prototype unchanged; compact-board strategy table (HDI, 6-layer, re-architecture, fewer parts, two-board
+  stack, larger outline) and the finding that PG is unused (one open compact item removable). New risk R-22 (ISP/ISN
+  pickup could cause nuisance fault 6).
+- New documents: `documentation/developer-guide.md` (architecture, fresh clone to prototype candidate, commands,
+  validation modes, troubleshooting, recovery) and `documentation/release-checklist.md`.
+- Updated: README (status, commands, readiness), AGENTS.md (repository map, regeneration order, validator baseline,
+  bench rule, pitfalls), PROGRESS.md (current state and next actions rewritten), requirements (REQ-MFG-01/03,
+  REQ-SRC-01), assembly instructions, test plan recording section, final report (superseded statements marked).
+- The README edit hit the heredoc backslash hazard again (control characters in two paths); the hygiene test caught it
+  and the paths were fixed.

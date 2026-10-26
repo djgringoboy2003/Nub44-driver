@@ -1,5 +1,16 @@
 # Design review report (2026-10-26)
 
+> **Update after the independent audit of 2026-10-26** (`reports/comprehensive-project-audit.md`). The text below is
+> the design review as written before the audit; these statements are superseded:
+> - *"147 Python tests"*, *"26 host checks"*, *"11 behavioural simulations"*: now 202 Python tests, six firmware host
+>   suites with 531 checks plus a 15-mutant check, and 12 simulations (SIM-11 is a frequency-response analysis of the
+>   ngspice deck; SIM-12 is a tolerance sweep with one open finding, AUD-SIM-04).
+> - *"Gate F ... passes its automated checks"* remains true, but release readiness is now reported per board:
+>   both boards are DRAFT_REVIEW; the evaluation board needs five recorded human reviews to become a
+>   PROTOTYPE_CANDIDATE (`reports/release-readiness.md`).
+> - The firmware reviewed here had supervision and measurement-chain defects, now fixed (DD-28), including a
+>   power-loss comparator reference in the wrong register that disabled the click mode change.
+
 ## Summary
 
 | Board | Status |
