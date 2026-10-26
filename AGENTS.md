@@ -147,4 +147,5 @@ and extracts its copper as the router's input.
 ## Commit conventions
 
 Commit at each milestone with a descriptive subject and a body listing what changed and what evidence was
-generated. Keep `PROGRESS.md` in the same commit as the work it describes.
+generated. Keep `PROGRESS.md` in the same commit as the work it describes. Then push `main` to `origin` (the
+owner's private GitHub repository), so the remote stays the handover point.

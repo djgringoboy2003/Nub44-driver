@@ -60,7 +60,8 @@ which the validator also mirrors into the requirement register.
    AGND items. It needs a fabrication quote and an owner decision.
 2. Some supplier stock and prices are UNKNOWN (`sourcing/components.csv`). Confirm them at order time.
 3. Waveforms, temperatures, efficiency and fault response are unmeasured until Gate G.
-4. No Git remote is configured. Commits are local.
+4. The code is on GitHub: remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver,
+   and local `main` tracks `origin/main`.
 
 ## Next actions (in order)
 
@@ -105,6 +106,10 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - Successful exports and review ZIPs never place orders.
 
 ## Log
+
+### 2026-10-26: repository pushed to GitHub
+- Added remote `origin` (private repository djgringoboy2003/Nub44-driver) and pushed all 16 commits of `main`.
+  The remote matches the local branch.
 
 ### 2026-10-26: documentation audit
 - **Current state:** status and next actions rewritten so they describe only the present. Superseded blocks
