@@ -10,7 +10,7 @@
   "D (evaluation-board)": "PASS",
   "E (evaluation-board)": "PASS",
   "F (evaluation-board)": "PASS",
-  "G": "OPEN: requires assembled-prototype testing (cannot be closed by software)"
+  "G": "OPEN: requires assembled-prototype testing (no bench records yet; cannot be closed by software)"
  },
  "gate_evidence": {
   "A": "documents present (inspection)",

@@ -108,6 +108,6 @@ Statuses are updated as work proceeds; see the change history in git.
 | D | PCB complete: all components placed, all nets routed. | D (compact-22mm): OPEN; D (evaluation-board): PASS |
 | E | ERC and DRC pass with no unresolved critical issues. | E (compact-22mm): OPEN; E (evaluation-board): PASS |
 | F | PCBWay files generated and internally checked. | F (compact-22mm): OPEN; F (evaluation-board): PASS |
-| G | Physical validation on an assembled prototype (thermal, electrical, fault). Cannot be closed by software. | OPEN: requires assembled-prototype testing (cannot be closed by software) |
+| G | Physical validation on an assembled prototype (thermal, electrical, fault). Cannot be closed by software. | OPEN: requires assembled-prototype testing (no bench records yet; cannot be closed by software) |
 
 Gate status is computed by `scripts/validate.ps1` from the validation register, not hard-coded.

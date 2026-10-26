@@ -85,7 +85,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-VAL-07 | medium | Defect | Firmware evidence uses a hard-coded file list and records no tool versions | FIXED |
 | AUD-VAL-08 | low | Defect | Schematic/ERC freshness relies on file modification times | DEFERRED |
 | AUD-VAL-09 | medium | Defect | `run_sims.py` and `power_stage.py` exit 0 when checks fail | FIXED |
-| AUD-VAL-10 | medium | Enhancement | No structured channel for bench (Gate G) evidence | OPEN |
+| AUD-VAL-10 | medium | Enhancement | No structured channel for bench (Gate G) evidence | FIXED |
 | AUD-SIM-01 | medium | Risk | Averaged model only; inner current loop and ISP/ISN loop strength are assumptions | DOCUMENTED |
 | AUD-SIM-02 | low | Defect | SIM-08 has a dead placeholder and an unsourced 25 A limit | FIXED |
 | AUD-SIM-03 | medium | Enhancement | No parameter/tolerance sensitivity sweep in simulation | FIXED |
@@ -352,7 +352,7 @@ side effects; dependencies; tests; status; validation outcome.
 
 #### AUD-VAL-10 No bench-evidence channel (medium, enhancement)
 - Gate G is a fixed string. The test plan asks for results in `documentation/testing/results/<serial>/` but there
-  is no schema, importer, comparison with predictions or report. **Status:** OPEN.
+  is no schema, importer, comparison with predictions or report. **Status:** FIXED. `automation/bench/bench.py` (template, import-csv with an explicit --measured affirmation, check), criteria in `documentation/testing/bench-tests.yaml` (34 tests), records in `documentation/testing/results/<serial>/` with raw-data hashes; INVALID for non-MEASURED origin, missing metadata, changed raw data or a contradicted operator PASS; predictions shown beside measurements; `reports/bench-summary.json` drives Gate G and MANUFACTURING_RELEASE. **Validation:** `tests/test_bench.py` (11, synthetic records in temporary folders only). Current: NO DATA for both boards.
 
 ### Simulation and calculation
 

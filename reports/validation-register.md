@@ -17,7 +17,7 @@ are predictions; only Gate G evidence is measured on hardware.
 | D (evaluation-board) | PASS | KiCad DRC connectivity |
 | E (evaluation-board) | PASS | KiCad ERC/DRC |
 | F (evaluation-board) | PASS | export package internal consistency; not a manufacturing release (see release readiness) |
-| G | OPEN: requires assembled-prototype testing (cannot be closed by software) | bench measurements on assembled prototypes only |
+| G | OPEN: requires assembled-prototype testing (no bench records yet; cannot be closed by software) | bench measurements on assembled prototypes only |
 
 ## Board readiness
 

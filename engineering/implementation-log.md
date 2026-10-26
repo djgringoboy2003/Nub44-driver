@@ -71,3 +71,15 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
 - **Result (actual):** PASS, 0 FAIL, 29 WARN (26 compact description mismatches = AUD-MFG-03; C14 10 V vs 7.3 V fault
   level < 1.5x; R16 80 mW in a pad short = new AUD-SRC-04), 72 INFO.
 - **Tests:** `tests/test_sourcing_check.py` (10).
+
+## 2026-10-26: bench-test recording framework (roadmap phase 4)
+
+- `documentation/testing/bench-tests.yaml`: machine-readable pass criteria for the 34 tests of the bench plan, with
+  conditions (for example efficiency at 4.0 V and 3.0 V), the variants each test is required for, and links to the
+  predictions (calculation results, calculation checks, simulation metrics).
+- `automation/bench/bench.py`: `template`, `import-csv` (copies raw files into `raw/`, records SHA-256, refuses to run
+  without `--measured`), `check` (validates every record, judges against the catalogue, writes
+  `reports/bench-summary.json` and `reports/bench-report.md` with predictions beside the measurements).
+- The validator refreshes the summary in full/manufacturing/bench modes; Gate G and MANUFACTURING_RELEASE read it.
+- **Result (actual):** no records exist; Gate G NO DATA for both boards (29 required evaluation tests, 23 compact).
+- **Tests:** `tests/test_bench.py` (11, synthetic records in temporary folders; none written to the project).

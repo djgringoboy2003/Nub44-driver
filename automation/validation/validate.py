@@ -489,6 +489,8 @@ def gate_g() -> str:
     if not isinstance(variants, dict) or not variants:
         return "OPEN: requires assembled-prototype testing (cannot be closed by software)"
     states = {v: (variants.get(v) or {}).get("gate_g", "NO DATA") for v in spec.VARIANTS}
+    if all(s == "NO DATA" for s in states.values()):
+        return "OPEN: requires assembled-prototype testing (no bench records yet; cannot be closed by software)"
     text = ", ".join(f"{v} {s}" for v, s in states.items())
     return ("PASS: " if all(s == "PASS" for s in states.values()) else "OPEN: ") + "bench evidence " + text
 
@@ -527,8 +529,24 @@ def classify(known: list[dict]) -> dict:
     return result
 
 
+def bench_evidence() -> None:
+    """Refresh reports/bench-summary.json from documentation/testing/results (MEASURED records only)."""
+    s = importlib.util.spec_from_file_location("nubm44_bench", ROOT / "automation/bench/bench.py")
+    module = importlib.util.module_from_spec(s)
+    s.loader.exec_module(module)
+    module.RESULTS, module.REPORTS = ROOT / "documentation/testing/results", REP
+    catalogue = module.load_catalogue(ROOT / "documentation/testing/bench-tests.yaml")
+    summary = module.summarise(module.RESULTS, catalogue)
+    module.write_report(summary, catalogue, REP)
+    for p in summary["invalid_records"]:
+        add("VAL-BENCH-INVALID", "Bench record valid (schema, metadata, raw-data hashes, MEASURED origin)", "TEST",
+            "FAIL", p, "see reports/bench-report.md")
+
+
 def run_checks(mode: str) -> None:
     entries.clear()
+    if mode in ("full", "manufacturing", "bench") and (ROOT / "automation/bench/bench.py").is_file():
+        bench_evidence()
     variants = {"eval-cad": ["evaluation-board"], "compact-cad": ["compact-22mm"]}.get(mode, list(spec.VARIANTS))
     if mode in ("full", "fast", "manufacturing"):
         research()
