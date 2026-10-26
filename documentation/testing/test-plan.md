@@ -41,6 +41,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T0.1 | Visual / X-ray inspection of U1 (VQFN-HR), U3 (VQFN) | Microscope; X-ray if available | No bridges, centre pads soldered | REQ-PCB-01 |
 | T0.2 | Polarity marks | Compare with `manufacturing/pcbway/<variant>/drawings/assembly_*.pdf` | All diodes, ICs and FETs oriented correctly | REQ-MFG-02 |
 | T0.3 | Short check VBAT–GND, VOUT–GND, LD+–LD− | DMM | > 1 kΩ (bleeder 4.7 kΩ on VOUT) | — |
+| T0.4 | Fuses | After programming, read the fuses back with pymcuprog (`firmware/README.md`) | BODCFG = 0x06, OSCCFG FREQSEL = 0x02; a board with other values blinks fault 15 and never emits | DD-28 |
 
 **Stage 1: power-up on a bench supply with a dummy load.**
 
@@ -53,9 +54,10 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T1.5 | Vf below Vbat (buck mode) | Dummy load with Vf ≈ 3.8 V at 4 A, supply 4.2 V | Current still regulated | REQ-OUT-02 |
 | T1.6 | Ripple | Laser-current ripple at 3.0 V and 4.2 V | ≤ 10 % p-p (prediction 8.9 % at 2.83 V) | power-stage calc |
 | T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; target ≥ 94 % at 4.0 V (owner deviation from > 95 %, DD-26) (predicted 94.6 % by the loss model, about 94.1 % with the evaluation-board copper) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
-| T1.8 | Flash mode | Short supply interruption (< 0.5 s) via the relay; check 2 Hz / 50 % | Mode advances; no overshoot at each flash; off < 1 ms to < 50 mA | REQ-MODE-02/04 (SIM-06) |
-| T1.9 | Mode memory timing | Interruptions of 0.1 / 0.3 / 0.6 / 1.0 s | < 0.5 s advances mode, > 1 s resets (record the actual threshold) | firmware |
+| T1.8 | Flash mode | Short supply interruption (< 0.5 s) via the relay; check 2 Hz / 50 % | Mode advances exactly once, also with a bouncing mechanical switch; no overshoot at each flash; off < 1 ms to < 50 mA | REQ-MODE-02/04 (SIM-06), DD-28 |
+| T1.9 | Mode memory timing | Interruptions of 0.01 / 0.1 / 0.3 / 0.6 / 1.0 s; scope VBAT, VMCU and LASER_EN_N | < 30 ms keeps the mode, 30 ms–0.5 s advances it, longer resets to continuous (record the actual thresholds and the VMCU minimum); the laser is off from the first 2.6 V crossing | firmware, DD-28 |
 | T1.10 | CC pin polarity | Force the backup limit (lower R_FB_TOP temporarily, or a light test load with a CSA fault injected) | Confirm the firmware's active-low assumption | firmware README |
+| T1.11 | Measurement chain | Supply 2.9 / 3.2 / 3.7 / 4.2 V with emission off; read the firmware's VBAT through UPDI (debugger) or compare the 3.2 V start refusal and the 3.1 V warning against a DMM; at 4 A compare the current reading with the bench shunt | VBAT within ± 3 % (reference tolerance); current within ± 5 % | DD-28, R-10 |
 
 **Stage 2: protection and faults (dummy load).**
 
@@ -73,6 +75,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 | T2.10 | VCC ripple | Short-ground probe across C7 and at U1 pin 19, 3.0 V and 4.2 V at 4 A | Record ripple; VCC stays above the TPS552882 VCC UVLO | layout review DRIVE-VCC5 |
 | T2.11 | Control-node noise and current jitter | Probe FB, COMP and CS at 3.0 V / 4 A; scope laser-current ripple spectrum; compare the measured current with the CS reading | Record; regulated-current offset within the ± 5 % budget (layout DC estimate +0.28 % evaluation, +0.75 % compact) | layout review GND-OFFSET, SPACE-COMP |
 | T2.12 | U1 power-pin temperature | Thermal camera on U1's top edge (SW2 pin 21) and the SW1/VOUT necks at 4 A, 2.9 V, steady state | Record; compare with T2.7 thermocouples | DD-16, layout review NECK-SW2 |
+| T2.13 | Sensor faults | (a) During arming, short NTC_BRD to GND with a probe: fault 11 within 0.1 s. (b) Fit a 10 kΩ NTC on TP10 before power-up, then disconnect it during emission: fault 12 within 0.1 s. (c) Power up without the TP10 NTC: normal operation | As stated; no emission after a fault until power is removed | REQ-SAFE-08, DD-28 |
 
 **Stage 3: battery operation (dummy load).**
 

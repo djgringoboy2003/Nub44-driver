@@ -391,19 +391,27 @@
   },
   {
    "id": "VAL-FW-TEST",
-   "item": "Firmware state-machine unit tests (host)",
+   "item": "Firmware host tests: state machine, conversions, hold-up, runtime, HAL register model",
    "method": "TEST(host)",
    "status": "PASS",
-   "evidence": "firmware/tests/test_app.c",
-   "detail": "26 checks, 0 failures"
+   "evidence": "firmware/tests/, firmware/build.py",
+   "detail": "6 suites, 531 checks, 0 failures; compiler: tcc version 0.9.27 (x86_64 Windows)"
   },
   {
    "id": "VAL-FW-BUILD",
    "item": "Firmware builds for ATtiny1616 with -Werror",
    "method": "BUILD",
    "status": "PASS",
-   "evidence": "firmware/build.ps1",
-   "detail": ""
+   "evidence": "firmware/build.py",
+   "detail": "flash 4134 B, RAM 59 B; avr-gcc.exe (GCC) 15.2.0"
+  },
+  {
+   "id": "VAL-FW-MUTATION",
+   "item": "Firmware tests detect each audited defect (mutation check)",
+   "method": "TEST(host)",
+   "status": "PASS",
+   "evidence": "firmware/build.py --mutation",
+   "detail": "15/15 mutants killed"
   },
   {
    "id": "VAL-REQ-BLOCKED",

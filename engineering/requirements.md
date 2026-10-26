@@ -49,7 +49,7 @@ Statuses are updated as work proceeds; see the change history in git.
 
 | ID | Requirement | Source | Verify | Status | Notes |
 |---|---|---|---|---|---|
-| REQ-MODE-01 | Continuous output mode. | BRIEF | TEST | DESIGNED | Firmware MODE_CONTINUOUS; unit-tested (firmware/tests). |
+| REQ-MODE-01 | Continuous output mode. | BRIEF | TEST | DESIGNED | Firmware MODE_CONTINUOUS; host-tested (firmware/tests). Mode changes by power gap or debounced switch (DD-28). |
 | REQ-MODE-02 | Flashing output mode. | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-06 flash transitions; firmware unit test checks 2 Hz / 50 %. |
 | REQ-MODE-03 | Default flash pattern 2 Hz, 50 % duty. | ASSUMPTION | INSPECT | DESIGNED | 2 Hz / 50 % in firmware (assumption; owner to confirm). |
 | REQ-MODE-04 | Mode transitions cause no overshoot (REQ-OUT-05) and no output-capacitor discharge through the diode. | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-06: each turn-on is a soft-started current ramp; turn-off reaches < 50 mA in 0.49 ms. |
@@ -61,12 +61,12 @@ Statuses are updated as work proceeds; see the change history in git.
 | REQ-PROT-01 | Reverse-polarity protection using a MOSFET (not a series diode). | BRIEF | SIM, TEST | VERIFIED-SIM | High-side SiSS23DN; SIM-10: 0.25 µA with −4.2 V applied. NEEDS-TEST. |
 | REQ-SAFE-01 | Hardware shutdown path that does not depend on firmware. | BRIEF | INSPECT, TEST | VERIFIED-SIM | EN/UVLO wired-AND of MCU, interlock and OV backstop; SIM-07 shows < 0.1 ms to < 50 mA. |
 | REQ-SAFE-02 | External safety interlock: output is disabled in hardware when the interlock loop is open. | BRIEF | INSPECT, TEST | VERIFIED-SIM | Q5 forces EN low with the loop open; SIM-07; firmware latches FAULT_INTERLOCK (manual reset). |
-| REQ-SAFE-03 | Default-disabled start-up: no emission on battery insertion until enabled by the user. | BRIEF | SIM, TEST | DESIGNED | R17 pull-up holds Q4 on, so the converter is off; firmware 2 s emission delay; unit-tested. |
+| REQ-SAFE-03 | Default-disabled start-up: no emission on battery insertion until enabled by the user. | BRIEF | SIM, TEST | DESIGNED | R17 pull-up holds Q4 on, so the converter is off; firmware 2 s emission delay after every power-up and every restart; a watchdog or unexpected reset latches a fault instead of re-arming (DD-28); host-tested, including the HAL register model. |
 | REQ-SAFE-04 | Soft-start of laser current. | BRIEF | SIM, TEST | VERIFIED-SIM | 4 ms reference ramp → current ramp (SIM-01/02). |
 | REQ-SAFE-05 | Output overshoot limiting. | BRIEF | SIM, TEST | VERIFIED-SIM | See REQ-OUT-05. |
-| REQ-SAFE-06 | Battery undervoltage lockout. | BRIEF | TEST | VERIFIED-CALC | Hardware UVLO 3.08/2.83 V plus firmware 2.9 V cut-off (unit-tested). |
+| REQ-SAFE-06 | Battery undervoltage lockout. | BRIEF | CALC, TEST | VERIFIED-CALC | Hardware UVLO 3.08/2.83 V (calculation checks 13/14) plus firmware 2.9 V cut-off and 3.2 V start check at power-up and at the end of every arming period (host-tested, DD-28). The firmware measures VBAT ratiometrically so the thresholds stay within the reference's specified supply range. NEEDS-TEST (T2.6, T1.11). |
 | REQ-SAFE-07 | Overcurrent protection. | BRIEF | SIM, TEST | VERIFIED-SIM | ISP/ISN ceiling 4.8–5.2 A plus 12 A average inductor limit; SIM-08. |
-| REQ-SAFE-08 | Thermal shutdown or thermal monitoring. | BRIEF | TEST | DESIGNED | Board NTC + optional laser NTC, firmware latch at 85 °C / 60 °C (unit-tested); IC TSD 175 °C. NEEDS-TEST. |
+| REQ-SAFE-08 | Thermal shutdown or thermal monitoring. | BRIEF | TEST | DESIGNED | Board NTC (mandatory: open or short latches fault 11) + optional laser NTC (a short, or a loss after being present at power-up, latches fault 12); firmware latch at 85 °C / 60 °C (host-tested, DD-28); IC TSD 175 °C. Before DD-28 a failed sensor silently disabled the limit (AUD-FW-01). NEEDS-TEST (T2.7, T2.13). |
 | REQ-SAFE-09 | Open-load protection (laser disconnected). | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-09: Zener backstop alone limits VOUT to 6.7 V; AC0 trip at 5.6 V in firmware. |
 | REQ-SAFE-10 | Output short-circuit protection. | BRIEF | SIM, TEST | VERIFIED-SIM | SIM-08: 4.0 A held into a 10 mΩ short; firmware latches FAULT_SHORT. |
 | REQ-SAFE-11 | Safe shutdown with controlled output discharge. | BRIEF | SIM, TEST | VERIFIED-SIM | Input isolated when disabled; 4.7 kΩ bleeder discharges VOUT; SIM-06/07. |

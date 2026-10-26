@@ -10,6 +10,7 @@ decisions; gate G always needs hardware).
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import hashlib
 import re
@@ -230,27 +231,37 @@ def simulation():
             json.dumps(r.get("metrics", {}), default=float)[:160])
 
 
-def firmware():
-    tcc = next((ROOT / "tools/tcc").rglob("tcc.exe"), None) if (ROOT / "tools/tcc").exists() else None
-    if tcc is None:
-        return add("VAL-FW-TEST", "Firmware unit tests", "TEST(host)", "NOT RUN", "firmware/tests")
-    exe = ROOT / "build/test_app.exe"
-    exe.parent.mkdir(exist_ok=True)
-    r = subprocess.run([str(tcc), "-o", str(exe), str(ROOT / "firmware/tests/test_app.c"), str(ROOT / "firmware/src/app.c")],
-                       capture_output=True, text=True)
-    if r.returncode != 0:
-        return add("VAL-FW-TEST", "Firmware unit tests", "TEST(host)", "FAIL", "firmware/tests", r.stderr[-200:])
-    r = subprocess.run([str(exe)], capture_output=True, text=True)
-    add("VAL-FW-TEST", "Firmware state-machine unit tests (host)", "TEST(host)",
-        "PASS" if r.returncode == 0 else "FAIL", "firmware/tests/test_app.c", r.stdout.strip().splitlines()[-1] if r.stdout else "")
-    avr = next((ROOT / "tools/avr-gcc").rglob("avr-gcc.exe"), None) if (ROOT / "tools/avr-gcc").exists() else None
-    if avr is None:
-        return add("VAL-FW-BUILD", "Firmware target build", "BUILD", "NOT RUN", "firmware/")
-    r = subprocess.run([str(avr), "-mmcu=attiny1616", "-Os", "-std=gnu11", "-Wall", "-Wextra", "-Werror",
-                        "-o", str(ROOT / "build/fw_check.elf"), str(ROOT / "firmware/src/main.c"), str(ROOT / "firmware/src/app.c")],
-                       capture_output=True, text=True)
-    return add("VAL-FW-BUILD", "Firmware builds for ATtiny1616 with -Werror", "BUILD",
-               "PASS" if r.returncode == 0 else "FAIL", "firmware/build.ps1", r.stderr[-200:])
+def firmware_build_module():
+    path = ROOT / "firmware/build.py"
+    spec_ = importlib.util.spec_from_file_location("nubm44_firmware_build", path)
+    module = importlib.util.module_from_spec(spec_)
+    spec_.loader.exec_module(module)
+    return module
+
+
+def firmware(target=True, mutation=True):
+    """Run the firmware build driver (the single source of compile flags) and record each step."""
+    fb = firmware_build_module()
+    suites, compiler = fb.host_tests(ROOT / "build/fw-validate")
+    statuses = {s["status"] for s in suites}
+    checks = sum(s.get("checks", 0) for s in suites)
+    fails = sum(s.get("failures", 0) for s in suites)
+    bad = [f"{s['suite']}: {s['status']} {s.get('detail', '')[:120]}" for s in suites if s["status"] != "PASS"]
+    status = "PASS" if statuses == {"PASS"} else ("NOT RUN" if statuses == {"NOT RUN"} else "FAIL")
+    add("VAL-FW-TEST", "Firmware host tests: state machine, conversions, hold-up, runtime, HAL register model",
+        "TEST(host)", status, "firmware/tests/, firmware/build.py",
+        f"{len(suites)} suites, {checks} checks, {fails} failures; compiler: {compiler}" + ("; " + "; ".join(bad) if bad else ""))
+    if target:
+        t = fb.target_build()
+        add("VAL-FW-BUILD", "Firmware builds for ATtiny1616 with -Werror", "BUILD", t["status"], "firmware/build.py",
+            (f"flash {t['flash_bytes']} B, RAM {t['ram_bytes']} B; {t['compiler']}" if t["status"] == "PASS"
+             else t.get("detail", "")[-300:]))
+    if mutation:
+        m = fb.mutation_check()
+        killed = sum(r["status"] == "KILLED" for r in m.get("mutants", []))
+        add("VAL-FW-MUTATION", "Firmware tests detect each audited defect (mutation check)", "TEST(host)", m["status"],
+            "firmware/build.py --mutation",
+            f"{killed}/{len(m.get('mutants', []))} mutants killed" if m.get("mutants") else m.get("detail", ""))
 
 
 def exports(variant):

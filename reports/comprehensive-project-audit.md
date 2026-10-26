@@ -56,24 +56,26 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 
 | ID | Sev. | Class | Title | Status |
 |---|---|---|---|---|
-| AUD-FW-01 | high | Defect | Open or shorted board NTC silently disables board over-temperature protection | OPEN |
-| AUD-FW-02 | medium | Defect | A fitted laser NTC that opens or shorts is silently treated as "not fitted" | OPEN |
-| AUD-FW-03 | high | Defect | Watchdog cleared on every loop pass, so a stalled tick never resets the MCU | OPEN |
-| AUD-FW-04 | high | Defect | 2.5 V internal reference used below its 2.9 V VDD minimum near the battery thresholds | OPEN |
-| AUD-FW-05 | medium | Defect | ADC0 reference switched every tick with no settling or forced reference | OPEN |
-| AUD-FW-06 | medium | Defect | Switch input not debounced (header claims it is) | OPEN |
-| AUD-FW-07 | medium | Defect | Watchdog reset restarts emission automatically with no fault indication | OPEN |
-| AUD-FW-08 | medium | Defect | Power-loss handler races can sleep forever with the watchdog off | OPEN |
-| AUD-FW-09 | medium | Defect | Reconnection bounce after a tail-switch click can advance the mode more than once | OPEN |
-| AUD-FW-10 | medium | Defect | MCU pull-ups drive TPS552882 CC/PG above VCC + 0.3 V while the converter is shut down | OPEN |
-| AUD-FW-11 | low | Defect | Start voltage checked only at boot, never before emission after re-arming | OPEN |
-| AUD-FW-12 | low | Defect | Boolean tick flag drops ticks on overrun and stretches fault timers silently | OPEN |
-| AUD-FW-13 | low | Defect | Fault codes ≥ 10 blink without a pause and cannot be read | OPEN |
-| AUD-FW-14 | low | Defect | Over-voltage event while the converter is off is not latched until the next enabled tick | OPEN |
-| AUD-FW-15 | medium | Enhancement | No detection of output current while firmware holds the converter off | OPEN |
-| AUD-FW-16 | medium | Defect | Fuses (BOD level, watchdog) neither defined nor verified by the build/programming flow | OPEN |
-| AUD-FW-17 | low | Enhancement | Hardware layer has no host tests (no HAL; ISRs, init, conversions, hold-up untested) | OPEN |
+| AUD-FW-01 | high | Defect | Open or shorted board NTC silently disables board over-temperature protection | FIXED |
+| AUD-FW-02 | medium | Defect | A fitted laser NTC that opens or shorts is silently treated as "not fitted" | FIXED |
+| AUD-FW-03 | high | Defect | Watchdog cleared on every loop pass, so a stalled tick never resets the MCU | FIXED |
+| AUD-FW-04 | high | Defect | 2.5 V internal reference used below its 2.9 V VDD minimum near the battery thresholds | FIXED |
+| AUD-FW-05 | medium | Defect | ADC0 reference switched every tick with no settling or forced reference | FIXED |
+| AUD-FW-06 | medium | Defect | Switch input not debounced (header claims it is) | FIXED |
+| AUD-FW-07 | medium | Defect | Watchdog reset restarts emission automatically with no fault indication | FIXED |
+| AUD-FW-08 | medium | Defect | Power-loss handler races can sleep forever with the watchdog off | FIXED |
+| AUD-FW-09 | medium | Defect | Reconnection bounce after a tail-switch click can advance the mode more than once | FIXED |
+| AUD-FW-10 | medium | Defect | MCU pull-ups drive TPS552882 CC/PG above VCC + 0.3 V while the converter is shut down | FIXED |
+| AUD-FW-11 | low | Defect | Start voltage checked only at boot, never before emission after re-arming | FIXED |
+| AUD-FW-12 | low | Defect | Boolean tick flag drops ticks on overrun and stretches fault timers silently | FIXED |
+| AUD-FW-13 | low | Defect | Fault codes ≥ 10 blink without a pause and cannot be read | FIXED |
+| AUD-FW-14 | low | Defect | Over-voltage event while the converter is off is not latched until the next enabled tick | FIXED |
+| AUD-FW-15 | medium | Enhancement | No detection of output current while firmware holds the converter off | FIXED |
+| AUD-FW-16 | medium | Defect | Fuses (BOD level, watchdog) neither defined nor verified by the build/programming flow | MITIGATED |
+| AUD-FW-17 | low | Enhancement | Hardware layer has no host tests (no HAL; ISRs, init, conversions, hold-up untested) | FIXED |
 | AUD-FW-18 | info | Risk | CC pin active-low polarity not stated in the TPS552882 datasheet | DOCUMENTED |
+| AUD-FW-19 | high | Defect | DAC2 reference written to VREF.CTRLC: AC2 power-loss trip at about 0.57 V, not 2.6 V | FIXED |
+| AUD-FW-20 | medium | Defect | DAC2 not enabled in standby: AC2 reference stops during the hold-up sleep | FIXED |
 | AUD-VAL-01 | high | Defect | Calculation evidence not bound to its inputs; stale results pass | OPEN |
 | AUD-VAL-02 | high | Defect | Simulation evidence not bound to its inputs or ngspice version; stale results pass | OPEN |
 | AUD-VAL-03 | medium | Defect | Malformed calculation/simulation evidence crashes the validator or passes on a status string | OPEN |
@@ -102,7 +104,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-SRC-02 | low | Enhancement | Stock/price snapshot carries no age flag | OPEN |
 | AUD-SRC-03 | medium | Risk | Capacitor DC-bias retention (50–55 %) is an assumption | DOCUMENTED |
 | AUD-DOC-01 | medium | Defect | AGENTS.md toolchain paths corrupted by control characters | OPEN |
-| AUD-DOC-02 | low | Defect | Firmware README/app.h out of date (debounce, check count) | OPEN |
+| AUD-DOC-02 | low | Defect | Firmware README/app.h out of date (debounce, check count) | FIXED |
 | AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | OPEN |
 | AUD-CI-01 | medium | Enhancement | No continuous integration; portable and Windows/KiCad tests not separated | OPEN |
 | AUD-PROC-01 | low | Defect | Firmware compile flags duplicated in `build.ps1` and `validate.py` | OPEN |
@@ -128,7 +130,7 @@ side effects; dependencies; tests; status; validation outcome.
   `FAULT_SENSOR_BOARD` after a short confirmation time (so one ADC glitch cannot trip it).
 - **Side effects:** a board with a damaged RT1 no longer emits (intended).
 - **Tests:** open, short, ADC rail values, boundary, glitch shorter than the confirmation time, latch persistence.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED (DD-28). `conv_ntc()` classifies open/short; `app.c` latches FAULT_SENSOR_BOARD after 50 ms. **Validation:** `test_app.c` open, short, 49 ms glitch, boundary 85.0/85.1 °C; `test_fw.c` raw 0 and 1023 through the HAL; mutant killed.
 
 #### AUD-FW-02 Fitted laser NTC that fails is treated as not fitted (medium, defect)
 - **Files:** same as FW-01.
@@ -140,7 +142,7 @@ side effects; dependencies; tests; status; validation outcome.
 - **Correction:** latch presence at boot; afterwards an open or short latches `FAULT_SENSOR_LASER`. A short at
   boot is a fault.
 - **Tests:** absent at boot, present then open, present then short, short at boot.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED (DD-28). Presence latched at the end of the 20 ms boot window; `APP_LASER_NTC_REQUIRED` build option. **Validation:** `test_app.c` absent, fitted-then-open, short at boot, valid hot reading; required-variant suite; mutant killed.
 
 #### AUD-FW-03 Watchdog cleared on every loop pass (high, defect)
 - **Files:** `firmware/src/main.c` `main()`.
@@ -150,7 +152,7 @@ side effects; dependencies; tests; status; validation outcome.
 - **Expected:** the watchdog is only cleared after a complete supervision cycle (sample → state machine → output).
 - **Correction:** clear the watchdog only after `app_tick()` has run and the output was written.
 - **Tests:** host harness: with ticks stopped, no watchdog clear occurs.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. `fw_poll()` clears the watchdog only after sampling, the state machine and the output write. **Validation:** `test_fw.c` (1000 polls without ticks: no clear); mutant killed.
 
 #### AUD-FW-04 2.5 V reference used outside its supply range (high, defect)
 - **Files:** `firmware/src/main.c` `analog_init()`, `adc_read()`, `to_mv()`.
@@ -166,7 +168,7 @@ side effects; dependencies; tests; status; validation outcome.
 - **Side effects:** one extra conversion per tick; DAC codes change (160 for AC0, 222 for AC2).
 - **Dependencies:** bench confirmation of the VBAT reading against a DMM (new T1.11).
 - **Tests:** conversion arithmetic at VDD 2.5–4.0 V, saturation, zero/invalid reference readings.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED (DD-28). ADC0 on VDD with INT11V calibration; ADC1/DAC0/DAC2 on INT15V; DAC codes 160/222. **Validation:** `test_conv.c` VBAT within 12 mV for VDD 2.25–4.05 V, 2.9 V readable at VDD 2.6 V; `test_hal.c` reference registers. Bench: T1.11.
 
 #### AUD-FW-05 ADC0 reference switching without settling (medium, defect)
 - **Files:** `firmware/src/main.c` `adc_read()`.
@@ -175,7 +177,7 @@ side effects; dependencies; tests; status; validation outcome.
   VREF start-up (§29.3.1) and INITDLY exists for exactly this case (§30.5.4).
 - **Correction:** force the ADC0 reference on (`VREF.CTRLB`), set `INITDLY`, and discard the first conversion
   after any reference change.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED by removing the switching: ADC0 never changes reference; 1.1 V forced on (`VREF.CTRLB`), INITDLY 64 clocks, first reference conversion discarded. **Validation:** `test_hal.c` checks every ADC0 conversion runs on VDD.
 
 #### AUD-FW-06 Switch input not debounced (medium, defect)
 - **Files:** `firmware/src/main.c` (raw `PORTA.IN` read), `firmware/src/app.c`, `app.h` (`switch_pressed` comment
@@ -185,7 +187,7 @@ side effects; dependencies; tests; status; validation outcome.
 - **Correction:** debounce in the application layer (20 ms stable level), accept a press only after a debounced
   release, ignore a switch held at power-up, and require 250 ms between accepted presses.
 - **Tests:** bounce bursts, rapid presses, held at boot, stuck closed.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. **Validation:** `test_app.c` noisy press = one change, sub-debounce contact ignored, lockout, held at boot, stuck closed; mutant killed.
 
 #### AUD-FW-07 Watchdog reset re-arms emission without a fault (medium, defect)
 - **Files:** `firmware/src/main.c` `main()` reset-flag handling.
@@ -193,7 +195,7 @@ side effects; dependencies; tests; status; validation outcome.
   power-up and, with the interlock closed, emits again after 2 s.
 - **Expected (Class 4, manual reset):** an unexpected reset latches a visible fault until power is removed.
 - **Correction:** latch `FAULT_INTERNAL` on WDRF (and on a software reset without the hold-up marker).
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. `fw_init()` latches FAULT_INTERNAL on WDRF and on a software reset without a valid hold-up record (with check byte). **Validation:** `test_fw.c`; mutant killed.
 
 #### AUD-FW-08 Power-loss handler races (medium, defect)
 - **Files:** `firmware/src/main.c` `handle_power_loss()`.
@@ -203,14 +205,14 @@ side effects; dependencies; tests; status; validation outcome.
   battery is removed long enough for a brown-out. The laser stays off (safe) but the device is locked up.
 - **Correction:** clear the flag first, check `AC2.STATUS.STATE` after reconfiguration, use the
   `cli`/`sei`+`sleep` idiom, and debounce the return (FW-09).
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. `hal_holdup_sleep()` uses cli → state check → sei+sleep; the hold-up loop polls `AC2.STATUS.STATE`; a 1 s guard watchdog covers polling with the supply present. **Validation:** `test_hal.c` (no sleep when present, interrupts enabled at sleep), `test_fw.c` (supply already back: no sleep, restart); mutant killed.
 
 #### AUD-FW-09 Reconnection bounce advances the mode more than once (medium, defect)
 - **Existing:** the first rising edge after a gap resets the MCU at once. A contact that bounces on reconnection
   produces a further short gap immediately after boot; the stored mode is already advanced, so it advances again.
 - **Correction:** a pure hold-up module that requires the supply to stay present for a debounce time before the
   restart, and classifies the gap once.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. `holdup.c` restarts only after 20 ms of continuous supply and measures the gap from the first loss. **Validation:** `test_holdup.c` (bounce, wrap, boundaries), `test_fw.c` (bouncing return = one click, mode advanced once); mutant killed.
 
 #### AUD-FW-10 CC/PG back-powered through MCU pull-ups (medium, defect)
 - **Files:** `firmware/src/main.c` `gpio_init()`.
@@ -219,14 +221,14 @@ side effects; dependencies; tests; status; validation outcome.
   off. PG is never read.
 - **Correction:** PG: pull-up off, digital input disabled. CC: pull-up and input enabled only while the converter
   is enabled, and evaluated only after a short arming delay.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. **Validation:** `test_hal.c` (no pull-up after init, on only while enabled, off after over-voltage), `test_app.c` (pull-up from the second enabled tick, CC read from the third); mutant killed. TPS552882 VCC start-up time is an assumption (≤ 1 ms).
 
 #### AUD-FW-11 Start voltage not re-checked before emission (low, defect)
 - **Existing:** the 3.2 V resting check runs once in `ST_BOOT`; an interlock wait or a re-arm can last
   indefinitely before emission.
 - **Correction:** require the resting voltage at the end of every arming period (converter off) before entering
   `ST_EMIT`.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. **Validation:** `test_app.c` (30 s interlock wait then 3.15 V: fault with detail ARMING_RECHECK; dip during arming that recovers: emits); mutant killed.
 
 #### AUD-FW-12 Ticks lost on overrun (low, defect)
 - **Existing:** `tick_flag` is a boolean; if one pass takes over 1 ms, ticks are lost and the 200 ms low-battery or
@@ -234,18 +236,18 @@ side effects; dependencies; tests; status; validation outcome.
   at 312.5 kHz ADC clock), so this is latent.
 - **Correction:** count pending ticks, run the state machine once per tick, and latch `FAULT_INTERNAL` if the
   backlog exceeds a bound.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. Pending-tick counter (saturating), state machine run once per tick, backlog > 4 latches FAULT_INTERNAL. **Validation:** `test_fw.c`, `test_hal.c` (saturation); mutant killed.
 
 #### AUD-FW-13 Fault codes ≥ 10 unreadable (low, defect)
 - **Existing:** `n` blinks of 300 ms inside a fixed 3000 ms period: code 10 (`FAULT_OVERVOLTAGE`) leaves no pause.
 - **Correction:** period = n × 300 ms + 1500 ms pause.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. **Validation:** `test_app.c` counts n blinks and a ≥ 1.5 s pause for every code 1–15; mutant killed.
 
 #### AUD-FW-14 Over-voltage event while off is not latched (low, defect)
 - **Existing:** `ov_trip` is evaluated only inside `check_running()` (converter enabled). An AC0 event during a
   flash off-phase leaves the state `ST_EMIT` with the indicator on until the next on-phase.
 - **Correction:** evaluate the latched comparator event in every non-fault state.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. **Validation:** `test_app.c` over-voltage while emitting, arming and in a flash off phase; mutant killed.
 
 #### AUD-FW-15 No check that the output is really off (medium, enhancement)
 - **Existing:** nothing detects laser current while firmware holds LASER_EN_N high (failed Q4 open, a broken PA1
@@ -253,27 +255,49 @@ side effects; dependencies; tests; status; validation outcome.
   fault code so the user knows.
 - **Correction:** `FAULT_OUTPUT_WHILE_OFF` when the current exceeds 200 mA for 20 ms while disabled, outside a
   10 ms turn-off blanking window (SIM-06 shows < 50 mA within 0.5 ms of disable).
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED (FAULT_OUTPUT_WHILE_OFF, 10 ms blanking, 200 mA, 20 ms). **Validation:** `test_app.c` (150 mA tolerated, 800 mA latches, flash turn-off decay not a fault); mutant killed.
 
 #### AUD-FW-16 Fuses undefined (medium, defect)
 - **Existing:** README says "set the BOD level to 1.8 V"; `build.ps1 -Flash` writes flash only. ATtiny1616 BODCFG
   resets to 0x00 (BOD disabled). Without BOD, RAM retention during hold-up (the mode memory) is unprotected.
 - **Correction:** record the required fuse values in the firmware (single source), print them in the build, and
   add a fuse-verification step to the bench plan. Programming fuses stays a manual bench action.
-- **Status:** OPEN. **Validation:** —
+- **Status:** MITIGATED. Required values in `firmware/src/fuses.h`, start-up check latches FAULT_CONFIG, programming/readback commands in the firmware README, bench step T0.4. Programming remains a manual bench action. **Validation:** `test_hal.c` (BOD disabled and 16 MHz rejected), `test_fw.c`.
 
 #### AUD-FW-17 Hardware layer untested (low, enhancement)
 - **Existing:** `main.c` mixes register access with logic (tick handling, conversions, hold-up), none of which
   is compiled on the host.
 - **Correction:** split into `hal.h` + `hal_avr.c` (registers, ISRs), `fw.c` (scheduler, sampling, outputs,
   hold-up), `conv.c` (pure conversions), `holdup.c` (pure gap logic); add a recording mock HAL and host tests.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. Layers `hal_avr.c` / `fw.c` / `app.c` / `conv.c` / `holdup.c`; six host suites (531 checks) in `firmware/build.py`, mock constants checked against avr-libc by `tests/test_firmware_build.py`; 15/15 mutants killed.
 
 #### AUD-FW-18 CC pin polarity (info, risk)
 - SLVSFC5 Table 5-1 says only "Constant current output indication"; the electrical table gives open-drain
   characteristics (I_CC_H leakage, V_CC_L at 4 mA). The sibling TPS552892 (SLVSH28A, pin 4) states "open drain
   output … outputs low level" when the current limit triggers. The firmware's active-low assumption is plausible
   and stays a bench item (T1.10). **Status:** DOCUMENTED.
+
+#### AUD-FW-19 DAC2 reference in the wrong register (high, defect)
+- **Files:** `firmware/src/main.c` `analog_init()` (before DD-28).
+- **Existing:** `VREF.CTRLC = VREF_ADC1REFSEL_2V5_gc | VREF_DAC2REFSEL_2V5_gc;`. DS40001997C §18.5.3/18.5.4 and the
+  avr-libc header put ADC1REFSEL and DAC1REFSEL in CTRLC and DAC2REFSEL in CTRLD (reset 0x00 = 0.55 V). The write set
+  DAC1's reference (unused) and left DAC2 at 0.55 V, so AC2 compared VBAT/2 with 133/256 × 0.55 V = 0.29 V: the
+  "battery removed" event fired near VBAT 0.57 V instead of 2.6 V.
+- **Consequence:** after a click, VBAT decays slowly through the dividers (tens of kΩ against 66 µF, about a second
+  to 0.57 V) while the MCU drains C16 in milliseconds, so the MCU browns out before AC2 fires: the short-click mode
+  change cannot work and the AC2 "laser off" path never acts. The hardware UVLO (2.83 V) still stops the converter,
+  so there is no emission hazard.
+- **Root cause:** register field mapping not verified; no host test of the register configuration.
+- **Correction:** write `VREF.CTRLD`; the register-model test (`firmware/tests/test_hal.c`) asserts every reference
+  register; the mutation check re-injects this defect.
+- **Status:** FIXED. **Validation:** `test_hal.c` asserts `VREF.CTRLD`; mutant (write to CTRLC) killed. Bench: T1.9.
+
+#### AUD-FW-20 DAC2 stops in standby (medium, defect)
+- **Existing:** `DAC2.CTRLA = DAC_ENABLE_bm` without RUNSTDBY. DS40001997C §31.3.3: with RUNSTDBY = 0 the DAC stops
+  in standby, which is the sleep mode used during the hold-up, so AC2's negative input is undefined exactly when it
+  must detect the battery's return.
+- **Correction:** `DAC_RUNSTDBY_bm`; asserted by the register-model test. Hold-up current impact UNKNOWN until T1.9.
+- **Status:** FIXED. **Validation:** `test_hal.c`; mutant killed. Bench: T1.9 (hold-up current).
 
 ### Validation and evidence
 
@@ -422,7 +446,7 @@ side effects; dependencies; tests; status; validation outcome.
 - The avr-gcc and TinyCC rows contain BEL/BS/TAB bytes where `\a`, `\b`, `\t` were meant as path separators
   (`cat -A` shows `tools^Gvr-gcc…`). **Status:** OPEN.
 
-#### AUD-DOC-02 Firmware docs out of date (low, defect) — **Status:** OPEN.
+#### AUD-DOC-02 Firmware docs out of date (low, defect) — **Status:** FIXED: firmware README rewritten (behaviour, fault codes, measurement chain, fuses, files, build).
 
 #### AUD-DOC-03 Requirement statuses (low, defect)
 - REQ-SAFE-06 is VERIFIED-CALC although its method is TEST only; REQ-SAFE-08 says the thermal latch is

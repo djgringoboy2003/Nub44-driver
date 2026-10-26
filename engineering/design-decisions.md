@@ -323,3 +323,35 @@ each with cost or scope consequences that bench data should inform.
 complete in CAD.
 - The compact board stays a routing draft, and its Gates D/E/F stay open.
 - Revisit it after the evaluation prototype has produced bench data (efficiency, temperatures, waveforms).
+
+## DD-28 Firmware supervision and measurement chain (audit 2026-10-26)
+The independent audit (`reports/comprehensive-project-audit.md`, AUD-FW-01…20) found firmware defects that weakened
+supervision without touching any protection threshold. The corrections keep every DD-06/DD-08 threshold, the
+4.0 A setpoint and the hardware enable chain unchanged; they only add checks or make existing ones work.
+- **Measurement chain.** The 2.5 V internal reference is specified for VDD ≥ 2.9 V (DS40001997C Table 37-22) and
+  VMCU sits one D2 drop below VBAT. ADC0 now uses VDD as its reference for every channel and measures the 1.1 V
+  reference each tick (ratiometric VBAT and current); ADC1, DAC0 and DAC2 use the 1.5 V reference. The DAC2/AC2
+  reference is written to `VREF.CTRLD`; the previous code wrote it to `CTRLC`, leaving the power-loss comparator on
+  the 0.55 V reset reference (trip near VBAT 0.57 V), so the short-click mode change could not work. DAC2 now runs
+  in standby.
+- **Sensors.** The board NTC is mandatory: open or short for 50 ms latches FAULT_SENSOR_BOARD (previously the
+  limit was silently skipped). The laser NTC stays optional: open at power-up means not fitted for that session;
+  a short, or a loss after being present, latches FAULT_SENSOR_LASER.
+- **Supervision.** The watchdog is cleared only after a complete sample → state machine → output cycle; a watchdog
+  or unexpected software reset latches FAULT_INTERNAL instead of re-arming; pending ticks are counted (an overrun
+  latches a fault); the over-voltage event is latched in every state; current above 200 mA while the firmware holds
+  the converter off latches FAULT_OUTPUT_WHILE_OFF; fuses are checked at start-up (FAULT_CONFIG).
+- **Start voltage.** The 3.2 V resting check now runs at the end of every arming period as well as at power-up.
+- **User interface.** The switch is debounced (20 ms, one press per release, 250 ms lockout, a switch held at
+  power-up is ignored). Power gaps are classified after the supply has been back for 20 ms: below 30 ms a glitch
+  (same mode, a latched fault is kept, because a glitch is not a deliberate power cycle), up to 0.5 s a click (next
+  mode), longer a fresh start. Fault codes 1–15 blink with a 1.5 s pause.
+- **Pull-ups into the converter.** The TPS552882 limits CC and PG to VCC + 0.3 V (SLVSFC5 §6.1) and VCC is off in
+  shutdown. PG (never read) has no pull-up; the CC pull-up is on only while the converter runs, from its second
+  enabled millisecond, and CC is evaluated from the third.
+- **Structure.** `hal_avr.c` (registers only), `fw.c` (cycle and hold-up), `app.c`, `conv.c`, `holdup.c`; host tests
+  cover each layer, including `hal_avr.c` against a register model, and a mutation check proves the tests catch
+  each audited defect.
+
+Bench confirmation remains Gate G: fuses (T0.4), hold-up and gap classification (T1.8/T1.9), CC polarity (T1.10),
+measurement chain (T1.11) and sensor-fault response (T2.13).

@@ -1,0 +1,197 @@
+{
+ "schema": "nubm44-firmware-evidence.v1",
+ "generated_utc": "2026-10-26T17:37:38.574817+00:00",
+ "evidence_class": "SOFTWARE (host tests and a compiler build; not hardware verification)",
+ "sources": {
+  "firmware/build.py": "3f405b6c0b4c0414222b47abb4b2ddac1566085290770df2bf77f7ac05a6798e",
+  "firmware/src/app.c": "837368f5a5377530bd0c0e8554fc30f680ef61161f4322e771b3cf667924ae66",
+  "firmware/src/app.h": "3135e7b7ec87bf6b7bade379c5bc9c25f2c649b9fccbc6594082e8f76f0f6c18",
+  "firmware/src/conv.c": "ccf3f64cf226d9b88890e660dc0f6edfc91c659d6574b02deb7bd5a447da5bee",
+  "firmware/src/conv.h": "101576c309ea4a2d7f0e626a5917f6be6d924eea2225bfdb6eefd5b85a364a2e",
+  "firmware/src/fuses.h": "6cadd80c5b49e443d6c2d5b37f29640affcea6881a230bf0f37dd1ed468a2762",
+  "firmware/src/fw.c": "cfa9b1e2b5a87432335176e657b09d10e85f82ec02f2b8b5c780fa0a4205d868",
+  "firmware/src/fw.h": "704904ba8dcaafa76e8fcc4d0d691e30d91647d1d8b8c5fe01893dd24dd0fa18",
+  "firmware/src/hal.h": "78f5bd63223db510fea343ef4f6a7d77d2604dad407e01202d6c342f689739d2",
+  "firmware/src/hal_avr.c": "b110c3e7b9c72bad9ff67dfed785b3af7b70fef09818d1ebe59472392622e797",
+  "firmware/src/holdup.c": "d4ff50384e10f2ed44fcf025073738070c99c056999deba0ea940a5a58534863",
+  "firmware/src/holdup.h": "d1cb0cce4b6598825f8e5859e2b6b4b2f66a66b612acc847275b3e67aa300f6e",
+  "firmware/src/main.c": "8b4ffdfacad8bec55f53626d12c967d7c430c099d074a52634409c60fa54026a",
+  "firmware/tests/check.h": "0bf335c9d200c9a32187a1db7d7cba86714cbf70205eba96b5130fe6477e86db",
+  "firmware/tests/hal_mock.c": "502f29bb4ab3a9087af99246a8605775bba8ab6d0d131748f84838f0fc7bfeaa",
+  "firmware/tests/hal_mock.h": "10645ed50f8bce3eea576d1e8f253f1510a99ab2fee6ff4be78691095660a7af",
+  "firmware/tests/mock/avr/interrupt.h": "a1e919e2d24351c0229b868db1355d795fe531aac25235daa5746d359f58d54f",
+  "firmware/tests/mock/avr/io.h": "9a6d13b90083937549c81d1f2d49a3015872511e50b1af369075527a0dff3ebb",
+  "firmware/tests/mock/avr/sleep.h": "8b814f26c090d505abd81d7892f3bed4fca8ba622bc139e96ed96fb36a6c1bd4",
+  "firmware/tests/test_app.c": "ccf22a74b37f2a087dc71ed7b82f1ecf39a4282167abf6ca9e4f13fc41aeee08",
+  "firmware/tests/test_conv.c": "39f43766fb18885dfd10913a641311fda882e68686afa28e68fccbfbe3b580bb",
+  "firmware/tests/test_fw.c": "be4a5ef5a6bd1916a78e83a282b5dbb4b7bafe95c48608fa00d805281b518067",
+  "firmware/tests/test_hal.c": "0dd7569a9df13b4350f8218de7ce1745b90a79ff12f58c2069593ecc77e669a8",
+  "firmware/tests/test_holdup.c": "be7436e7b057efe729b5531a492fbcdd136b20ee29823c8f561926217ad050d5"
+ },
+ "fuses_required": {
+  "BODCFG": "0x06",
+  "OSCCFG": "0x02",
+  "OSCCFG_MASK": "0x03"
+ },
+ "host_tests": [
+  {
+   "suite": "app",
+   "status": "PASS",
+   "checks": 110,
+   "failures": 0,
+   "detail": ""
+  },
+  {
+   "suite": "app_laser_ntc_required",
+   "status": "PASS",
+   "checks": 2,
+   "failures": 0,
+   "detail": ""
+  },
+  {
+   "suite": "conv",
+   "status": "PASS",
+   "checks": 297,
+   "failures": 0,
+   "detail": ""
+  },
+  {
+   "suite": "holdup",
+   "status": "PASS",
+   "checks": 16,
+   "failures": 0,
+   "detail": ""
+  },
+  {
+   "suite": "fw",
+   "status": "PASS",
+   "checks": 41,
+   "failures": 0,
+   "detail": ""
+  },
+  {
+   "suite": "hal_register_model",
+   "status": "PASS",
+   "checks": 65,
+   "failures": 0,
+   "detail": ""
+  }
+ ],
+ "host_compiler": "tcc version 0.9.27 (x86_64 Windows)",
+ "target": {
+  "status": "PASS",
+  "compiler": "avr-gcc.exe (GCC) 15.2.0",
+  "flags": [
+   "-mmcu=attiny1616",
+   "-Os",
+   "-std=gnu11",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-ffunction-sections",
+   "-fdata-sections",
+   "-Wl,--gc-sections"
+  ],
+  "sources": [
+   "src/app.c",
+   "src/conv.c",
+   "src/fw.c",
+   "src/hal_avr.c",
+   "src/holdup.c",
+   "src/main.c"
+  ],
+  "hex": "firmware/build/nubm44_fw.hex",
+  "hex_sha256": "96c12d52565ade9e6efb035e76945634efb204e1830657893e37eb1f7b2114c6",
+  "sizes": {
+   "data": 0,
+   "text": 4090,
+   "rodata": 44,
+   "bss": 53,
+   "noinit": 6
+  },
+  "flash_bytes": 4134,
+  "ram_bytes": 59,
+  "detail": ""
+ },
+ "mutation": {
+  "status": "PASS",
+  "mutants": [
+   {
+    "mutant": "AUD-FW-01 board NTC failure ignored",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-02 fitted laser NTC failure ignored",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-03 watchdog cleared without a tick",
+    "suite": "fw",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-06 no debounce",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-07 watchdog reset ignored",
+    "suite": "fw",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-08 sleeps although the supply is back",
+    "suite": "hal_register_model",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-09 restart on the first return edge",
+    "suite": "holdup",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-10 CC pull-up always on",
+    "suite": "hal_register_model",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-11 no start-voltage re-check",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-12 tick backlog ignored",
+    "suite": "fw",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-13 fixed 3 s blink period",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-14 over-voltage only while running",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-15 no output-while-off check",
+    "suite": "app",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-19 DAC2 reference written to CTRLC",
+    "suite": "hal_register_model",
+    "status": "KILLED"
+   },
+   {
+    "mutant": "AUD-FW-20 DAC2 stops in standby",
+    "suite": "hal_register_model",
+    "status": "KILLED"
+   }
+  ]
+ },
+ "status": "PASS"
+}

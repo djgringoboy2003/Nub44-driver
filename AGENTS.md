@@ -87,8 +87,8 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | ngspice | 47 | `tools\ngspice\Spice64\bin\ngspice_con.exe` |
 | FreeRouting | 2.5.0 jar | `tools\jre25\jdk-25.0.4.1+1-jre\bin\java.exe -jar tools\freerouting\freerouting-2.5.0.jar -de in.dsn -do out.ses` |
 | InteractiveHtmlBom | 2.12.0 | `tools\ibom\InteractiveHtmlBom\generate_interactive_bom.py` (run with KiCad's Python) |
-| avr-gcc | 15.2.0 | `toolsvr-gccvr-gcc-15.2.0-x64-windowsinvr-gcc.exe` (firmware target build, via `firmwareuild.ps1`) |
-| TinyCC | 0.9.27 | `tools	cc	cc	cc.exe` (firmware host unit tests, via `firmwareuild.ps1`) |
+| avr-gcc | 15.2.0 | `tools\avr-gcc\avr-gcc-15.2.0-x64-windows\bin\avr-gcc.exe` (firmware target build, via `firmware\build.py`) |
+| TinyCC | 0.9.27 | `tools\tcc\tcc\tcc.exe` (firmware host unit tests, via `firmware\build.py`) |
 
 Paths are resolved in code by `automation/nubm44/paths.py`. Run `scripts\setup.ps1` on a fresh machine;
 it is idempotent and verifies SHA-256 hashes.

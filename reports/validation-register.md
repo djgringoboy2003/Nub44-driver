@@ -69,8 +69,9 @@ Statuses come from tool reports; none are hard-coded.
 | VAL-SIM-09 | Open load (diode disconnected) during emission, hardware backstop only | SIM | **PASS** | simulation/results/results.md | {"peak_vout_v": 6.71037081} |
 | VAL-SIM-10 | Reverse battery (-4.2 V): P-FET blocks (body diode reverse-biased, Vgs = 0) | SIM | **PASS** | simulation/results/results.md | {"reverse_current_a": 2.492341e-07, "vbat_node_v": -4.98468e-07} |
 | VAL-SIM-11 | Control-loop response (linearised model, 12 corners) | SIM | **PASS** | simulation/results/results.md | {"min_phase_margin_deg": 111.72886450565349, "min_gain_margin_db": 12.092440233441394} |
-| VAL-FW-TEST | Firmware state-machine unit tests (host) | TEST(host) | **PASS** | firmware/tests/test_app.c | 26 checks, 0 failures |
-| VAL-FW-BUILD | Firmware builds for ATtiny1616 with -Werror | BUILD | **PASS** | firmware/build.ps1 |  |
+| VAL-FW-TEST | Firmware host tests: state machine, conversions, hold-up, runtime, HAL register model | TEST(host) | **PASS** | firmware/tests/, firmware/build.py | 6 suites, 531 checks, 0 failures; compiler: tcc version 0.9.27 (x86_64 Windows) |
+| VAL-FW-BUILD | Firmware builds for ATtiny1616 with -Werror | BUILD | **PASS** | firmware/build.py | flash 4134 B, RAM 59 B; avr-gcc.exe (GCC) 15.2.0 |
+| VAL-FW-MUTATION | Firmware tests detect each audited defect (mutation check) | TEST(host) | **PASS** | firmware/build.py --mutation | 15/15 mutants killed |
 | VAL-REQ-BLOCKED | Requirements awaiting owner decisions | INSPECT | **PASS** | engineering/requirements.md | none |
 | VAL-REQ-RISK | Requirements at risk (documented, not blocking CAD) | INSPECT | **PASS** | engineering/requirements.md | none |
 
