@@ -28,7 +28,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 
-from nubm44 import kicad_lib, netlist, paths, spec as spec_mod  # noqa: E402
+from nubm44 import evidence, kicad_lib, netlist, paths, spec as spec_mod  # noqa: E402
 from nubm44.schematic import Schematic, snap, xform  # noqa: E402
 
 SPEC = ROOT / "engineering/design/connectivity.yaml"
@@ -301,7 +301,17 @@ def verify(variant: str, spec: dict, sch_path: Path) -> dict:
         "status": "PASS" if not errors and not problems else "FAIL",
     }
     summary_json.write_text(json.dumps(result, indent=1), encoding="utf-8")
+    write_evidence(variant, sch_path, [erc_json, summary_json, net_path], {"kicad-cli": evidence.command_version([cli, "version"])})
     return result
+
+
+def write_evidence(variant: str, sch_path: Path, reports: list[Path], tools: dict, **extra) -> Path:
+    """Hash manifest binding the schematic, netlist and ERC evidence to their sources (audit AUD-VAL-08)."""
+    out = paths.REPORTS / f"schematic-{variant}-evidence.json"
+    evidence.write(evidence.build(
+        "schematic", inputs=[ROOT / "engineering/design/connectivity.yaml", ROOT / "engineering/design/parameters.yaml"],
+        outputs=[sch_path, *reports], tools=tools, **extra), out)
+    return out
 
 
 def main() -> int:

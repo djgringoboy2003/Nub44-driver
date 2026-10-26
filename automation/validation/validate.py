@@ -195,6 +195,37 @@ def calculations():
     return "PASS"
 
 
+SCH_REQUIRED_INPUTS = ("engineering/design/connectivity.yaml", "engineering/design/parameters.yaml")
+
+
+def legacy_schematic_inputs(sch: Path) -> list[Path]:
+    return [sch, sch.with_suffix(".net"), REP / f"erc-{sch.parent.name}.json",
+            ROOT / "engineering/design/connectivity.yaml", ROOT / "engineering/design/parameters.yaml"]
+
+
+def attest_schematic_evidence() -> list[str]:
+    """One-off migration of legacy schematic evidence to a hash manifest. Writes a manifest only when the legacy
+    modification-time check passes now; build_schematic.py writes manifests itself from then on."""
+    spec_bs = importlib.util.spec_from_file_location("nubm44_build_schematic", ROOT / "automation/schematic/build_schematic.py")
+    bs = importlib.util.module_from_spec(spec_bs)
+    spec_bs.loader.exec_module(bs)
+    done = []
+    for v in spec.VARIANTS:
+        sch = paths.HARDWARE / v / "nubm44_driver.kicad_sch"
+        summary, erc_report = REP / f"schematic-{v}.json", REP / f"erc-{v}.json"
+        if (REP / f"schematic-{v}-evidence.json").is_file():
+            continue
+        problems = freshness_problems(summary, legacy_schematic_inputs(sch)) + freshness_problems(erc_report, [sch])
+        if problems:
+            done.append(f"{v}: not attested ({'; '.join(problems)})")
+            continue
+        bs.write_evidence(v, sch, [erc_report, summary, sch.with_suffix(".net")], {"kicad-cli": "not rerun"},
+                          attested="legacy evidence migrated by validate.py --attest-schematic after its modification-time "
+                                   f"freshness check passed on {date.today()}; schematics were not regenerated")
+        done.append(f"{v}: attested")
+    return done
+
+
 def schematic(variant):
     summary = REP / f"schematic-{variant}.json"
     erc_report = REP / f"erc-{variant}.json"
@@ -209,12 +240,19 @@ def schematic(variant):
             d.get("schematic", "")).replace("\\", "/") != sch.relative_to(ROOT).as_posix():
         problems.append("missing or malformed schematic summary")
     problems += kicad_report_problems(erc, "erc", sch)
-    if summary.is_file():
-        problems += freshness_problems(summary, [sch, net, erc_report,
-                                                ROOT / "engineering/design/connectivity.yaml",
-                                                ROOT / "engineering/design/parameters.yaml"])
-    if erc_report.is_file():
-        problems += freshness_problems(erc_report, [sch])
+    manifest = REP / f"schematic-{variant}-evidence.json"
+    if manifest.is_file():                        # hash-bound evidence (AUD-VAL-08)
+        m = load_json(manifest)
+        problems += evidence_mod.problems(m, ROOT, "schematic", SCH_REQUIRED_INPUTS)
+        outs = m.get("outputs", {}) if isinstance(m, dict) else {}
+        for p in (sch, net, erc_report, summary):
+            if p.relative_to(ROOT).as_posix() not in outs:
+                problems.append(f"schematic evidence manifest does not cover {p.name}")
+    else:                                         # legacy evidence: modification times only
+        if summary.is_file():
+            problems += freshness_problems(summary, legacy_schematic_inputs(sch))
+        if erc_report.is_file():
+            problems += freshness_problems(erc_report, [sch])
     if problems:
         status = "NOT RUN" if not summary.exists() or not erc_report.exists() else "FAIL"
         for prefix, item in (("ERC", "ERC"), ("NET", "Netlist equals connectivity.yaml")):
@@ -634,7 +672,13 @@ def main(argv: list[str] | None = None) -> int:
                     choices=["full", "fast", "eval-cad", "compact-cad", "manufacturing", "bench"])
     ap.add_argument("--strict", action="store_true", help="exit 1 for any entry that is not PASS")
     ap.add_argument("--rerun-stale", action="store_true", help="rerun stale calculations and simulations first")
+    ap.add_argument("--attest-schematic", action="store_true",
+                    help="one-off: migrate legacy schematic evidence to a hash manifest if its mtime check passes")
     args = ap.parse_args(argv)
+
+    if args.attest_schematic:
+        for line in attest_schematic_evidence():
+            print("schematic evidence", line)
 
     if args.rerun_stale:
         print("reran:", ", ".join(rerun_stale()) or "nothing (evidence current)")

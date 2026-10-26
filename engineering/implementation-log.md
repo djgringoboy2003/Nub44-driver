@@ -96,3 +96,17 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
 - The dashboard showed three findings fixed but still marked OPEN in the audit (DOC-01, DOC-03, PROC-01): corrected.
 - `tests/test_dashboard.py` (generated from evidence; missing evidence shows UNKNOWN and no PASS badge) and
   `tests/test_repo_hygiene.py` (no control characters, UTF-8 text) added.
+
+## 2026-10-26: continuous integration and schematic evidence (roadmap phase 4)
+
+- `.github/workflows/ci.yml`: a portable Linux job (pytest; `firmware/build.py --host-only --mutation` with gcc;
+  `validate.py --mode fast`) and a Windows job (avr-gcc 15.2.0 and TinyCC fetched with the SHA-256 pins of
+  `scripts/setup.ps1`; host tests, ATtiny1616 build, mutation check). KiCad, FreeRouting and ngspice runs stay local;
+  CI re-hashes their committed evidence. The validator's known-limitations baseline lets CI fail only on new or
+  changed failures. **Not yet run on GitHub** (no push in this session).
+- Schematic evidence is now hash-bound (AUD-VAL-08): `build_schematic.py` writes a manifest; the existing evidence
+  was migrated with `validate.py --attest-schematic` after its legacy mtime check passed (schematics not regenerated).
+  Without this, a fresh CI checkout would have produced arbitrary modification-time failures.
+- `firmware/tests/hal_mock.c`: loop counter made 32-bit (found by an avr-gcc warning proxy for gcc).
+- **Results (actual):** 202 Python tests pass; with KiCad hidden 181 pass and 18 skip; `validate.py --mode fast`
+  exit 0; avr-gcc `-O1 -Wall -Wextra -Werror` proxy compile of every host source clean.

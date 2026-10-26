@@ -83,7 +83,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-VAL-05 | high | Defect | Validator always exits 1 because of the parked compact board: no regression signal | FIXED |
 | AUD-VAL-06 | medium | Defect | Gate statuses hide the evidence type (model-level, internal consistency) | FIXED |
 | AUD-VAL-07 | medium | Defect | Firmware evidence uses a hard-coded file list and records no tool versions | FIXED |
-| AUD-VAL-08 | low | Defect | Schematic/ERC freshness relies on file modification times | DEFERRED |
+| AUD-VAL-08 | low | Defect | Schematic/ERC freshness relies on file modification times | FIXED |
 | AUD-VAL-09 | medium | Defect | `run_sims.py` and `power_stage.py` exit 0 when checks fail | FIXED |
 | AUD-VAL-10 | medium | Enhancement | No structured channel for bench (Gate G) evidence | FIXED |
 | AUD-SIM-01 | medium | Risk | Averaged model only; inner current loop and ISP/ISN loop strength are assumptions | DOCUMENTED |
@@ -108,7 +108,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-DOC-01 | medium | Defect | AGENTS.md toolchain paths corrupted by control characters | FIXED |
 | AUD-DOC-02 | low | Defect | Firmware README/app.h out of date (debounce, check count) | FIXED |
 | AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | FIXED |
-| AUD-CI-01 | medium | Enhancement | No continuous integration; portable and Windows/KiCad tests not separated | OPEN |
+| AUD-CI-01 | medium | Enhancement | No continuous integration; portable and Windows/KiCad tests not separated | FIXED |
 | AUD-PROC-01 | low | Defect | Firmware compile flags duplicated in `build.ps1` and `validate.py` | FIXED |
 
 ## 4. Findings in detail
@@ -345,7 +345,7 @@ side effects; dependencies; tests; status; validation outcome.
 
 #### AUD-VAL-08 Modification-time freshness (low, defect)
 - `freshness_problems()` compares mtimes; a checkout or copy changes mtimes, which can make fresh evidence look
-  stale or stale evidence look fresh. The schematic summary has no hashes. **Status:** DEFERRED: adding hashes to the schematic summary requires regenerating both schematics and therefore the full DRC/export chain; scheduled with the next CAD regeneration (roadmap). DRC, layout and export evidence are already hash-bound.
+  stale or stale evidence look fresh. The schematic summary has no hashes. **Status:** FIXED. `build_schematic.py` writes `reports/schematic-<variant>-evidence.json` (hashes of connectivity, parameters, schematic, netlist, ERC and summary); the validator uses it and falls back to modification times only for legacy evidence. The existing evidence was migrated once with `validate.py --attest-schematic`, which writes a manifest only if the legacy check passes (recorded in the manifest's `attested` field; schematics were not regenerated). **Validation:** test with a changed connectivity file and an old mtime.
 
 #### AUD-VAL-09 Generators exit 0 on failure (medium, defect)
 - `run_sims.py` `main()` always returns 0; `power_stage.py` exits 0 with failing checks. **Status:** FIXED. Both generators exit 1 when a check or simulation fails or cannot run (`run_sims.py` currently exits 1 because of SIM-12).
@@ -475,7 +475,7 @@ side effects; dependencies; tests; status; validation outcome.
 - REQ-SAFE-06 is VERIFIED-CALC although its method is TEST only; REQ-SAFE-08 says the thermal latch is
   "unit-tested" while FW-01 shows a sensor failure bypasses it. **Status:** FIXED: REQ-SAFE-06 verification method is now CALC, TEST; REQ-SAFE-03, REQ-SAFE-08 and REQ-MODE-01 describe the DD-28 behaviour and that the earlier thermal latch could be bypassed by a sensor failure.
 
-#### AUD-CI-01 No CI (medium, enhancement) — **Status:** OPEN.
+#### AUD-CI-01 No CI (medium, enhancement) — **Status:** FIXED (not yet executed on GitHub: nothing was pushed). `.github/workflows/ci.yml`: Linux job (pytest, firmware host tests and mutation check with gcc, validator fast mode), Windows job (pinned avr-gcc/TinyCC, target build). `tests/test_ci_workflow.py` keeps the pins equal to `scripts/setup.ps1`. Locally: 181 tests pass and 18 skip with KiCad hidden; host sources compile warning-free under avr-gcc -O1 -Wall -Wextra -Werror as a proxy for gcc.
 
 #### AUD-PROC-01 Duplicated compile flags (low, defect)
 - `firmware/build.ps1` and `validate.py` each spell the compiler command; they already differ (`-ffunction-sections`

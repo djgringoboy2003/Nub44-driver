@@ -101,11 +101,11 @@ void hal_holdup_guard(bool on)
 
 void hal_holdup_sleep(void)
 {
-    unsigned i;
+    uint32_t i;
     if (mock.guard) mock.slept_with_guard = true;
     log_event(EV_SLEEP);
     /* sleep until the supply returns (an AC2 edge), bounded so a broken test cannot hang */
-    for (i = 0; i < 1000000u && !hal_supply_present(); i++) mock.rtc++;
+    for (i = 0; i < 1000000UL && !hal_supply_present(); i++) mock.rtc++;
 }
 
 void hal_restart(void)

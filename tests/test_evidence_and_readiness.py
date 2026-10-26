@@ -253,3 +253,33 @@ def test_incomplete_board_export_must_carry_the_marker(validation):
     with zipfile.ZipFile(pkg / f"{variant}-gerbers.zip", "w") as z:
         z.writestr("DO_NOT_FABRICATE.txt", "no")
     assert not validation.incomplete_marker_problems(variant, pkg, {"package_class": "DRAFT_REVIEW_INCOMPLETE_BOARD"})
+
+
+# ------------------------------------------------------------------ schematic evidence (AUD-VAL-08)
+def schematic_fixture(v, variant="evaluation-board"):
+    root = v.ROOT
+    conn = write(root / "engineering/design/connectivity.yaml", "parts: []\n")
+    params = write(root / "engineering/design/parameters.yaml", "current: {i_set_a: 4.0}\n")
+    sch = write(v.paths.HARDWARE / variant / "nubm44_driver.kicad_sch", "(kicad_sch)")
+    net = write(sch.with_suffix(".net"), "(export)")
+    erc = write(v.REP / f"erc-{variant}.json", json.dumps({
+        "$schema": "https://schemas.kicad.org/erc.v1.json", "source": "nubm44_driver.kicad_sch",
+        "included_severities": ["error", "warning", "exclusion"], "sheets": [{"violations": []}]}))
+    summary = write(v.REP / f"schematic-{variant}.json", json.dumps({
+        "variant": variant, "schematic": f"hardware/{variant}/nubm44_driver.kicad_sch", "upgrade_rc": 0,
+        "erc_errors": 0, "erc_warnings": 0, "netlist_parts": 5, "netlist_nets": 4, "connectivity_differences": []}))
+    evidence.write(evidence.build("schematic", [conn, params], [sch, net, erc, summary], {"kicad-cli": "10.0.6"},
+                                  root=root), v.REP / f"schematic-{variant}-evidence.json")
+    return conn
+
+
+def test_schematic_evidence_is_hash_bound(validation):
+    conn = schematic_fixture(validation)
+    validation.schematic("evaluation-board")
+    assert status(validation, "VAL-ERC-evaluation-board") == "PASS"
+    validation.entries.clear()
+    conn.write_text("parts: [changed]\n", encoding="utf-8")
+    import os
+    os.utime(conn, (1, 1))                       # an old mtime must not hide the change
+    validation.schematic("evaluation-board")
+    assert status(validation, "VAL-ERC-evaluation-board") == "FAIL"

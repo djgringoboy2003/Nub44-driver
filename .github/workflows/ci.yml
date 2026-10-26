@@ -1,0 +1,71 @@
+# Continuous integration (audit AUD-CI-01).
+#
+# - portable: everything that runs without KiCad, ngspice or avr-gcc. Python tests (KiCad-dependent tests skip
+#   themselves), firmware host tests and the mutation check with gcc, and the validator in fast mode, which re-hashes
+#   the committed calculation, simulation, schematic, DRC, layout-review and export evidence.
+# - firmware-target: the ATtiny1616 build with the same pinned, hash-verified avr-gcc and TinyCC as scripts/setup.ps1
+#   (tests/test_ci_workflow.py checks that the URLs and hashes match).
+#
+# KiCad (ERC/DRC/export), FreeRouting and ngspice runs stay local (scripts/validate.ps1); CI only checks that their
+# committed evidence still matches its sources. The validator exits 1 only for a NEW or CHANGED failure: the parked
+# compact board and other entries in engineering/known-limitations.yaml stay FAIL in the register without failing CI.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    name: Portable checks (Linux)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install Python packages (pinned in requirements.txt)
+        run: python -m pip install -r requirements.txt
+      - name: Python unit tests
+        run: python -m pytest tests -q
+      - name: Firmware host tests and mutation check (gcc -Wall -Wextra -Werror)
+        run: python firmware/build.py --host-only --mutation --no-evidence
+      - name: Validation, fast mode (evidence integrity and regression check)
+        run: python automation/validation/validate.py --mode fast
+      - name: Keep the validation output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-fast
+          path: build/validation-fast.json
+          if-no-files-found: warn
+
+  firmware-target:
+    name: Firmware target build (Windows, avr-gcc 15.2.0)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Fetch pinned toolchains (SHA-256 verified)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          function Get-Pinned($Url, $Zip, $Sha, $Dest) {
+            New-Item -ItemType Directory -Force (Split-Path $Zip) | Out-Null
+            curl.exe -sSL --fail -o $Zip $Url
+            $h = (Get-FileHash $Zip -Algorithm SHA256).Hash
+            if ($h -ne $Sha) { throw "SHA-256 mismatch for $Url (got $h)" }
+            Expand-Archive -Path $Zip -DestinationPath $Dest -Force
+          }
+          Get-Pinned 'https://github.com/ZakKemble/avr-gcc-build/releases/download/v15.2.0-1/avr-gcc-15.2.0-x64-windows.zip' `
+            'tools\dl-avr\avr-gcc-15.2.0-x64-windows.zip' '3BCFDBDBFF6E3576EF0BEF9E119B16F7012657D30F002D6D9D4848A7EFD4F8B7' 'tools\avr-gcc'
+          Get-Pinned 'https://download.savannah.gnu.org/releases/tinycc/tcc-0.9.27-win64-bin.zip' `
+            'tools\dl-tcc\tcc-0.9.27-win64-bin.zip' '34A721949A2583FDFF725312DA092FA0F5F1F284B702E6F811C6954714FAABB2' 'tools\tcc'
+      - name: Host tests (TinyCC), target build and mutation check
+        run: python firmware/build.py --mutation --no-evidence

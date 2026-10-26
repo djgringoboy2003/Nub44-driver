@@ -1,0 +1,20 @@
+{
+ "attested": "legacy evidence migrated by validate.py --attest-schematic after its modification-time freshness check passed on 2026-10-26; schematics were not regenerated",
+ "generated_utc": "2026-10-26T22:58:58+00:00",
+ "generator": "automation/validation/validate.py",
+ "inputs": {
+  "engineering/design/connectivity.yaml": "014683a41ef2a722bf12220071c5bd83dea44e9c400736aac224241645fe8dab",
+  "engineering/design/parameters.yaml": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220"
+ },
+ "kind": "schematic",
+ "outputs": {
+  "hardware/compact-22mm/nubm44_driver.kicad_sch": "e346e598a3521193d14681a28a6c0ae0a6ef646567f5b60e40db3f3f7b6a56d9",
+  "hardware/compact-22mm/nubm44_driver.net": "edc4789dd7560adeff0a278e0ac2af83f513cd5248228f80647409fcb71d3a85",
+  "reports/erc-compact-22mm.json": "f53d1456cf879212a89e717c021f16dfa20a1000e4546625fa0680d90494bf52",
+  "reports/schematic-compact-22mm.json": "73ab895c23c486b707dc92ee374e49f03abfd91cc1418bc1d273fe51ccb9e360"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "kicad-cli": "not rerun"
+ }
+}

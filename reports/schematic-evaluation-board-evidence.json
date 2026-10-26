@@ -1,0 +1,20 @@
+{
+ "attested": "legacy evidence migrated by validate.py --attest-schematic after its modification-time freshness check passed on 2026-10-26; schematics were not regenerated",
+ "generated_utc": "2026-10-26T22:58:58+00:00",
+ "generator": "automation/validation/validate.py",
+ "inputs": {
+  "engineering/design/connectivity.yaml": "014683a41ef2a722bf12220071c5bd83dea44e9c400736aac224241645fe8dab",
+  "engineering/design/parameters.yaml": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220"
+ },
+ "kind": "schematic",
+ "outputs": {
+  "hardware/evaluation-board/nubm44_driver.kicad_sch": "6578c4f31eb5a3d2a2d7be191b4bc5ccdd82ba18c0c8a1b5fa92c560d006872b",
+  "hardware/evaluation-board/nubm44_driver.net": "840c772f1ee8fad436a5e1fe15218bcce80d18048b7c1d7bc803c5b13561eafe",
+  "reports/erc-evaluation-board.json": "2a61484cca4bb69ab8125093dfca0813b0e90b92899afde6dc83d14ca95554b9",
+  "reports/schematic-evaluation-board.json": "c40b4f0a2f06fe8ffbd2ead065aa8bcaf701a7106e8cc03150f9628d0df1ce11"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "kicad-cli": "not rerun"
+ }
+}
