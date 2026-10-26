@@ -651,6 +651,13 @@ def main(argv: list[str] | None = None) -> int:
         sync_requirement_gates(g)
         write_register(g, cls, readiness)
         release_check.write_report(readiness, REP, str(date.today()))
+        dash = ROOT / "automation/dashboard/build_dashboard.py"
+        if dash.is_file():
+            s = importlib.util.spec_from_file_location("nubm44_dashboard", dash)
+            module = importlib.util.module_from_spec(s)
+            s.loader.exec_module(module)
+            module.ROOT, module.OUT = ROOT, REP / "dashboard" / "index.html"
+            module.main()
     else:
         out = ROOT / "build" / f"validation-{args.mode}.json"
         out.parent.mkdir(exist_ok=True)

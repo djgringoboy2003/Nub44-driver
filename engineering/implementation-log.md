@@ -83,3 +83,16 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
 - The validator refreshes the summary in full/manufacturing/bench modes; Gate G and MANUFACTURING_RELEASE read it.
 - **Result (actual):** no records exist; Gate G NO DATA for both boards (29 required evaluation tests, 23 compact).
 - **Tests:** `tests/test_bench.py` (11, synthetic records in temporary folders; none written to the project).
+
+## 2026-10-26: engineering status dashboard (roadmap phase 4)
+
+- `automation/dashboard/build_dashboard.py` writes `reports/dashboard/index.html`: one self-contained page (inline CSS,
+  SVG and a small tooltip script; no network) built only from the evidence files and the audit/risk registers:
+  overview tiles, decisions and human reviews required, per-board gates and blockers, release gates with evidence
+  class, current test results, estimated efficiency (prediction), simulation table, SIM-11 loop gain, SIM-12 gain
+  margin per case, open findings and risks, sourcing and cost summary, required bench tests, computed next actions.
+  Light and dark themes; tables behind every chart. The validator regenerates it in full mode.
+- Rendered with headless Edge and inspected; label collisions fixed.
+- The dashboard showed three findings fixed but still marked OPEN in the audit (DOC-01, DOC-03, PROC-01): corrected.
+- `tests/test_dashboard.py` (generated from evidence; missing evidence shows UNKNOWN and no PASS badge) and
+  `tests/test_repo_hygiene.py` (no control characters, UTF-8 text) added.

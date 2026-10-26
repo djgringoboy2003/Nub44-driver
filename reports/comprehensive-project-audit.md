@@ -105,11 +105,11 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-SRC-02 | low | Enhancement | Stock/price snapshot carries no age flag | FIXED |
 | AUD-SRC-03 | medium | Risk | Capacitor DC-bias retention (50–55 %) is an assumption | DOCUMENTED |
 | AUD-SRC-04 | low | Risk | Indicator resistor R16 overloaded (80 mW) if the external LED pad is shorted | DOCUMENTED |
-| AUD-DOC-01 | medium | Defect | AGENTS.md toolchain paths corrupted by control characters | OPEN |
+| AUD-DOC-01 | medium | Defect | AGENTS.md toolchain paths corrupted by control characters | FIXED |
 | AUD-DOC-02 | low | Defect | Firmware README/app.h out of date (debounce, check count) | FIXED |
-| AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | OPEN |
+| AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | FIXED |
 | AUD-CI-01 | medium | Enhancement | No continuous integration; portable and Windows/KiCad tests not separated | OPEN |
-| AUD-PROC-01 | low | Defect | Firmware compile flags duplicated in `build.ps1` and `validate.py` | OPEN |
+| AUD-PROC-01 | low | Defect | Firmware compile flags duplicated in `build.ps1` and `validate.py` | FIXED |
 
 ## 4. Findings in detail
 
@@ -467,19 +467,19 @@ side effects; dependencies; tests; status; validation outcome.
 
 #### AUD-DOC-01 AGENTS.md control characters (medium, defect)
 - The avr-gcc and TinyCC rows contain BEL/BS/TAB bytes where `\a`, `\b`, `\t` were meant as path separators
-  (`cat -A` shows `tools^Gvr-gcc…`). **Status:** OPEN.
+  (`cat -A` shows `tools^Gvr-gcc…`). **Status:** FIXED (commit b3c3dfd): rows rewritten; no control characters remain in tracked text files. Root cause: the agent shell collapses doubled backslashes in heredocs. A repository hygiene test guards against recurrence (`tests/test_repo_hygiene.py`).
 
 #### AUD-DOC-02 Firmware docs out of date (low, defect) — **Status:** FIXED: firmware README rewritten (behaviour, fault codes, measurement chain, fuses, files, build).
 
 #### AUD-DOC-03 Requirement statuses (low, defect)
 - REQ-SAFE-06 is VERIFIED-CALC although its method is TEST only; REQ-SAFE-08 says the thermal latch is
-  "unit-tested" while FW-01 shows a sensor failure bypasses it. **Status:** OPEN.
+  "unit-tested" while FW-01 shows a sensor failure bypasses it. **Status:** FIXED: REQ-SAFE-06 verification method is now CALC, TEST; REQ-SAFE-03, REQ-SAFE-08 and REQ-MODE-01 describe the DD-28 behaviour and that the earlier thermal latch could be bypassed by a sensor failure.
 
 #### AUD-CI-01 No CI (medium, enhancement) — **Status:** OPEN.
 
 #### AUD-PROC-01 Duplicated compile flags (low, defect)
 - `firmware/build.ps1` and `validate.py` each spell the compiler command; they already differ (`-ffunction-sections`
-  and `--gc-sections` only in `build.ps1`). **Status:** OPEN.
+  and `--gc-sections` only in `build.ps1`). **Status:** FIXED: `firmware/build.py` is the only place that spells the compile commands; `build.ps1`, `validate.py` and CI call it.
 
 ## 5. Opportunities to simplify
 
