@@ -860,12 +860,12 @@
   },
   {
    "check": "Inductor RMS current vs Irms (20 C rise)",
-   "value": 7.3929,
+   "value": 7.4185,
    "limit": 12.8,
    "kind": "max",
    "unit": "A",
    "status": "PASS",
-   "note": ""
+   "note": "RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point"
   },
   {
    "check": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26)",

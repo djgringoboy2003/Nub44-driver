@@ -225,13 +225,54 @@ def check_assembly(out: Path, pcb: Path) -> list[str]:
     return problems
 
 
+INCOMPLETE_MARKER = "DO_NOT_FABRICATE.txt"
+
+
+def cad_state(variant: str, pcb: Path) -> dict:
+    """The board's DRC state at export time (audit AUD-MFG-01). Missing or stale DRC evidence counts as incomplete."""
+    report = ROOT / "reports" / f"drc-{variant}.json"
+    manifest = ROOT / "reports" / f"drc-{variant}-evidence.json"
+    state = {"drc_report": report.relative_to(ROOT).as_posix(), "complete": False}
+    try:
+        d = json.loads(report.read_text(encoding="utf-8"))
+        m = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return dict(state, reason="DRC report or evidence manifest missing or unreadable")
+    viol = d.get("violations") if isinstance(d, dict) else None
+    unconn, parity = d.get("unconnected_items"), d.get("schematic_parity")
+    if not all(isinstance(x, list) for x in (viol, unconn, parity)):
+        return dict(state, reason="DRC report malformed")
+    state.update(drc_report_sha256=sha256(report), unconnected=len(unconn), parity=len(parity),
+                 errors=sum(v.get("severity") == "error" for v in viol if isinstance(v, dict)),
+                 warnings=sum(v.get("severity") == "warning" for v in viol if isinstance(v, dict)))
+    key = pcb.relative_to(ROOT).as_posix()
+    if not isinstance(m, dict) or (m.get("inputs") or {}).get(key) != sha256(pcb):
+        return dict(state, reason="DRC evidence does not match the current PCB")
+    state["complete"] = state["unconnected"] == 0 and state["errors"] == 0 and state["parity"] == 0
+    if not state["complete"]:
+        state["reason"] = (f"{state['unconnected']} unconnected items, {state['errors']} DRC errors, "
+                           f"{state['parity']} parity issues")
+    return state
+
+
 def generate_outputs(out: Path, pcb: Path, sch: Path, variant: str, check: dict) -> None:
+    incomplete = not check["cad_state"]["complete"]
+    warning = ("## INCOMPLETE BOARD - DO NOT FABRICATE\n\n"
+               f"The board is not complete: {check['cad_state'].get('reason', 'DRC state unknown')}.\n"
+               f"The fabrication ZIP carries `{INCOMPLETE_MARKER}`. These files are for layout review only.\n\n"
+               if incomplete else "")
     (out / "REVIEW_ONLY.md").write_text(
-        "# DRAFT - review only\n\nThis package has not been released for manufacturing.\n"
+        "# DRAFT - review only\n\n" + warning + "This package has not been released for manufacturing.\n"
         "`reports/export-check.json` checks exported file completeness and consistency; it does not close a release gate.\n"
-        "Review the project's current `reports/validation-register.md` and its CAD findings before ordering a\n"
-        "prototype. A production release additionally needs the Gate G bench results from an assembled prototype.\n"
-        "This tool does not place manufacturing orders.\n", encoding="utf-8")
+        "Review the project's current `reports/validation-register.md` and `reports/release-readiness.md` before\n"
+        "ordering a prototype: a prototype needs the PROTOTYPE_CANDIDATE level (complete CAD, current evidence and\n"
+        "the recorded human reviews). A production release additionally needs the Gate G bench results from an\n"
+        "assembled prototype and a signed approval. This tool does not place manufacturing orders.\n", encoding="utf-8")
+    if incomplete:
+        (out / INCOMPLETE_MARKER).write_text(
+            f"DO NOT FABRICATE: {variant} is an incomplete PCB draft ({check['cad_state'].get('reason')}).\n"
+            "These Gerber and drill files are for layout review only. See REVIEW_ONLY.md in the package.\n",
+            encoding="utf-8")
     shutil.copyfile(ROOT / "documentation/stack-up.md", out / "drawings/stack-up.md")
     cli("pcb", "export", "gerbers", "--no-x2", "--no-netlist", "--subtract-soldermask", "--check-zones",
         "--use-drill-file-origin", "-l", ",".join(GERBER_LAYERS), "-o", out / "gerbers", pcb)
@@ -268,6 +309,8 @@ def generate_outputs(out: Path, pcb: Path, sch: Path, variant: str, check: dict)
     if r.returncode != 0:
         raise RuntimeError(f"InteractiveHtmlBom failed ({r.returncode}): {r.stdout[-1500:]}\n{r.stderr[-1500:]}")
     fabrication = sorted(p for folder in ("gerbers", "drill") for p in (out / folder).iterdir() if p.is_file())
+    if incomplete:
+        fabrication.insert(0, out / INCOMPLETE_MARKER)
     zpath = out / f"{variant}-gerbers.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         for f in fabrication:
@@ -313,6 +356,8 @@ def export(variant: str) -> dict:
     check = {"variant": variant, "problems": [], "files": {}, "file_sha256": {}, "inputs": {},
              "release_status": "DRAFT_REVIEW", "manufacturing_release": False,
              "required_files": required_files(variant), "bom_lines": 0, "bom_parts": 0, "cpl_parts": 0}
+    check["cad_state"] = cad_state(variant, pcb) if pcb.is_file() else {"complete": False, "reason": "PCB missing"}
+    check["package_class"] = "DRAFT_REVIEW" if check["cad_state"]["complete"] else "DRAFT_REVIEW_INCOMPLETE_BOARD"
     try:
         check["inputs"] = {p.relative_to(ROOT).as_posix(): sha256(p) for p in
                            (pcb, sch, vdir / f"{PROJECT}.kicad_pro", ROOT / "documentation/stack-up.md",

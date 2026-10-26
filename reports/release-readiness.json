@@ -1,0 +1,53 @@
+{
+ "date": "2026-10-26",
+ "variants": {
+  "compact-22mm": {
+   "variant": "compact-22mm",
+   "level": "DRAFT_REVIEW",
+   "blockers": {
+    "DRAFT_REVIEW": [],
+    "PROTOTYPE_CANDIDATE": [
+     "VAL-ROUTE-compact-22mm: FAIL (20 unconnected items)",
+     "VAL-DRC-compact-22mm: FAIL (0 errors, 3 warnings, 0 exclusions {'via_dangling': 3}; ignored checks: tuning_profile_track_geometries (no track length tuning used; DD-20))",
+     "human review FP-U1 not recorded as DONE",
+     "human review FP-L1 not recorded as DONE",
+     "human review FP-POWERPAK not recorded as DONE",
+     "human review FP-RS1 not recorded as DONE",
+     "human review ORIENT not recorded as DONE"
+    ],
+    "MANUFACTURING_RELEASE": [
+     "no bench evidence summary (reports/bench-summary.json); Gate G open",
+     "finding awaiting owner disposition: VAL-SIM-12",
+     "human review PCBWAY-DFM not recorded as DONE",
+     "no signed approval file manufacturing/approvals/compact-22mm.yaml"
+    ]
+   },
+   "next_level": "PROTOTYPE_CANDIDATE",
+   "manufacturing_release": false,
+   "orders_placed_by_tooling": false
+  },
+  "evaluation-board": {
+   "variant": "evaluation-board",
+   "level": "DRAFT_REVIEW",
+   "blockers": {
+    "DRAFT_REVIEW": [],
+    "PROTOTYPE_CANDIDATE": [
+     "human review FP-U1 not recorded as DONE",
+     "human review FP-L1 not recorded as DONE",
+     "human review FP-POWERPAK not recorded as DONE",
+     "human review FP-RS1 not recorded as DONE",
+     "human review ORIENT not recorded as DONE"
+    ],
+    "MANUFACTURING_RELEASE": [
+     "no bench evidence summary (reports/bench-summary.json); Gate G open",
+     "finding awaiting owner disposition: VAL-SIM-12",
+     "human review PCBWAY-DFM not recorded as DONE",
+     "no signed approval file manufacturing/approvals/evaluation-board.yaml"
+    ]
+   },
+   "next_level": "PROTOTYPE_CANDIDATE",
+   "manufacturing_release": false,
+   "orders_placed_by_tooling": false
+  }
+ }
+}

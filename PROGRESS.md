@@ -107,6 +107,21 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 
 ## Log
 
+### 2026-10-26: independent audit, firmware fixes, evidence binding and release levels (branch `audit/comprehensive-improvements`)
+- **Audit:** `reports/comprehensive-project-audit.md` (single issue register), `engineering/risk-register.md`,
+  `engineering/improvement-roadmap.md`, `engineering/implementation-log.md` (details and actual test results).
+- **Firmware (DD-28):** board-NTC failure no longer disables thermal protection; watchdog cleared only after a full
+  cycle; watchdog resets latch a fault; ratiometric measurements (the 2.5 V reference was used below its VDD
+  minimum); the AC2 power-loss reference was in the wrong register (`VREF.CTRLD`), so the click mode change could
+  not work; debounce, re-check of the start voltage, output-while-off detection, hold-up race fixes, fuse check.
+  HAL split with host tests: 531 checks, 15/15 mutants caught; ATtiny1616 build 4134 B.
+- **Evidence:** calculation and simulation results are hash-bound to their inputs and tool versions; SIM-11 is now
+  a frequency-response analysis; SIM-12 sensitivity sweep found GM 9.5 dB at combined tolerances (AUD-SIM-04, owner
+  decision pending).
+- **Validation and release:** known-limitations baseline (exit 0 unless a failure is new or changed), modes,
+  per-board readiness (both boards DRAFT_REVIEW), incomplete-board marker in the compact fabrication ZIP.
+- No hardware, threshold or setpoint change; no order placed; nothing pushed.
+
 ### 2026-10-26: repository pushed to GitHub
 - Added remote `origin` (private repository djgringoboy2003/Nub44-driver) and pushed all 16 commits of `main`.
   The remote matches the local branch.

@@ -17,6 +17,13 @@ encrypted), so this is a cycle-averaged behavioural model built from datasheet p
 
 Results go to simulation/results/ (CSV, PNG, results.json, results.md). A test PASSes only when its
 measured metric meets its stated limit inside this model; physical behaviour remains Gate G.
+
+SIM-11 measures the current-loop gain in this deck by frequency-response analysis (a sinusoidal voltage
+injected between the CSA output and the FB divider, Middlebrook method, one transient per frequency), so it no
+longer copies the Python loop model; the Python result at the same corner is reported beside it as a cross-check.
+Both share datasheet parameters and the inner-loop assumption, so agreement is corroboration, not proof.
+SIM-12 repeats the loop measurement with component tolerances and the modelling assumptions varied.
+simulation/results/evidence.json binds every result to parameters.yaml, this script and the ngspice version.
 """
 from __future__ import annotations
 
@@ -44,8 +51,12 @@ LASER = {k: v for k, v in P["laser"]["vf_model"].items()}
 
 
 def netlist(name: str, vbat: float, laser: str = "typ", tstop: float = 0.012, en=None,
-            extra: str = "", laser_r_override: str | None = None, interlock=None, rbat=0.04) -> str:
-    """Return a full ngspice deck. ``en``: PWL list for the MCU enable (1 = enable)."""
+            extra: str = "", laser_r_override: str | None = None, interlock=None, rbat=0.04,
+            variant: dict | None = None) -> str:
+    """Return a full ngspice deck. ``en``: PWL list for the MCU enable (1 = enable).
+    ``variant`` scales model parameters for the sensitivity sweep: c_out, l, gm, csa_bw, inner (multipliers)
+    and soft_start_s (seconds)."""
+    v = variant or {}
     lm = LASER[laser]
     en = en or [(0, 0), (0.0005, 0), (0.00051, 1)]
     en_pwl = " ".join(f"{t} {v}" for t, v in en)
@@ -83,18 +94,18 @@ BEN en_raw 0 V = (V(enp) > {cv['en_uvlo_v']} && V(vin) > 2.7) ? 1 : 0
 REN en_raw en_int 100
 CEN en_int 0 1n
 * ---------------- soft start: 1.2 V reference ramp in 4 ms, reset when disabled
-BSS 0 vref I = (V(en_int) > 0.5) ? ((V(vref) < {cv['vref_v']}) ? {cv['vref_v']}*1e-9/{cv['soft_start_s']} : 0) : 0
+BSS 0 vref I = (V(en_int) > 0.5) ? ((V(vref) < {cv['vref_v']}) ? {cv['vref_v']}*1e-9/{v.get('soft_start_s', cv['soft_start_s'])} : 0) : 0
 CSS vref 0 1n
 SSS vref 0 en_int 0 SWHI
 .model SWHI SW(Ron=1 Roff=1e12 Vt=0.5 Vh=0.05)
 * note SSS shorts vref when en_int is LOW (switch closes when control < Vt via inverted control below)
 * ---------------- error amplifier (gm) and compensation
-BGM 0 comp I = (V(en_int) > 0.5) ? {cv['gea_s']}*(V(vref)-V(fb)) : -1e-3*V(comp)
+BGM 0 comp I = (V(en_int) > 0.5) ? {cv['gea_s'] * v.get('gm', 1)}*(V(vref)-V(fb)) : -1e-3*V(comp)
 * ISP/ISN backup current loop: pulls COMP down above 50 mV (strength assumed)
 BCC comp 0 I = {2e-3}*max(V(vout)-V(ldp)-{cv['isp_isn_limit_v'][1]}, 0)/0.001
-RC comp comp_rc {comp['r_c_ohm']}
+RC comp comp_rc {comp['r_c_ohm'] * v.get('r_c', 1)}
 CC comp_rc 0 {comp['c_c_f']}
-CP comp 0 {comp['c_p_f']}
+CP comp 0 {comp['c_p_f'] * v.get('c_p', 1)}
 REA comp 0 {cv['rea_ohm']}
 DCH comp clamp_hi DCL
 VCH clamp_hi 0 2.5
@@ -103,12 +114,12 @@ DCLO 0 comp DCL
 * current command and inner PI current loop -> control variable u
 BIC icmd 0 V = min(max(V(comp)/{cv['ri_equiv_ohm']}, -2), {ILIM})
 BERR err 0 V = V(icmd) - I(VIL1)
-BUI 0 uint I = (V(en_int) > 0.5) ? 6000e-6*V(err) : -1e-3*V(uint)
+BUI 0 uint I = (V(en_int) > 0.5) ? {6000e-6 * v.get('inner', 1)}*V(err) : -1e-3*V(uint)
 CUI uint 0 1u
 DUH uint uh DCL
 VUH uh 0 1.92
 DUL 0 uint DCL
-BU u 0 V = (V(en_int) > 0.5) ? min(max(V(uint) + 0.08*V(err), 0), 1.92) : 0
+BU u 0 V = (V(en_int) > 0.5) ? min(max(V(uint) + {0.08 * v.get('inner', 1)}*V(err), 0), 1.92) : 0
 BD1 d1 0 V = min(V(u), 1)
 BD2 d2 0 V = max(V(u) - 1, 0)
 * ---------------- averaged power stage (inductor explicit), losses lumped
@@ -116,7 +127,7 @@ BNA na 0 V = V(d1)*V(vin)
 BNB nb 0 V = (1-V(d2))*V(vout)
 VIL1 na nl1 0
 RL nl1 nl2 {cm['inductor']['dcr_typ_ohm'] * 1.2 + 0.012}
-L1 nl2 nl3 {cm['inductor']['l_h']}
+L1 nl2 nl3 {cm['inductor']['l_h'] * v.get('l', 1)}
 * with the converter disabled all four FETs are off: block reverse inductor current
 DOFF nl3 nb DIDEAL
 SON nl3 nb en_int 0 SWHI2
@@ -125,7 +136,7 @@ SON nl3 nb en_int 0 SWHI2
 BIIN vin 0 I = V(d1)*I(VIL1)
 BIOUT 0 vout I = (1-V(d2))*I(VIL1)
 * ---------------- output: capacitors, bleeder, shunt, wiring, clamp diode, laser
-COUT vout cout_e {C_OUT}
+COUT vout cout_e {C_OUT * v.get('c_out', 1)}
 RCOUT cout_e 0 0.0015
 R7 vout 0 {cm['bleeder_ohm']}
 RS1 vout ldp {cm['shunt']['r_ohm']}
@@ -136,7 +147,7 @@ D1 0 ldk DSCH
 {load}
 * ---------------- current sense amplifier INA186A2 + FB divider
 BCSA csa_i 0 V = min(max({cm['csa']['gain']}*(V(vout)-V(ldp)), 0), V(vin)-0.02)
-RCSA csa_i csf {1/(2*math.pi*cm['csa']['bw_hz']*1e-9):.1f}
+RCSA csa_i csf {1/(2*math.pi*cm['csa']['bw_hz']*v.get('csa_bw', 1)*1e-9):.1f}
 CCSA csf 0 1n
 ECSB csout 0 csf 0 1
 R8 csout fb {cm['fb_divider']['r_top_ohm']}
@@ -154,11 +165,15 @@ quit
 """
 
 
+def finalize(deck: str) -> str:
+    # the soft-start reset switch must close when the converter is disabled: invert its control
+    return deck.replace("SSS vref 0 en_int 0 SWHI", "BSSN ssn 0 V = (V(en_int) > 0.5) ? 0 : 1\nSSS vref 0 ssn 0 SWHI")
+
+
 def run(name: str, deck: str) -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     cir = OUT / f"{name}.cir"
-    # the soft-start reset switch must close when the converter is disabled: invert its control
-    deck = deck.replace("SSS vref 0 en_int 0 SWHI", "BSSN ssn 0 V = (V(en_int) > 0.5) ? 0 : 1\nSSS vref 0 ssn 0 SWHI")
+    deck = finalize(deck)
     cir.write_text(deck, encoding="utf-8")
     r = subprocess.run([str(paths.ngspice()), "-b", cir.name], cwd=OUT, capture_output=True, text=True, timeout=900)
     csv = OUT / f"{name}.csv"
@@ -290,14 +305,14 @@ def short_circuit():
     load = "BLD ldk 0 I = (time < 9e-3) ? 0.170^-1*0.03*ln(1+exp((V(ldk)-3.75)/0.03)) : V(ldk)/0.01"
     d = run("short", netlist("short", 3.7, tstop=0.014, laser_r_override=load))
     i = d["csout"] / (cm["csa"]["gain"] * cm["shunt"]["r_ohm"])
-    ish = (d["vout"] - d["vld"]) * 0  # placeholder (shunt current not saved separately)
-    m = d["t"] > 0.0095
-    i_short = float(np.max(d["iL"][m]))
+    i_peak = float(np.max(d["iL"][d["t"] > 0.009]))
+    i_settled = settle_value(d["t"], i, 0.013)
+    # 25 A = TPS552882 ILIM_PK, typical cycle-by-cycle peak limit (SLVSFC5 p.7, LEAD-01). The averaged model has
+    # no cycle-by-cycle limit, so this compares the averaged inductor current with it.
     return {"id": "SIM-08", "name": "Output short-circuit (10 mOhm) during emission",
-            "metrics": {"peak_inductor_current_a": float(np.max(d["iL"][d["t"] > 0.009])),
-                        "settled_output_current_a": settle_value(d["t"], d["iL"] * 0 + i, 0.013)},
-            "limit": "inductor current < 25 A cycle-by-cycle peak limit; output current settles <= 5.2 A (backup ceiling)",
-            "pass": float(np.max(d["iL"][d["t"] > 0.009])) < 25 and settle_value(d["t"], i, 0.013) <= 5.2, "data": d, "il": i}
+            "metrics": {"peak_inductor_current_a": i_peak, "settled_output_current_a": i_settled},
+            "limit": "averaged inductor current < 25 A (ILIM_PK typ, SLVSFC5 p.7); output current settles <= 5.2 A (backup ceiling)",
+            "pass": i_peak < 25 and i_settled <= 5.2, "data": d, "il": i}
 
 
 @test
@@ -345,17 +360,157 @@ quit
             "limit": "reverse current < 1 mA", "pass": i < 1e-3}
 
 
-def loop_ac() -> dict:
-    """Cross-check of the Python loop model: crossover / phase margin at 3.7 V, typical diode."""
-    sys.path.insert(0, str(ROOT / "engineering/calculations"))
-    res = json.loads((ROOT / "engineering/calculations/power-stage-results.json").read_text(encoding="utf-8"))
-    loops = res["loop"]
-    pm = min(l["phase_margin_deg"] for l in loops if l["phase_margin_deg"] is not None)
-    gm = min(l["gain_margin_db"] for l in loops if l["gain_margin_db"] is not None)
-    return {"id": "SIM-11", "name": "Control-loop response (linearised model, 12 corners)",
-            "metrics": {"min_phase_margin_deg": pm, "min_gain_margin_db": gm},
-            "limit": "PM >= 50 deg, GM >= 10 dB (time-domain step tests SIM-04/05 corroborate)",
-            "pass": pm >= 50 and gm >= 10}
+# ---------------------------------------------------------------- loop gain by frequency-response analysis
+FRA_WORK = ROOT / "build" / "sim-fra"           # raw FRA decks and waveforms (scratch; results keep the processed data)
+FRA_FREQS = [float(f) for f in np.round(np.logspace(np.log10(300), np.log10(100e3), 16), -1)]
+FRA_AMP_V = 0.05                                 # injected amplitude: 2.5 % of the 2.0 V CSA signal at 4 A
+FRA_SOFT_START_S = 0.0005                        # shortened ramp: only the steady-state small signal matters
+PM_LIMIT, GM_LIMIT = 50.0, 10.0
+
+
+def fra_point(tag: str, f: float, vbat: float, laser: str, variant: dict | None = None) -> complex:
+    """Loop gain T(f) = -Vy/Vx with a series voltage injection between the CSA output (y) and R8 (x)."""
+    variant = dict(variant or {}, soft_start_s=FRA_SOFT_START_S)
+    period = 1.0 / f
+    t_inj = 0.003
+    settle = max(5 * period, 0.003)
+    n_per = max(5, math.ceil(0.002 / period))
+    t_meas = t_inj + settle
+    tstop = t_meas + n_per * period
+    step = min(period / 200, 2e-6)
+    name = f"fra_{tag}_{int(f)}"
+    deck = netlist(name, vbat, laser=laser, tstop=0.01, rbat=0.005, variant=variant)
+    if vbat < 3.3:                               # start above the 3.08 V UVLO rising threshold, then ramp down
+        deck = deck.replace(f"VB batp_i 0 DC {vbat}", f"VB batp_i 0 PWL(0 3.3 1.5m 3.3 2m {vbat})")
+    deck = deck.replace("ECSB csout 0 csf 0 1",
+                        f"ECSB csy 0 csf 0 1\nVINJ csout csy DC 0 SIN(0 {FRA_AMP_V} {f} {t_inj})")
+    deck = deck.replace(".tran 1u 0.01 0 2u uic", f".tran {step:.4g} {tstop:.6g} 0 {step:.4g} uic")
+    deck = deck.replace("reltol=1e-4", "reltol=1e-5")
+    deck = deck.replace(f"wrdata {name}.csv I(VIL1) v(vout) v(ldk) v(vin) v(enp) v(vref) v(comp) v(u) v(csout) i(VB)",
+                        f"wrdata {name}.csv v(csout) v(csy)")
+    FRA_WORK.mkdir(parents=True, exist_ok=True)
+    (FRA_WORK / f"{name}.cir").write_text(finalize(deck), encoding="utf-8")
+    r = subprocess.run([str(paths.ngspice()), "-b", f"{name}.cir"], cwd=FRA_WORK, capture_output=True, text=True,
+                       timeout=900)
+    csv = FRA_WORK / f"{name}.csv"
+    if r.returncode != 0 or not csv.exists():
+        raise RuntimeError(f"ngspice failed for {name}:\n{r.stdout[-1500:]}\n{r.stderr[-1500:]}")
+    data = np.loadtxt(csv, skiprows=1)
+    t, x, y = data[:, 0], data[:, 1], data[:, 2]
+    tu = np.linspace(t_meas, tstop, 4000, endpoint=False)          # integer number of periods
+    xu, yu = np.interp(tu, t, x), np.interp(tu, t, y)
+    e = np.exp(-2j * np.pi * f * tu)
+    return complex(-np.sum((yu - yu.mean()) * e) / np.sum((xu - xu.mean()) * e))
+
+
+def margins(freqs: list[float], T: list[complex]) -> dict:
+    """Crossover, phase margin and gain margin by log interpolation between measured points."""
+    f = np.array(freqs)
+    if min(abs(t) for t in T) < 1e-9:
+        raise RuntimeError("no loop response at some frequency (converter not running in the FRA deck?)")
+    mag = 20 * np.log10(np.abs(np.array(T)))
+    ph = np.degrees(np.unwrap(np.angle(np.array(T))))
+    out = {"f_cross_hz": None, "phase_margin_deg": None, "f_180_hz": None, "gain_margin_db": None,
+           "mag_at_fmax_db": float(mag[-1]), "phase_at_fmax_deg": float(ph[-1])}
+    for i in range(len(f) - 1):
+        if out["f_cross_hz"] is None and mag[i] >= 0 > mag[i + 1]:
+            k = mag[i] / (mag[i] - mag[i + 1])
+            lf = np.log10(f[i]) + k * (np.log10(f[i + 1]) - np.log10(f[i]))
+            out["f_cross_hz"] = float(10 ** lf)
+            out["phase_margin_deg"] = float(180 + ph[i] + k * (ph[i + 1] - ph[i]))
+        if out["f_180_hz"] is None and ph[i] > -180 >= ph[i + 1]:
+            k = (ph[i] + 180) / (ph[i] - ph[i + 1])
+            out["f_180_hz"] = float(10 ** (np.log10(f[i]) + k * (np.log10(f[i + 1]) - np.log10(f[i]))))
+            out["gain_margin_db"] = float(-(mag[i] + k * (mag[i + 1] - mag[i])))
+    return out
+
+
+def loop_ok(m: dict) -> bool:
+    """PM >= 50 deg at crossover; GM >= 10 dB, or, when the phase never reaches -180 deg below fmax, at least
+    10 dB of attenuation at fmax (the averaged model is not meaningful much above fsw/5)."""
+    if m["phase_margin_deg"] is None or m["phase_margin_deg"] < PM_LIMIT:
+        return False
+    if m["gain_margin_db"] is not None:
+        return m["gain_margin_db"] >= GM_LIMIT
+    return m["mag_at_fmax_db"] <= -GM_LIMIT
+
+
+def fra_sweep(tag: str, vbat: float, laser: str, variant: dict | None = None, freqs=None) -> dict:
+    from concurrent.futures import ThreadPoolExecutor
+    freqs = list(freqs or FRA_FREQS)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        T = list(pool.map(lambda f: fra_point(tag, f, vbat, laser, variant), freqs))
+        # refine: two extra points inside each bracket that holds the gain or the phase crossover
+        m = margins(freqs, T)
+        extra = []
+        for fx in (m["f_cross_hz"], m["f_180_hz"]):
+            if fx is None:
+                continue
+            i = max(k for k in range(len(freqs) - 1) if freqs[k] <= fx)
+            lo, hi = math.log10(freqs[i]), math.log10(freqs[i + 1])
+            extra += [round(10 ** (lo + (hi - lo) * q), 1) for q in (1 / 3, 2 / 3)]
+        extra = sorted(set(extra) - set(freqs))
+        T += list(pool.map(lambda f: fra_point(tag, f, vbat, laser, variant), extra))
+    order = sorted(range(len(freqs) + len(extra)), key=lambda k: (freqs + extra)[k])
+    freqs, T = [(freqs + extra)[k] for k in order], [T[k] for k in order]
+    m = margins(freqs, T)
+    return {"vbat": vbat, "laser": laser, "freqs_hz": freqs, "mag_db": [round(20 * math.log10(abs(t)), 3) for t in T],
+            "phase_deg": [round(math.degrees(a), 2) for a in np.unwrap(np.angle(np.array(T)))], **m}
+
+
+def loop_fra() -> dict:
+    corners = {"3.7V_typ": (3.7, "typ"), "3.0V_max": (3.0, "max"), "4.2V_min": (4.2, "min")}
+    sweeps = {k: fra_sweep(k, vb, lz) for k, (vb, lz) in corners.items()}
+    calc = json.loads((ROOT / "engineering/calculations/power-stage-results.json").read_text(encoding="utf-8"))
+    ref = next((l for l in calc["loop"] if l["corner"] == "typ_25C" and l["v_in"] == 3.7 and l["rd_scale"] == 1.0), None)
+    s = sweeps["3.7V_typ"]
+    metrics = {f"{k}_{q}": (round(v[q], 2) if v[q] is not None else None)
+               for k, v in sweeps.items() for q in ("f_cross_hz", "phase_margin_deg", "gain_margin_db")}
+    if ref and s["f_cross_hz"]:
+        metrics["python_model_3.7V_typ_f_cross_hz"] = round(ref["f_cross_hz"], 1)
+        metrics["python_model_3.7V_typ_phase_margin_deg"] = round(ref["phase_margin_deg"], 2)
+        metrics["fc_difference_pct"] = round(100 * (s["f_cross_hz"] - ref["f_cross_hz"]) / ref["f_cross_hz"], 1)
+        metrics["pm_difference_deg"] = round(s["phase_margin_deg"] - ref["phase_margin_deg"], 1)
+    return {"id": "SIM-11", "name": "Current-loop gain by frequency-response analysis of the averaged deck "
+                                    "(3.7 V typ, 3.0 V max-Vf, 4.2 V min-Vf), compared with the Python model",
+            "metrics": metrics, "bode": sweeps,
+            "limit": f"PM >= {PM_LIMIT:g} deg at every corner; GM >= {GM_LIMIT:g} dB (or >= {GM_LIMIT:g} dB attenuation "
+                     "at 100 kHz if the phase stays above -180 deg); Python-model difference reported, not judged",
+            "pass": all(loop_ok(v) for v in sweeps.values())}
+
+
+SENSITIVITY = {                                   # one-at-a-time and combined worst cases (multipliers)
+    "nominal": {},
+    "C_out retention 0.35/0.55": {"c_out": 0.35 / 0.55},
+    "C_out retention 0.75/0.55": {"c_out": 0.75 / 0.55},
+    "L -20 %": {"l": 0.8},
+    "L +20 %": {"l": 1.2},
+    "gm -20 %": {"gm": 0.8},
+    "gm +20 %": {"gm": 1.2},
+    "CSA bandwidth -30 %": {"csa_bw": 0.7},
+    "inner loop gain x0.5 (assumption)": {"inner": 0.5},
+    "inner loop gain x2 (assumption)": {"inner": 2.0},
+    "combined: low C, high L, high gm, slow CSA": {"c_out": 0.35 / 0.55, "l": 1.2, "gm": 1.2, "csa_bw": 0.7},
+}
+SENS_FREQS = [float(f) for f in np.round(np.logspace(np.log10(700), np.log10(100e3), 11), -1)]
+
+
+def sensitivity() -> dict:
+    rows = {}
+    for label, var in SENSITIVITY.items():
+        tag = "sens_" + "".join(ch if ch.isalnum() else "_" for ch in label)[:40]
+        s = fra_sweep(tag, 3.0, "max", var, SENS_FREQS)
+        rows[label] = {k: (round(s[k], 2) if isinstance(s[k], float) else s[k])
+                       for k in ("f_cross_hz", "phase_margin_deg", "gain_margin_db", "mag_at_fmax_db")}
+        rows[label]["pass"] = loop_ok(s)
+    pms = [r["phase_margin_deg"] for r in rows.values() if r["phase_margin_deg"] is not None]
+    return {"id": "SIM-12", "name": "Loop sensitivity at 3.0 V, max-Vf diode: output capacitance (DC bias), inductance, "
+                                    "error-amplifier gm, CSA bandwidth and the assumed inner-loop gain",
+            "metrics": {"min_phase_margin_deg": min(pms) if pms else None,
+                        "cases_passing": sum(r["pass"] for r in rows.values()), "cases": len(rows)},
+            "sweep": rows,
+            "limit": f"every case: PM >= {PM_LIMIT:g} deg and the gain-margin rule of SIM-11",
+            "pass": all(r["pass"] for r in rows.values())}
 
 
 def plot(results):
@@ -363,6 +518,18 @@ def plot(results):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     for r in results:
+        if "bode" in r:
+            fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.5, 6), sharex=True)
+            for k, s in r["bode"].items():
+                a1.semilogx(s["freqs_hz"], s["mag_db"], marker="o", ms=3, lw=0.9, label=k)
+                a2.semilogx(s["freqs_hz"], [180 + p for p in s["phase_deg"]], marker="o", ms=3, lw=0.9)
+            a1.axhline(0, color="k", lw=0.6); a1.set_ylabel("Loop gain (dB)"); a1.legend(fontsize=7)
+            a2.axhline(PM_LIMIT, color="grey", ls="--", lw=0.8); a2.set_ylabel("180 + phase (deg)")
+            a2.set_xlabel("Frequency (Hz)")
+            for a in (a1, a2):
+                a.grid(alpha=0.3, which="both")
+            a1.set_title(f'{r["id"]}: loop gain measured in the averaged ngspice deck (FRA)', fontsize=9)
+            fig.tight_layout(); fig.savefig(OUT / f'{r["id"]}.png', dpi=110); plt.close(fig)
         if "data" not in r:
             continue
         d = r["data"]
@@ -380,32 +547,68 @@ def plot(results):
         fig.tight_layout(); fig.savefig(OUT / f'{r["id"]}.png', dpi=110); plt.close(fig)
 
 
+SIM_IDS = {"startup_nominal": "SIM-01", "startup_low_battery": "SIM-02", "regulation_corners": "SIM-03",
+           "battery_sag": "SIM-04", "load_step": "SIM-05", "flash_mode": "SIM-06", "interlock_open": "SIM-07",
+           "short_circuit": "SIM-08", "open_load": "SIM-09", "reverse_polarity": "SIM-10", "loop_fra": "SIM-11",
+           "sensitivity": "SIM-12"}
+
+
+def ngspice_version() -> str:
+    try:
+        r = subprocess.run([str(paths.ngspice()), "--version"], capture_output=True, text=True, timeout=60)
+        return next((ln.strip(" *") for ln in (r.stdout + r.stderr).splitlines() if "ngspice-" in ln), "UNKNOWN")
+    except (OSError, subprocess.SubprocessError, FileNotFoundError):
+        return "UNKNOWN"
+
+
+def write_evidence() -> None:
+    from nubm44 import evidence
+    outputs = [OUT / "results.json", OUT / "results.md", *sorted(OUT.glob("SIM-*.png")),
+               *sorted(OUT.glob("*.cir")), *sorted(OUT.glob("*.csv"))]
+    evidence.write(evidence.build(
+        "simulation",
+        inputs=[ROOT / "engineering/design/parameters.yaml", Path(__file__).resolve(),
+                ROOT / "engineering/calculations/power-stage-results.json"],
+        outputs=outputs,
+        tools={**evidence.python_tools(["numpy", "PyYAML", "matplotlib"]), "ngspice": ngspice_version()},
+        evidence_class="PREDICTION (behavioural cycle-averaged ngspice model; not switching-level, not a measurement)",
+        simulation_ids=sorted(SIM_IDS.values())), OUT / "evidence.json")
+
+
 def main() -> int:
     results = []
-    for fn in TESTS:
+    for fn in TESTS + [reverse_polarity, loop_fra, sensitivity]:
         try:
             results.append(fn())
         except Exception as e:  # a failed run is reported, never hidden
-            results.append({"id": fn.__name__, "name": fn.__name__, "metrics": {}, "limit": "",
-                            "pass": False, "error": str(e)[:500]})
-    results.append(reverse_polarity())
-    results.append(loop_ac())
+            results.append({"id": SIM_IDS.get(fn.__name__, fn.__name__), "name": fn.__name__, "metrics": {},
+                            "limit": "", "pass": False, "error": f"{type(e).__name__}: {str(e)[:500]}"})
     plot(results)
     slim = [{k: v for k, v in r.items() if k not in ("data", "il")} for r in results]
     for r in slim:
+        r["pass"] = bool(r["pass"])               # numpy booleans would serialise as 1.0
         r["status"] = "PASS" if r["pass"] else ("NOT RUN" if r.get("error") else "FAIL")
     (OUT / "results.json").write_text(json.dumps(slim, indent=1, default=float), encoding="utf-8")
     lines = ["# Simulation results", "", "Behavioural cycle-averaged model (see `simulation/run_sims.py` docstring for",
-             "every assumption). PASS means the metric met its limit inside this model only.", "",
+             "every assumption). PASS means the metric met its limit inside this model only: these are predictions,",
+             "not measurements, and the model has no switching ripple, saturation or dead time.", "",
              "| ID | Test | Metrics | Limit | Status |", "|---|---|---|---|---|"]
     for r in slim:
         met = ", ".join(f"{k}={v:.4g}" if isinstance(v, float) else f"{k}={v}" for k, v in r["metrics"].items())
         lines.append(f'| {r["id"]} | {r["name"]} | {met or r.get("error", "")} | {r["limit"]} | **{r["status"]}** |')
-    lines += ["", "Plots: `simulation/results/SIM-*.png`."]
+    sens = next((r for r in slim if r["id"] == "SIM-12" and "sweep" in r), None)
+    if sens:
+        lines += ["", "## SIM-12 sensitivity cases", "", "| Case | fc (Hz) | PM (deg) | GM (dB) | |T| at 100 kHz (dB) | Pass |",
+                  "|---|---|---|---|---|---|"]
+        for label, row in sens["sweep"].items():
+            lines.append(f"| {label} | {row['f_cross_hz']} | {row['phase_margin_deg']} | {row['gain_margin_db']} | "
+                         f"{row['mag_at_fmax_db']} | {'yes' if row['pass'] else 'NO'} |")
+    lines += ["", "Plots: `simulation/results/SIM-*.png`. Evidence manifest: `simulation/results/evidence.json`."]
     (OUT / "results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_evidence()
     for r in slim:
-        print(f'{r["status"]:8} {r["id"]} {r["name"]}: {r["metrics"] or r.get("error", "")}')
-    return 0
+        print(f'{r["status"]:8} {r["id"]} {r["name"][:70]}: {r["metrics"] or r.get("error", "")}')
+    return 0 if all(r["status"] == "PASS" for r in slim) else 1
 
 
 if __name__ == "__main__":

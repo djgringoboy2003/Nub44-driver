@@ -76,28 +76,29 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-FW-18 | info | Risk | CC pin active-low polarity not stated in the TPS552882 datasheet | DOCUMENTED |
 | AUD-FW-19 | high | Defect | DAC2 reference written to VREF.CTRLC: AC2 power-loss trip at about 0.57 V, not 2.6 V | FIXED |
 | AUD-FW-20 | medium | Defect | DAC2 not enabled in standby: AC2 reference stops during the hold-up sleep | FIXED |
-| AUD-VAL-01 | high | Defect | Calculation evidence not bound to its inputs; stale results pass | OPEN |
-| AUD-VAL-02 | high | Defect | Simulation evidence not bound to its inputs or ngspice version; stale results pass | OPEN |
-| AUD-VAL-03 | medium | Defect | Malformed calculation/simulation evidence crashes the validator or passes on a status string | OPEN |
-| AUD-VAL-04 | medium | Defect | SIM-11 copies the Python loop analysis instead of simulating | OPEN |
-| AUD-VAL-05 | high | Defect | Validator always exits 1 because of the parked compact board: no regression signal | OPEN |
-| AUD-VAL-06 | medium | Defect | Gate statuses hide the evidence type (model-level, internal consistency) | OPEN |
-| AUD-VAL-07 | medium | Defect | Firmware evidence uses a hard-coded file list and records no tool versions | OPEN |
-| AUD-VAL-08 | low | Defect | Schematic/ERC freshness relies on file modification times | OPEN |
-| AUD-VAL-09 | medium | Defect | `run_sims.py` and `power_stage.py` exit 0 when checks fail | OPEN |
+| AUD-VAL-01 | high | Defect | Calculation evidence not bound to its inputs; stale results pass | FIXED |
+| AUD-VAL-02 | high | Defect | Simulation evidence not bound to its inputs or ngspice version; stale results pass | FIXED |
+| AUD-VAL-03 | medium | Defect | Malformed calculation/simulation evidence crashes the validator or passes on a status string | FIXED |
+| AUD-VAL-04 | medium | Defect | SIM-11 copies the Python loop analysis instead of simulating | FIXED |
+| AUD-VAL-05 | high | Defect | Validator always exits 1 because of the parked compact board: no regression signal | FIXED |
+| AUD-VAL-06 | medium | Defect | Gate statuses hide the evidence type (model-level, internal consistency) | FIXED |
+| AUD-VAL-07 | medium | Defect | Firmware evidence uses a hard-coded file list and records no tool versions | FIXED |
+| AUD-VAL-08 | low | Defect | Schematic/ERC freshness relies on file modification times | DEFERRED |
+| AUD-VAL-09 | medium | Defect | `run_sims.py` and `power_stage.py` exit 0 when checks fail | FIXED |
 | AUD-VAL-10 | medium | Enhancement | No structured channel for bench (Gate G) evidence | OPEN |
 | AUD-SIM-01 | medium | Risk | Averaged model only; inner current loop and ISP/ISN loop strength are assumptions | DOCUMENTED |
-| AUD-SIM-02 | low | Defect | SIM-08 has a dead placeholder and an unsourced 25 A limit | OPEN |
-| AUD-SIM-03 | medium | Enhancement | No parameter/tolerance sensitivity sweep in simulation | OPEN |
-| AUD-CAL-01 | low | Defect | "Inductor RMS current" check uses the average current | OPEN |
+| AUD-SIM-02 | low | Defect | SIM-08 has a dead placeholder and an unsourced 25 A limit | FIXED |
+| AUD-SIM-03 | medium | Enhancement | No parameter/tolerance sensitivity sweep in simulation | FIXED |
+| AUD-SIM-04 | medium | Risk | Averaged-model gain margin 9.5 dB (< 10 dB) at combined worst-case tolerances | DOCUMENTED |
+| AUD-CAL-01 | low | Defect | "Inductor RMS current" check uses the average current | FIXED |
 | AUD-CAL-02 | medium | Risk | Efficiency margin is thin (94.1 % estimate with evaluation copper vs ≥ 94 %) | DOCUMENTED |
 | AUD-PCB-01 | medium | Risk | Evaluation-board layout items accepted with bench checks (DR1H via, ISP/ISN, C5, VCC, SW2, AGND/PGND) | DOCUMENTED |
 | AUD-PCB-02 | high | Risk | Compact board: 20 unconnected items, routing-capacity limit | DOCUMENTED |
 | AUD-PCB-03 | medium | Risk | Custom/assumed footprints (TPS552882 from PDF vectors; XGL5030 on the XAL5030 pattern) not independently reviewed | OPEN |
 | AUD-PCB-04 | low | Risk | Q6 gate (VGSS ±6 V) sees VOUT − 6.2 V with no clamp; overstressed above ~12 V in a multiple fault | DOCUMENTED |
 | AUD-PCB-05 | low | Risk | CS_OUT can exceed VMCU by up to about 0.3 V when the INA186 output saturates | DOCUMENTED |
-| AUD-MFG-01 | high | Defect | Compact fabrication ZIP and Gerbers carry no "incomplete board" marker | OPEN |
-| AUD-MFG-02 | medium | Defect | Export ignores DRC/ERC/parity state; no release levels; no human approval record | OPEN |
+| AUD-MFG-01 | high | Defect | Compact fabrication ZIP and Gerbers carry no "incomplete board" marker | FIXED |
+| AUD-MFG-02 | medium | Defect | Export ignores DRC/ERC/parity state; no release levels; no human approval record | FIXED |
 | AUD-MFG-03 | medium | Defect | Compact BOM descriptions contradict the MPN and footprint (0402/16 V X7R text on 0201/10 V X5R parts) | OPEN |
 | AUD-MFG-04 | medium | Risk | Centroid rotation/side conventions verified against KiCad only, not against PCBWay | DOCUMENTED |
 | AUD-SRC-01 | medium | Defect | Sourcing ratings are a hand table with no consistency or derating check; CSV freshness unchecked | OPEN |
@@ -309,45 +310,44 @@ side effects; dependencies; tests; status; validation outcome.
   VAL-CALC entries stay PASS.
 - **Correction:** the calculation writes an evidence manifest (input hashes, Python and package versions); the
   validator recomputes hashes and fails stale or missing manifests.
-- **Status:** OPEN. **Validation:** —
+- **Status:** FIXED. `power_stage.py` writes `power-stage-evidence.json` (hashes of parameters.yaml, the script, `automation/nubm44/calc/*.py`, outputs, tool versions, check list); the validator fails stale, missing or edited evidence and re-judges every check from value and limit. **Validation:** `tests/test_evidence_and_readiness.py` (parameter change, edited results, contradictory status, malformed files).
 
 #### AUD-VAL-02 Simulation evidence not bound to inputs (high, defect)
 - As VAL-01 for `simulation/results/results.json` (inputs: `parameters.yaml`, `run_sims.py`, the calculation
-  results SIM-11 reads, the ngspice version). **Status:** OPEN.
+  results SIM-11 reads, the ngspice version). **Status:** FIXED. `simulation/results/evidence.json` binds results to parameters.yaml, `run_sims.py`, the calculation results and the ngspice version (ngspice-47). **Validation:** tests for a changed script, a missing SIM ID and a contradictory PASS. The new check immediately caught a NumPy boolean serialised as 1.0 in SIM-02 (producer fixed).
 
 #### AUD-VAL-03 Malformed evidence handling (medium, defect)
 - `calculations()` indexes `d["checks"]` and `c["status"]` directly: a malformed file raises `KeyError` (the
   validator crashes instead of recording FAIL). Saved status strings are trusted without re-checking value
-  against limit, and the number of expected checks/simulations is not enforced. **Status:** OPEN.
+  against limit, and the number of expected checks/simulations is not enforced. **Status:** FIXED. Malformed calculation or simulation files produce FAIL entries instead of exceptions; each expected SIM ID must appear once; recorded statuses are re-judged. **Validation:** parametrised malformed-file tests.
 
 #### AUD-VAL-04 SIM-11 is not a simulation (medium, defect)
 - `run_sims.py` `loop_ac()` re-reads `power-stage-results.json`. Gate C counts it as simulation evidence, so the
   loop is "verified" twice by one model. **Correction:** a frequency-response analysis (sinusoidal injection in the
   transient behavioural deck, Middlebrook voltage injection at the CSA output) compared with the Python model.
-  **Status:** OPEN.
+  **Status:** FIXED. SIM-11 is a frequency-response analysis of the ngspice deck at three corners (PM 114-122 deg, GM 11.9-12.6 dB); the Python model is reported beside it (crossover -12.7 %, PM -5.0 deg at 3.7 V typical).
 
 #### AUD-VAL-05 No regression signal (high, defect)
 - `validate.py` exits 1 whenever any entry fails. The parked compact board always fails `VAL-ROUTE`/`VAL-DRC`, so
   every run fails and a new regression is indistinguishable. **Correction:** an explicit, documented
   known-limitations file (`engineering/known-limitations.yaml`) with the exact accepted detail; the register keeps
   the FAIL, but the exit code separates "known, unchanged" from "new or changed"; per-board readiness levels.
-  **Status:** OPEN.
+  **Status:** FIXED. `engineering/known-limitations.yaml` (accepted / pending_disposition) lets the exit code separate unchanged known items from new or changed failures; the register keeps every FAIL; `--strict` restores the old behaviour. **Validation:** tests for unchanged, changed (better or worse), new and resolved items. Current run: exit 0 with 3 known items.
 
 #### AUD-VAL-06 Evidence type hidden in gate statuses (medium, defect)
 - Gate C reads "PASS" (model-level only); Gate F "PASS" means internal export consistency. **Correction:** gate
-  details state the evidence class; per-board readiness table. **Status:** OPEN.
+  details state the evidence class; per-board readiness table. **Status:** FIXED. The register shows an evidence class per gate and a board-readiness table; `reports/release-readiness.md` lists blockers per level.
 
 #### AUD-VAL-07 Firmware evidence (medium, defect)
 - `validate.py` `firmware()` compiles `main.c` + `app.c` only (a new source file would break or be silently
-  omitted), without warnings for the host build, and records no tool versions. **Status:** OPEN.
+  omitted), without warnings for the host build, and records no tool versions. **Status:** FIXED. The validator runs `firmware/build.py` (all sources, all suites, target build, mutation check) and records compiler versions in `reports/firmware-evidence.json`.
 
 #### AUD-VAL-08 Modification-time freshness (low, defect)
 - `freshness_problems()` compares mtimes; a checkout or copy changes mtimes, which can make fresh evidence look
-  stale or stale evidence look fresh. The schematic summary has no hashes. **Status:** OPEN (low priority; DRC
-  and export evidence already use hashes).
+  stale or stale evidence look fresh. The schematic summary has no hashes. **Status:** DEFERRED: adding hashes to the schematic summary requires regenerating both schematics and therefore the full DRC/export chain; scheduled with the next CAD regeneration (roadmap). DRC, layout and export evidence are already hash-bound.
 
 #### AUD-VAL-09 Generators exit 0 on failure (medium, defect)
-- `run_sims.py` `main()` always returns 0; `power_stage.py` exits 0 with failing checks. **Status:** OPEN.
+- `run_sims.py` `main()` always returns 0; `power_stage.py` exits 0 with failing checks. **Status:** FIXED. Both generators exit 1 when a check or simulation fails or cannot run (`run_sims.py` currently exits 1 because of SIM-12).
 
 #### AUD-VAL-10 No bench-evidence channel (medium, enhancement)
 - Gate G is a fixed string. The test plan asks for results in `documentation/testing/results/<serial>/` but there
@@ -362,15 +362,28 @@ side effects; dependencies; tests; status; validation outcome.
 
 #### AUD-SIM-02 SIM-08 placeholder (low, defect)
 - `short_circuit()` computes an unused `ish = … * 0` and uses a 25 A inductor limit with no source.
-  **Status:** OPEN.
+  **Status:** FIXED. Placeholder removed; the 25 A limit is now cited as ILIM_PK typ (SLVSFC5 p.7) and labelled as an averaged-current comparison.
 
 #### AUD-SIM-03 No sensitivity sweep (medium, enhancement)
 - Loop robustness against output-capacitance DC bias, inductance tolerance, error-amplifier gm and CSA bandwidth is
-  not swept. **Status:** OPEN.
+  not swept. **Status:** FIXED. SIM-12 sweeps output-capacitance retention, inductance, gm, CSA bandwidth and the assumed inner-loop gain (11 cases). Result: AUD-SIM-04.
+
+#### AUD-SIM-04 Gain margin below 10 dB at combined tolerances (medium, risk; found by SIM-12)
+- **Evidence:** SIM-12 (frequency-response analysis of the averaged deck at 3.0 V, max-Vf diode) gives GM 9.5 dB and
+  PM 119 deg when output-capacitance retention 0.35, inductance +20 %, error-amplifier gm +20 % and CSA bandwidth -30 %
+  coincide. Every single tolerance passes (GM 11.1-14.6 dB, PM >= 109 deg); nominal corners give GM 11.9-12.6 dB.
+  The 10 dB criterion (DD-09, CALC-19) is unchanged.
+- **Interpretation:** the loop stays stable with large phase margin; the gain-margin guideline is not met only in a
+  pessimistic stack of an averaged model whose inner-loop gain is itself an assumption.
+- **Options (owner decision, not applied):** (a) accept and measure the loop on the evaluation prototype (T2.11 extended
+  with an injection measurement); (b) change R4 (Rc) from 1.2 kOhm to 1.0 kOhm: exploratory simulation gives 11.1 dB
+  worst case, 14.1 dB nominal, PM 112-114 deg, crossover 2.0-2.4 kHz. Increasing Cp lowers the gain margin further.
+  Option (b) is a hardware change and needs CALC-18..21, SIM-01..12 and the layout review rerun.
+- **Status:** DOCUMENTED (`engineering/known-limitations.yaml` pending_disposition; blocks MANUFACTURING_RELEASE only).
 
 #### AUD-CAL-01 RMS check uses average (low, defect)
 - `power_stage.py`: "Inductor RMS current vs Irms" passes `max(i_l_avg)`. With ripple, RMS = √(avg² + ripple²/12)
-  (7.42 A vs 7.39 A at the worst point). **Status:** OPEN.
+  (7.42 A vs 7.39 A at the worst point). **Status:** FIXED. RMS = sqrt(avg^2 + ripple^2 / 12): 7.42 A (was reported as 7.39 A) against 12.8 A. Layout reviews regenerated for the new calculation hash.
 
 #### AUD-CAL-02 Thin efficiency margin (medium, risk)
 - 94.59 % model, about 94.1 % with evaluation copper, against ≥ 94 %. Bench T1.7 decides. **Status:** DOCUMENTED.
@@ -391,7 +404,7 @@ side effects; dependencies; tests; status; validation outcome.
 #### AUD-PCB-03 Footprints needing independent review (medium, risk)
 - U1 land pattern extracted from PDF vectors (LEAD-01); L1 "XGL5030 uses the XAL5030 land pattern (verify)" in
   `connectivity.yaml`; DD-20 already states independent footprint review is required before release.
-  **Status:** OPEN (release blocker recorded in the manufacturing gate).
+  **Status:** OPEN, now an explicit PROTOTYPE_CANDIDATE blocker (reviews FP-U1, FP-L1, FP-POWERPAK, FP-RS1, ORIENT in `engineering/release/design-reviews.yaml`); needs a human reviewer.
 
 #### AUD-PCB-04 Q6 gate overstress in a multiple fault (low, risk)
 - DMG1012T VGSS ±6 V (DS31783 p.2). Q6 gate = VOUT − V_Z(D3) across R20; above about 12 V of VOUT the gate is
@@ -410,12 +423,12 @@ side effects; dependencies; tests; status; validation outcome.
   unconnected items. The ZIP (what a user uploads) contains only Gerbers and drills; `REVIEW_ONLY.md` is generic.
 - **Correction:** read the DRC evidence at export time; mark the package and the ZIP (`DO_NOT_FABRICATE.txt`
   inside, release level in `export-check.json` and `REVIEW_ONLY.md`).
-- **Status:** OPEN.
+- **Status:** FIXED. `export_pcbway.py` reads the DRC evidence at export time; an incomplete or stale board gets package class DRAFT_REVIEW_INCOMPLETE_BOARD, a warning in REVIEW_ONLY.md and `DO_NOT_FABRICATE.txt` inside the fabrication ZIP; the validator fails an incomplete-board export without them. Compact package regenerated with the marker.
 
 #### AUD-MFG-02 No release levels (medium, defect)
 - **Correction:** `automation/export/release_check.py` computes DRAFT_REVIEW → PROTOTYPE_CANDIDATE →
   MANUFACTURING_RELEASE from hashed evidence (ERC, netlist, DRC 0/0/0/0, layout review, export, BOM MPN
-  completeness, open footprint reviews, Gate G evidence, signed human approval file). **Status:** OPEN.
+  completeness, open footprint reviews, Gate G evidence, signed human approval file). **Status:** FIXED. `automation/export/release_check.py`: DRAFT_REVIEW / PROTOTYPE_CANDIDATE / MANUFACTURING_RELEASE from register evidence, human reviews (`engineering/release/design-reviews.yaml`), bench summary and a signed approval file matching the package hashes. Current: both boards DRAFT_REVIEW; evaluation blocked only by five human reviews.
 
 #### AUD-MFG-03 Compact BOM description mismatch (medium, defect)
 - `connectivity.yaml` has one `desc` per part, but compact parts use 0201 MPNs: the compact BOM reads e.g.

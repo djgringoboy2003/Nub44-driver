@@ -13,7 +13,7 @@ measurements. Gate G (physical validation) remains open until bench data exists.
 | Backup current limit minimum above setpoint (no interference) | 4.8 A | ≥ 4.35035 A | **PASS** | ISP/ISN 48 mV min / shunt; must not clip normal regulation |
 | Average inductor current vs ILIM minimum (20 % margin) | 8.8715 A | ≤ 10.2131 A | **PASS** | worst operating avg 7.39 A; ILIM min 10.21 A |
 | Peak inductor current vs Isat (30 % drop rating) | 8.4579 A | ≤ 14 A | **PASS** |  |
-| Inductor RMS current vs Irms (20 C rise) | 7.3929 A | ≤ 12.8 A | **PASS** |  |
+| Inductor RMS current vs Irms (20 C rise) | 7.4185 A | ≤ 12.8 A | **PASS** | RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point |
 | Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | 94.5883 % | ≥ 94 % | **PASS** | board-input to laser; estimate from loss model; brief asked > 95 % |
 | Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | 91.2684 % | ≥ 86 % | **PASS** |  |
 | Boost off-time vs minimum off-time | 909.339 ns | ≥ 145 ns | **PASS** |  |

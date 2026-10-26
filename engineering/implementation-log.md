@@ -33,3 +33,30 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
 - **Found on the way:** the agent shell collapses `\\` inside heredocs, which is how AGENTS.md acquired BEL/BS/TAB
   bytes; text with backslashes is now written with file tools, and a repository hygiene test is planned.
 - **Bench items added:** T0.4 (fuses), T1.11 (measurement chain), T2.13 (sensor faults); T1.8/T1.9 extended.
+
+## 2026-10-26: evidence, validation and release controls (roadmap phases 2 and 3, part)
+
+- **Evidence manifests** (`automation/nubm44/evidence.py`): calculations (`power-stage-evidence.json`) and simulations
+  (`simulation/results/evidence.json`) record input/output hashes, tool versions and the expected check or SIM list.
+  The validator re-hashes them and re-judges every saved status (AUD-VAL-01/02/03); both generators exit 1 on failure.
+- **Calculation fix:** inductor RMS now includes ripple (7.42 A, was 7.39 A; limit 12.8 A). Layout reviews regenerated
+  (only their calculation hash changed).
+- **Simulation:** SIM-11 is now a frequency-response analysis of the ngspice deck (injection between the CSA output and
+  R8, 16 frequencies plus refinement, three corners): PM 114.2/121.0/121.9 deg, GM 12.6/12.4/11.9 dB; the Python model
+  differs by -12.7 % in crossover and -5.0 deg in PM at 3.7 V. SIM-12 (new) sweeps 11 tolerance/assumption cases:
+  10 pass; the combined worst case gives GM 9.5 dB (AUD-SIM-04, owner decision pending; R4 1.2 -> 1.0 kOhm explored in
+  a scratch run only: 11.1 dB). SIM-08 cites ILIM_PK. Run time about 2.5 min.
+- **Validator:** modes full/fast/eval-cad/compact-cad/manufacturing/bench; `--rerun-stale`; `--strict`;
+  `engineering/known-limitations.yaml` baseline (exit 0 only when every failure is an unchanged known item); gate
+  evidence classes; Gate G reads `reports/bench-summary.json`.
+- **Release controls:** `automation/export/release_check.py` with DRAFT_REVIEW / PROTOTYPE_CANDIDATE /
+  MANUFACTURING_RELEASE, human reviews in `engineering/release/design-reviews.yaml` and signed approvals in
+  `manufacturing/approvals/`. Exports of an incomplete board are classed DRAFT_REVIEW_INCOMPLETE_BOARD and carry
+  `DO_NOT_FABRICATE.txt` in the fabrication ZIP. Both packages re-exported (Gerber/drill changes are KiCad
+  creation timestamps only).
+- **Tests added:** `tests/test_evidence_and_readiness.py` (21 tests).
+- **Results (actual):** 174 Python tests pass; `validate.py` exit 0: 55 entries, 3 known unchanged (compact routing,
+  compact DRC, SIM-12 pending); gates A/B/C PASS, D/E/F evaluation PASS, compact OPEN, G OPEN; readiness: both boards
+  DRAFT_REVIEW (evaluation needs the five human reviews for PROTOTYPE_CANDIDATE).
+- **Deferred:** schematic-summary hashes (AUD-VAL-08) and variant-specific BOM descriptions (AUD-MFG-03) wait for the
+  next CAD regeneration.

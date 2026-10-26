@@ -1,0 +1,51 @@
+{
+ "check_names": [
+  "Current setpoint worst-case tolerance",
+  "Nominal setpoint error",
+  "Backup current limit minimum above setpoint (no interference)",
+  "Average inductor current vs ILIM minimum (20 % margin)",
+  "Peak inductor current vs Isat (30 % drop rating)",
+  "Inductor RMS current vs Irms (20 C rise)",
+  "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26)",
+  "Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %)",
+  "Boost off-time vs minimum off-time",
+  "Reverse-polarity FET dissipation (worst point)",
+  "Shunt dissipation vs 50 % of rating",
+  "TPS552882 junction estimate at 50 C board (60 K/W assumed)",
+  "Hardware UVLO falling threshold >= 2.80 V cell floor",
+  "Hardware UVLO falling threshold below firmware cut-off",
+  "OV backstop trip (min) above normal maximum output",
+  "Laser current ripple (p-p) as % of setpoint",
+  "Output capacitor RMS current per capacitor",
+  "Current-loop phase margin (all corners)",
+  "Current-loop gain margin (all corners)",
+  "Crossover below RHP zero / 5",
+  "Crossover below CSA bandwidth / 3"
+ ],
+ "evidence_class": "PREDICTION (engineering calculation from datasheet parameters; not a measurement)",
+ "generated_utc": "2026-10-26T17:38:39+00:00",
+ "generator": "engineering/calculations/power_stage.py",
+ "inputs": {
+  "automation/nubm44/calc/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "automation/nubm44/calc/boost.py": "641ed2c77b54f8e4677e6314b98a5907e24c227b0400bce9e81493c9a6892fbc",
+  "automation/nubm44/calc/buckboost.py": "5dcc5b628a898e4bf86e414a23020bb3a4739c09a1123d60fd6a65a8a20b6ac7",
+  "automation/nubm44/calc/copper.py": "3cf0049153b88cbd2e1a265d028fefca26f10244b0569da144560e448721426b",
+  "automation/nubm44/calc/loop.py": "966f4f9ccde36638500bfff6c6baa027a1fd8a36332f8c83d9c1d84e3ffa8d39",
+  "engineering/calculations/power_stage.py": "aeeb80d6451d86695044a3a232fd1db9ce17a38f1f64e3510de6d67f0b659272",
+  "engineering/design/parameters.yaml": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220"
+ },
+ "kind": "calculation",
+ "outputs": {
+  "engineering/calculations/plots/current_loop_bode.png": "91988e8ce9253e31c6959ef36b7f92c8e66971f2522ab75a5f8c69cdd8730448",
+  "engineering/calculations/plots/efficiency_vs_vin.png": "88e97e9b97047214c1e99007b1c05c67e11366211922b9c8d218560d6ec6fa4e",
+  "engineering/calculations/power-stage-results.json": "0250f5ad9cf0588ad379f9964789aed29a77c943a5152b41d73642da6d97fba6",
+  "engineering/calculations/power-stage-results.md": "e80cc20d6a25b2f0d4f4829a52d117a297a8d4fe6b09ede7fb6b1b22f75d06ee"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "PyYAML": "6.0.3",
+  "matplotlib": "3.11.2",
+  "numpy": "2.4.6",
+  "python": "3.11.9"
+ }
+}

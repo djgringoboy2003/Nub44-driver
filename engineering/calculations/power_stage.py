@@ -140,8 +140,9 @@ ilim_min = 330000 / cv["r_ilim_ohm"] * cv["ilim_tol"][0]
 check("Average inductor current vs ILIM minimum (20 % margin)", worst_iL * 1.2, ilim_min, "max", "A",
       f"worst operating avg {worst_iL:.2f} A; ILIM min {ilim_min:.2f} A")
 check("Peak inductor current vs Isat (30 % drop rating)", worst_pk, cm["inductor"]["isat_30pct_a"], "max", "A")
-check("Inductor RMS current vs Irms (20 C rise)", max(p["i_l_avg"] for p in points),
-      cm["inductor"]["irms_20c_a"], "max", "A")
+i_l_rms_worst = max(math.sqrt(p["i_l_avg"] ** 2 + p["ripple_pp"] ** 2 / 12) for p in points)
+check("Inductor RMS current vs Irms (20 C rise)", i_l_rms_worst, cm["inductor"]["irms_20c_a"], "max", "A",
+      "RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point")
 
 eff = {(p["corner"], p["v_in"]): p["efficiency"] for p in points}
 eta_4v = eff[("typ_25C", 4.0)]
@@ -348,7 +349,21 @@ for k, v in runtime.items():
 L += ["", "![efficiency](plots/efficiency_vs_vin.png)", "", "![loop](plots/current_loop_bode.png)", ""]
 (OUT / "power-stage-results.md").write_text("\n".join(L), encoding="utf-8")
 
+# Evidence manifest: binds the results to the parameters, this script, the model code and the tool versions
+# (audit AUD-VAL-01). The validator recomputes every hash.
+from nubm44 import evidence  # noqa: E402
+
+evidence.write(evidence.build(
+    "calculation",
+    inputs=[ROOT / "engineering/design/parameters.yaml", Path(__file__).resolve(),
+            *sorted((ROOT / "automation/nubm44/calc").glob("*.py"))],
+    outputs=[OUT / "power-stage-results.json", OUT / "power-stage-results.md", *sorted(PLOTS.glob("*.png"))],
+    tools=evidence.python_tools(["numpy", "PyYAML", "matplotlib"]),
+    evidence_class="PREDICTION (engineering calculation from datasheet parameters; not a measurement)",
+    check_names=[c["check"] for c in checks]), OUT / "power-stage-evidence.json")
+
 fails = [c for c in checks if c["status"] == "FAIL"]
 print(f"{len(checks)} checks, {len(fails)} FAIL")
 for c in checks:
     print(f'  {c["status"]:4}  {c["check"]}: {c["value"]} {c["unit"]} (limit {c["kind"]} {c["limit"]})')
+sys.exit(1 if fails else 0)

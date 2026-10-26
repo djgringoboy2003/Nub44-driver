@@ -1,0 +1,35 @@
+# Known limitations and open findings recognised by automation/validation/validate.py (audit AUD-VAL-05).
+#
+# Every entry stays FAIL in reports/validation-register.md; nothing here turns a failure into a pass. This file
+# only lets the validator's exit code tell an UNCHANGED known item from a NEW or CHANGED failure, so automation
+# and CI can detect regressions while the compact board stays parked.
+#
+# - `accepted`: the owner has decided to live with it for now (decision reference required).
+# - `pending_disposition`: a documented finding that needs an owner decision; it is listed under
+#   "decisions required" in the register, the readiness report and the dashboard.
+# A match needs the same register ID, the same status and the detail text below (exact, or contained when
+# `detail_contains` is used). If the item improves or worsens, the detail changes and the validator reports it
+# as changed: update this file deliberately, with the reason, in the same commit.
+
+accepted:
+  - id: VAL-ROUTE-compact-22mm
+    status: FAIL
+    detail: "20 unconnected items"
+    reason: "Compact 22 mm board parked as a routing draft until evaluation bench data exists"
+    decision: "DD-27 (owner, 2026-10-25); engineering/compact-feasibility.md"
+  - id: VAL-DRC-compact-22mm
+    status: FAIL
+    detail_contains: "0 errors, 3 warnings, 0 exclusions {'via_dangling': 3}"
+    reason: "Dangling vias of the 20 open nets on the parked compact draft"
+    decision: "DD-27 (owner, 2026-10-25)"
+
+pending_disposition:
+  - id: VAL-SIM-12
+    status: FAIL
+    detail_contains: '"cases_passing": 10, "cases": 11'
+    reason: >-
+      Averaged-model gain margin 9.5 dB (< 10 dB) when low output-capacitance retention, +20 % inductance,
+      +20 % error-amplifier gm and -30 % CSA bandwidth coincide; every single tolerance passes and PM stays
+      above 109 deg. Options: accept and verify on the bench (T2.11 loop measurement), or change R4 (Rc)
+      1.2 kOhm -> 1.0 kOhm (exploratory simulation: 11.1 dB worst case). Both need an owner decision.
+    finding: AUD-SIM-04

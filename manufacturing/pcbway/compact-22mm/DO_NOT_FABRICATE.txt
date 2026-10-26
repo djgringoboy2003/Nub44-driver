@@ -1,0 +1,2 @@
+DO NOT FABRICATE: compact-22mm is an incomplete PCB draft (20 unconnected items, 0 DRC errors, 0 parity issues).
+These Gerber and drill files are for layout review only. See REVIEW_ONLY.md in the package.

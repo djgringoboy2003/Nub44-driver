@@ -1,28 +1,44 @@
-"""Validation register and release-gate computation.
+"""Validation register, release gates and per-board readiness.
 
 Collects the machine-readable evidence produced by the other tools and derives every status from it.
-Nothing here is hard-coded to pass: a missing report is NOT RUN, a check without bench data is
-NOT VERIFIABLE.
+Nothing here is hard-coded to pass: a missing report is NOT RUN, stale or malformed evidence is FAIL, and a
+check without bench data is never PASS. Calculation, simulation, firmware, DRC and export evidence is bound to
+its inputs by SHA-256 (automation/nubm44/evidence.py); file modification times are only used for the legacy
+schematic summary.
 
-Writes reports/validation-register.md and reports/validation-register.json.
-Exit code 0 only when every collected automated check passes (gate F may still be HELD by owner
-decisions; gate G always needs hardware).
+Modes (--mode):
+  full (default)  every check, firmware target build and mutation check; writes reports/validation-register.*,
+                  reports/release-readiness.* and the requirement gate table
+  fast            portable checks without KiCad, avr-gcc or ngspice: evidence integrity, calculation and
+                  simulation results, CAD report hashes, firmware host tests (writes build/validation-fast.json)
+  eval-cad, compact-cad   CAD evidence and readiness of one board
+  manufacturing   readiness of both boards from the current evidence
+  bench           Gate G bench evidence (documentation/testing/results/)
+
+Exit code: 0 when every failure is an unchanged entry of engineering/known-limitations.yaml, 1 for any new or
+changed failure; with --strict, 1 for any entry that is not PASS. Gate G always needs hardware.
 """
 from __future__ import annotations
 
+import argparse
 import importlib.util
 import json
 import hashlib
 import re
 import subprocess
 import sys
+import zipfile
 from datetime import date
 from pathlib import Path
+
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 from nubm44 import paths, spec  # noqa: E402
+from nubm44 import evidence as evidence_mod  # noqa: E402
 from export.export_pcbway import required_files as required_export_files  # noqa: E402
+from export import release_check  # noqa: E402
 
 REP = ROOT / "reports"
 entries: list[dict] = []
@@ -138,16 +154,45 @@ def research():
                f"missing: {missing}" if missing else "")
 
 
+CALC_DIR = "engineering/calculations"
+CALC_REQUIRED_INPUTS = ("engineering/design/parameters.yaml", "engineering/calculations/power_stage.py")
+SIM_DIR = "simulation/results"
+SIM_REQUIRED_INPUTS = ("engineering/design/parameters.yaml", "simulation/run_sims.py")
+
+
 def calculations():
-    d = load_json(ROOT / "engineering/calculations/power-stage-results.json")
-    if d is None:
-        return add("VAL-CALC", "Power-stage calculations", "CALC", "NOT RUN", "engineering/calculations/")
-    out = []
-    for i, c in enumerate(d["checks"], start=1):
-        out.append(add(f"VAL-CALC-{i:02d}", c["check"], "CALC", c["status"],
-                       "engineering/calculations/power-stage-results.md",
-                       f'{c["value"]} {c["unit"]} (limit {c["kind"]} {c["limit"]})'))
-    return out
+    """Each calculation check, re-judged from its value and limit, only if the evidence is current."""
+    results, manifest = load_json(ROOT / CALC_DIR / "power-stage-results.json"), load_json(ROOT / CALC_DIR / "power-stage-evidence.json")
+    if results is None and manifest is None:
+        return add("VAL-CALC-EVID", "Power-stage calculation evidence", "CALC", "NOT RUN", f"{CALC_DIR}/",
+                   "run engineering/calculations/power_stage.py")
+    problems = evidence_mod.problems(manifest, ROOT, "calculation", CALC_REQUIRED_INPUTS)
+    checks = results.get("checks") if isinstance(results, dict) else None
+    if not isinstance(checks, list) or not checks:
+        problems.append("results contain no checks")
+    elif isinstance(manifest, dict) and [c.get("check") if isinstance(c, dict) else None for c in checks] != manifest.get("check_names"):
+        problems.append("check list differs from the evidence manifest")
+    tools = manifest.get("tools", {}) if isinstance(manifest, dict) else {}
+    add("VAL-CALC-EVID", "Calculation evidence current (hashes of parameters, script and model code)", "CALC",
+        "FAIL" if problems else "PASS", f"{CALC_DIR}/power-stage-evidence.json",
+        "; ".join(problems[:6]) if problems else f"{len(checks)} checks; python {tools.get('python')}, numpy {tools.get('numpy')}")
+    if problems:
+        return "FAIL"
+    for i, c in enumerate(checks, start=1):
+        eid = f"VAL-CALC-{i:02d}"
+        try:
+            value, limit, kind, recorded = float(c["value"]), float(c["limit"]), c["kind"], c["status"]
+            if kind not in ("max", "min") or recorded not in ("PASS", "FAIL"):
+                raise ValueError
+        except (KeyError, TypeError, ValueError):
+            add(eid, str(c.get("check", "?")) if isinstance(c, dict) else "?", "CALC", "FAIL",
+                f"{CALC_DIR}/power-stage-results.md", "malformed check entry")
+            continue
+        judged = "PASS" if (value <= limit if kind == "max" else value >= limit) else "FAIL"
+        add(eid, c["check"], "CALC", judged if judged == recorded else "FAIL", f"{CALC_DIR}/power-stage-results.md",
+            f'{c["value"]} {c.get("unit", "")} (limit {kind} {c["limit"]})'
+            + ("" if judged == recorded else "; recorded status contradicts the value and limit"))
+    return "PASS"
 
 
 def schematic(variant):
@@ -223,12 +268,38 @@ def drc(variant):
 
 
 def simulation():
-    d = load_json(ROOT / "simulation/results/results.json")
-    if d is None:
-        return add("VAL-SIM", "Simulations", "SIM", "NOT RUN", "simulation/")
-    for r in d:
-        add(f"VAL-{r['id']}", r["name"], "SIM", r["status"], "simulation/results/results.md",
-            json.dumps(r.get("metrics", {}), default=float)[:160])
+    """Each simulation result, only if the evidence is current; every expected ID must appear exactly once."""
+    results, manifest = load_json(ROOT / SIM_DIR / "results.json"), load_json(ROOT / SIM_DIR / "evidence.json")
+    if results is None and manifest is None:
+        return add("VAL-SIM-EVID", "Simulation evidence", "SIM", "NOT RUN", "simulation/", "run simulation/run_sims.py")
+    problems = evidence_mod.problems(manifest, ROOT, "simulation", SIM_REQUIRED_INPUTS)
+    if not isinstance(results, list) or not results:
+        problems.append("results.json is not a list of results")
+    tools = manifest.get("tools", {}) if isinstance(manifest, dict) else {}
+    add("VAL-SIM-EVID", "Simulation evidence current (hashes of parameters, script, calculation results)", "SIM",
+        "FAIL" if problems else "PASS", f"{SIM_DIR}/evidence.json",
+        "; ".join(problems[:6]) if problems else f"{len(results)} results; {tools.get('ngspice', 'ngspice UNKNOWN')}")
+    if problems:
+        return "FAIL"
+    expected = manifest.get("simulation_ids") or [s.replace("VAL-", "") for s in SIMULATION_IDS]
+    seen = set()
+    for r in results:
+        if not (isinstance(r, dict) and isinstance(r.get("id"), str) and r.get("status") in ("PASS", "FAIL", "NOT RUN")
+                and isinstance(r.get("metrics"), dict) and isinstance(r.get("name"), str)):
+            add("VAL-SIM-MALFORMED", "Simulation result", "SIM", "FAIL", f"{SIM_DIR}/results.json", "malformed result entry")
+            continue
+        status, note = r["status"], ""
+        if not isinstance(r.get("pass"), bool):
+            status, note = "FAIL", "; pass flag is not a boolean"
+        elif status == "PASS" and not r["pass"]:
+            status, note = "FAIL", "; recorded PASS contradicts the result"
+        seen.add(r["id"])
+        add(f"VAL-{r['id']}", r["name"], "SIM", status, f"{SIM_DIR}/results.md",
+            (json.dumps(r["metrics"], default=float)[:160] if r["metrics"] else str(r.get("error", ""))[:160]) + note)
+    for sid in expected:
+        if sid not in seen:
+            add(f"VAL-{sid}", f"Simulation {sid}", "SIM", "NOT RUN", f"{SIM_DIR}/results.json", "result missing")
+    return "PASS"
 
 
 def firmware_build_module():
@@ -295,9 +366,32 @@ def exports(variant):
                 problems.append(f"missing, empty or unmanifested export artifact: {rel}")
             elif p.stat().st_size != files[rel] or hashes.get(rel) != hashlib.sha256(p.read_bytes()).hexdigest():
                 problems.append(f"export artifact size/hash differs: {rel}")
+        problems += incomplete_marker_problems(variant, package, d)
     return add(f"VAL-EXPORT-{variant}", f"PCBWay export package internally consistent ({variant})", "CAD",
                "PASS" if d["status"] == "PASS" and not problems else "FAIL",
                f"manufacturing/pcbway/{variant}/reports/export-check.json", "; ".join(map(str, problems)))
+
+
+def incomplete_marker_problems(variant, package: Path, check: dict) -> list[str]:
+    """An export of a board whose DRC shows open items must say so inside the fabrication ZIP (AUD-MFG-01)."""
+    drc_report = load_json(REP / f"drc-{variant}.json")
+    if not isinstance(drc_report, dict):
+        return []
+    incomplete = bool(drc_report.get("unconnected_items")) or any(
+        v.get("severity") == "error" for v in drc_report.get("violations", []) if isinstance(v, dict))
+    if not incomplete:
+        return []
+    problems = []
+    if check.get("package_class") != "DRAFT_REVIEW_INCOMPLETE_BOARD":
+        problems.append("incomplete board exported without the DRAFT_REVIEW_INCOMPLETE_BOARD class")
+    zpath = package / f"{variant}-gerbers.zip"
+    try:
+        with zipfile.ZipFile(zpath) as z:
+            if "DO_NOT_FABRICATE.txt" not in z.namelist():
+                problems.append("fabrication ZIP of an incomplete board lacks DO_NOT_FABRICATE.txt")
+    except (OSError, zipfile.BadZipFile):
+        problems.append("fabrication ZIP unreadable")
+    return problems
 
 
 def layout_review(variant):
@@ -356,8 +450,121 @@ def gates(blocked):
             g[f"F ({v})"] = "HELD (owner decisions: " + ", ".join(blocked) + ")" if blocked else "PASS"
         else:
             g[f"F ({v})"] = "OPEN"
-    g["G"] = "OPEN: requires assembled-prototype testing (cannot be closed by software)"
+    g["G"] = gate_g()
     return g
+
+
+GATE_EVIDENCE = {
+    "A": "documents present (inspection)",
+    "B": "KiCad ERC and netlist comparison",
+    "C": "model-level predictions (averaged ngspice model); not measurements",
+    "D": "KiCad DRC connectivity",
+    "E": "KiCad ERC/DRC",
+    "F": "export package internal consistency; not a manufacturing release (see release readiness)",
+    "G": "bench measurements on assembled prototypes only",
+}
+
+
+def gate_g() -> str:
+    """Gate G is closed only by recorded bench evidence (reports/bench-summary.json), never by software checks."""
+    summary = load_json(REP / "bench-summary.json")
+    variants = summary.get("variants") if isinstance(summary, dict) else None
+    if not isinstance(variants, dict) or not variants:
+        return "OPEN: requires assembled-prototype testing (cannot be closed by software)"
+    states = {v: (variants.get(v) or {}).get("gate_g", "NO DATA") for v in spec.VARIANTS}
+    text = ", ".join(f"{v} {s}" for v, s in states.items())
+    return ("PASS: " if all(s == "PASS" for s in states.values()) else "OPEN: ") + "bench evidence " + text
+
+
+def load_known() -> list[dict]:
+    data = None
+    try:
+        data = yaml.safe_load((ROOT / "engineering/known-limitations.yaml").read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        pass
+    out = []
+    for category in ("accepted", "pending_disposition"):
+        for item in (data or {}).get(category) or []:
+            if isinstance(item, dict) and isinstance(item.get("id"), str):
+                out.append(dict(item, category=category))
+    return out
+
+
+def classify(known: list[dict]) -> dict:
+    """Split failures into unchanged known items and new or changed ones (the register keeps every FAIL)."""
+    by_id = {k["id"]: k for k in known}
+    result = {"known": [], "changed": [], "new": [], "resolved": []}
+    for e in entries:
+        if e["status"] == "PASS" or e["id"] == "VAL-REQ-BLOCKED":
+            continue
+        k = by_id.get(e["id"])
+        if k is None:
+            result["new"].append(e)
+            continue
+        detail = str(e.get("detail", ""))
+        same = k.get("status") == e["status"] and (
+            detail == k["detail"] if "detail" in k else str(k.get("detail_contains", "\0")) in detail)
+        result["known" if same else "changed"].append(dict(e, category=k["category"], reason=k.get("reason", "")))
+    st = {e["id"]: e["status"] for e in entries}
+    result["resolved"] = [k for k in known if st.get(k["id"]) == "PASS"]
+    return result
+
+
+def run_checks(mode: str) -> None:
+    entries.clear()
+    variants = {"eval-cad": ["evaluation-board"], "compact-cad": ["compact-22mm"]}.get(mode, list(spec.VARIANTS))
+    if mode in ("full", "fast", "manufacturing"):
+        research()
+        calculations()
+        simulation()
+    for v in variants:
+        if mode == "bench":
+            break
+        schematic(v)
+        drc(v)
+        layout_review(v)
+        exports(v)
+    if mode in ("full", "manufacturing"):
+        firmware(target=True, mutation=(mode == "full"))
+    elif mode == "fast":
+        firmware(target=False, mutation=False)
+    elif mode in ("eval-cad", "compact-cad"):
+        calculations()
+        simulation()
+        firmware(target=True, mutation=False)
+
+
+def write_register(g: dict, cls: dict, readiness: dict) -> None:
+    today = str(date.today())
+    REP.mkdir(exist_ok=True)
+    (REP / "validation-register.json").write_text(json.dumps(
+        {"date": today, "gates": g, "gate_evidence": GATE_EVIDENCE, "entries": entries,
+         "known_unchanged": [e["id"] for e in cls["known"]], "new_or_changed": [e["id"] for e in cls["new"] + cls["changed"]],
+         "readiness": {v: r["level"] for v, r in readiness.items()}}, indent=1), encoding="utf-8")
+    lines = ["# Validation register", "", f"Generated by `automation/validation/validate.py` on {today}.",
+             "Statuses come from tool reports and hash-bound evidence; none are hard-coded. Calculations and simulations",
+             "are predictions; only Gate G evidence is measured on hardware.", "", "## Release gates", "",
+             "| Gate | Status | Evidence class |", "|---|---|---|"]
+    lines += [f"| {k} | {v} | {GATE_EVIDENCE.get(k[0], '')} |" for k, v in g.items()]
+    lines += ["", "## Board readiness", "", "| Variant | Level | Blockers to the next level |", "|---|---|---|"]
+    for v, r in readiness.items():
+        nxt = r["next_level"]
+        todo = f"{len(r['blockers'][nxt])} for {nxt}" if nxt else "none"
+        lines.append(f"| {v} | **{r['level']}** | {todo} |")
+    lines += ["", "Details: [release-readiness.md](release-readiness.md).", "",
+              "## Known limitations and open findings", "",
+              "Listed in `engineering/known-limitations.yaml`. They remain FAIL below; the validator's exit code only "
+              "ignores them while they are unchanged.", "", "| ID | Category | Status | Reason |", "|---|---|---|---|"]
+    for e in cls["known"] + cls["changed"]:
+        changed = " (CHANGED: update the file deliberately)" if e in cls["changed"] else ""
+        lines.append(f"| {e['id']} | {e['category']}{changed} | {e['status']} | {str(e.get('reason', '')).strip()} |")
+    if cls["new"]:
+        lines += ["", "**New failures (not in known-limitations.yaml):** " + ", ".join(e["id"] for e in cls["new"])]
+    lines += ["", "## Register", "", "| ID | Item | Method | Status | Evidence | Detail |", "|---|---|---|---|---|---|"]
+    for e in entries:
+        lines.append(f"| {e['id']} | {e['item']} | {e['method']} | **{e['status']}** | {e['evidence']} | {e['detail']} |")
+    lines += ["", "Physical verification still required (Gate G): see documentation/testing/test-plan.md."]
+    (REP / "validation-register.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def sync_requirement_gates(computed):
@@ -373,37 +580,62 @@ def sync_requirement_gates(computed):
     requirement_path.write_text(text, encoding="utf-8", newline="\n")
 
 
-def main() -> int:
-    entries.clear()
-    research()
-    calculations()
-    for v in spec.VARIANTS:
-        schematic(v)
-        drc(v)
-        layout_review(v)
-        exports(v)
-    simulation()
-    firmware()
+def rerun_stale() -> list[str]:
+    """Regenerate calculation and simulation evidence whose inputs changed (generators run in this venv)."""
+    done = []
+    for kind, manifest, script, required in (
+            ("calculation", ROOT / CALC_DIR / "power-stage-evidence.json", ROOT / CALC_DIR / "power_stage.py", CALC_REQUIRED_INPUTS),
+            ("simulation", ROOT / SIM_DIR / "evidence.json", ROOT / "simulation/run_sims.py", SIM_REQUIRED_INPUTS)):
+        if evidence_mod.problems(load_json(manifest), ROOT, kind, required):
+            subprocess.run([sys.executable, str(script)], cwd=ROOT, timeout=3600)
+            done.append(kind)
+    return done
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--mode", default="full",
+                    choices=["full", "fast", "eval-cad", "compact-cad", "manufacturing", "bench"])
+    ap.add_argument("--strict", action="store_true", help="exit 1 for any entry that is not PASS")
+    ap.add_argument("--rerun-stale", action="store_true", help="rerun stale calculations and simulations first")
+    args = ap.parse_args(argv)
+
+    if args.rerun_stale:
+        print("reran:", ", ".join(rerun_stale()) or "nothing (evidence current)")
+    run_checks(args.mode)
     blocked = requirement_blocks()
     g = gates(blocked)
-    sync_requirement_gates(g)
-    REP.mkdir(exist_ok=True)
-    (REP / "validation-register.json").write_text(json.dumps({"date": str(date.today()), "gates": g, "entries": entries},
-                                                             indent=1), encoding="utf-8")
-    lines = [f"# Validation register", "", f"Generated by `automation/validation/validate.py` on {date.today()}.",
-             "Statuses come from tool reports; none are hard-coded.", "", "## Release gates", "",
-             "| Gate | Status |", "|---|---|"]
-    lines += [f"| {k} | {v} |" for k, v in g.items()]
-    lines += ["", "## Register", "", "| ID | Item | Method | Status | Evidence | Detail |", "|---|---|---|---|---|---|"]
-    for e in entries:
-        lines.append(f"| {e['id']} | {e['item']} | {e['method']} | **{e['status']}** | {e['evidence']} | {e['detail']} |")
-    lines += ["", "Physical verification still required (Gate G): see documentation/testing/test-plan.md."]
-    (REP / "validation-register.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    fails = [e for e in entries if e["status"] != "PASS" and e["id"] != "VAL-REQ-BLOCKED"]
-    print(f"{len(entries)} entries; FAIL/NOT RUN: {len(fails)}")
+    known = load_known()
+    cls = classify(known)
+    pending = [k["id"] for k in known if k["category"] == "pending_disposition"]
+    variants = {"eval-cad": ["evaluation-board"], "compact-cad": ["compact-22mm"]}.get(args.mode, list(spec.VARIANTS))
+    readiness = {v: release_check.readiness(v, entries, ROOT, pending) for v in variants} if args.mode != "bench" else {}
+
+    if args.mode == "full":
+        sync_requirement_gates(g)
+        write_register(g, cls, readiness)
+        release_check.write_report(readiness, REP, str(date.today()))
+    else:
+        out = ROOT / "build" / f"validation-{args.mode}.json"
+        out.parent.mkdir(exist_ok=True)
+        out.write_text(json.dumps({"mode": args.mode, "gates": g, "entries": entries,
+                                   "readiness": readiness}, indent=1), encoding="utf-8")
+
+    not_pass = [e for e in entries if e["status"] != "PASS" and e["id"] != "VAL-REQ-BLOCKED"]
+    print(f"mode {args.mode}: {len(entries)} entries; not PASS: {len(not_pass)} "
+          f"(known, unchanged: {len(cls['known'])}; new: {len(cls['new'])}; changed: {len(cls['changed'])})")
+    for e in cls["new"] + cls["changed"]:
+        print(f"  {'NEW' if e in cls['new'] else 'CHANGED'} {e['id']}: {e['status']} {str(e.get('detail', ''))[:150]}")
+    for k in cls["resolved"]:
+        print(f"  RESOLVED {k['id']} now passes: remove it from engineering/known-limitations.yaml")
     for k, v in g.items():
         print(f"  gate {k}: {v}")
-    return 0 if not fails else 1
+    for v, r in readiness.items():
+        print(f"  readiness {v}: {r['level']}" + (f" (next {r['next_level']}: {len(r['blockers'][r['next_level']])} blockers)"
+                                                  if r["next_level"] else ""))
+    if args.strict:
+        return 0 if not not_pass else 1
+    return 0 if not (cls["new"] or cls["changed"]) else 1
 
 
 if __name__ == "__main__":
