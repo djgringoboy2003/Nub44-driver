@@ -302,6 +302,23 @@ def simulation():
     return "PASS"
 
 
+def sourcing():
+    """Sourcing records against connectivity.yaml and part ratings against the circuit (FAIL-level findings only)."""
+    path = ROOT / "sourcing" / "check_sourcing.py"
+    if not path.is_file():
+        return add("VAL-SRC", "Sourcing records and part ratings", "INSPECT", "NOT RUN", "sourcing/")
+    s = importlib.util.spec_from_file_location("nubm44_check_sourcing", path)
+    module = importlib.util.module_from_spec(s)
+    s.loader.exec_module(module)
+    result = module.check()
+    module.write(result)
+    fails = [f"{f['ref']} {f['check']}: {f['detail']}" for f in result["findings"] if f["severity"] == "FAIL"]
+    c = result["counts"]
+    return add("VAL-SRC", "Sourcing records current; package, voltage and power ratings consistent", "INSPECT",
+               result["status"], "sourcing/sourcing-check.md",
+               (("; ".join(fails[:5]) + "; ") if fails else "") + f"{c['FAIL']} FAIL, {c['WARN']} WARN, {c['INFO']} INFO")
+
+
 def firmware_build_module():
     path = ROOT / "firmware/build.py"
     spec_ = importlib.util.spec_from_file_location("nubm44_firmware_build", path)
@@ -517,6 +534,7 @@ def run_checks(mode: str) -> None:
         research()
         calculations()
         simulation()
+        sourcing()
     for v in variants:
         if mode == "bench":
             break

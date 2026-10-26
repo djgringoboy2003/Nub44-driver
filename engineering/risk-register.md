@@ -27,3 +27,4 @@ calculation alone.
 | R-18 | Fuses not programmed (BOD disabled by default) on the first prototype | 2 | 2 | 4 | Fuse values recorded in firmware; T0.4 fuse verification step | T0.4 readback | Open until bench |
 | R-19 | Gerber package of an incomplete board ordered by mistake | 1 | 2 | 2 | Release levels, DO_NOT_FABRICATE marker in incomplete packages | n/a (control) | Mitigated |
 | R-20 | Current-loop gain margin below 10 dB when tolerances stack (SIM-12: 9.5 dB averaged model; AUD-SIM-04) | 1 | 2 | 2 | PM stays above 109 deg in every case; nominal GM 11.9-12.6 dB; Rc 1.0 kOhm option simulated (11.1 dB) | Owner decision; loop measurement on the evaluation prototype (T2.11) | Owner decision pending |
+| R-21 | R16 (indicator LED resistor) opens after a short on the external LED pad, silently removing the emission indicator (AUD-SRC-04) | 1 | 2 | 2 | Wiring instructions; LED is external | Owner decision on a larger resistor package or value | Documented |

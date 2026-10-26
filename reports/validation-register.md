@@ -78,6 +78,7 @@ Listed in `engineering/known-limitations.yaml`. They remain FAIL below; the vali
 | VAL-SIM-10 | Reverse battery (-4.2 V): P-FET blocks (body diode reverse-biased, Vgs = 0) | SIM | **PASS** | simulation/results/results.md | {"reverse_current_a": 2.492341e-07, "vbat_node_v": -4.98468e-07} |
 | VAL-SIM-11 | Current-loop gain by frequency-response analysis of the averaged deck (3.7 V typ, 3.0 V max-Vf, 4.2 V min-Vf), compared with the Python model | SIM | **PASS** | simulation/results/results.md | {"3.7V_typ_f_cross_hz": 2855.29, "3.7V_typ_phase_margin_deg": 120.97, "3.7V_typ_gain_margin_db": 12.42, "3.0V_max_f_cross_hz": 1695.73, "3.0V_max_phase_margin_d |
 | VAL-SIM-12 | Loop sensitivity at 3.0 V, max-Vf diode: output capacitance (DC bias), inductance, error-amplifier gm, CSA bandwidth and the assumed inner-loop gain | SIM | **FAIL** | simulation/results/results.md | {"min_phase_margin_deg": 109.47, "cases_passing": 10, "cases": 11} |
+| VAL-SRC | Sourcing records current; package, voltage and power ratings consistent | INSPECT | **PASS** | sourcing/sourcing-check.md | 0 FAIL, 29 WARN, 72 INFO |
 | VAL-ERC-compact-22mm | ERC (compact-22mm) | CAD | **PASS** | reports/erc-compact-22mm.json | 0 unresolved findings |
 | VAL-NET-compact-22mm | Netlist equals connectivity.yaml (compact-22mm) | CAD | **PASS** | reports/schematic-compact-22mm.json | 0 differences |
 | VAL-ROUTE-compact-22mm | PCB placed and fully routed (compact-22mm) | CAD | **FAIL** | reports/drc-compact-22mm.json | 20 unconnected items |

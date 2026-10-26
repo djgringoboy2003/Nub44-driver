@@ -83,12 +83,15 @@ def ratings(mpn: str) -> dict:
     return {"v": U, "i": U, "p": U, "tol": U}
 
 
-def build() -> None:
+HEADER = ["variant", "reference_designators", "quantity", "manufacturer", "mpn", "value", "tolerance",
+          "voltage_rating", "current_rating", "power_rating", "package", "footprint", "datasheet",
+          "preferred_supplier", "supplier_part_number", "availability", "approx_price_usd",
+          "data_retrieved", "verified", "approved_alternatives", "notes"]
+
+
+def compute() -> tuple[list, list]:
+    """Component rows and cost lines exactly as build() writes them (sourcing/check_sourcing.py compares them)."""
     idx = research_index()
-    header = ["variant", "reference_designators", "quantity", "manufacturer", "mpn", "value", "tolerance",
-              "voltage_rating", "current_rating", "power_rating", "package", "footprint", "datasheet",
-              "preferred_supplier", "supplier_part_number", "availability", "approx_price_usd",
-              "data_retrieved", "verified", "approved_alternatives", "notes"]
     rows, costs = [], []
     for variant in spec.VARIANTS:
         groups: "OrderedDict[str, list]" = OrderedDict()
@@ -119,8 +122,13 @@ def build() -> None:
             if m:
                 unit = float(m.group(1))
             costs.append([variant, mpn, len(parts), unit, "" if unit == U else round(unit * len(parts), 4), price])
+    return rows, costs
+
+
+def build() -> None:
+    rows, costs = compute()
     with open(OUT / "components.csv", "w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh); w.writerow(header); w.writerows(rows)
+        w = csv.writer(fh); w.writerow(HEADER); w.writerows(rows)
     with open(OUT / "alternatives.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["references", "primary_mpn", "alt_manufacturer", "alt_mpn", "alt_supplier_pn", "notes"])

@@ -5,8 +5,8 @@ Levels, each requiring everything below it:
   DRAFT_REVIEW           the PCBWay package exists and is internally consistent (files, BOM, centroid, hashes);
                          it may describe an incomplete board and is for review only.
   PROTOTYPE_CANDIDATE    the CAD is complete and current (ERC, netlist parity, 0 unconnected, DRC clean, layout
-                         review and export bound to the current sources); calculation, simulation (SIM-01..11) and
-                         firmware evidence pass; every required human review (engineering/release/design-reviews.yaml)
+                         review and export bound to the current sources); calculation, simulation (SIM-01..11),
+                         firmware and sourcing checks pass; every required human review (engineering/release/design-reviews.yaml)
                          is recorded as DONE. The owner may then order a prototype by hand.
   MANUFACTURING_RELEASE  additionally: Gate G bench evidence passes for this variant (reports/bench-summary.json),
                          no finding awaits disposition, the fabricator DFM review is recorded, and a signed approval
@@ -24,7 +24,7 @@ import yaml
 
 LEVELS = ("NONE", "DRAFT_REVIEW", "PROTOTYPE_CANDIDATE", "MANUFACTURING_RELEASE")
 CAD_CHECKS = ("ERC", "NET", "ROUTE", "PARITY", "DRC", "LAYOUT", "EXPORT")
-COMMON_CHECKS = ("VAL-CALC-EVID", "VAL-SIM-EVID", "VAL-FW-TEST", "VAL-FW-BUILD")
+COMMON_CHECKS = ("VAL-CALC-EVID", "VAL-SIM-EVID", "VAL-FW-TEST", "VAL-FW-BUILD", "VAL-SRC")
 SIM_GATE_IDS = tuple(f"VAL-SIM-{i:02d}" for i in range(1, 12))
 APPROVAL_FIELDS = ("approver", "date", "level", "git_commit", "gerber_zip_sha256", "bom_sha256", "cpl_sha256")
 

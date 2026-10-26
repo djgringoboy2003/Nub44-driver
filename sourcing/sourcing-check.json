@@ -1,0 +1,630 @@
+{
+ "date": "2026-10-26",
+ "status": "PASS",
+ "counts": {
+  "FAIL": 0,
+  "WARN": 29,
+  "INFO": 72
+ },
+ "cost_summary": {
+  "compact-22mm": {
+   "lines": 30,
+   "priced_lines": 6,
+   "known_subtotal_usd": 5.14
+  },
+  "evaluation-board": {
+   "lines": 30,
+   "priced_lines": 8,
+   "known_subtotal_usd": 5.18
+  }
+ },
+ "findings": [
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R1",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-07100KL is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C4",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C4",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C4",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C5",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C5",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C5",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C6",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C6",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C6",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R2",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-0733K2L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R3",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-0727K4L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R4",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-071K2L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C9",
+   "check": "description",
+   "detail": "description says 0402 but GRM0335C1H681JA01D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R5",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-0749K9L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R6",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-0733K2L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C14",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C14",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C14",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C14",
+   "check": "capacitor voltage",
+   "detail": "10 V rating < 1.5 x 7.30 V (max diode corner; Zener backstop 7.3 V (DD-05)); check DC-bias capacitance"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R7",
+   "check": "description",
+   "detail": "description says 0402 but RC0201FR-074K7L is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C15",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C15",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C15",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C17",
+   "check": "description",
+   "detail": "description says 0402 but GRM033R61A104KE15D is 0201 (AUD-MFG-03)"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C17",
+   "check": "description",
+   "detail": "description says 16 V but GRM033R61A104KE15D is rated 10 V"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:C17",
+   "check": "description",
+   "detail": "description says X7R but GRM033R61A104KE15D is X5R"
+  },
+  {
+   "severity": "WARN",
+   "ref": "compact-22mm:R16",
+   "check": "resistor power",
+   "detail": "80.2 mW in a single fault (series IND_OUT-IND_PAD; fault: one side shorted to GND) > 50 mW rating"
+  },
+  {
+   "severity": "WARN",
+   "ref": "evaluation-board:R16",
+   "check": "resistor power",
+   "detail": "80.2 mW in a single fault (series IND_OUT-IND_PAD; fault: one side shorted to GND) > 62.5 mW rating"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:J1",
+   "check": "mpn",
+   "detail": "no MPN (hand-fitted or PCB feature)"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R1,R10,R11,R12,R17,R18",
+   "check": "supplier data",
+   "detail": "RC0201FR-07100KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C1,C2,C3,C10,C11,C12,C13",
+   "check": "datasheet",
+   "detail": "CL21A226MOQNNNE: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C4,C5,C6,C14,C15,C17",
+   "check": "supplier data",
+   "detail": "GRM033R61A104KE15D: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C4,C5,C6,C14,C15,C17",
+   "check": "datasheet",
+   "detail": "GRM033R61A104KE15D: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:U1",
+   "check": "supplier data",
+   "detail": "TPS552882RPMR: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:Q2,Q3",
+   "check": "supplier data",
+   "detail": "SISS80DN-T1-GE3: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:L1",
+   "check": "supplier data",
+   "detail": "XGL5030-102MEC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:L1",
+   "check": "datasheet",
+   "detail": "XGL5030-102MEC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C7,C16",
+   "check": "supplier data",
+   "detail": "CL10A106KP8NNNC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C7,C16",
+   "check": "datasheet",
+   "detail": "CL10A106KP8NNNC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R2,R6",
+   "check": "supplier data",
+   "detail": "RC0201FR-0733K2L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R3",
+   "check": "supplier data",
+   "detail": "RC0201FR-0727K4L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R4",
+   "check": "supplier data",
+   "detail": "RC0201FR-071K2L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C8",
+   "check": "supplier data",
+   "detail": "CL05B563KO5NNNC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C8",
+   "check": "datasheet",
+   "detail": "CL05B563KO5NNNC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C9",
+   "check": "supplier data",
+   "detail": "GRM0335C1H681JA01D: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:C9",
+   "check": "datasheet",
+   "detail": "GRM0335C1H681JA01D: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R5",
+   "check": "supplier data",
+   "detail": "RC0201FR-0749K9L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R7,R20",
+   "check": "supplier data",
+   "detail": "RC0201FR-074K7L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:RS1",
+   "check": "supplier data",
+   "detail": "MCS1632R010FER: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:RS1",
+   "check": "datasheet",
+   "detail": "MCS1632R010FER: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R8",
+   "check": "supplier data",
+   "detail": "RT0402BRD076K65L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R9",
+   "check": "supplier data",
+   "detail": "RT0402BRD0710KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:D1",
+   "check": "datasheet",
+   "detail": "PMEG4010CEJ,115: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:D2",
+   "check": "supplier data",
+   "detail": "RB521S30T1G: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:D2",
+   "check": "datasheet",
+   "detail": "RB521S30T1G: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R13",
+   "check": "supplier data",
+   "detail": "RC0201FR-0720KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:RT1",
+   "check": "supplier data",
+   "detail": "NCP03XH103F05RL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:RT1",
+   "check": "datasheet",
+   "detail": "NCP03XH103F05RL: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R14,R15",
+   "check": "supplier data",
+   "detail": "RC0201FR-0710KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R16",
+   "check": "supplier data",
+   "detail": "RC0201FR-07220RL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:Q4,Q5,Q6",
+   "check": "datasheet",
+   "detail": "DMG1012T-7: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:R19",
+   "check": "supplier data",
+   "detail": "RC0201FR-0747KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:D3",
+   "check": "supplier data",
+   "detail": "BZX585-C6V2: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "compact-22mm:D3",
+   "check": "datasheet",
+   "detail": "BZX585-C6V2: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:J1",
+   "check": "mpn",
+   "detail": "no MPN (hand-fitted or PCB feature)"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R1,R10,R11,R12,R17,R18",
+   "check": "supplier data",
+   "detail": "RC0402FR-07100KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C1,C2,C3,C10,C11,C12,C13",
+   "check": "datasheet",
+   "detail": "CL21A226MOQNNNE: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C4,C5,C6,C14,C15,C17",
+   "check": "datasheet",
+   "detail": "CL05B104KO5NNNC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:U1",
+   "check": "supplier data",
+   "detail": "TPS552882RPMR: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:Q2,Q3",
+   "check": "supplier data",
+   "detail": "SISS80DN-T1-GE3: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:L1",
+   "check": "supplier data",
+   "detail": "XGL5030-102MEC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:L1",
+   "check": "datasheet",
+   "detail": "XGL5030-102MEC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C7,C16",
+   "check": "supplier data",
+   "detail": "CL10A106KP8NNNC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C7,C16",
+   "check": "datasheet",
+   "detail": "CL10A106KP8NNNC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R2,R6",
+   "check": "supplier data",
+   "detail": "RC0402FR-0733K2L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R3",
+   "check": "supplier data",
+   "detail": "RC0402FR-0727K4L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R4",
+   "check": "supplier data",
+   "detail": "RC0402FR-071K2L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C8",
+   "check": "supplier data",
+   "detail": "CL05B563KO5NNNC: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C8",
+   "check": "datasheet",
+   "detail": "CL05B563KO5NNNC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C9",
+   "check": "supplier data",
+   "detail": "GRM1555C1H681JA01D: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:C9",
+   "check": "datasheet",
+   "detail": "GRM1555C1H681JA01D: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R5",
+   "check": "supplier data",
+   "detail": "RC0402FR-0749K9L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R7,R20",
+   "check": "supplier data",
+   "detail": "RC0402FR-074K7L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:RS1",
+   "check": "supplier data",
+   "detail": "MCS1632R010FER: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:RS1",
+   "check": "datasheet",
+   "detail": "MCS1632R010FER: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R8",
+   "check": "supplier data",
+   "detail": "RT0402BRD076K65L: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R9",
+   "check": "supplier data",
+   "detail": "RT0402BRD0710KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:D1",
+   "check": "datasheet",
+   "detail": "PMEG4010CEJ,115: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:D2",
+   "check": "supplier data",
+   "detail": "RB521S30T1G: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:D2",
+   "check": "datasheet",
+   "detail": "RB521S30T1G: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R13",
+   "check": "supplier data",
+   "detail": "RC0402FR-0720KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:RT1",
+   "check": "datasheet",
+   "detail": "NCP15XH103F03RC: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R14,R15",
+   "check": "supplier data",
+   "detail": "RC0402FR-0710KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R16",
+   "check": "supplier data",
+   "detail": "RC0402FR-07220RL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:Q4,Q5,Q6",
+   "check": "datasheet",
+   "detail": "DMG1012T-7: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:R19",
+   "check": "supplier data",
+   "detail": "RC0402FR-0747KL: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:D3",
+   "check": "supplier data",
+   "detail": "BZX585-C6V2: stock or price UNKNOWN; confirm at order time"
+  },
+  {
+   "severity": "INFO",
+   "ref": "evaluation-board:D3",
+   "check": "datasheet",
+   "detail": "BZX585-C6V2: no datasheet URL in connectivity.yaml"
+  },
+  {
+   "severity": "INFO",
+   "ref": "Q1",
+   "check": "alternate",
+   "detail": "Diodes Inc. DMP2005UFG-13 is not a drop-in replacement (different land pattern)"
+  },
+  {
+   "severity": "INFO",
+   "ref": "Q2,Q3",
+   "check": "alternate",
+   "detail": "Diodes Inc. DMN22M5UFG-7 is not a drop-in replacement (different land pattern)"
+  }
+ ],
+ "note": "Ratings and decode tables must be confirmed against each datasheet; stock and prices are not verified."
+}

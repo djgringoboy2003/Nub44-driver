@@ -60,3 +60,14 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
   DRAFT_REVIEW (evaluation needs the five human reviews for PROTOTYPE_CANDIDATE).
 - **Deferred:** schematic-summary hashes (AUD-VAL-08) and variant-specific BOM descriptions (AUD-MFG-03) wait for the
   next CAD regeneration.
+
+## 2026-10-26: sourcing verification (roadmap phase 3)
+
+- `sourcing/build_sourcing.py` split into `compute()` and `build()` (CSV output byte-identical).
+- New `sourcing/check_sourcing.py` (validator entry VAL-SRC, PROTOTYPE_CANDIDATE requirement): stale CSV detection,
+  MPN size/dielectric/voltage decoding against footprint and description, capacitor voltage derating per net,
+  resistor power in normal operation and single faults, rating table against parameters.yaml, data age, datasheet
+  links, non-drop-in alternates. Reports `sourcing/sourcing-check.md/.json`.
+- **Result (actual):** PASS, 0 FAIL, 29 WARN (26 compact description mismatches = AUD-MFG-03; C14 10 V vs 7.3 V fault
+  level < 1.5x; R16 80 mW in a pad short = new AUD-SRC-04), 72 INFO.
+- **Tests:** `tests/test_sourcing_check.py` (10).

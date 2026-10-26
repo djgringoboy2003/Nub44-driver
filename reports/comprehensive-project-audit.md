@@ -99,11 +99,12 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-PCB-05 | low | Risk | CS_OUT can exceed VMCU by up to about 0.3 V when the INA186 output saturates | DOCUMENTED |
 | AUD-MFG-01 | high | Defect | Compact fabrication ZIP and Gerbers carry no "incomplete board" marker | FIXED |
 | AUD-MFG-02 | medium | Defect | Export ignores DRC/ERC/parity state; no release levels; no human approval record | FIXED |
-| AUD-MFG-03 | medium | Defect | Compact BOM descriptions contradict the MPN and footprint (0402/16 V X7R text on 0201/10 V X5R parts) | OPEN |
+| AUD-MFG-03 | medium | Defect | Compact BOM descriptions contradict the MPN and footprint (0402/16 V X7R text on 0201/10 V X5R parts) | MITIGATED |
 | AUD-MFG-04 | medium | Risk | Centroid rotation/side conventions verified against KiCad only, not against PCBWay | DOCUMENTED |
-| AUD-SRC-01 | medium | Defect | Sourcing ratings are a hand table with no consistency or derating check; CSV freshness unchecked | OPEN |
-| AUD-SRC-02 | low | Enhancement | Stock/price snapshot carries no age flag | OPEN |
+| AUD-SRC-01 | medium | Defect | Sourcing ratings are a hand table with no consistency or derating check; CSV freshness unchecked | FIXED |
+| AUD-SRC-02 | low | Enhancement | Stock/price snapshot carries no age flag | FIXED |
 | AUD-SRC-03 | medium | Risk | Capacitor DC-bias retention (50–55 %) is an assumption | DOCUMENTED |
+| AUD-SRC-04 | low | Risk | Indicator resistor R16 overloaded (80 mW) if the external LED pad is shorted | DOCUMENTED |
 | AUD-DOC-01 | medium | Defect | AGENTS.md toolchain paths corrupted by control characters | OPEN |
 | AUD-DOC-02 | low | Defect | Firmware README/app.h out of date (debounce, check count) | FIXED |
 | AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | OPEN |
@@ -434,7 +435,7 @@ side effects; dependencies; tests; status; validation outcome.
 - `connectivity.yaml` has one `desc` per part, but compact parts use 0201 MPNs: the compact BOM reads e.g.
   "100 nF 16 V X7R 0402 output HF" for GRM033R61A104KE15D (0201, 10 V, X5R). **Correction:** variant-specific
   descriptions require a schematic/PCB regeneration (connectivity hash invalidates DRC evidence) and are deferred
-  to the next CAD regeneration; an automated check reports the mismatch until then. **Status:** OPEN.
+  to the next CAD regeneration; an automated check reports the mismatch until then. **Status:** MITIGATED. The sourcing check reports every compact BOM line whose description contradicts its MPN (size, voltage, dielectric: 26 warnings). The fix itself (variant-specific descriptions in connectivity.yaml) is DEFERRED to the next CAD regeneration because it invalidates both boards' DRC and export evidence.
 
 #### AUD-MFG-04 PCBWay centroid convention (medium, risk)
 - The exporter checks CPL against KiCad's own position file, not against PCBWay's rotation convention. PCBWay DFM
@@ -445,13 +446,22 @@ side effects; dependencies; tests; status; validation outcome.
 #### AUD-SRC-01 Ratings table unchecked (medium, defect)
 - `sourcing/build_sourcing.py` hard-codes ratings; nothing checks that `components.csv` matches the current
   `connectivity.yaml`, that capacitor voltage ratings exceed the net's worst voltage, or that resistor power
-  ratings cover dissipation. **Status:** OPEN.
+  ratings cover dissipation. **Status:** FIXED. `sourcing/check_sourcing.py` (also run by the validator as VAL-SRC and required for PROTOTYPE_CANDIDATE): stale CSV, MPN package vs footprint, capacitor voltage derating per net (voltages from parameters.yaml and datasheets), resistor power in normal operation and single faults, inductor/shunt ratings vs parameters.yaml, datasheet links, non-drop-in alternates. Current result: 0 FAIL, 29 WARN, 72 INFO. **Validation:** `tests/test_sourcing_check.py` (decoders, derating, stale CSV, undersized capacitor).
 
 #### AUD-SRC-02 No data age flag (low, enhancement)
-- All supplier data is from 2026-10-24 with no expiry. **Status:** OPEN.
+- All supplier data is from 2026-10-24 with no expiry. **Status:** FIXED. Supplier data older than 90 days is flagged WARN (current data is 2 days old); UNKNOWN stock/price is listed per line.
 
 #### AUD-SRC-03 DC-bias retention assumed (medium, risk)
 - 50–55 % retention for 22 µF 0805 X5R at 4–7 V is UNKNOWN from vendors (DD-10). **Status:** DOCUMENTED.
+
+#### AUD-SRC-04 R16 overload in a wiring fault (low, risk; found by the sourcing check)
+- **Evidence:** `sourcing/check_sourcing.py`: R16 (220 Ohm, 0201 on the compact board at 50 mW, 0402 on the evaluation
+  board at 62.5 mW) dissipates 80 mW if the external indicator pad (TP9) is shorted to SGND with PB2 driven high.
+  The MCU pin current (19 mA) stays within the ATtiny1616 limit.
+- **Consequence:** R16 may open, and the indicator is the emission warning; firmware cannot detect a dead LED.
+- **Options (owner):** 0603 resistor or a higher value (LED brightness permitting), or accept with a wiring
+  instruction. Hardware change; not applied.
+- **Status:** DOCUMENTED.
 
 ### Documentation, CI, process
 

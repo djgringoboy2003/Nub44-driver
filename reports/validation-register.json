@@ -311,6 +311,14 @@
    "detail": "{\"min_phase_margin_deg\": 109.47, \"cases_passing\": 10, \"cases\": 11}"
   },
   {
+   "id": "VAL-SRC",
+   "item": "Sourcing records current; package, voltage and power ratings consistent",
+   "method": "INSPECT",
+   "status": "PASS",
+   "evidence": "sourcing/sourcing-check.md",
+   "detail": "0 FAIL, 29 WARN, 72 INFO"
+  },
+  {
    "id": "VAL-ERC-compact-22mm",
    "item": "ERC (compact-22mm)",
    "method": "CAD",
