@@ -94,21 +94,28 @@ def output_problems(out: Path, variant: str) -> list[str]:
 def write_assembly(out: Path, fps: list[dict], origin: tuple[float, float]) -> tuple[int, int, int]:
     bom_parts = [f for f in fps if f["in_bom"]]
     pos_parts = [f for f in fps if f["in_pos"] and not f["dnp"]]
+    # One line per orderable part: assemblers price and buy per line, so identical parts are never split by their
+    # functional descriptions (those are merged into the description column).
     groups: OrderedDict[tuple, list] = OrderedDict()
-    for f in sorted(bom_parts, key=lambda f: (f["mpn"], f["value"], f["ref"])):
-        groups.setdefault(tuple(f[k] for k in ("mpn", "mfr", "value", "fpid", "mount", "dnp", "desc")), []).append(f["ref"])
+    descs: dict[tuple, list] = {}
+    for f in sorted(bom_parts, key=lambda f: (f["mpn"], f["value"], _ref_key(f["ref"]))):
+        key = tuple(f[k] for k in ("mpn", "mfr", "value", "fpid", "mount", "dnp"))
+        groups.setdefault(key, []).append(f["ref"])
+        if f["desc"] not in descs.setdefault(key, []):
+            descs[key].append(f["desc"])
     with open(out / "assembly/BOM_PCBWay_template.csv", "w", newline="", encoding="utf-8-sig") as fh:
         w = csv.writer(fh)
         w.writerow(TEMPLATE_COLUMNS)
-        for i, ((mpn, mfr, val, fpid, mount, dnp, desc), refs) in enumerate(groups.items(), start=1):
+        for i, ((mpn, mfr, val, fpid, mount, dnp), refs) in enumerate(groups.items(), start=1):
             typ = "DNS" if dnp else ("thru-hole" if mount == "thru-hole" else "SMD")
             note = "Do not place: customer fits the battery spring by hand" if dnp else ""
-            w.writerow([i, ",".join(sorted(refs, key=_ref_key)), len(refs), mfr, mpn, f"{val} - {desc}",
+            w.writerow([i, ",".join(sorted(refs, key=_ref_key)), len(refs), mfr, mpn,
+                        f"{val} - {'; '.join(descs[(mpn, mfr, val, fpid, mount, dnp)])}",
                         fpid.split(":", 1)[-1], typ, note])
     with open(out / "assembly/BOM_PCBWay_plugin.csv", "w", newline="", encoding="utf-8-sig") as fh:
         w = csv.writer(fh)
         w.writerow(BOM_COLUMNS)
-        for (mpn, mfr, val, fpid, mount, dnp, desc), refs in groups.items():
+        for (mpn, mfr, val, fpid, mount, dnp), refs in groups.items():
             w.writerow([",".join(sorted(refs, key=_ref_key)), len(refs), val, fpid, fpid.split(":", 1)[-1], mpn,
                         "DNP" if dnp else "", mount, mfr])
     with open(out / "assembly/CPL_PCBWay.csv", "w", newline="", encoding="utf-8-sig") as fh:
@@ -195,7 +202,11 @@ def check_assembly(out: Path, pcb: Path) -> list[str]:
                                               "Footprint": f["fpid"], "Package": package, "Mount_Type": f["mount"],
                                               "DNP": "DNP" if f["dnp"] else ""})
                 for key, value in expected.items():
-                    if row[key] != value:
+                    if key == "Description / Value":     # merged line: value first, this part's description inside
+                        ok = row[key].startswith(f"{f['value']} - ") and f["desc"] in row[key]
+                    else:
+                        ok = row[key] == value
+                    if not ok:
                         problems.append(f"{filename}: {ref} {key} differs from board")
         check_ref_counts(refs, bom_expected, filename, problems)
     missing_mpn = sorted(f["ref"] for f in fps if f["in_bom"] and not f["dnp"] and f["mpn"] in ("", "-", "UNKNOWN"))

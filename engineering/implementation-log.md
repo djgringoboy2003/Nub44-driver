@@ -125,3 +125,16 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
   REQ-SRC-01), assembly instructions, test plan recording section, final report (superseded statements marked).
 - The README edit hit the heredoc backslash hazard again (control characters in two paths); the hygiene test caught it
   and the paths were fixed.
+
+## 2026-10-27: ordering preparation (owner request: PCBWay and JLCPCB, review by Codex before ordering)
+
+- `documentation/ordering-guide.md`: files per fab, layer order (from the Gerber job file), board options with the
+  design requirement behind each (inner copper 1 oz, ENIG, 7628 stack, tented vias, no impedance control), assembly
+  options (top only, X-ray of U1/U3, no substitutions, placement confirmation), pre-payment and post-order steps.
+- `automation/export/export_jlcpcb.py` with `tests/test_order_packages.py` (byte-identical Gerbers, coordinates equal
+  to the PCBWay CPL, designators complete, stale-source detection, incomplete boards refused).
+- AUD-MFG-05 fixed: the PCBWay BOM split identical parts over several lines (48 -> 30 lines); grouping test added.
+- `automation/review/footprint_report.py`: pad tables for FP-U1/FP-L1/FP-POWERPAK/FP-RS1/ORIENT. Custom pads report the
+  union of the anchor rectangle and the stroked polygons (the first version showed only the 0.2 mm anchor).
+- `documentation/pre-order-review.md`: brief for the independent reviewer.
+- Merged `audit/comprehensive-improvements` into `main` (fast-forward) and pushed with the owner's authorisation.

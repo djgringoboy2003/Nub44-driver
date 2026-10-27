@@ -3,7 +3,8 @@
 #
 # To close a review, set `status: DONE` and fill `reviewer`, `date` (YYYY-MM-DD) and `evidence` (what was
 # compared, with document revision and page). A review applies to the variants listed. Never mark a review DONE
-# without performing it.
+# without performing it. The pad geometry to compare is tabulated in reports/footprint-review.md
+# (automation/review/footprint_report.py); the brief is documentation/pre-order-review.md.
 
 reviews:
   - id: FP-U1

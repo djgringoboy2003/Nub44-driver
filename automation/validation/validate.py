@@ -427,6 +427,19 @@ def exports(variant):
                f"manufacturing/pcbway/{variant}/reports/export-check.json", "; ".join(map(str, problems)))
 
 
+def jlcpcb(variant):
+    """Derived JLCPCB package (if one exists) must still match the PCBWay package it came from."""
+    s = importlib.util.spec_from_file_location("nubm44_export_jlcpcb", ROOT / "automation/export/export_jlcpcb.py")
+    module = importlib.util.module_from_spec(s)
+    s.loader.exec_module(module)
+    problems = module.check_problems(variant, ROOT)
+    if problems is None:
+        return None
+    return add(f"VAL-JLC-{variant}", f"JLCPCB upload files derived from the current PCBWay package ({variant})", "CAD",
+               "PASS" if not problems else "FAIL", f"manufacturing/jlcpcb/{variant}/reports/jlcpcb-check.json",
+               "; ".join(problems[:4]))
+
+
 def incomplete_marker_problems(variant, package: Path, check: dict) -> list[str]:
     """An export of a board whose DRC shows open items must say so inside the fabrication ZIP (AUD-MFG-01)."""
     drc_report = load_json(REP / f"drc-{variant}.json")
@@ -598,6 +611,8 @@ def run_checks(mode: str) -> None:
         drc(v)
         layout_review(v)
         exports(v)
+        if (ROOT / "automation/export/export_jlcpcb.py").is_file():
+            jlcpcb(v)
     if mode in ("full", "manufacturing"):
         firmware(target=True, mutation=(mode == "full"))
     elif mode == "fast":

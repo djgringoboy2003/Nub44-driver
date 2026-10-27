@@ -1,6 +1,6 @@
 {
  "schema": "nubm44-firmware-evidence.v1",
- "generated_utc": "2026-10-26T23:07:35.226676+00:00",
+ "generated_utc": "2026-10-27T11:40:23.687257+00:00",
  "evidence_class": "SOFTWARE (host tests and a compiler build; not hardware verification)",
  "sources": {
   "firmware/build.py": "3f405b6c0b4c0414222b47abb4b2ddac1566085290770df2bf77f7ac05a6798e",

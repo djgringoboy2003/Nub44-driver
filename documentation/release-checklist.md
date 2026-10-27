@@ -2,6 +2,8 @@
 
 No tool in this repository places an order or uploads manufacturing data. Each level below is computed by
 `automation/validation/validate.py` into `reports/release-readiness.md`; this checklist adds the human steps around it.
+Fab files and order-form options for PCBWay and JLCPCB: [ordering-guide.md](ordering-guide.md). Independent review
+brief: [pre-order-review.md](pre-order-review.md).
 
 ## A. Before asking for a prototype quote (PROTOTYPE_CANDIDATE)
 

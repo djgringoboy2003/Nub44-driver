@@ -1,5 +1,5 @@
 {
- "date": "2026-10-26",
+ "date": "2026-10-27",
  "gates": {
   "A": "PASS",
   "B": "PASS",
@@ -428,6 +428,14 @@
    "method": "CAD",
    "status": "PASS",
    "evidence": "manufacturing/pcbway/evaluation-board/reports/export-check.json",
+   "detail": ""
+  },
+  {
+   "id": "VAL-JLC-evaluation-board",
+   "item": "JLCPCB upload files derived from the current PCBWay package (evaluation-board)",
+   "method": "CAD",
+   "status": "PASS",
+   "evidence": "manufacturing/jlcpcb/evaluation-board/reports/jlcpcb-check.json",
    "detail": ""
   },
   {

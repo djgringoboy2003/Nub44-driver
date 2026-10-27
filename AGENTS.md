@@ -67,7 +67,10 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | `automation/placement/` | `build_pcb.py` (pipeline stages place/route/finish/drc/render) and `pcb_builder.py` (KiCad-side builder); `floorplan.py` (fast placement check); `place_opt.py` (small-part optimiser, writes `pos` entries); `grid_route.py` (negotiated-congestion grid router, writes the generated `grid_routes` section) |
 | `automation/review/` | Power-layout review: copper extractor (KiCad Python), raster model, DC current-flow solver, report (`power_layout.py`) |
 | `automation/validation/validate.py` | Validation register, gates, modes (`--mode full/fast/eval-cad/compact-cad/manufacturing/bench`), known-limitations baseline, readiness and dashboard regeneration |
-| `automation/export/` | PCBWay export (`export_pcbway.py`, marks incomplete boards), release levels (`release_check.py`), review packaging |
+| `automation/export/` | PCBWay export (`export_pcbway.py`, marks incomplete boards), JLCPCB files derived from it (`export_jlcpcb.py`), release levels (`release_check.py`), review packaging |
+| `automation/review/footprint_report.py` | Pad tables for the human footprint reviews (`reports/footprint-review.md`) |
+| `manufacturing/jlcpcb/<variant>/` | JLCPCB upload files (flat Gerber ZIP, JLC BOM/CPL), evaluation board only |
+| `documentation/ordering-guide.md`, `documentation/pre-order-review.md` | Fab files and options (PCBWay, JLCPCB, layer order); the brief for the independent pre-order review |
 | `automation/nubm44/evidence.py` | Evidence manifests (input/output SHA-256, tool versions) used by calculations, simulations, schematics |
 | `automation/bench/bench.py` | Bench-test records (MEASURED only): import, validation, judging against `documentation/testing/bench-tests.yaml`, Gate G summary |
 | `automation/dashboard/build_dashboard.py` | Generated status page `reports/dashboard/index.html` |
@@ -112,7 +115,8 @@ Evidence is hash-bound to its sources. After editing `parameters.yaml`, `connect
 1. `automation/schematic/build_schematic.py` (ERC and netlist; writes `reports/schematic-<variant>-evidence.json`).
 2. `build_pcb.py --stage drc` per variant. DRC refills and re-saves the board.
 3. `automation/review/power_layout.py --variant <v>`.
-4. `scripts/export-pcbway.ps1`.
+4. `scripts/export-pcbway.ps1`, then `automation/export/export_jlcpcb.py --variant evaluation-board` (the JLCPCB
+   files go stale whenever the PCBWay package changes) and `automation/review/footprint_report.py`.
 5. If `parameters.yaml` changed: `engineering/calculations/power_stage.py`, then `simulation/run_sims.py`, then the
    layout reviews again (they hash the calculation results). `validate.py --rerun-stale` reruns stale
    calculations and simulations.

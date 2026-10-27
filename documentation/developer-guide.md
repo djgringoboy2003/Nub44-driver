@@ -62,6 +62,8 @@ known, unchanged items (compact routing, compact DRC, SIM-12 pending a decision)
 | Any failure counts (no baseline) | add `--strict` |
 | Dashboard only | `.venv\Scripts\python.exe automation\dashboard\build_dashboard.py` |
 | Export review packages | `scripts\export-pcbway.ps1 -Variant evaluation-board` |
+| JLCPCB upload files (from the PCBWay package) | `.venv\Scripts\python.exe automation\export\export_jlcpcb.py --variant evaluation-board` |
+| Footprint review pack | `.venv\Scripts\python.exe automation\review\footprint_report.py` |
 
 ### Validator exit codes
 

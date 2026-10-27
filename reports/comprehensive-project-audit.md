@@ -51,7 +51,7 @@ paths without HDI via-in-pad (DD-16); supplier stock and prices UNKNOWN; average
 
 ## 3. Summary register
 
-**Status on 2026-10-26 (end of session):** 54 findings: 9 high, 29 medium, 15 low, 1 info; none critical. 40 FIXED, 2 MITIGATED (AUD-FW-16 fuses, AUD-MFG-03 BOM descriptions), 11 DOCUMENTED (risks and owner decisions), 1 OPEN (AUD-PCB-03, a human review now enforced as a PROTOTYPE_CANDIDATE blocker). The 8 fixed high findings: AUD-FW-01, FW-03, FW-04, FW-19, VAL-01, VAL-02, VAL-05, MFG-01; the remaining high item, AUD-PCB-02 (compact routing capacity), awaits the owner's direction.
+**Status on 2026-10-27:** 55 findings: 9 high, 30 medium, 15 low, 1 info; none critical. 41 FIXED, 2 MITIGATED (AUD-FW-16 fuses, AUD-MFG-03 BOM descriptions), 11 DOCUMENTED (risks and owner decisions), 1 OPEN (AUD-PCB-03, a human review now enforced as a PROTOTYPE_CANDIDATE blocker). The 8 fixed high findings: AUD-FW-01, FW-03, FW-04, FW-19, VAL-01, VAL-02, VAL-05, MFG-01; the remaining high item, AUD-PCB-02 (compact routing capacity), awaits the owner's direction.
 
 Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed, residual noted), DOCUMENTED
 (accepted limitation or owner decision needed), DEFERRED (needs CAD regeneration or owner approval).
@@ -102,6 +102,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-MFG-01 | high | Defect | Compact fabrication ZIP and Gerbers carry no "incomplete board" marker | FIXED |
 | AUD-MFG-02 | medium | Defect | Export ignores DRC/ERC/parity state; no release levels; no human approval record | FIXED |
 | AUD-MFG-03 | medium | Defect | Compact BOM descriptions contradict the MPN and footprint (0402/16 V X7R text on 0201/10 V X5R parts) | MITIGATED |
+| AUD-MFG-05 | medium | Defect | PCBWay BOM split identical parts over several lines (48 lines for 29 parts) | FIXED |
 | AUD-MFG-04 | medium | Risk | Centroid rotation/side conventions verified against KiCad only, not against PCBWay | DOCUMENTED |
 | AUD-SRC-01 | medium | Defect | Sourcing ratings are a hand table with no consistency or derating check; CSV freshness unchecked | FIXED |
 | AUD-SRC-02 | low | Enhancement | Stock/price snapshot carries no age flag | FIXED |
@@ -459,6 +460,15 @@ side effects; dependencies; tests; status; validation outcome.
 #### AUD-MFG-04 PCBWay centroid convention (medium, risk)
 - The exporter checks CPL against KiCad's own position file, not against PCBWay's rotation convention. PCBWay DFM
   review must confirm. **Status:** DOCUMENTED.
+
+#### AUD-MFG-05 BOM lines split by description (medium, defect; found while preparing the order, 2026-10-27)
+- **Existing:** `export_pcbway.py` grouped BOM lines by MPN *and* functional description, so the same part appeared on
+  several lines (for example CL05B104KO5NNNC on four lines): 48 lines for 29 orderable parts plus J1. Assemblers price
+  and purchase per line, so this risks minimum-order quantities per line and confused sourcing.
+- **Correction:** one line per orderable part (MPN, manufacturer, value, footprint, mount, DNP); the descriptions are
+  merged into the description column; the independent re-check verifies each designator's value and description.
+- **Status:** FIXED. **Validation:** `tests/test_export.py` grouping test; both packages re-exported: 30 lines (29 parts
+  + J1 DNS); export checks PASS.
 
 ### Sourcing
 

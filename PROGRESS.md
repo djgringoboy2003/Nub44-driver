@@ -2,9 +2,9 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-26, after the independent audit on branch `audit/comprehensive-improvements` (not merged,
-not pushed). The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
-unchanged; firmware, evidence handling, release controls and tooling changed._
+_Last updated: 2026-10-27. The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
+and pushed. The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
+unchanged; firmware, evidence handling, release controls, ordering files and tooling changed._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -21,16 +21,23 @@ PROTOTYPE_CANDIDATE when five human reviews are recorded in `engineering/release
 land pattern, FP-L1 XGL5030 on the XAL5030 pattern, FP-POWERPAK pad mapping, FP-RS1 Kelvin shunt, ORIENT pin-1 and
 polarity). Everything else for that level passes.
 
+**Ordering (prepared, not placed):** `documentation/ordering-guide.md` gives the files, layer order (L1 `.gtl`,
+L2 `.g1`, L3 `.g2`, L4 `.gbl`) and order-form options for PCBWay (`manufacturing/pcbway/evaluation-board/`,
+preferred for assembly) and JLCPCB (`manufacturing/jlcpcb/evaluation-board/`, derived with identical Gerber bytes).
+Key options: 4 layers, 1.6 mm, **1 oz inner and outer copper**, **ENIG**, assembly top side only (29 parts, 52
+placements), X-ray of U1/U3, no unreviewed substitutes. The pre-order review brief for Codex (or a person) is
+`documentation/pre-order-review.md`, with the footprint geometry in `reports/footprint-review.md`.
+
 **Validation:** `validate.py` exits 0 with 56 entries, 53 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (actual, 2026-10-26):** 202 Python tests pass (181 pass and 18 skip with KiCad hidden, as on CI). Firmware:
+**Tests (actual, 2026-10-27):** 207 Python tests pass (with KiCad hidden, as on CI, the KiCad tests skip). Firmware:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
 `-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
 WARN. CI workflow written but not yet run on GitHub.
 
-**Audit outcome** (`reports/comprehensive-project-audit.md`): 54 findings (9 high, 29 medium, 15 low, 1 info; none critical); 40 fixed, 2 mitigated, 11 documented risks or owner decisions, 1 open (AUD-PCB-03 footprint reviews, now a release blocker).
+**Audit outcome** (`reports/comprehensive-project-audit.md`): 55 findings (9 high, 30 medium, 15 low, 1 info; none critical); 41 fixed, 2 mitigated, 11 documented risks or owner decisions, 1 open (AUD-PCB-03 footprint reviews, now a release blocker).
 - **Firmware (DD-28):** fixed a board-NTC failure that silently disabled thermal protection, a watchdog cleared even
   when the tick stopped, watchdog resets that re-armed emission, the 2.5 V reference used below its VDD minimum, the
   AC2 power-loss reference written to the wrong register (the click mode change could not work), missing debounce,
@@ -54,7 +61,7 @@ WARN. CI workflow written but not yet run on GitHub.
 3. **AUD-PCB-04:** optional gate clamp for Q6 (VGSS ±6 V) in a later revision.
 4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
    (`engineering/pcb-review-2026-10-26.md`).
-5. Merge of `audit/comprehensive-improvements` into `main` and the push to GitHub.
+5. **Fab choice** (PCBWay preferred for assembly) and acceptance of the pre-order review results.
 
 **Open limitations.**
 1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
@@ -65,17 +72,18 @@ WARN. CI workflow written but not yet run on GitHub.
    unmeasured until Gate G.
 4. The averaged simulation model has no switching ripple, saturation or dead time; its inner-loop gain is an
    assumption.
-5. Remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver; the audit branch exists
-   only locally.
+5. Remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver; `main` includes the
+   audit work. The CI workflow runs there on push; its first results are not recorded here yet.
 
 ## Next actions (in order)
 
-1. **Owner review of the audit branch:** read `reports/comprehensive-project-audit.md` and the dashboard; decide the
-   items above; merge `audit/comprehensive-improvements` into `main` and push (no push was made in this session).
-2. **Human reviews for the evaluation board:** record FP-U1, FP-L1, FP-POWERPAK, FP-RS1 and ORIENT in
-   `engineering/release/design-reviews.yaml`; rerun `validate.py` until the board shows PROTOTYPE_CANDIDATE.
-3. **Evaluation prototype (owner, by hand):** follow `documentation/release-checklist.md` sections A and B. No tool
-   places orders.
+1. **Pre-order review (Codex or a person):** follow `documentation/pre-order-review.md`. Record FP-U1, FP-L1,
+   FP-POWERPAK, FP-RS1 and ORIENT in `engineering/release/design-reviews.yaml` (an AI reviewer says so in
+   `reviewer`); report findings in `reports/pre-order-review.md`; rerun `validate.py` until the evaluation board
+   shows PROTOTYPE_CANDIDATE. Check the GitHub Actions run of the pushed `main`.
+2. **Owner decisions** listed above (none changes the order files; R4 can be swapped by hand later).
+3. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
+   sections A and B. No tool places orders.
 4. **Bench testing:** program firmware and fuses (T0.4), then run `documentation/testing/test-plan.md` with a rated
    dummy load, recording each test with `automation/bench/bench.py`. Watch especially T1.8/T1.9 (hold-up and mode
    change, never tested before), T1.10 (CC polarity), T1.11 (measurement chain), T2.11 (loop, AUD-SIM-04) and nuisance
@@ -102,6 +110,16 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-27: ordering files for PCBWay and JLCPCB; pre-order review pack; merged and pushed
+- `documentation/ordering-guide.md`: files, layer order and order-form options for both fabs; assembly options.
+- `automation/export/export_jlcpcb.py`: JLCPCB files derived from the checked PCBWay package (flat Gerber ZIP with
+  identical bytes, JLC BOM with 9 of 29 part numbers recorded, JLC CPL); refuses incomplete boards; validator entry
+  VAL-JLC-<variant> fails if the PCBWay package changes afterwards.
+- PCBWay BOM fixed to one line per orderable part (30 lines; was 48), AUD-MFG-05; both packages re-exported.
+- `automation/review/footprint_report.py` -> `reports/footprint-review.md` (pad tables incl. custom-pad outlines,
+  nets, pin names, placement); `documentation/pre-order-review.md` brief for Codex.
+- 207 Python tests pass; validator exit 0 (3 known items); firmware PASS. Merged into `main` and pushed. No order.
 
 ### 2026-10-26: audit follow-up: sourcing checks, bench framework, dashboard, CI, documentation (same branch)
 - `sourcing/check_sourcing.py` (0 FAIL, 29 WARN; new finding AUD-SRC-04 on R16); `automation/bench/bench.py` with

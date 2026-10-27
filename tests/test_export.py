@@ -275,3 +275,20 @@ def test_promotion_restores_previous_package_if_rename_fails(exporter, monkeypat
     with pytest.raises(OSError, match="injected"):
         module.promote(staged, destination)
     assert (destination / "old.txt").read_text(encoding="utf-8") == "old"
+
+
+def test_identical_parts_share_one_bom_line_whatever_their_descriptions(exporter):
+    module, board = exporter
+    out = module.ROOT / "grouping"
+    (out / "assembly").mkdir(parents=True)
+    fps, origin = module.board_footprints(board)
+    for f in fps:
+        if f["ref"] == "R1":
+            f["desc"] = "pull-up"
+        if f["ref"] == "R2":
+            f["desc"] = "divider"
+    module.write_assembly(out, fps, origin)
+    with open(out / "assembly/BOM_PCBWay_template.csv", encoding="utf-8-sig", newline="") as fh:
+        rows = [r for r in csv.DictReader(fh) if r["*Mfg Part #"] == "PART-R"]
+    assert len(rows) == 1 and rows[0]["*Designator"] == "R1,R2" and rows[0]["*Qty"] == "2"
+    assert rows[0]["Description / Value"] == "10k - pull-up; divider"

@@ -20,6 +20,9 @@ targeting a 22 mm round PCB (plus a larger evaluation board) for PCBWay fabricat
 - **Firmware:** reworked after an independent audit (DD-28); 531 host checks, register-model tests of the hardware
   layer and a mutation check; not yet run on hardware.
 
+**Ordering:** files and options for PCBWay and JLCPCB are in [documentation/ordering-guide.md](documentation/ordering-guide.md);
+the pre-order review brief is [documentation/pre-order-review.md](documentation/pre-order-review.md).
+
 Live state: [PROGRESS.md](PROGRESS.md) and the generated dashboard `reports/dashboard/index.html` (open it in a
 browser). Agents start with [AGENTS.md](AGENTS.md); people with the
 [developer guide](documentation/developer-guide.md). Audit: [reports/comprehensive-project-audit.md](reports/comprehensive-project-audit.md).
