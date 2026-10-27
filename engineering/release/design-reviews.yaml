@@ -1,5 +1,7 @@
-# Human reviews required before a board can be classified PROTOTYPE_CANDIDATE or MANUFACTURING_RELEASE
-# (audit AUD-MFG-02, AUD-PCB-03). Automation cannot perform these; it only checks that each is recorded.
+# Recorded independent reviews required before a board can be classified PROTOTYPE_CANDIDATE or MANUFACTURING_RELEASE
+# (audit AUD-MFG-02, AUD-PCB-03). AI reviews must identify the reviewer; the owner decides sufficiency.
+# 2026-10-27: evaluation and compact scopes separated. See reports/pre-order-review.md.
+# AUD-VAL-11/12: required-ID and dependency-hash enforcement still need fixes.
 #
 # To close a review, set `status: DONE` and fill `reviewer`, `date` (YYYY-MM-DD) and `evidence` (what was
 # compared, with document revision and page). A review applies to the variants listed. Never mark a review DONE
@@ -9,7 +11,22 @@
 reviews:
   - id: FP-U1
     level: PROTOTYPE_CANDIDATE
-    variants: [evaluation-board, compact-22mm]
+    variants: [evaluation-board]
+    item: >-
+      TPS552882 RPM0026A land pattern (nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm, generated from PDF vector
+      geometry) against TI's mechanical and land-pattern drawings in SLVSFC5: pad sizes, 0.5 mm pitch, the three
+      centre pads, pin 1 and the bridged centre-pad connections (DD-16).
+    status: DONE
+    reviewer: "Codex (AI review), requested by repository owner"
+    date: "2026-10-27"
+    evidence: >-
+      reports/pre-order-review.md section 1; TI SLVSFC5 November 2020 pp.3,38-40, drawing 4224618/A. Compared
+      all 26 pads, dimensions, pin 1 and actual 9-24/21-25/11-26 copper bridges. Nominal geometry and mapping
+      pass; corner rounding/process and existing layout limitations stated. Applies only to reviewed baseline
+      fab63177bd7086457878a5da7a13dc7cc917e8c3 and artifact hashes in section 9.
+  - id: FP-U1
+    level: PROTOTYPE_CANDIDATE
+    variants: [compact-22mm]
     item: >-
       TPS552882 RPM0026A land pattern (nubm44:TI_RPM0026A_VQFN-HR-26_4x3.5mm_P0.5mm, generated from PDF vector
       geometry) against TI's mechanical and land-pattern drawings in SLVSFC5: pad sizes, 0.5 mm pitch, the three
@@ -20,7 +37,20 @@ reviews:
     evidence: null
   - id: FP-L1
     level: PROTOTYPE_CANDIDATE
-    variants: [evaluation-board, compact-22mm]
+    variants: [evaluation-board]
+    item: >-
+      XGL5030-102MEC on the KiCad XAL5030 land pattern: compare with Coilcraft's XGL5030 recommended land pattern
+      (connectivity.yaml says "verify").
+    status: DONE
+    reviewer: "Codex (AI review), requested by repository owner"
+    date: "2026-10-27"
+    evidence: >-
+      reports/pre-order-review.md section 2; Coilcraft 1576-1 revised 2026-02-19 p.1. Embedded XAL5030
+      footprint has 1.18 x 4.70 mm pads at 3.31 mm centre spacing, matching XGL5030. Baseline
+      fab63177bd7086457878a5da7a13dc7cc917e8c3; artifact hashes section 9.
+  - id: FP-L1
+    level: PROTOTYPE_CANDIDATE
+    variants: [compact-22mm]
     item: >-
       XGL5030-102MEC on the KiCad XAL5030 land pattern: compare with Coilcraft's XGL5030 recommended land pattern
       (connectivity.yaml says "verify").
@@ -30,7 +60,21 @@ reviews:
     evidence: null
   - id: FP-POWERPAK
     level: PROTOTYPE_CANDIDATE
-    variants: [evaluation-board, compact-22mm]
+    variants: [evaluation-board]
+    item: >-
+      Vishay PowerPAK 1212-8 Single footprint and symbol pad mapping (1-3 S, 4 G, 5 D) for SiSS23DN (P-channel,
+      Q1) and SiSS80DN (Q2, Q3) against the Vishay datasheets' pinout and land pattern.
+    status: OPEN
+    reviewer: "Codex (AI review), requested by repository owner"
+    date: "2026-10-27"
+    evidence: >-
+      reports/pre-order-review.md section 3; Vishay 62852 Rev.A p.1, 77684 Rev.C p.1, 63919 dated 2020-07-20
+      p.1 and 72597 dated 2008-01-21 p.7. Source/gate/drain mappings pass. Generic 1212-8 lands versus actual
+      1212-8S package require exact land-pattern or assembler acceptance; AUD-PCB-06. Q1 datasheet link wrong,
+      AUD-DOC-04.
+  - id: FP-POWERPAK
+    level: PROTOTYPE_CANDIDATE
+    variants: [compact-22mm]
     item: >-
       Vishay PowerPAK 1212-8 Single footprint and symbol pad mapping (1-3 S, 4 G, 5 D) for SiSS23DN (P-channel,
       Q1) and SiSS80DN (Q2, Q3) against the Vishay datasheets' pinout and land pattern.
@@ -40,7 +84,20 @@ reviews:
     evidence: null
   - id: FP-RS1
     level: PROTOTYPE_CANDIDATE
-    variants: [evaluation-board, compact-22mm]
+    variants: [evaluation-board]
+    item: >-
+      Kelvin 1206 shunt footprint (nubm44:R_1206_3216Metric_Kelvin) against the MCS1632R010FER land pattern; sense
+      pads 2/3 connect only at the resistor terminals (net tie).
+    status: OPEN
+    reviewer: "Codex (AI review), requested by repository owner"
+    date: "2026-10-27"
+    evidence: >-
+      reports/pre-order-review.md section 4; Ohmite MCS series NEC#11705 PDF p.2/printed p.16. Current lands
+      1.125 x 1.75 mm differ from 1.20 x 1.84 mm recommendation; AUD-PCB-06. Two-terminal part with local
+      copper-only sense taps; mapping is consistent. Correct geometry or obtain assembler acceptance.
+  - id: FP-RS1
+    level: PROTOTYPE_CANDIDATE
+    variants: [compact-22mm]
     item: >-
       Kelvin 1206 shunt footprint (nubm44:R_1206_3216Metric_Kelvin) against the MCS1632R010FER land pattern; sense
       pads 2/3 connect only at the resistor terminals (net tie).
@@ -50,7 +107,22 @@ reviews:
     evidence: null
   - id: ORIENT
     level: PROTOTYPE_CANDIDATE
-    variants: [evaluation-board, compact-22mm]
+    variants: [evaluation-board]
+    item: >-
+      Pin-1 and polarity of U1, U2, U3, D1, D2, D3 and Q1-Q6 in the assembly drawings, the iBOM and the centroid
+      rotations of the DRAFT package, part by part.
+    status: DONE
+    reviewer: "Codex (AI review), requested by repository owner"
+    date: "2026-10-27"
+    evidence: >-
+      reports/pre-order-review.md section 5, source IDs PREORDER-02/03/07-11 and LEAD-01/04 with
+      revisions/pages. Assembly PDF inspected, iBOM decoded, all 52 CPL centres/rotations matched; requested
+      U1-U3, D1-D3, Q1-Q6 pin 1/polarity compared to datasheets. D1 cathode is bottom in top view. Orientation
+      only: U3 land-pattern deviation remains AUD-PCB-06; supplier feeder preview outstanding. Baseline
+      fab63177bd7086457878a5da7a13dc7cc917e8c3; hashes section 9.
+  - id: ORIENT
+    level: PROTOTYPE_CANDIDATE
+    variants: [compact-22mm]
     item: >-
       Pin-1 and polarity of U1, U2, U3, D1, D2, D3 and Q1-Q6 in the assembly drawings, the iBOM and the centroid
       rotations of the DRAFT package, part by part.

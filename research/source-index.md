@@ -24,3 +24,26 @@ document revision, local path, relevant pages and primary/secondary classificati
 | LEAD-06 | LCSC listing C6937849 (XGL5030-102MEC: 1 µH, 5.8 mΩ, 14 A Isat, 17.8 A rated, 5.5 × 5.3 mm; stock UNKNOWN) | LCSC | https://www.lcsc.com/product-detail/C6937849.html | page as fetched | none | L1 cross-check |
 | LEAD-07 | Ohmite MCS1632R010FER listing (10 mΩ ±1 % 1 W 1206; ~775k stock, 26-week lead time) | DigiKey | https://www.digikey.my/en/products/detail/ohmite/MCS1632R010FER/2003872 | search result snippet | none | Shunt choice (stock figure from a search snippet, not a fetched page) |
 | LEAD-08 | RALEC LR1206-21R010F4 datasheet (10 mΩ 1 W 1206; LCSC ~830 pcs) | RALEC / LCSC | https://datasheet.lcsc.com/lcsc/2304140030_RALEC-LR1206-21R010F4_C154635.pdf | search result snippet | none | Alternate shunt |
+
+
+## Independent pre-order review sources (retrieved 2026-10-27)
+
+Primary manufacturer documents. These supplement the historical LEAD rows; live stock is UNKNOWN.
+
+| ID | Document / manufacturer | Revision and reviewed pages | URL |
+|---|---|---|---|
+| PREORDER-01 | XGL5030 / Coilcraft | 1576-1, 2026-02-19, p.1 | https://www.coilcraft.com/getmedia/e64ac115-95f2-45c7-b798-1b3769b91583/xgl5030.pdf |
+| PREORDER-02 | SiSS23DN / Vishay | 62852 Rev.A, 2013-05-13, p.1 | https://www.vishay.com/docs/62852/siss23dn.pdf |
+| PREORDER-03 | SiSS80DN / Vishay | 77684 Rev.C, 2026-10-19, p.1 | https://www.vishay.com/docs/77684/siss80dn.pdf |
+| PREORDER-04 | PowerPAK 1212-8S / Vishay | 63919, 2020-07-20, p.1 | https://www.vishay.com/docs/63919/ppak1212-8s.pdf |
+| PREORDER-05 | Recommended minimum pads / Vishay | 72597, 2008-01-21, p.7 | https://www.vishay.com/docs/72597/72597.pdf |
+| PREORDER-06 | MCS series / Ohmite | NEC#11705, no printed revision date, PDF pp.2-3 (printed pp.16-17) | https://www.ohmite.com/assets/files/Datasheets/mcs-series.pdf?r=false |
+| PREORDER-07 | INA186 / TI | SBOS318B, July 2021, p.3 | https://www.ti.com/lit/ds/symlink/ina186.pdf |
+| PREORDER-08 | ATtiny1614/1616/1617 / Microchip | DS40002204A, 2020, pp.16/18/576-578 | https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-16-17-DataSheet-DS40002204A.pdf |
+| PREORDER-09 | PMEG4010CEJ / Nexperia | 2022-10-01, p.1 | https://assets.nexperia.com/documents/data-sheet/PMEG4010CEJ.pdf |
+| PREORDER-10 | RB521S30T1 / onsemi | RB521S30T1/D Rev.12, October 2024, p.1 | https://www.onsemi.com/pdf/datasheet/rb521s30t1-d.pdf |
+| PREORDER-11 | BZX585 series / Nexperia | Rev.9, 2026-09-11, p.1 | https://assets.nexperia.com/documents/data-sheet/BZX585_SER.pdf |
+
+LEAD-01 was rechecked against the manufacturer PDF, pp.3/38-40, SLVSFC5 November 2020. LEAD-04 was rechecked
+against DS31783 Rev.8-2 February 2022, p.1, at https://www.diodes.com/datasheet/download/DMG1012T.pdf.
+The exact reviewed board/package hashes and comparison results are in [pre-order-review.md](../reports/pre-order-review.md).

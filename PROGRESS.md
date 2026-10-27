@@ -16,10 +16,12 @@ unchanged; firmware, evidence handling, release controls, ordering files and too
 | F Manufacturing files | Evaluation PASS (internal consistency); compact OPEN | DRAFT packages only; the compact ZIP carries DO_NOT_FABRICATE.txt |
 | G Physical validation | OPEN | No bench records (`reports/bench-report.md`); only measured data can close it |
 
-**Release readiness** (`reports/release-readiness.md`): both boards **DRAFT_REVIEW**. The evaluation board becomes a
-PROTOTYPE_CANDIDATE when five human reviews are recorded in `engineering/release/design-reviews.yaml` (FP-U1 TPS552882
-land pattern, FP-L1 XGL5030 on the XAL5030 pattern, FP-POWERPAK pad mapping, FP-RS1 Kelvin shunt, ORIENT pin-1 and
-polarity). Everything else for that level passes.
+**Release readiness:** **DRAFT_REVIEW; hold payment pending footprint dispositions.** Independent AI review of
+`fab63177bd7086457878a5da7a13dc7cc917e8c3` is in `reports/pre-order-review.md`. Evaluation FP-U1, FP-L1 and
+ORIENT are recorded DONE; FP-POWERPAK and FP-RS1 remain OPEN. U3's land-pattern difference also requires DFM
+disposition (AUD-PCB-06). Compact reviews remain OPEN. AUD-VAL-11/12 identify missing-ID and stale-review
+weaknesses in release checks. The owner decides whether AI review is sufficient. Saved generated release
+reports predate these register updates; rerun the full toolchain after disposition/fixes.
 
 **Ordering (prepared, not placed):** `documentation/ordering-guide.md` gives the files, layer order (L1 `.gtl`,
 L2 `.g1`, L3 `.g2`, L4 `.gbl`) and order-form options for PCBWay (`manufacturing/pcbway/evaluation-board/`,
@@ -28,16 +30,18 @@ Key options: 4 layers, 1.6 mm, **1 oz inner and outer copper**, **ENIG**, assemb
 placements), X-ray of U1/U3, no unreviewed substitutes. The pre-order review brief for Codex (or a person) is
 `documentation/pre-order-review.md`, with the footprint geometry in `reports/footprint-review.md`.
 
-**Validation:** `validate.py` exits 0 with 56 entries, 53 PASS and 3 known, unchanged failures listed in
+**Validation:** the saved full run has 56 entries. This independent review reran fast mode after updating reviews:
+exit 0, 55 entries, 52 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (actual, 2026-10-27):** 207 Python tests pass (with KiCad hidden, as on CI, the KiCad tests skip). Firmware:
+**Tests (2026-10-27):** prior full-tool run: 207 Python tests pass. Independent review rerun: 188 pass / 19
+skip without KiCad, including after a fixture fix making test review states independent of live sign-offs. Firmware:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
 `-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
-WARN. CI workflow written but not yet run on GitHub.
+WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 
-**Audit outcome** (`reports/comprehensive-project-audit.md`): 55 findings (9 high, 30 medium, 15 low, 1 info; none critical); 41 fixed, 2 mitigated, 11 documented risks or owner decisions, 1 open (AUD-PCB-03 footprint reviews, now a release blocker).
+**Audit outcome** (`reports/comprehensive-project-audit.md`): 59 findings (11 high, 31 medium, 16 low, 1 info); 41 fixed, 2 mitigated, 11 documented, 5 open. New pre-order findings: AUD-VAL-11/12, AUD-PCB-06, AUD-DOC-04.
 - **Firmware (DD-28):** fixed a board-NTC failure that silently disabled thermal protection, a watchdog cleared even
   when the tick stopped, watchdog resets that re-armed emission, the 2.5 V reference used below its VDD minimum, the
   AC2 power-loss reference written to the wrong register (the click mode change could not work), missing debounce,
@@ -79,11 +83,11 @@ WARN. CI workflow written but not yet run on GitHub.
 
 ## Next actions (in order)
 
-1. **Pre-order review (Codex or a person):** follow `documentation/pre-order-review.md`. Record FP-U1, FP-L1,
-   FP-POWERPAK, FP-RS1 and ORIENT in `engineering/release/design-reviews.yaml` (an AI reviewer says so in
-   `reviewer`); report findings in `reports/pre-order-review.md`; rerun `validate.py` until the evaluation board
-   shows PROTOTYPE_CANDIDATE.
-2. **Owner decisions** listed above (none changes the order files; R4 can be swapped by hand later).
+1. **Resolve the pre-order review:** `reports/pre-order-review.md`. Correct or obtain assembler acceptance for
+   RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
+   all affected CAD/export evidence, repeat affected reviews and full validation. Evaluation still has two
+   OPEN review records. Review entries are scoped separately from the parked compact board.
+2. **Owner decisions** listed above. Any adopted component or footprint change requires regenerated order files and evidence.
 3. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
    sections A and B. No tool places orders.
 4. **Bench testing:** program firmware and fuses (T0.4), then run `documentation/testing/test-plan.md` with a rated
@@ -112,6 +116,20 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-27: independent pre-order review
+- Codex (AI review) compared manufacturer drawings, embedded footprints, assembly PDF, iBOM and centroids.
+  Evaluation U1/L1/orientation DONE; PowerPAK and RS1 OPEN. RS1/U3 pad deviations and exact 8S compatibility
+  require DFM disposition. Review is bound in prose to the baseline and exact package SHA-256 values.
+- Added AUD-VAL-11/12 (missing review IDs and stale approvals), AUD-PCB-06 (land deviations) and AUD-DOC-04
+  (Q1 source link). Four issues documented with remedies; no CAD, firmware or release-check code changed.
+- Fixed the test review fixture to reset synthetic statuses explicitly; release-check assertions preserved.
+- Actual checks: 356/356 Git blobs matched; pytest 188 passed/19 skipped; firmware six suites/531 checks and
+  15/15 mutants; fast validator exit 0, three known failures, no new/changed failures. KiCad, ngspice and
+  AVR target tools unavailable locally; full saved evidence retained. Gate G remains OPEN.
+- PCBWay/JLC common Gerber/drill members identical; all 52 placements agree. Report committed on a review
+  branch per the brief. Owner order decision remains pending.
+
 
 ### 2026-10-27: CI verified on GitHub
 - First run (40497985197): Windows job passed; Linux pytest failed twice: gcc rejected unused static test functions in

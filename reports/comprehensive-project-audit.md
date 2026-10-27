@@ -51,7 +51,7 @@ paths without HDI via-in-pad (DD-16); supplier stock and prices UNKNOWN; average
 
 ## 3. Summary register
 
-**Status on 2026-10-27:** 55 findings: 9 high, 30 medium, 15 low, 1 info; none critical. 41 FIXED, 2 MITIGATED (AUD-FW-16 fuses, AUD-MFG-03 BOM descriptions), 11 DOCUMENTED (risks and owner decisions), 1 OPEN (AUD-PCB-03, a human review now enforced as a PROTOTYPE_CANDIDATE blocker). The 8 fixed high findings: AUD-FW-01, FW-03, FW-04, FW-19, VAL-01, VAL-02, VAL-05, MFG-01; the remaining high item, AUD-PCB-02 (compact routing capacity), awaits the owner's direction.
+**Status on 2026-10-27, after independent pre-order review:** 59 findings: 11 high, 31 medium, 16 low, 1 info; none critical. 41 FIXED, 2 MITIGATED, 11 DOCUMENTED, 5 OPEN. Four additions: AUD-VAL-11/12, AUD-PCB-06 and AUD-DOC-04. AUD-PCB-03 remains OPEN: evaluation FP-U1/FP-L1/ORIENT are reviewed, but FP-POWERPAK/FP-RS1 and compact reviews are still open. See [pre-order-review.md](pre-order-review.md).
 
 Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed, residual noted), DOCUMENTED
 (accepted limitation or owner decision needed), DEFERRED (needs CAD regeneration or owner approval).
@@ -96,7 +96,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-CAL-02 | medium | Risk | Efficiency margin is thin (94.1 % estimate with evaluation copper vs ≥ 94 %) | DOCUMENTED |
 | AUD-PCB-01 | medium | Risk | Evaluation-board layout items accepted with bench checks (DR1H via, ISP/ISN, C5, VCC, SW2, AGND/PGND) | DOCUMENTED |
 | AUD-PCB-02 | high | Risk | Compact board: 20 unconnected items, routing-capacity limit | DOCUMENTED |
-| AUD-PCB-03 | medium | Risk | Custom/assumed footprints (TPS552882 from PDF vectors; XGL5030 on the XAL5030 pattern) not independently reviewed | OPEN |
+| AUD-PCB-03 | medium | Risk | Independent footprint reviews incomplete; evaluation U1/L1/orientation now reviewed | OPEN |
 | AUD-PCB-04 | low | Risk | Q6 gate (VGSS ±6 V) sees VOUT − 6.2 V with no clamp; overstressed above ~12 V in a multiple fault | DOCUMENTED |
 | AUD-PCB-05 | low | Risk | CS_OUT can exceed VMCU by up to about 0.3 V when the INA186 output saturates | DOCUMENTED |
 | AUD-MFG-01 | high | Defect | Compact fabrication ZIP and Gerbers carry no "incomplete board" marker | FIXED |
@@ -113,6 +113,10 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-DOC-03 | low | Defect | Requirement statuses overstate firmware thermal/UVLO verification | FIXED |
 | AUD-CI-01 | medium | Enhancement | No continuous integration; portable and Windows/KiCad tests not separated | FIXED |
 | AUD-PROC-01 | low | Defect | Firmware compile flags duplicated in `build.ps1` and `validate.py` | FIXED |
+| AUD-VAL-11 | high | Defect | Missing mandatory design-review records silently bypass review blockers | OPEN |
+| AUD-VAL-12 | high | Defect | DONE reviews survive changes to the reviewed artifacts without hash verification | OPEN |
+| AUD-PCB-06 | medium | Risk | RS1/U3 land deviations and exact PowerPAK-8S compatibility need DFM disposition | OPEN |
+| AUD-DOC-04 | low | Defect | Q1 source datasheet URL has wrong Vishay document number | OPEN |
 
 ## 4. Findings in detail
 
@@ -509,6 +513,43 @@ side effects; dependencies; tests; status; validation outcome.
 #### AUD-PROC-01 Duplicated compile flags (low, defect)
 - `firmware/build.ps1` and `validate.py` each spell the compiler command; they already differ (`-ffunction-sections`
   and `--gc-sections` only in `build.ps1`). **Status:** FIXED: `firmware/build.py` is the only place that spells the compile commands; `build.ps1`, `validate.py` and CI call it.
+
+### Independent pre-order review additions (2026-10-27)
+
+Detailed dimensions, document revisions/pages, baseline hashes and solutions are in [pre-order-review.md](pre-order-review.md).
+
+#### AUD-VAL-11 Missing required review IDs bypass the review gate (high, defect)
+
+**Status: OPEN.** `automation/export/release_check.py:review_blockers` iterates only supplied records. In an
+isolated reproduction, `reviews: []` returns `[]`; removing FP-U1 while synthetically completing the other
+records also returns `[]`. Wrong scopes/levels and malformed entries are skipped. The actual baseline register
+is complete, so this is a latent release-control defect, not an assertion that the current board passed release.
+Require a fixed set of IDs per variant/level independently of the records, validate schema and uniqueness, and
+add missing/empty/duplicate/wrong-scope regression tests. Keep all other release gates intact.
+
+#### AUD-VAL-12 Review freshness is not enforced (high, defect)
+
+**Status: OPEN.** DONE/reviewer/date/evidence are the only checks. A synthetic CAD mutation left an isolated
+DONE register with no review blockers. Regenerating valid CAD/export evidence after a layout change does not
+invalidate old human reviews. Bind each review to its dependencies' hashes and reject changed inputs, with a
+mutation test. Final manufacturing approval hashes are separate and do not cover the prototype review gate.
+
+#### AUD-PCB-06 Footprint deviations need disposition (medium, risk)
+
+**Status: OPEN.** RS1's lands are 1.125 × 1.75 mm versus Ohmite's 1.20 × 1.84 mm. U3 has a 1.70 mm exposed
+land and 2.90 mm opposing pad spacing versus Microchip's 1.80 mm / 3.00 mm recommended pattern. Q1–Q3 use
+generic 1212-8 lands at 0.66 mm pitch, while the specified 1212-8S package outline has 0.65 mm pitch. These
+are real differences, but not proof of assembly failure. Correct the authoritative footprint sources and fully
+regenerate, or obtain written assembler acceptance of exact pad/paste geometry. Keep FP-RS1/FP-POWERPAK OPEN
+until disposition and include U3 in the DFM request. Recheck clearance, mask, paste and thermal/current paths
+after any geometry change. Sources: PREORDER-02…06 and PREORDER-08.
+
+#### AUD-DOC-04 Wrong Q1 datasheet link (low, defect)
+
+**Status: OPEN.** `engineering/design/connectivity.yaml` references `/docs/62999/siss23dn.pdf`; the manufacturer
+SiSS23DN document is `/docs/62852/siss23dn.pdf` (PREORDER-02). Correct the authoritative field with the next
+CAD/export regeneration, since it affects source hashes and generated datasheet fields. No electrical mapping
+error was found from this link defect.
 
 ## 5. Opportunities to simplify
 

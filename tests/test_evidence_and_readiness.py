@@ -196,6 +196,8 @@ def passing(variant):
 def reviews(root: Path, done: bool):
     data = yaml.safe_load((ROOT / "engineering/release/design-reviews.yaml").read_text(encoding="utf-8"))
     for r in data["reviews"]:
+        # Test states must not depend on which real reviews the owner has completed.
+        r.update(status="OPEN", reviewer=None, date=None, evidence=None)
         if done and r["level"] == "PROTOTYPE_CANDIDATE":
             r.update(status="DONE", reviewer="reviewer", date="2026-10-27", evidence="compared drawing rev X")
     write(root / "engineering/release/design-reviews.yaml", yaml.safe_dump(data))
