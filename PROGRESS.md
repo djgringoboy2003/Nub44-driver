@@ -73,14 +73,16 @@ WARN. CI workflow written but not yet run on GitHub.
 4. The averaged simulation model has no switching ripple, saturation or dead time; its inner-loop gain is an
    assumption.
 5. Remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver; `main` includes the
-   audit work. The CI workflow runs there on push; its first results are not recorded here yet.
+   audit work. CI (`.github/workflows/ci.yml`) passes on GitHub (run 40500901442, 2026-10-27): Linux 188 tests pass
+   and 19 skip without KiCad, gcc host tests and mutation check pass, fast validation exits 0 with the 3 known items;
+   Windows pinned-toolchain target build and mutation check pass.
 
 ## Next actions (in order)
 
 1. **Pre-order review (Codex or a person):** follow `documentation/pre-order-review.md`. Record FP-U1, FP-L1,
    FP-POWERPAK, FP-RS1 and ORIENT in `engineering/release/design-reviews.yaml` (an AI reviewer says so in
    `reviewer`); report findings in `reports/pre-order-review.md`; rerun `validate.py` until the evaluation board
-   shows PROTOTYPE_CANDIDATE. Check the GitHub Actions run of the pushed `main`.
+   shows PROTOTYPE_CANDIDATE.
 2. **Owner decisions** listed above (none changes the order files; R4 can be swapped by hand later).
 3. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
    sections A and B. No tool places orders.
@@ -110,6 +112,11 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-27: CI verified on GitHub
+- First run (40497985197): Windows job passed; Linux pytest failed twice: gcc rejected unused static test functions in
+  the `APP_LASER_NTC_REQUIRED` host build (TinyCC does not warn), and the footprint report needed KiCad. Fixed in
+  4f608a9; second run (40500901442) passed both jobs.
 
 ### 2026-10-27: ordering files for PCBWay and JLCPCB; pre-order review pack; merged and pushed
 - `documentation/ordering-guide.md`: files, layer order and order-form options for both fabs; assembly options.

@@ -138,3 +138,16 @@ changed, the tests run with their actual results, and what remains. Issue IDs re
   union of the anchor rectangle and the stroked polygons (the first version showed only the 0.2 mm anchor).
 - `documentation/pre-order-review.md`: brief for the independent reviewer.
 - Merged `audit/comprehensive-improvements` into `main` (fast-forward) and pushed with the owner's authorisation.
+
+## 2026-10-27: CI verified on GitHub
+
+- Run 40497985197 (commit 1526e44): Windows job PASS; Linux pytest FAIL: (1) the `APP_LASER_NTC_REQUIRED` host build
+  of `test_app.c` defined the default-build tests without calling them, which gcc `-Wall -Wextra -Werror` rejects as
+  unused static functions (TinyCC does not warn, and the earlier avr-gcc proxy check had not included that define);
+  (2) `footprint_report.py` called KiCad's library path, which raises when KiCad is absent.
+- Fix 4f608a9: the default-build tests are guarded by `#if !APP_LASER_NTC_REQUIRED`; the report lists KiCad-library
+  footprints as not found without KiCad; the host-suite test now prints the failing suites.
+- Run 40500901442 (commit 4f608a9): both jobs PASS. Linux: 188 passed, 19 skipped; gcc host suites and mutation check
+  PASS; `validate.py --mode fast` exit 0 (55 entries, 3 known unchanged). Windows: pinned avr-gcc/TinyCC, target build
+  and mutation check PASS. Fast mode reports one more readiness blocker than full mode because it does not build the
+  target firmware (VAL-FW-BUILD absent), as intended.
