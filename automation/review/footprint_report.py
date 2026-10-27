@@ -48,8 +48,12 @@ ITEMS = [
 
 def footprint_file(fpid: str) -> Path:
     lib, name = fpid.split(":", 1)
-    base = paths.LIBRARIES / "nubm44.pretty" if lib == "nubm44" else paths.kicad_footprints_dir() / f"{lib}.pretty"
-    return base / f"{name}.kicad_mod"
+    if lib == "nubm44":
+        return paths.LIBRARIES / "nubm44.pretty" / f"{name}.kicad_mod"
+    try:
+        return paths.kicad_footprints_dir() / f"{lib}.pretty" / f"{name}.kicad_mod"
+    except FileNotFoundError:                     # KiCad not installed (e.g. CI): reported as not found
+        return Path(f"{lib}.pretty") / f"{name}.kicad_mod"
 
 
 def pads(fp_path: Path) -> list[dict]:

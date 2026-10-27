@@ -55,6 +55,9 @@ static unsigned sim_run(sim_t *s, unsigned n)
     return on;
 }
 
+/* The default-build tests below assume the optional laser NTC; the APP_LASER_NTC_REQUIRED build runs only
+ * test_laser_ntc_required(), so gcc -Wunused-function would reject them there. */
+#if !APP_LASER_NTC_REQUIRED
 static void emitting(sim_t *s)
 {
     sim_init(s, APP_START_FRESH, MODE_CONTINUOUS);
@@ -472,6 +475,8 @@ static void test_forced_fault_and_latch(void)
     CHECK(s.a.fault == FAULT_INTERNAL && s.a.fault_detail == DETAIL_TICK_OVERRUN, "first fault wins");
     CHECK(sim_run(&s, 20000) == 0 && !s.o.cc_sense, "latched: no emission, no CC pull-up");
 }
+
+#endif /* !APP_LASER_NTC_REQUIRED */
 
 #if APP_LASER_NTC_REQUIRED
 static void test_laser_ntc_required(void)

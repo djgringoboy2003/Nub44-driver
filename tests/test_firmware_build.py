@@ -65,5 +65,7 @@ def test_mutation_patterns_still_match_the_sources(build):
 def test_host_suites_pass_when_a_compiler_exists(build):
     if build.host_compiler() is None:
         pytest.skip("no host C compiler")
-    results, _ = build.host_tests(FW / "build" / "pytest-host")
-    assert results and all(r["status"] == "PASS" for r in results), results
+    results, compiler = build.host_tests(FW / "build" / "pytest-host")
+    failing = [f"{r['suite']}: {r['status']} {r.get('stage', '')} {r.get('detail', '')}" for r in results
+               if r["status"] != "PASS"]
+    assert results and not failing, f"{compiler}: " + " | ".join(failing)
