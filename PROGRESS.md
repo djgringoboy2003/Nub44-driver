@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-28 (local-document pre-order follow-up and quote/sourcing review on `10a29cc`; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
+_Last updated: 2026-10-28 (GBP/UK sourcing follow-up to the pre-order and quote review on `10a29cc`; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
 and pushed. The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
 unchanged; firmware, evidence handling, release controls, ordering files and tooling changed._
 
@@ -34,8 +34,12 @@ placements), X-ray of U1/U3, no unreviewed substitutes. The pre-order review bri
 **Quote/sourcing review:** `reports/bom-quote-sourcing-review.md`, per-line `reports/bom-sourcing-options.csv`.
 QUOTE-01 matches all 30 BOM lines, exact MPN suffixes and J1 DNS; arithmetic correct. Five-board stored total
 304.615, dollar-format cells but ISO currency UNKNOWN. L1 is 126.790 (50.79% of components); cause UNKNOWN,
-request exact-MPN reprice. AliExpress Choice offers/UK prices remain UNKNOWN. Three-assembly and consignment
-totals need PCBWay quotes; published minimum 5 and conflicting attrition rules need written clarification.
+request exact-MPN reprice. Owner currency GBP: conditional USD quote equivalent £229.25 (FX-01); quote ISO
+still UNKNOWN. Native GBP distributor snapshots, quantities, UK eBay findings and proposed packing-only
+alternatives are now recorded in the report/CSV. Exact Coilcraft L1 reference converts to £1.97 each before
+unknown freight/tax/handling; current UK stock/delivered offer UNKNOWN. No cheaper electrical straight swap
+approved. AliExpress Choice offers remain UNKNOWN. Three-assembly and consignment totals need PCBWay quotes; published minimum 5 and conflicting attrition rules need written
+clarification.
 Recommend revised turnkey; genuine L1-only consignment is the fallback to quote. Diode PREORDER-09/10/11 are
 now saved locally with hashes. No design/CAD/export change. Dashboard missing board scope is new AUD-DOC-05.
 
@@ -97,7 +101,8 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
    RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
    all affected CAD/export evidence, repeat affected reviews and full validation. Evaluation still has two
    OPEN review records. Review entries are scoped separately from the parked compact board.
-2. **Owner quote confirmation:** `reports/bom-quote-sourcing-review.md` questions for PCBWay: ISO currency,
+2. **Owner quote confirmation:** `reports/bom-quote-sourcing-review.md` questions for PCBWay: ISO currency and
+   firm GBP payable total, current exact-MPN consolidated distributor/Coilcraft UK quotes before any purchase,
    L1 exact-MPN reprice, final U1 price, UK delivered costs/X-ray scope, 3 populated + 2 bare quote, and optional
    genuine L1 consignment counts/leader/fees/shipping. Do not buy unverified Choice parts or assume 29 assembly
    survives consignment. No order placed; owner decides and merges the review branch.
@@ -130,6 +135,24 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-28: GBP preference, UK suppliers/eBay and straight-swap investigation
+- Owner requested sterling prices and UK/UK-eBay sources. Added FX-01 dated ECB conversion: USD 1 equals
+  GBP 0.752582412647...; five-board quote £229.25 only if its UNKNOWN ISO currency is confirmed USD.
+- Added native GBP primary-seller price snapshots and quantity-break/MOQ/spare comparisons to the existing
+  report and all-30-line CSV; recorded cache age/direct-fetch failures, VAT, stock, dispatch and delivery limits.
+  Current offers/complete landed totals UNKNOWN. Coilcraft has a verified UK sales/warehouse route, exact
+  L1 stock and GBP delivered offer UNKNOWN. L1 reference £1.97 FX remains the main repricing opportunity.
+- Inspected a Hampshire eBay precision-resistor listing (pack/UK postage UNKNOWN) and a Shenzhen MCU listing
+  with Unbranded item specifics; neither establishes a better qualified purchase. No marketplace order/cart/login.
+- Proposed INA186 A2 DCK packing-only T and TI's identical U1 .A alias; no adoption. XAL5030-102MEC has higher
+  DCR/lower thermal-current capability and a higher manufacturer reference price, so is not recommended to save.
+- Recommendation remains exact-MPN turnkey reprice, genuine L1-only consignment fallback after a written
+  PCBWay parts count/tape/fee quote. Design/CAD/exports/generated sourcing CSVs and release reviews unchanged.
+- Verification: 207 pytest tests passed in 17.42 s; full validator exit 0, 57 entries / 54 PASS / the same
+  three known unchanged findings, no new/changed failures, two evaluation blockers; Gate G OPEN. Independent
+  Decimal checks passed all GBP conversions and spare/MOQ/tier purchases. Seven baseline hashes and all
+  protected source/CAD/export/generated-sourcing bytes still match. Dashboard regenerated by validator.
 
 ### 2026-10-28: full pre-order follow-up, private quote audit and sourcing options
 - Review branch `review/bom-quote-sourcing`, base `10a29cc`. Downloaded the three missing manufacturer diode

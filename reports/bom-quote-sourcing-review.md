@@ -11,6 +11,10 @@ separate alternative; three-board acceptance and price are UNKNOWN. The only com
 No AliExpress Choice offer met the evidence requirements, so there is no defensible AliExpress savings total.
 If repricing fails, investigate **genuine Coilcraft L1-only consignment** before consigning the ICs or FETs.
 
+Owner's display currency is **GBP (£)**. The UK/GBP follow-up in [section 9](#9-gbp-uk-suppliers-ebay-and-substitution-candidates-2026-10-28)
+adds native GBP distributor observations, quantity breaks, UK eBay checks and conditional quote conversions.
+The preference for GBP does not identify QUOTE-01's original ISO currency.
+
 ## 1. Quote check
 
 Source **QUOTE-01**: [original XLS](../documentation/T-1K2W1137524A-5units-BOM_PCBWay_template(2026-10-28).xls),
@@ -247,8 +251,9 @@ Sources: [Coilcraft exact L1](https://www.coilcraft.com/en-us/products/power/shi
 These are seller-page observations, not reserved inventory or verification of every line's supply chain.
 LCSC's authenticity statement is its own claim; manufacturer authorisation/lot traceability was not independently
 verified for these listings. Obtain traceable supply paperwork before treating any marketplace stock as genuine.
-For all other MPNs genuine-channel prices remain UNKNOWN; the CSV gives the exact requested part and the
-per-option quantity. Request one consolidated distributor BOM quote rather than paying many separate shipping charges.
+The initial dollar-source comparison left other MPN prices UNKNOWN; section 9 adds subsequent UK/GBP
+primary-seller observations. The CSV gives each exact requested part, per-option quantity and retrieval
+limits. Request one consolidated distributor BOM quote rather than paying many separate shipping charges.
 
 ### Owner assembly feasibility
 
@@ -326,3 +331,178 @@ section-9 baseline artifact hashes match. See [pre-order review addendum](pre-or
 for exact land remedies, full-toolchain results and the dashboard defect. Final documentation reruns:
 **207 passed in 18.92 s; full validator exit 0, 57 entries/54 PASS/three known unchanged**, still two evaluation
 blockers. The checker rejected a deliberately removed D2 MPN suffix in a temporary fixture (expected exit 1).
+
+
+## 9. GBP, UK suppliers, eBay and substitution candidates (2026-10-28)
+
+### Currency basis and limits of the prices
+
+**GBP is the owner's preferred currency.** QUOTE-01 still has no ISO code: a dollar-format cell does not prove
+USD. All conversions of that quote below are **conditional on PCBWay confirming USD**. If it is another dollar
+currency, these converted amounts do not apply. No conversion changes the stored XLS or quote-check JSON.
+
+**FX-01**, ECB reference rates dated 2026-10-28: EUR 1 = USD 1.1133 = GBP 0.83785.
+Therefore USD 1 = GBP **0.752582412647...** (`0.83785 / 1.1133`). Use full precision and round display totals to
+pence, half up. This is a reference conversion; card/bank/PCBWay payment FX and fees are UNKNOWN.
+[ECB dated reference sheet](https://www.ecb.europa.eu/stats/shared/pdf/eurofxref.pdf).
+
+| QUOTE-01 amount / model | Original units | GBP if and only if USD |
+|---|---:|---:|
+| Components, five | 249.645 | £187.88 |
+| Assembly, five | 29.000 | £21.82 |
+| PCB, five fabricated | 25.970 | £19.54 |
+| **A: five-board quoted subtotal** | **304.615** | **£229.25** |
+| **B: three assembled / five fabricated, same-fixed-cost model only** | **204.757** | **£154.10** |
+| L1, five fitted | 126.790 | £95.42 (£19.08 each) |
+| U1, five fitted | 44.275 | £33.32 |
+| Q2/Q3, ten fitted | 24.350 | £18.33 |
+| Q1, five fitted | 8.455 | £6.36 |
+
+Totals use the original unrounded numbers, so summing rounded display lines may differ by a penny. UK delivered
+totals, tax basis of the PCBWay quote, payment FX and fees remain UNKNOWN. The three-board model is not a quote.
+
+**UK supplier and UK stock are different facts.** Farnell UK, CPC UK and RS UK have relevant exact-part listings;
+Coilcraft explicitly lists a UK sales route/warehouse (UK-27). Mouser/DigiKey provide GBP UK storefronts, which
+do not establish UK dispatch for any selected line. Exact dispatch location and current inventory remain
+UNKNOWN unless a new supplier quotation confirms them. Coilcraft's UK terms allow VAT, handling and FX costs.
+
+The prices below are **observed public primary-page or primary-seller search snapshots retrieved 2026-10-28**,
+not reserved stock or firm current offers. Several snapshots are two weeks to five months old; U1's retrieved
+DigiKey snapshot is marked last year. Direct retrieval failed for some indexed pages. The CSV records those
+limits per line. Current checkout prices and stock are UNKNOWN. This distinction is necessary because search
+and product snapshots sometimes show different prices or misleading full-reel availability. No price was
+taken from a third-party comparison site or an unqualified zero-price placeholder.
+Different-MPN offers are explicitly marked as substitution candidates, without approval.
+
+### Per-line UK/GBP purchase comparison
+
+The existing [per-line CSV](bom-sourcing-options.csv) now includes conditional GBP prices for every priced
+quote line, UK seller/URL/MPN, observed tiers, MOQ/multiple, VAT/stock/shipping limits and 5/3-board purchases.
+**Home planning is fitted+2 per MPN**, as before. **Consignment planning is fitted+3**, still conditional on
+PCBWay accepting that overage; the published small-passive rules may require far more. The UK consignment
+columns show what that hypothetical line would cost if selected; they do not change option C's selected lines.
+The purchase optimiser rounds up to MOQ/multiple and also checks higher observed price breaks: it buys extra
+only when the observed component subtotal falls. No reel-making, shipping, tax or handling charge is silently
+included. All UK purchase subtotals are calculations from the displayed unit tiers, rounded half up to pence;
+they are not seller invoices. For example, D1 five times £0.469 calculates to £2.35 while Farnell displays £2.34,
+so invoice rounding/underlying price precision must be confirmed. J1 remains DNS; spring MPN/price UNKNOWN.
+
+Amounts in this table are **GBP component subtotals only**; Farnell/RS/DigiKey show ex VAT, while the retrieved
+Mouser pricing blocks do not establish tax inclusion (VAT basis UNKNOWN). The L1 amount is converted from a USD
+reference, not a native sterling offer. D3's offered `,135` suffix differs from the BOM and is explicitly a
+substitution candidate. A subtotal for all UK parts or for complete owner assembly remains **UNKNOWN**.
+
+| Designators | Observed source (URLs in source index/CSV) | Observed GBP tiers / each | Home buy qty: 5 / 3 boards, incl. spares | Calculated parts GBP: 5 / 3 | Qualification / recommendation |
+|---|---|---|---:|---:|---|
+| U3 | UK-05 / Farnell UK | 1+: GBP 0.690, 25+: GBP 0.676 | 7 / 5 | 4.83 / 3.45 | Exact QFN bare MCU; not SOIC -SNR or a breakout board. |
+| D3 | UK-12 / DigiKey UK storefront | 1+: GBP 0.220, 10+: GBP 0.135 | 10 / 5 | 1.35 / 1.10 | Suffix substitution; approval required |
+| C4,C5,C6,C14,C15,C17 | UK-13 / Farnell UK | 10+: GBP 0.0105, 100+: GBP 0.0090 | 40 / 20 | 0.42 / 0.21 | Do not use the headline full-reel stock count as low-quantity availability. |
+| C8 | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | No qualified UK low-quantity GBP offer retrieved; use exact search term and request one distributor quote. Do not use broker zero-price placeholders or resistor-kit assumptions. |
+| C7,C16 | UK-14 / Farnell UK | 10+: GBP 0.105, 100+: GBP 0.0638 | 20 / 10 | 2.10 / 1.05 | Exact MPN; current delivered offer UNKNOWN |
+| C1,C2,C3,C10,C11,C12,C13 | UK-15 / DigiKey UK storefront | 1+: GBP 0.240, 10+: GBP 0.143, 50+: GBP 0.1042 | 50 / 23 | 5.21 / 3.29 | Keep exact O/Q/N suffix string; cheaper MQQNNNE/MQQNNNG listings are different MPNs, not approved substitutes. |
+| Q4,Q5,Q6 | UK-08 / Mouser UK storefront | 1+: GBP 0.292, 10+: GBP 0.174 | 17 / 11 | 2.96 / 1.91 | CPC UK-31 is cheaper but retrieved stock of eight is below either fitted requirement; availability must be confirmed. |
+| C9 | UK-17 / RS UK | 100+: GBP 0.018 | 100 / 100 | 1.80 / 1.80 | 100-piece pack is excessive for this build; request a small cut-tape quantity elsewhere. |
+| U2 | UK-06 / DigiKey UK storefront | 1+: GBP 0.750, 10+: GBP 0.537 | 7 / 5 | 5.25 / 3.75 | A2 gain and DCK package retained; packing-only T candidate is ALT-02, not adopted. |
+| RS1 | UK-07 / DigiKey UK storefront | 1+: GBP 0.490, 10+: GBP 0.312 | 10 / 5 | 3.12 / 2.45 | Freshly fetched snapshot used, not the conflicting indexed GBP 0.480/0.307; footprint remains OPEN. |
+| RT1 | UK-09 / Farnell UK | 10+: GBP 0.0743 | 10 / 10 | 0.74 / 0.74 | Retain exact thermal-protection curve/tolerance; do not replace with generic 10k NTC. |
+| D1 | UK-10 / Farnell UK | 5+: GBP 0.469, 10+: GBP 0.321 | 10 / 5 | 3.21 / 2.35 | Exact MPN; current delivered offer UNKNOWN |
+| D2 | UK-11 / Farnell UK | 5+: GBP 0.147, 50+: GBP 0.0781 | 10 / 5 | 1.47 / 0.74 | Exact onsemi suffix; do not replace with Nexperia RB521S30,115 automatically. |
+| R1,R10,R11,R12,R17,R18 | UK-18 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.015, 25+: GBP 0.0112, 50+: GBP 0.0088 | 32 / 25 | 0.36 / 0.28 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R14,R15 | UK-19 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.015, 25+: GBP 0.0112 | 12 / 10 | 0.18 / 0.15 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R4 | UK-20 / DigiKey UK storefront | 1+: GBP 0.080, 10+: GBP 0.016 | 10 / 10 | 0.16 / 0.16 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R13 | UK-21 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.015 | 10 / 10 | 0.15 / 0.15 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R16 | UK-22 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.015 | 10 / 10 | 0.15 / 0.15 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R3 | UK-23 / DigiKey UK storefront | UNKNOWN | UNKNOWN / UNKNOWN | UNKNOWN / UNKNOWN | Conflicting CT and Digi-Reel price blocks: low-quantity price UNKNOWN. |
+| R2,R6 | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | No qualified UK low-quantity GBP offer retrieved; use exact search term and request one distributor quote. Do not use broker zero-price placeholders or resistor-kit assumptions. |
+| R19 | UK-24 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.016 | 10 / 10 | 0.16 / 0.16 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R5 | UK-25 / DigiKey UK storefront | 1+: GBP 0.080, 10+: GBP 0.016 | 10 / 10 | 0.16 / 0.16 | Observed cut-tape breaks; a small kit is not proof of exact manufacturer/tolerance. |
+| R7,R20 | UK-26 / DigiKey UK storefront | UNKNOWN | UNKNOWN / UNKNOWN | UNKNOWN / UNKNOWN | Exact primary product lead found; price block not retrieved: price UNKNOWN. |
+| R9 | UK-16 / DigiKey UK storefront | 1+: GBP 0.070, 10+: GBP 0.058 | 7 / 5 | 0.49 / 0.35 | Retain 0.1% precision current-setting part; UK eBay lead UK-29 not qualified on pack/postage. |
+| R8 | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | No qualified UK low-quantity GBP offer retrieved; use exact search term and request one distributor quote. Do not use broker zero-price placeholders or resistor-kit assumptions. |
+| Q1 | UK-03 / Mouser UK storefront | 1+: GBP 1.20, 10+: GBP 0.568 | 10 / 10 | 5.68 / 5.68 | Cut tape; optional MouseReel GBP 3.50 excluded. Compare consolidated DigiKey UK-32 before splitting orders. |
+| Q2,Q3 | UK-04 / DigiKey UK storefront | 1+: GBP 2.04, 10+: GBP 1.311 | 12 / 10 | 15.73 / 13.11 | Cut tape. Observed ten-part purchase costs less than nine; present stock UNKNOWN. |
+| U1 | UK-02 / DigiKey UK storefront | 1+: GBP 5.11, 10+: GBP 3.934 | 7 / 5 | 35.77 / 25.55 | Cut tape; optional Digi-Reel GBP 4.50 excluded. Ten costs less than eight at the observed break. |
+| J1 | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | DNS for PCBWay; hand-fit spring MPN/price UNKNOWN. |
+| L1 | UK-01 / Coilcraft direct / UK sales route | 1+: GBP 1.97 FX | 7 / 5 | 13.80 / 9.86 | C suffix retained for sub-reel tape; ask for a firm GBP UK-warehouse quote and accepted tape format. |
+
+The snapshots list C4/C5/C6/C14/C15/C17 cut tape on backorder despite full-reel stock, and C7/C16 and
+C9 as out of stock. Their table subtotals describe the observed price, not an immediately available purchase.
+
+Important purchase comparisons for **consignment** (fitted+3 provisional, not a PCBWay-accepted packing list):
+
+| Line | Five assembled: purchase / calculated GBP parts | Three assembled: purchase / calculated GBP parts | Consequence |
+|---|---:|---:|---|
+| L1, exact Coilcraft | 8 / £15.77 FX | 6 / £11.83 FX | Dominant potential saving. Optional USD 25 leader adds £18.81 FX once; freight/handling/tax UNKNOWN. |
+| U1, exact DigiKey | 10 / £39.34 | 6 / £30.66 | Ten is cheaper than eight (£40.88), but £39.34 already exceeds the five-fitted quote conversion £33.32. |
+| Q1, exact Mouser | 10 / £5.68 | 10 / £5.68 | Ten is cheaper than eight (£9.60) or six (£7.20); tax/delivery UNKNOWN. Saving versus five-fitted quote conversion is only about £0.68 before those costs. |
+| Q2/Q3, exact DigiKey | 13 / £17.04 | 10 / £13.11 | Ten is cheaper than nine (£18.36). Five-board gross difference is only about £1.28; three-board purchase exceeds the £11.00 fitted quote conversion. |
+
+For Q1, DigiKey's separately fetched exact-part source **UK-32** is £7.46 for ten ex VAT, versus Mouser's £5.68
+with tax basis UNKNOWN. The £1.78 displayed difference is easily lost by splitting an order. U1/U2/Q2-Q3 alone
+would exceed DigiKey's published £33 free-delivery threshold in either consignment illustration; destination,
+service, tax and direct shipment to China still need a real quote. Farnell's threshold is £40 and CPC's £24.99
+ex VAT; avoid assuming that every small order is free delivery. An out-of-stock cheap line does not complete a BOM.
+
+### UK eBay checks
+
+Two inspected public listings illustrate why neither an `ebay.co.uk` URL nor “uk” in a seller name is enough:
+
+| Listing / seller | Exactness and location evidence | Observed price / lot | UK shipping and decision |
+|---|---|---|---|
+| [R9 listing 146427921924](https://www.ebay.co.uk/itm/146427921924), RapidWarehouse-Office (UK-29) | Exact RT0402BRD0710KL title; located Hampshire, UK. Traceable supply paperwork and pieces per listing unit UNKNOWN | £3.22 per listing unit; pack quantity UNKNOWN | UK postage UNKNOWN: the page's £12.09 international postage is addressed to a non-UK postcode. Do not cost as one resistor, a pack of ten, or free UK delivery. Request quantity/postage/traceability before comparing. DigiKey's explicit ten-part reference is £0.58 ex VAT. |
+| [U3 listing 405733729377](https://www.ebay.co.uk/itm/405733729377), richde_uk0 (UK-30) | Title claims five ATTINY1616-MNR, but item specifics say Unbranded; located Shenzhen, China | £17.27 per five; displayed postage £3.36, UK destination not established | UK postage UNKNOWN. Five exact Farnell parts are £3.45 ex VAT before order delivery. This eBay lead is not UK stock, is more expensive on the displayed parts price, and does not establish a genuine Microchip device. Reject for this protection MCU unless independently qualified. |
+
+Both are cached primary listings retrieved 2026-10-28; current price/stock are UNKNOWN. No qualified
+UK-located, traceable, cheaper exact-MPN offer was established for L1/U1/Q1/Q2-Q3. This is the outcome of the
+public searches, not a claim no such seller exists. Use the exact MPN plus `UK stock` and inspect item location,
+maker, full suffix, pack count, traceability and UK postage. Do not use ordinary resistor assortments for R8/R9
+or generic 10k NTCs for RT1. Marketplace risk/safety roles remain those in section 4 and the CSV.
+
+### Straight-swap candidates: proposed only
+
+| Candidate | Manufacturer evidence / fit assessment | Price and disposition |
+|---|---|---|
+| **U2 INA186A2IDCKT** instead of INA186A2IDCKR | **ALT-02**, TI identifies the same A2, DCK six-pin SC70 part with 250/small-reel packing versus 3000/large reel. A2 gain remains 50 V/V; same package/pins. This is a packing-only candidate, not an adopted BOM change. | Low-quantity GBP saving UNKNOWN; exact R cut tape is already available as a reference. Ask supplier whether T improves price/availability. Different suffix still needs owner decision, a design-decision entry and regeneration. |
+| **U1 TPS552882RPMR.A** instead of TPS552882RPMR | **ALT-03**, TI explicitly identifies it as an identical part number alias. Retains RPM 26-pin package; does not justify TPS55288, another controller, or another package. | GBP price/stock UNKNOWN; useful as a documented sourcing alias, not an established saving. Confirm actual ordering code/marking and owner acceptance. |
+| **L1 XAL5030-102MEC** instead of XGL5030-102MEC | **ALT-01 / PREORDER-01**: 1 uH, same broad 5030 family and the board's XAL-named footprint make mechanical review plausible; exact substitute land/paste approval remains uncompleted. XAL DCR is 8.5/9.4 mOhm typ/max versus 4.8/5.8 for XGL; 40 C-rise Irms is 11.1 A versus 17.8 A. At equal current, typical DC copper loss is about **77% higher** (8.5/4.8 - 1); actual efficiency/temperature change is UNKNOWN. | Manufacturer USD 2.74 converts to £2.06 at FX-01, versus exact XGL £1.97. It is not cheaper in the directly compared manufacturer references, and it reduces thermal margin. **Do not recommend this swap to save money**; requires calculations/thermal/footprint review if pursued. |
+| Alternative PowerPAK MOSFET, different-gain INA186, SOIC ATtiny, generic 1206 shunt or lower-rated capacitor | Package name or headline voltage/current alone does not verify gate drive, Rds(on), Qg/timing, pinout, shunt TCR/geometry/Kelvin routing, capacitance at bias, or safety function. Existing PowerPAK/RS1/U3 land concerns remain. | No additional device has been qualified as a cheaper electrical straight swap. Exact traceable low-quantity parts are the stronger next quote. Do not apply distributor “similar” suggestions automatically. |
+
+Sources: [TI INA186A2IDCKT packing](https://www.ti.com/product/INA186/part-details/INA186A2IDCKT),
+[TI TPS552882 ordering alias](https://www.ti.com/product/TPS552882/part-details/TPS552882RPMR),
+[Coilcraft XAL exact product](https://www.coilcraft.com/en-us/products/power/shielded-inductors/molded-inductor/xal/xal50xx/xal5030-102/),
+[Coilcraft XAL datasheet](https://www.coilcraft.com/getmedia/49bc46c8-4b2c-45b9-9b6c-2eaa235ea698/xal50xx.pdf).
+These candidates are proposals. No owner adoption, design-decision entry, CAD change or completed substitute
+review is implied. The full AGENTS.md regeneration chain and affected re-reviews apply if one is adopted.
+
+### GBP options and recommended next purchase decision
+
+| Option | Five assembled | Three assembled | GBP conclusion |
+|---|---|---|---|
+| A, quoted turnkey | £229.25 if quote USD; delivered total UNKNOWN | No quote | Keep professional assembly, request exact L1 reprice in GBP. |
+| B, fewer assembled | Same baseline as A | £154.10 only under the section-5 linear model | Obtain written three-assembled/five-fabricated quote and minimum exception. |
+| C1, exact L1-only consignment | £112.00 converted residual parts+PCB plus £15.77 observed L1 = **£127.78**, **then add the new partial assembly fee and all logistics/tax/packing** | £75.02 model residual parts+PCB plus £11.83 L1 = **£86.85**, then the same unknown cost categories | These are conditional known/modelled portions, not complete quotes. Promotion loss and leader/freight may erode savings. |
+| C2, IC/FET/L1 consignment | Complete total UNKNOWN; compare actual consignment purchase counts above | Complete total UNKNOWN | U1/FET spares and split delivery offer little clear benefit; start with L1 only. |
+| D, owner assembly | Bare PCB reference £19.54 if USD; stencil, complete component set, assembly tools/inspection/landed cost UNKNOWN | Same fabricated-quantity reference; fit three | Existing hidden-pad/stencil/reflow/X-ray concern remains; no approved cheaper home-build total. |
+| E, genuine UK/GBP retail | Per-line observed buys in CSV; complete delivered BOM UNKNOWN | Same | Prefer consolidated exact-MPN distributor quote over many marketplace parcels. |
+
+**Recommendation remains revised exact-MPN turnkey, with a firm GBP invoice and exact Coilcraft L1 reprice.**
+The five-board quoted baseline is **£229.25 only if PCBWay confirms USD**. Otherwise its GBP equivalent is
+UNKNOWN. The strongest fallback is Coilcraft genuine L1-only consignment, provisionally 8/6 pieces for five/three
+assembled boards, after PCBWay confirms its actual spare/tape requirements. Gross converted L1 difference is
+about £79.65/£45.42 before leader, revised assembly, tax, payment FX and two-way logistics; those are not net savings.
+Do not self-source cheap passives solely to save pennies or buy a reel because its unit-price headline is low.
+
+Before paying, add these to section 7's questions: confirm quote ISO currency and **fixed GBP payable amount**;
+obtain GBP quotes for five assembled and three assembled plus two bare; ask PCBWay to source exact L1 from
+Coilcraft/its authorised channel or accept direct distributor delivery; obtain accepted L1 count, cut-tape leader,
+partial assembly/inspection fee and UK/China customs/freight responsibilities. Ask distributors for current
+exact-MPN cut-tape prices, warehouse location, MOQ/multiples, tax, consolidated UK delivery or direct China
+delivery, and lot/date-code paperwork. None of those supplier confirmations was sent or fabricated by this review.
+
+
+GBP follow-up verification: **207 tests passed in 17.42 s**; full `validate.py` **exit 0**, 57 entries,
+54 PASS and the same three known unchanged findings; no new or changed failures. Evaluation remains
+DRAFT_REVIEW with FP-POWERPAK/FP-RS1 as its two recorded blockers; Gate G OPEN. Independent Decimal checks
+covered all 30 quote-line GBP conversions, 26 UK leads / 24 price snapshots (23 exact MPNs), every 5/3-board
+spare/MOQ/price-break purchase calculation, source IDs and original text/CSV line endings. All seven baseline
+artifact hashes and all protected source/CAD/export/generated-sourcing bytes still match the previous review.

@@ -338,3 +338,12 @@ scope is separate and the evaluation board still has exactly two recorded review
 evaluation DONE rows are absent while the five compact OPEN reviews remain distinguishable. Regenerate the
 dashboard through its generator/validator after a future code fix. Do not hand-edit generated HTML or close
 the compact reviews to remove these rows. This review records the defect; it does not change the generator.
+
+
+### GBP / UK sourcing follow-up (2026-10-28)
+
+The owner prefers GBP. The [quote/sourcing review, section 9](bom-quote-sourcing-review.md#9-gbp-uk-suppliers-ebay-and-substitution-candidates-2026-10-28)
+and its per-line CSV now include conditional GBP quote conversion, UK distributor snapshots, UK eBay checks
+and unadopted substitute candidates. QUOTE-01 ISO currency remains UNKNOWN; £229.25 applies only if USD.
+No CAD, order file, reviewed artifact hash or release disposition changed. Exact-MPN L1 repricing remains the
+main cost opportunity; the PowerPAK/RS1/U3 land issues still require the dispositions above before payment.
