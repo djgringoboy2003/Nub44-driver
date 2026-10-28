@@ -11,6 +11,7 @@ document revision, local path, relevant pages and primary/secondary classificati
 | Supporting components and sourcing | CMP-01 … CMP-42 | [sources/component-sources.md](sources/component-sources.md) | [component-research.md](component-research.md), [component-candidates.csv](component-candidates.csv) |
 | Batteries, polarity, host mechanics | BAT-01 … BAT-44 | [sources/battery-sources.md](sources/battery-sources.md) | [battery-and-mechanics.md](battery-and-mechanics.md) |
 | PCBWay fabrication/assembly, CAD tooling | MFG-01 … MFG-33 | [sources/manufacturing-sources.md](sources/manufacturing-sources.md) | [pcbway-requirements.md](pcbway-requirements.md), [cad-tooling.md](cad-tooling.md) |
+| Separate 2S budget-driver feasibility | BUD-01 … BUD-14 | [sources/budget-driver-sources.md](sources/budget-driver-sources.md) | [budget-driver plan](../engineering/budget-driver-plan.md) |
 
 ## Sources added by the lead engineer
 
@@ -134,3 +135,13 @@ QUOTE-01's ISO currency. No unverified placeholder zero price is recorded as a r
 | P450-03 | TPS552882 product information / Texas Instruments | https://www.ti.com/product/TPS552882 | Retrieved 2026-10-28. Manufacturer confirms four-switch buck-boost, RPM 26-pin package and fixed 4 ms soft start; existing local datasheet LEAD-01 remains the detailed design source. No current price/stock assertion. |
 
 Assessment: [Project 450 design notes](project450-design-notes.md). All changes are proposals only.
+
+## Budget two-cell planning sources (retrieved 2026-10-28)
+
+[BUD-01…14 source table](sources/budget-driver-sources.md) records manufacturer specifications, local PDF
+paths/SHA-256 and native GBP distributor snapshots for the separate budget proposal (DD-29). New local PDFs:
+TPS54821, TPS56628, SRP1265A, INA300 and INA180. Documents were parsed with Python `-I`; no downloaded code ran.
+Retailer search snapshots are explicitly dated with crawl age and VAT basis. Live price/stock/shipping and
+complete delivered cost remain UNKNOWN. No marketplace listing or substitution is qualified by this study.
+The owner's 2S permission / £60 ceiling are requirements; the architecture, parts and remaining targets in
+[the plan](../engineering/budget-driver-plan.md) are proposals, with no CAD or bench verification claimed.

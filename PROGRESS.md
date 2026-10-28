@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-28 (pre-order, quote and GBP/UK sourcing reviews integrated into `main` at the owner's request; see Log). The independent audit and review commits `3a6e4c4` and `0faacf8` are merged into `main`.
+_Last updated: 2026-10-28 (separate budget-driver plan added after the owner accepted 2S and specified £60 per driver; DD-29). The pre-order, quote and GBP/UK reviews `3a6e4c4` / `0faacf8` and Project 450 study are integrated into `main`.
 The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are unchanged;
 firmware, evidence handling, release controls, ordering files and tooling changed during the audit._
 
@@ -47,14 +47,24 @@ now saved locally with hashes. No design/CAD/export change. Dashboard missing bo
 startup, diagnostics and charging inhibition with our existing design. The two-cell TPS56C215 buck is not
 a straight swap for the single-cell TPS552882; costs/savings UNKNOWN. Proposals only; no design change.
 
-**Validation:** full-toolchain rerun on integrated `main` at `0faacf8` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
+**Separate budget track (DD-29):** `engineering/budget-driver-plan.md` consolidates the reviews into a six-stage
+development plan. Owner accepts two series Li-ion cells, no size constraint and £60 per driver; three/five
+working units are compared (£180/£300 batch ceilings). Lead proposal: externally compensated synchronous
+buck, larger inductor/passives, precision high-side sensing, independent overcurrent trip, hardware disconnect
+and SOIC MCU. Parts/thresholds/stack-up remain proposals. Four-role genuine GBP reference baskets with two
+spares per MPN are £32.490/£45.486 ex VAT and delivery; these omit most of the driver and are not build totals.
+Complete delivered/new-development cost UNKNOWN. Sources BUD-01…14 and scoped REQ-BUD-01…09 (all OPEN) added.
+No budget CAD, firmware adaptation or validation exists; the gate table and test results here apply to A/B.
+
+**Validation (existing A/B only):** full-toolchain rerun after the budget-planning documentation update
+(2026-10-28, base `f136565`, KiCad, ngspice and avr-gcc present): exit 0,
 57 entries, 54 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (2026-10-28, full toolchain on integrated `main` at `0faacf8`):** 207 Python tests pass in 22.19 s (the independent review saw 188 pass /
-19 skip without KiCad). The regenerated firmware evidence and footprint report match the committed ones except
-timestamps, and the evaluation PCB, connectivity and PCBWay package match the review's SHA-256 baseline. Firmware:
+**Tests (2026-10-28, budget-planning milestone, existing project):** 207 Python tests pass in 31.64 s (the independent review saw 188 pass /
+19 skip without KiCad). Earlier firmware-evidence and footprint-report reruns matched the committed ones except
+timestamps; the evaluation PCB, connectivity and PCBWay package remain unchanged. Last firmware verification:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
 `-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
 WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
@@ -101,6 +111,12 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 
 ## Next actions (in order)
 
+**Parallel budget planning track:** follow `engineering/budget-driver-plan.md` work packages 1–2: compare the
+repriced existing board with a 2S buck, freeze pack/voltage/cost scope, qualify the current loop and independent
+fault/disconnect circuit, then obtain a complete GBP quote for 3/5 units. Extend variant tooling and record
+implementation decisions before any new source/CAD work. Do not inherit A/B PASS results or spend against
+partial component baskets.
+
 1. **Resolve the pre-order review:** `reports/pre-order-review.md`. Correct or obtain assembler acceptance for
    RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
    all affected CAD/export evidence, repeat affected reviews and full validation. Evaluation still has two
@@ -118,7 +134,8 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
    change, never tested before), T1.10 (CC polarity), T1.11 (measurement chain), T2.11 (loop, AUD-SIM-04) and nuisance
    fault 6 (R-22).
 6. **After evaluation measurements:** assess the host/heatsink interface and optional arming ideas in
-   `research/project450-design-notes.md`; retain hardware interlocks. No two-cell redesign is adopted.
+   `research/project450-design-notes.md`; retain hardware interlocks. A/B retain their 1S circuit; the separate
+   budget 2S feasibility plan is DD-29, with no component or implementation adoption yet.
 7. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
    the compact chain (`grid_route.py --variant compact-22mm --rebuild --partial --write`; `place`, `route`, `finish`,
    `drc`; `power_layout.py`). Accept it only with 0 unconnected, 0 DRC errors and every power path connected.
@@ -141,6 +158,24 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-28: separate £60 / two-cell budget-driver plan
+- Owner requested similar specifications with no size limit, accepted two Li-ion cells in series and gave a
+  £60 per-driver target. Recorded planning scope as DD-29; compare 3/5 working units, with explicit driver-only
+  cost boundary and all nine new budget requirements OPEN.
+- Consolidated original quote/cost-driver findings, UK/genuine versus marketplace sourcing, footprint/audit
+  lessons and Project 450 ideas in `engineering/budget-driver-plan.md`. Proposed a 2S synchronous buck,
+  precision sensing, independent overcurrent/OVP/interlock and hardware disconnect; new part choices remain
+  unadopted. Included feasibility formulas, GBP reference baskets, target spending allocations and six work
+  packages through separate physical qualification. Complete delivered/development costs UNKNOWN.
+- Downloaded five primary manufacturer PDFs; isolated Python parsing verified revisions and SHA-256. Added
+  BUD-01…14 source table with exact links, native GBP observations, VAT/crawl-age/direct-fetch limitations.
+  No new marketplace listing qualified; no CAD/design/generated-sourcing edit, review approval or order.
+- Verification: 207 pytest tests passed in 31.64 s; full validator exit 0 with 57 entries / 54 PASS / the same
+  three known unchanged findings, no new/changed failures and two evaluation blockers. Validator regenerated
+  the dashboard. Authored-document link/UTF-8 checks, independent Decimal basket/formula checks, all five new
+  PDF hashes and all nine OPEN budget requirement rows checked. Protected A/B design/CAD/manufacturing and
+  generated sourcing paths remain unchanged from `f136565`. These checks do not validate a budget circuit.
 
 ### 2026-10-28: review work integrated into main at owner request
 - Fetched origin and fast-forwarded `main` through review commits `3a6e4c4` and `0faacf8`; no conflicts.

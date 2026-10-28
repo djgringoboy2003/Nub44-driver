@@ -355,3 +355,23 @@ supervision without touching any protection threshold. The corrections keep ever
 
 Bench confirmation remains Gate G: fuses (T0.4), hold-up and gap classification (T1.8/T1.9), CC polarity (T1.10),
 measurement chain (T1.11) and sensor-fault response (T2.13).
+
+## DD-29 Separate budget-driver planning scope (owner, 2026-10-28)
+
+The owner requested a budget driver with similar specifications and no size constraint, then confirmed that
+**two Li-ion cells in series are acceptable** and specified **£60 per driver**. Initial quantity was not
+specified; the plan compares three and five working units. The question defining the price excluded the
+laser diode and battery; additional scope assumptions are explicit in the plan.
+
+[Budget-driver plan](budget-driver-plan.md) consolidates the pre-order audit, quote/GBP/UK sourcing reviews
+and Project 450 ideas. It proposes a separate 2S synchronous buck, larger components, genuine sourcing and
+independent hardware protection. TPS54821, SRP1265A-4R7M, INA300 and SOIC ATtiny1616 are a shortlist, not
+owner-approved component selections. Operating range, thresholds, budget allocations and efficiency targets
+are proposals pending circuit qualification and a complete quote.
+
+The £60 ceiling is not a verified cost. Current complete delivered pricing is UNKNOWN. Compare a repriced
+original evaluation-board quote before committing money to a redesign. Existing A/B sources, decisions,
+review dispositions and release gates remain scoped to their existing 1S circuit. No CAD, firmware or
+manufacturing change is authorised by a parts shortlist alone; adopted implementation needs a further DD,
+variant-specific authoritative sources and the full regeneration/review chain. Budget requirements are
+registered separately as REQ-BUD-01…09, all OPEN; no existing PASS verifies this new design.
