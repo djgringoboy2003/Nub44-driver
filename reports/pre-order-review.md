@@ -1,5 +1,8 @@
 # Independent pre-order review, 2026-10-27
 
+**Updated 2026-10-28:** section 10 adds the full-toolchain rerun and local-document recheck on `10a29cc`.
+The original review and its baseline hashes below remain historical evidence. Recommendation remains hold payment.
+
 Reviewer: **Codex (AI review), requested by repository owner**. Reviewed commit
 `fab63177bd7086457878a5da7a13dc7cc917e8c3`, following `documentation/pre-order-review.md`.
 Scope: evaluation board, 45 × 40 mm, four layers, five assembled prototypes. The compact board remains
@@ -48,7 +51,7 @@ under the real waveform remain bench checks, not consequences of this geometric 
 **References:** PREORDER-02, SiSS23DN document 62852, Rev. A, 2013-05-13, p.1;
 PREORDER-03, SiSS80DN document 77684, Rev. C, 2026-10-19, p.1;
 PREORDER-04, PowerPAK 1212-8S outline document 63919, 2020-07-20, p.1;
-PREORDER-05, recommended minimum pads document 72597, 2008-01-21, p.7.
+PREORDER-05, recommended minimum pads document 72597, 2008-01-21, PDF p.1 (printed p.7).
 
 Pin mapping is correct: 1–3 source, 4 gate, drain terminals combined into footprint pad 5.
 
@@ -236,3 +239,102 @@ SHA-256 values for the baseline:
 4. Bring up on a rated dummy load and record physical results in Gate G before connecting the intended load.
 
 Manufacturer links and revisions are indexed as PREORDER-01…11 in `research/source-index.md`.
+
+
+## 10. Full-toolchain and local-document addendum, 2026-10-28
+
+Reviewer: **Codex (AI review), requested by owner**. Base `main` commit
+`10a29cc4f80c892963c34c91973fab6dbfc80132`; work on `review/bom-quote-sourcing`. Scope remains the evaluation
+board. All seven artifact hashes in section 9 were recalculated and **match**. Parameters, connectivity,
+placements, generated CAD/manufacturing exports, firmware sources and generated sourcing CSVs are unchanged.
+No order was placed. [Quote and sourcing review](bom-quote-sourcing-review.md) covers QUOTE-01 and 5/3-board options.
+
+### Full-toolchain commands actually run
+
+All three commands in `documentation/pre-order-review.md` section 2 were executed with the full installed
+toolchain, not fast mode (shell calls prefixed with `rtk proxy` per RTK.md):
+
+| Command | Actual result, 2026-10-28 |
+|---|---|
+| `.venv/Scripts/python.exe -m pytest tests -q` | **Exit 0, 207 passed**, no skipped tests (initial review run: 16.29 s) |
+| `.venv/Scripts/python.exe firmware/build.py --mutation` | **Exit 0, PASS**; six host suites, 531 checks (110/2/297/16/41/65); AVR target **4134 B flash / 59 B RAM**; **15/15 mutants killed** |
+| `.venv/Scripts/python.exe automation/validation/validate.py` | **Exit 0**; **57 entries, 54 PASS**, three known unchanged findings, zero new/changed findings. A/B/C PASS; evaluation D/E/F PASS, compact D/E/F OPEN; G OPEN |
+
+The three known findings remain compact routing, compact DRC and VAL-SIM-12; the baseline was not relaxed.
+Evaluation remains **DRAFT_REVIEW, two blockers FP-POWERPAK and FP-RS1**; compact has seven. Full validation
+checks the saved hash-bound ERC/DRC/layout/export and simulation evidence; it does not mean a new KiCad board
+rewrite or bench run occurred. No generated evidence was hand-edited. **Final reruns after documentation and
+review-register changes:** pytest **207 passed in 18.92 s**, exit 0; full validator **exit 0, 57 entries,
+54 PASS, three known unchanged, zero new/changed**, evaluation two blockers. The quote checker also rejected
+a temporary BOM fixture with the D2 G suffix removed (expected exit 1); the real input still passes.
+
+### FP-POWERPAK: local documents rechecked; OPEN
+
+PREORDER-02/03 confirm **1212-8S** for both exact selected Vishay parts. PREORDER-04, 63919 dated
+2020-07-20, p.1, gives terminal pitch **0.65 mm**. PREORDER-05, 72597 dated 2008-01-21, is a **single PDF
+page, printed page 7**, headed generic **PowerPAK 1212-8 Single**. It corroborates the existing generic land
+dimensions, not an explicit manufacturer approval for the newer 8S package. The existing source/gate/drain
+mapping in section 3 remains correct.
+
+The board's small pads are 0.99 × 0.405 mm at 0.66 mm pitch (centres y = ±0.99/±0.33 mm, x = -1.435 mm);
+drain envelope is 2.235 × 2.390 mm. The 0.01 mm pitch difference alone does not demonstrate an assembly
+failure; the outer row displacement from a centred 0.65 mm pitch is 0.015 mm. The **exact 8S recommended
+land/paste compatibility is unresolved** by these local documents. Do not substitute an 8SCD common-drain or
+dual-device drawing, or derive an invented land pattern merely from the body outline.
+
+**Exact remedy:** obtain a Vishay land-pattern recommendation explicitly applicable to both selected MPNs,
+or PCBWay's written acceptance of the current numbered lands, drain copper, mask and paste for those MPNs.
+If correction is required, update the authoritative footprint generator/library selection, then regenerate
+the affected schematics/PCB/DRC/layout and manufacturing evidence in AGENTS.md order and repeat this review.
+**FP-POWERPAK remains OPEN; no CAD changed.** Q1's incorrect source URL remains AUD-DOC-04.
+
+### FP-RS1: confirmed smaller lands; OPEN
+
+Local PREORDER-06, Ohmite NEC#11705, PDF p.2 / printed p.16, confirms **1.20 × 1.84 mm current lands,
+1.80 mm inner gap**, 4.20 mm derived outer span. The actual 1.125 × 1.75 mm lands, centres ±1.4625 mm,
+give 4.05 mm span and approximately 10.8% smaller rectangular area before rounded-corner reduction.
+The two-terminal MCS1632R010FER and separate local copper-only Kelvin taps are correctly understood.
+
+**Exact preferred remedy:** current lands **1.20 × 1.84 mm at x = ±1.50 mm**, keeping the 1.80 mm inner
+gap; preserve separate local F.Cu joins 1–2 and 3–4 and sense pads without mask/paste openings. Review
+current entry, solder-mask clearance, paste and courtyard/neighbouring clearance before the full rebuild.
+Alternatively obtain written acceptance of the exact existing geometry. **FP-RS1 remains OPEN**, not DONE
+because the document has now been found. This remains AUD-PCB-06.
+
+### U3 exposed pad, AUD-PCB-06: confirmed recommendation deviation; OPEN
+
+Local PREORDER-08, Microchip DS40002204A (2020), **p.578, C04-23380 Rev.A**, recommends **1.80 × 1.80 mm
+centre land and 3.00 mm opposing peripheral-pad-centre spacing**. Existing lands are 1.70 × 1.70 and 2.90 mm.
+The 1.70 mm physical exposed-pad dimension is not a justification for overriding the board-layout example.
+Peripheral pad size **0.80 × 0.20 mm** and **0.40 mm pitch** already match.
+
+**Exact preferred remedy:** centre land 1.80 × 1.80 mm; move each opposing row outward **0.05 mm** to
+±1.50 mm from ±1.45 mm, retaining pad size/pitch and numbering, including EP pad 21 to GND. Recheck clearance
+and mask slivers, calculate the revised paste window/process with the assembler and inspect adjacent copper.
+Do not invent a paste coverage percentage. Correct the authoritative library/generation source, regenerate
+all dependent outputs and repeat DFM/orientation checks; alternatively obtain explicit existing-land/paste
+acceptance. U3 geometry remains **OPEN under AUD-PCB-06/PCBWAY-DFM**, independently of the DONE orientation
+review. X-ray of U1/U3 remains recommended.
+
+### D1-D3 local-document follow-up
+
+The three missing PDFs were searched for, saved first, and parsed with Python `-I`; source-index rows now
+give actual local paths, revisions and SHA-256 values. PREORDER-09 (2022-10-01 pp.1-3), PREORDER-10 (Rev.12
+October 2024 p.1), PREORDER-11 (Rev.9 September 2026 pp.1,2,4) confirm the cathode/anode pin numbering used
+in section 5. That section's D1 bottom cathode, D2/D3 left cathode and connectivity remain consistent with
+the unchanged PCB/assembly package. **Evaluation ORIENT stays DONE**, with this narrower local-document
+recheck added to its evidence; no compact review was completed. Marking and exact-MPN acceptance limitations
+for marketplace offers are in the sourcing report; no AliExpress part is authenticated.
+
+### Dashboard scope defect: AUD-DOC-05
+
+**Confirmed low-severity presentation defect, OPEN.** In `automation/dashboard/build_dashboard.py`, the
+"Decisions and reviews required" table iterates every non-DONE record but displays only ID, level and item.
+It discards `variants`. Hence FP-U1/FP-L1/ORIENT, open **only for compact**, look like evaluation blockers,
+and FP-POWERPAK/FP-RS1 appear twice as identical rows despite distinct board scopes. Actual release-check
+scope is separate and the evaluation board still has exactly two recorded review blockers.
+
+**Remedy:** add a Board/variant column or group by board, show each scoped record clearly once, and verify
+evaluation DONE rows are absent while the five compact OPEN reviews remain distinguishable. Regenerate the
+dashboard through its generator/validator after a future code fix. Do not hand-edit generated HTML or close
+the compact reviews to remove these rows. This review records the defect; it does not change the generator.

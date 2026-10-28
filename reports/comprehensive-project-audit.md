@@ -51,7 +51,7 @@ paths without HDI via-in-pad (DD-16); supplier stock and prices UNKNOWN; average
 
 ## 3. Summary register
 
-**Status on 2026-10-27, after independent pre-order review:** 59 findings: 11 high, 31 medium, 16 low, 1 info; none critical. 41 FIXED, 2 MITIGATED, 11 DOCUMENTED, 5 OPEN. Four additions: AUD-VAL-11/12, AUD-PCB-06 and AUD-DOC-04. AUD-PCB-03 remains OPEN: evaluation FP-U1/FP-L1/ORIENT are reviewed, but FP-POWERPAK/FP-RS1 and compact reviews are still open. See [pre-order-review.md](pre-order-review.md).
+**Status on 2026-10-28, after full-toolchain/local-document and quote review:** 60 findings: 11 high, 31 medium, 17 low, 1 info; none critical. 41 FIXED, 2 MITIGATED, 11 DOCUMENTED, 6 OPEN. Latest addition AUD-DOC-05; previous pre-order additions AUD-VAL-11/12, AUD-PCB-06 and AUD-DOC-04 remain OPEN. AUD-PCB-03 remains OPEN: evaluation FP-U1/FP-L1/ORIENT are reviewed, but FP-POWERPAK/FP-RS1 and compact reviews are still open. See [pre-order-review.md](pre-order-review.md).
 
 Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed, residual noted), DOCUMENTED
 (accepted limitation or owner decision needed), DEFERRED (needs CAD regeneration or owner approval).
@@ -117,6 +117,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-VAL-12 | high | Defect | DONE reviews survive changes to the reviewed artifacts without hash verification | OPEN |
 | AUD-PCB-06 | medium | Risk | RS1/U3 land deviations and exact PowerPAK-8S compatibility need DFM disposition | OPEN |
 | AUD-DOC-04 | low | Defect | Q1 source datasheet URL has wrong Vishay document number | OPEN |
+| AUD-DOC-05 | low | Defect | Dashboard review rows omit board scope, showing compact reviews and duplicates ambiguously | OPEN |
 
 ## 4. Findings in detail
 
@@ -544,12 +545,28 @@ regenerate, or obtain written assembler acceptance of exact pad/paste geometry. 
 until disposition and include U3 in the DFM request. Recheck clearance, mask, paste and thermal/current paths
 after any geometry change. Sources: PREORDER-02…06 and PREORDER-08.
 
+2026-10-28 local-document recheck confirms these differences, without changing CAD or closing the reviews.
+Exact preferred RS1 remedy is 1.20 x 1.84 mm current lands at +/-1.50 mm preserving the 1.80 mm gap and
+local Kelvin taps. U3: 1.80 mm EP and peripheral row centres +/-1.50 mm (move each row outward 0.05 mm),
+retain 0.80 x 0.20 mm pads/0.40 mm pitch and EP ground connection. PowerPAK: local 72597 is the generic
+single pattern (PDF p.1/printed p.7); exact 8S land/paste compatibility remains unresolved. See
+reports/pre-order-review.md section 10 for authoritative-source/regeneration and acceptance remedies.
+
 #### AUD-DOC-04 Wrong Q1 datasheet link (low, defect)
 
 **Status: OPEN.** `engineering/design/connectivity.yaml` references `/docs/62999/siss23dn.pdf`; the manufacturer
 SiSS23DN document is `/docs/62852/siss23dn.pdf` (PREORDER-02). Correct the authoritative field with the next
 CAD/export regeneration, since it affects source hashes and generated datasheet fields. No electrical mapping
 error was found from this link defect.
+
+#### AUD-DOC-05 Dashboard reviews omit their board scope (low, defect)
+
+**Status: OPEN.** `automation/dashboard/build_dashboard.py` builds "Decisions and reviews required" rows
+from all non-DONE review records using ID/level/item only, omitting `variants`. Compact-only FP-U1/FP-L1/ORIENT
+therefore look outstanding for the evaluation board; FP-POWERPAK/FP-RS1 look duplicated even though the records
+have different scopes. Actual evaluation readiness still reports two blockers. Add a Board/variant column
+or board groups in the generator, verify each scoped record once, then regenerate via the normal tool.
+Do not close compact reviews or hand-edit generated HTML. Recorded, not fixed, by this review.
 
 ## 5. Opportunities to simplify
 

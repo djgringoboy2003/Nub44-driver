@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-28 (full-toolchain verification of a fresh working copy; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
+_Last updated: 2026-10-28 (local-document pre-order follow-up and quote/sourcing review on `10a29cc`; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
 and pushed. The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
 unchanged; firmware, evidence handling, release controls, ordering files and tooling changed._
 
@@ -31,19 +31,27 @@ Key options: 4 layers, 1.6 mm, **1 oz inner and outer copper**, **ENIG**, assemb
 placements), X-ray of U1/U3, no unreviewed substitutes. The pre-order review brief for Codex (or a person) is
 `documentation/pre-order-review.md`, with the footprint geometry in `reports/footprint-review.md`.
 
-**Validation:** full-toolchain rerun on `480a69f` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
+**Quote/sourcing review:** `reports/bom-quote-sourcing-review.md`, per-line `reports/bom-sourcing-options.csv`.
+QUOTE-01 matches all 30 BOM lines, exact MPN suffixes and J1 DNS; arithmetic correct. Five-board stored total
+304.615, dollar-format cells but ISO currency UNKNOWN. L1 is 126.790 (50.79% of components); cause UNKNOWN,
+request exact-MPN reprice. AliExpress Choice offers/UK prices remain UNKNOWN. Three-assembly and consignment
+totals need PCBWay quotes; published minimum 5 and conflicting attrition rules need written clarification.
+Recommend revised turnkey; genuine L1-only consignment is the fallback to quote. Diode PREORDER-09/10/11 are
+now saved locally with hashes. No design/CAD/export change. Dashboard missing board scope is new AUD-DOC-05.
+
+**Validation:** full-toolchain rerun for this review on `10a29cc` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
 57 entries, 54 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (2026-10-28, full toolchain on `480a69f`):** 207 Python tests pass (the independent review saw 188 pass /
+**Tests (2026-10-28, full toolchain for review based on `10a29cc`):** 207 Python tests pass (the independent review saw 188 pass /
 19 skip without KiCad). The regenerated firmware evidence and footprint report match the committed ones except
 timestamps, and the evaluation PCB, connectivity and PCBWay package match the review's SHA-256 baseline. Firmware:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
 `-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
 WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 
-**Audit outcome** (`reports/comprehensive-project-audit.md`): 59 findings (11 high, 31 medium, 16 low, 1 info); 41 fixed, 2 mitigated, 11 documented, 5 open. New pre-order findings: AUD-VAL-11/12, AUD-PCB-06, AUD-DOC-04.
+**Audit outcome** (`reports/comprehensive-project-audit.md`): 60 findings (11 high, 31 medium, 17 low, 1 info); 41 fixed, 2 mitigated, 11 documented, 6 open. Pre-order findings: AUD-VAL-11/12, AUD-PCB-06, AUD-DOC-04/05. The last is a dashboard display defect; real evaluation blockers remain two.
 - **Firmware (DD-28):** fixed a board-NTC failure that silently disabled thermal protection, a watchdog cleared even
   when the tick stopped, watchdog resets that re-armed emission, the 2.5 V reference used below its VDD minimum, the
   AC2 power-loss reference written to the wrong register (the click mode change could not work), missing debounce,
@@ -89,17 +97,21 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
    RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
    all affected CAD/export evidence, repeat affected reviews and full validation. Evaluation still has two
    OPEN review records. Review entries are scoped separately from the parked compact board.
-2. **Owner decisions** listed above. Any adopted component or footprint change requires regenerated order files and evidence.
-3. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
+2. **Owner quote confirmation:** `reports/bom-quote-sourcing-review.md` questions for PCBWay: ISO currency,
+   L1 exact-MPN reprice, final U1 price, UK delivered costs/X-ray scope, 3 populated + 2 bare quote, and optional
+   genuine L1 consignment counts/leader/fees/shipping. Do not buy unverified Choice parts or assume 29 assembly
+   survives consignment. No order placed; owner decides and merges the review branch.
+3. **Owner decisions** listed above. Any adopted component or footprint change requires regenerated order files and evidence.
+4. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
    sections A and B. No tool places orders.
-4. **Bench testing:** program firmware and fuses (T0.4), then run `documentation/testing/test-plan.md` with a rated
+5. **Bench testing:** program firmware and fuses (T0.4), then run `documentation/testing/test-plan.md` with a rated
    dummy load, recording each test with `automation/bench/bench.py`. Watch especially T1.8/T1.9 (hold-up and mode
    change, never tested before), T1.10 (CC polarity), T1.11 (measurement chain), T2.11 (loop, AUD-SIM-04) and nuisance
    fault 6 (R-22).
-5. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
+6. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
    the compact chain (`grid_route.py --variant compact-22mm --rebuild --partial --write`; `place`, `route`, `finish`,
    `drc`; `power_layout.py`). Accept it only with 0 unconnected, 0 DRC errors and every power path connected.
-6. **Next CAD regeneration:** variant-specific BOM descriptions (AUD-MFG-03); rerun the full chain.
+7. **Next CAD regeneration:** variant-specific BOM descriptions (AUD-MFG-03); rerun the full chain.
 
 **Commands:**
 ```powershell
@@ -118,6 +130,27 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-28: full pre-order follow-up, private quote audit and sourcing options
+- Review branch `review/bom-quote-sourcing`, base `10a29cc`. Downloaded the three missing manufacturer diode
+  PDFs first; recorded local paths/revisions/SHA-256 in research/source-index.md. No downloaded code executed.
+- Re-ran all three brief commands with the full toolchain: pytest 207 pass; firmware six suites/531 checks,
+  4134 B flash/59 B RAM and 15/15 mutants; full validation exit 0, 57 entries/54 PASS/3 known unchanged.
+  All seven reviewed PCB/connectivity/package hashes still match. Final reruns after documentation/review
+  updates: pytest 207 passed in 18.92 s, full validator exit 0 with the same 57 entries/3 known/2 evaluation
+  blockers. Quote checker rejects a temporary missing-suffix fixture; all protected sources/exports byte-identical.
+- Rechecked local PowerPAK/Ohmite/Microchip documents. Exact RS1/U3 remedies and unresolved 8S acceptance
+  recorded; FP-POWERPAK/FP-RS1 stay OPEN. Evaluation orientation local-diode follow-up recorded only for that
+  board. New AUD-DOC-05: dashboard omits review board scope; generator unchanged, finding OPEN.
+- Parsed QUOTE-01 original XLS with system Python -I and external temporary xlrd 2.0.2 (no requirements change).
+  Added reproducible checker/JSON: all 30 lines match, all arithmetic reconciles; 304.615 stored total, ISO
+  currency UNKNOWN despite dollar formats. L1 126.790 dominates; request reprice, cause UNKNOWN.
+- Added 5/3-board line CSV, cost chart and report: turnkey/fewer assembled/partial consignment/home/genuine
+  options, safety roles, explicit spare assumptions and unknown totals. No qualified AliExpress Choice UK
+  offers/prices. PCBWay promotion/minimum/attrition conflicts and exact pre-payment questions documented.
+- Original private quote committed with this review. Design sources, CAD/export files, generated sourcing
+  CSVs and known-limitations baseline unchanged; Gate G OPEN. No order, login, cart or supplier message.
+
 
 ### 2026-10-28: fresh working copy verified with the full toolchain; review sources stored locally
 - `scripts/setup.ps1` failed under Windows PowerShell 5.1 (`java -version` writes to stderr, which `2>&1` turns
