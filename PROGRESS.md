@@ -2,9 +2,9 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-28 (GBP/UK sourcing follow-up to the pre-order and quote review on `10a29cc`; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
-and pushed. The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
-unchanged; firmware, evidence handling, release controls, ordering files and tooling changed._
+_Last updated: 2026-10-28 (pre-order, quote and GBP/UK sourcing reviews integrated into `main` at the owner's request; see Log). The independent audit and review commits `3a6e4c4` and `0faacf8` are merged into `main`.
+The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are unchanged;
+firmware, evidence handling, release controls, ordering files and tooling changed during the audit._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -43,12 +43,16 @@ clarification.
 Recommend revised turnkey; genuine L1-only consignment is the fallback to quote. Diode PREORDER-09/10/11 are
 now saved locally with hashes. No design/CAD/export change. Dashboard missing board scope is new AUD-DOC-05.
 
-**Validation:** full-toolchain rerun for this review on `10a29cc` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
+**Project 450 inspiration:** `research/project450-design-notes.md` compares thermal mounting, deliberate arming,
+startup, diagnostics and charging inhibition with our existing design. The two-cell TPS56C215 buck is not
+a straight swap for the single-cell TPS552882; costs/savings UNKNOWN. Proposals only; no design change.
+
+**Validation:** full-toolchain rerun on integrated `main` at `0faacf8` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
 57 entries, 54 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (2026-10-28, full toolchain for review based on `10a29cc`):** 207 Python tests pass (the independent review saw 188 pass /
+**Tests (2026-10-28, full toolchain on integrated `main` at `0faacf8`):** 207 Python tests pass in 22.19 s (the independent review saw 188 pass /
 19 skip without KiCad). The regenerated firmware evidence and footprint report match the committed ones except
 timestamps, and the evaluation PCB, connectivity and PCBWay package match the review's SHA-256 baseline. Firmware:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
@@ -105,7 +109,7 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
    firm GBP payable total, current exact-MPN consolidated distributor/Coilcraft UK quotes before any purchase,
    L1 exact-MPN reprice, final U1 price, UK delivered costs/X-ray scope, 3 populated + 2 bare quote, and optional
    genuine L1 consignment counts/leader/fees/shipping. Do not buy unverified Choice parts or assume 29 assembly
-   survives consignment. No order placed; owner decides and merges the review branch.
+   survives consignment. Reviews are integrated into `main`; the owner still decides whether and when to order.
 3. **Owner decisions** listed above. Any adopted component or footprint change requires regenerated order files and evidence.
 4. **Evaluation prototype (owner, by hand):** `documentation/ordering-guide.md` and `documentation/release-checklist.md`
    sections A and B. No tool places orders.
@@ -113,10 +117,12 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
    dummy load, recording each test with `automation/bench/bench.py`. Watch especially T1.8/T1.9 (hold-up and mode
    change, never tested before), T1.10 (CC polarity), T1.11 (measurement chain), T2.11 (loop, AUD-SIM-04) and nuisance
    fault 6 (R-22).
-6. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
+6. **After evaluation measurements:** assess the host/heatsink interface and optional arming ideas in
+   `research/project450-design-notes.md`; retain hardware interlocks. No two-cell redesign is adopted.
+7. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
    the compact chain (`grid_route.py --variant compact-22mm --rebuild --partial --write`; `place`, `route`, `finish`,
    `drc`; `power_layout.py`). Accept it only with 0 unconnected, 0 DRC errors and every power path connected.
-7. **Next CAD regeneration:** variant-specific BOM descriptions (AUD-MFG-03); rerun the full chain.
+8. **Next CAD regeneration:** variant-specific BOM descriptions (AUD-MFG-03); rerun the full chain.
 
 **Commands:**
 ```powershell
@@ -135,6 +141,21 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-28: review work integrated into main at owner request
+- Fetched origin and fast-forwarded `main` through review commits `3a6e4c4` and `0faacf8`; no conflicts.
+  The pre-order follow-up, original private QUOTE-01 XLS, sourcing report/CSV and GBP/UK follow-up are
+  now on `main`. All existing remote branches are ancestors of the integrated review work.
+- Updated the current handover and REQ-SRC-01 evidence; unverified delivered offers remain UNKNOWN.
+  No component substitution, design/CAD/export change or order. Release remains DRAFT_REVIEW with
+  FP-POWERPAK/FP-RS1 open, U3 DFM disposition outstanding and Gate G OPEN.
+- Verification on integrated main: 207 pytest tests passed in 22.19 s; full validator exit 0, 57 entries /
+  54 PASS / three known unchanged findings, no new/changed failures and two evaluation blockers.
+  Independent GBP/quote/quantity checks and all seven baseline/protected-file checks passed.
+- Owner then requested inspiration from Loneoceans Project 450. Added a source-backed comparison and
+  local page/TI datasheet references: host heat transfer is useful; optional arming/startup ideas need
+  defined requirements. Its two-cell buck is not a single-cell straight swap. No new defect or completed
+  design review is claimed; all ideas remain proposals.
 
 ### 2026-10-28: GBP preference, UK suppliers/eBay and straight-swap investigation
 - Owner requested sterling prices and UK/UK-eBay sources. Added FX-01 dated ECB conversion: USD 1 equals

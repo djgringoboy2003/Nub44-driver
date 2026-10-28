@@ -347,3 +347,7 @@ and its per-line CSV now include conditional GBP quote conversion, UK distributo
 and unadopted substitute candidates. QUOTE-01 ISO currency remains UNKNOWN; £229.25 applies only if USD.
 No CAD, order file, reviewed artifact hash or release disposition changed. Exact-MPN L1 repricing remains the
 main cost opportunity; the PowerPAK/RS1/U3 land issues still require the dispositions above before payment.
+
+Owner follow-up (2026-10-28): [Project 450 inspiration review](../research/project450-design-notes.md)
+records thermal/arming/startup ideas and the two-cell buck incompatibility. No component or CAD change,
+new footprint approval or release-status change follows from that comparison.

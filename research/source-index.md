@@ -124,3 +124,13 @@ QUOTE-01's ISO currency. No unverified placeholder zero price is recorded as a r
 | ALT-01 | XAL5030-102MEC / Coilcraft | https://www.coilcraft.com/en-us/products/power/shielded-inductors/molded-inductor/xal/xal50xx/xal5030-102/ ; https://www.coilcraft.com/getmedia/49bc46c8-4b2c-45b9-9b6c-2eaa235ea698/xal50xx.pdf | Retrieved 2026-10-28. Manufacturer 1+ USD 2.74; XAL table 1 uH, DCR 8.5/9.4 mOhm typ/max, Isat 14 A at 30% drop, Irms 8.7/11.1 A at 20/40 C rise. Compared with PREORDER-01 XGL. Proposed only, no completed substitute footprint/thermal review; not cheaper than exact XGL direct reference. |
 | ALT-02 | INA186A2IDCKT / TI | https://www.ti.com/product/INA186/part-details/INA186A2IDCKT | Retrieved 2026-10-28. A2 gain 50 V/V, DCK six-pin SC70, 250 small T&R; linked A2IDCKR 3000 large T&R. Packing-only candidate; GBP price/stock UNKNOWN, not adopted. |
 | ALT-03 | TPS552882RPMR ordering alias / TI | https://www.ti.com/product/TPS552882/part-details/TPS552882RPMR | Retrieved 2026-10-28. TI identifies TPS552882RPMR.A as identical to TPS552882RPMR. 26-pin RPM package retained. GBP price/stock UNKNOWN; proposed sourcing alias only. |
+
+## Project 450 inspiration review (2026-10-28)
+
+| ID | Source / publisher | URL | Retrieval, local copy and scope |
+|---|---|---|---|
+| P450-01 | Project 450 / Gao Guangyan, Loneoceans Laboratories | https://www.loneoceans.com/labs/project450/ | Retrieved 2026-10-28 using direct HTTPS after web reader returned 406. Author's 2018–2019 build narrative, not independent verification. Local `datasheets/project450.html`, SHA-256 `40342538f0eed9d68457e692b875cf1a3bf7a7f7cc92e3b40ec366f645463cef`. Two-cell buck, mechanical heat path, arming and charging concepts; historical prices not current offers. |
+| P450-02 | TPS56C215 datasheet / Texas Instruments | https://www.ti.com/lit/ds/symlink/tps56c215.pdf | Retrieved 2026-10-28; SLVSD05H, revised June 2025, 39 pages. Local `datasheets/pwr_tps56c215_slvsd05h.pdf`, SHA-256 `d0645b0baa5e2115ac8b8075fb40743454ed371a83ffed7d2f3abf289ffd4b06`. Pages 1–3: step-down topology, 4.5 V startup without external bias, 18-pin RNN package and adjustable SS; not compatible with the existing single-cell design or RPM pinout. |
+| P450-03 | TPS552882 product information / Texas Instruments | https://www.ti.com/product/TPS552882 | Retrieved 2026-10-28. Manufacturer confirms four-switch buck-boost, RPM 26-pin package and fixed 4 ms soft start; existing local datasheet LEAD-01 remains the detailed design source. No current price/stock assertion. |
+
+Assessment: [Project 450 design notes](project450-design-notes.md). All changes are proposals only.
