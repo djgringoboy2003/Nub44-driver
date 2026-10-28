@@ -1,5 +1,5 @@
 {
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "variants": {
   "compact-22mm": {
    "variant": "compact-22mm",
@@ -32,11 +32,8 @@
    "blockers": {
     "DRAFT_REVIEW": [],
     "PROTOTYPE_CANDIDATE": [
-     "human review FP-U1 not recorded as DONE",
-     "human review FP-L1 not recorded as DONE",
      "human review FP-POWERPAK not recorded as DONE",
-     "human review FP-RS1 not recorded as DONE",
-     "human review ORIENT not recorded as DONE"
+     "human review FP-RS1 not recorded as DONE"
     ],
     "MANUFACTURING_RELEASE": [
      "Gate G bench evidence incomplete for evaluation-board: 29 required tests not PASS (e.g. T0.1, T0.2, T0.3, T0.4, T1.1)",

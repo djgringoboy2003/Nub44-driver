@@ -20,8 +20,9 @@ unchanged; firmware, evidence handling, release controls, ordering files and too
 `fab63177bd7086457878a5da7a13dc7cc917e8c3` is in `reports/pre-order-review.md`. Evaluation FP-U1, FP-L1 and
 ORIENT are recorded DONE; FP-POWERPAK and FP-RS1 remain OPEN. U3's land-pattern difference also requires DFM
 disposition (AUD-PCB-06). Compact reviews remain OPEN. AUD-VAL-11/12 identify missing-ID and stale-review
-weaknesses in release checks. The owner decides whether AI review is sufficient. Saved generated release
-reports predate these register updates; rerun the full toolchain after disposition/fixes.
+weaknesses in release checks. The owner decides whether AI review is sufficient. Release reports were
+regenerated after merging the review (2026-10-28): the evaluation board has 2 blockers to PROTOTYPE_CANDIDATE
+(FP-POWERPAK, FP-RS1); rerun the full toolchain after any disposition or fix.
 
 **Ordering (prepared, not placed):** `documentation/ordering-guide.md` gives the files, layer order (L1 `.gtl`,
 L2 `.g1`, L3 `.g2`, L4 `.gbl`) and order-form options for PCBWay (`manufacturing/pcbway/evaluation-board/`,

@@ -1,6 +1,6 @@
 {
  "schema": "nubm44-bench-summary.v1",
- "generated": "2026-10-27",
+ "generated": "2026-10-28",
  "evidence_class": "MEASURED (bench records only; predictions are shown for comparison)",
  "variants": {
   "compact-22mm": {
