@@ -30,19 +30,22 @@ document revision, local path, relevant pages and primary/secondary classificati
 
 Primary manufacturer documents. These supplement the historical LEAD rows; live stock is UNKNOWN.
 
-| ID | Document / manufacturer | Revision and reviewed pages | URL |
-|---|---|---|---|
-| PREORDER-01 | XGL5030 / Coilcraft | 1576-1, 2026-02-19, p.1 | https://www.coilcraft.com/getmedia/e64ac115-95f2-45c7-b798-1b3769b91583/xgl5030.pdf |
-| PREORDER-02 | SiSS23DN / Vishay | 62852 Rev.A, 2013-05-13, p.1 | https://www.vishay.com/docs/62852/siss23dn.pdf |
-| PREORDER-03 | SiSS80DN / Vishay | 77684 Rev.C, 2026-10-19, p.1 | https://www.vishay.com/docs/77684/siss80dn.pdf |
-| PREORDER-04 | PowerPAK 1212-8S / Vishay | 63919, 2020-07-20, p.1 | https://www.vishay.com/docs/63919/ppak1212-8s.pdf |
-| PREORDER-05 | Recommended minimum pads / Vishay | 72597, 2008-01-21, p.7 | https://www.vishay.com/docs/72597/72597.pdf |
-| PREORDER-06 | MCS series / Ohmite | NEC#11705, no printed revision date, PDF pp.2-3 (printed pp.16-17) | https://www.ohmite.com/assets/files/Datasheets/mcs-series.pdf?r=false |
-| PREORDER-07 | INA186 / TI | SBOS318B, July 2021, p.3 | https://www.ti.com/lit/ds/symlink/ina186.pdf |
-| PREORDER-08 | ATtiny1614/1616/1617 / Microchip | DS40002204A, 2020, pp.16/18/576-578 | https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-16-17-DataSheet-DS40002204A.pdf |
-| PREORDER-09 | PMEG4010CEJ / Nexperia | 2022-10-01, p.1 | https://assets.nexperia.com/documents/data-sheet/PMEG4010CEJ.pdf |
-| PREORDER-10 | RB521S30T1 / onsemi | RB521S30T1/D Rev.12, October 2024, p.1 | https://www.onsemi.com/pdf/datasheet/rb521s30t1-d.pdf |
-| PREORDER-11 | BZX585 series / Nexperia | Rev.9, 2026-09-11, p.1 | https://assets.nexperia.com/documents/data-sheet/BZX585_SER.pdf |
+| ID | Document / manufacturer | Revision and reviewed pages | URL | Local copy |
+|---|---|---|---|---|
+| PREORDER-01 | XGL5030 / Coilcraft | 1576-1, 2026-02-19, p.1 | https://www.coilcraft.com/getmedia/e64ac115-95f2-45c7-b798-1b3769b91583/xgl5030.pdf | `datasheets/cmp_Coilcraft_XGL5030_1576-1.pdf` |
+| PREORDER-02 | SiSS23DN / Vishay | 62852 Rev.A, 2013-05-13, p.1 | https://www.vishay.com/docs/62852/siss23dn.pdf | `datasheets/cmp_Vishay_SiSS23DN.pdf` |
+| PREORDER-03 | SiSS80DN / Vishay | 77684 Rev.C, 2026-10-19, p.1 | https://www.vishay.com/docs/77684/siss80dn.pdf | `datasheets/cmp_Vishay_SiSS80DN.pdf` |
+| PREORDER-04 | PowerPAK 1212-8S / Vishay | 63919, 2020-07-20, p.1 | https://www.vishay.com/docs/63919/ppak1212-8s.pdf | `datasheets/cmp_Vishay_PowerPAK1212-8S_outline_63919.pdf` |
+| PREORDER-05 | Recommended minimum pads / Vishay | 72597, 2008-01-21, p.7 | https://www.vishay.com/docs/72597/72597.pdf | `datasheets/cmp_Vishay_recommended-min-pads_72597.pdf` (the URL serves the PowerPAK 1212-8 single page alone) |
+| PREORDER-06 | MCS series / Ohmite | NEC#11705, no printed revision date, PDF pp.2-3 (printed pp.16-17) | https://www.ohmite.com/assets/files/Datasheets/mcs-series.pdf?r=false | `datasheets/cmp_Ohmite_MCS-series.pdf` |
+| PREORDER-07 | INA186 / TI | SBOS318B, July 2021, p.3 | https://www.ti.com/lit/ds/symlink/ina186.pdf | `datasheets/cmp_TI_INA186.pdf` |
+| PREORDER-08 | ATtiny1614/1616/1617 / Microchip | DS40002204A, 2020, pp.16/18/576-578 | https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-16-17-DataSheet-DS40002204A.pdf | `datasheets/cmp_Microchip_ATtiny1614-16-17_DS40002204A.pdf` |
+| PREORDER-09 | PMEG4010CEJ / Nexperia | 2022-10-01, p.1 | https://assets.nexperia.com/documents/data-sheet/PMEG4010CEJ.pdf | none (scripted download refused, HTTP 403) |
+| PREORDER-10 | RB521S30T1 / onsemi | RB521S30T1/D Rev.12, October 2024, p.1 | https://www.onsemi.com/pdf/datasheet/rb521s30t1-d.pdf | none (scripted download refused, HTTP 403) |
+| PREORDER-11 | BZX585 series / Nexperia | Rev.9, 2026-09-11, p.1 | https://assets.nexperia.com/documents/data-sheet/BZX585_SER.pdf | none (scripted download refused, HTTP 403) |
+
+Local copies were downloaded on 2026-10-28 and checked against the document number and revision above; the
+existing SiSS23DN, SiSS80DN and INA186 copies already were these revisions.
 
 LEAD-01 was rechecked against the manufacturer PDF, pp.3/38-40, SLVSFC5 November 2020. LEAD-04 was rechecked
 against DS31783 Rev.8-2 February 2022, p.1, at https://www.diodes.com/datasheet/download/DMG1012T.pdf.

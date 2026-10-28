@@ -2,7 +2,7 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-27. The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
+_Last updated: 2026-10-28 (full-toolchain verification of a fresh working copy; see Log). The independent audit (branch `audit/comprehensive-improvements`) is merged into `main`
 and pushed. The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are
 unchanged; firmware, evidence handling, release controls, ordering files and tooling changed._
 
@@ -31,13 +31,14 @@ Key options: 4 layers, 1.6 mm, **1 oz inner and outer copper**, **ENIG**, assemb
 placements), X-ray of U1/U3, no unreviewed substitutes. The pre-order review brief for Codex (or a person) is
 `documentation/pre-order-review.md`, with the footprint geometry in `reports/footprint-review.md`.
 
-**Validation:** the saved full run has 56 entries. This independent review reran fast mode after updating reviews:
-exit 0, 55 entries, 52 PASS and 3 known, unchanged failures listed in
+**Validation:** full-toolchain rerun on `480a69f` (2026-10-28, KiCad, ngspice and avr-gcc present): exit 0,
+57 entries, 54 PASS and 3 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
 owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
 
-**Tests (2026-10-27):** prior full-tool run: 207 Python tests pass. Independent review rerun: 188 pass / 19
-skip without KiCad, including after a fixture fix making test review states independent of live sign-offs. Firmware:
+**Tests (2026-10-28, full toolchain on `480a69f`):** 207 Python tests pass (the independent review saw 188 pass /
+19 skip without KiCad). The regenerated firmware evidence and footprint report match the committed ones except
+timestamps, and the evaluation PCB, connectivity and PCBWay package match the review's SHA-256 baseline. Firmware:
 six host suites with 531 checks, register-model tests of `hal_avr.c`, ATtiny1616 build 4134 B flash / 59 B RAM with
 `-Werror`, mutation check 15/15. Calculations 21/21. Simulations 11/12 (SIM-12 finding). Sourcing check 0 FAIL / 29
 WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
@@ -117,6 +118,17 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-28: fresh working copy verified with the full toolchain; review sources stored locally
+- `scripts/setup.ps1` failed under Windows PowerShell 5.1 (`java -version` writes to stderr, which `2>&1` turns
+  into a terminating error under `Stop`). Tool banners are now captured through `Get-NativeOutput`; setup runs
+  cleanly under `powershell.exe` as documented.
+- Full rerun on `480a69f`: doctor all OK; pytest 207 passed; firmware PASS, 15/15 mutants; `validate.py` exit 0,
+  57 entries, 3 known unchanged; evaluation board 2 blockers (FP-POWERPAK, FP-RS1). All seven SHA-256 values in
+  `reports/pre-order-review.md` section 9 match the local files.
+- Downloaded PREORDER-01, 04, 05, 06, 08 into `research/datasheets/` (git-ignored) and listed every local copy in
+  `research/source-index.md`. PREORDER-09/10/11 refused scripted download (HTTP 403); fetch them in a browser.
+- No CAD, firmware, threshold or manufacturing file changed; no order placed.
 
 ### 2026-10-27: independent pre-order review
 - Codex (AI review) compared manufacturer drawings, embedded footprints, assembly PDF, iBOM and centroids.

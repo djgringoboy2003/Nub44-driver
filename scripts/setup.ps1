@@ -64,6 +64,13 @@ function Expand-Zip([string]$Zip, [string]$Dest) {
     Expand-Archive -Path $Zip -DestinationPath $Dest -Force
 }
 
+# Windows PowerShell 5.1 turns native stderr redirected with 2>&1 into a terminating error under 'Stop';
+# java -version writes to stderr, so capture tool banners with the preference relaxed for that call only.
+function Get-NativeOutput([string]$Exe, [string[]]$Arguments) {
+    $ErrorActionPreference = 'Continue'
+    & $Exe @Arguments 2>&1 | ForEach-Object { "$_" }
+}
+
 # ------------------------------------------------------------------ KiCad
 $KiCadRoot = Join-Path $env:LOCALAPPDATA 'Programs\KiCad\10.0'
 $KiCadCli = Join-Path $KiCadRoot 'bin\kicad-cli.exe'
@@ -119,7 +126,7 @@ if ($Force -or -not (Test-Path $Ngspice)) {
     & $Py -I -c "import sys, py7zr; py7zr.SevenZipFile(sys.argv[1]).extractall(sys.argv[2])" $arc $dest
     if (-not (Test-Path $Ngspice)) { throw 'ngspice extraction failed' }
 }
-Log "ngspice: $((& $Ngspice --version 2>&1 | Select-String 'ngspice-').Line.Trim())"
+Log "ngspice: $((Get-NativeOutput $Ngspice '--version' | Select-String 'ngspice-').Line.Trim())"
 
 # ------------------------------------------------------------------ Java 25 (for FreeRouting)
 $Java = Join-Path $Tools 'jre25\jdk-25.0.4.1+1-jre\bin\java.exe'
@@ -129,7 +136,7 @@ if ($Force -or -not (Test-Path $Java)) {
         $zip '4C95451CEA98556DEF2C54F7782933F52A26D4A36BD85E1D59F0364464828B07'
     Expand-Zip $zip (Join-Path $Tools 'jre25')
 }
-Log "java: $((& $Java -version 2>&1 | Select-Object -First 1))"
+Log "java: $((Get-NativeOutput $Java '-version' | Select-Object -First 1))"
 
 # ------------------------------------------------------------------ FreeRouting 2.5.0
 $Jar = Join-Path $Tools 'freerouting\freerouting-2.5.0.jar'
