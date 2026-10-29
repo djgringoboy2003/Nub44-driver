@@ -1,0 +1,27 @@
+{
+ "generated_utc": "2026-10-29T00:44:18+00:00",
+ "generator": "automation/budget/loop_model.py",
+ "inputs": {
+  "automation/budget/loop_model.py": "f49e7f9596f942aba372e6b6e7a1222603b1f72cf32b5e8702a6172f32ca3570",
+  "automation/nubm44/evidence.py": "82197c83b892aca47d180d0f24fef5b5a2deb026c0d19cf1898087189fd266cf",
+  "automation/nubm44/paths.py": "d890d66eab7677f4532be76fd68ec36772b4da11f39eafdc4131735bcf18fcbe",
+  "automation/nubm44/variants.py": "8e81e9eb3b9bf1ff86bc611ed5c43b58ea1780d4107f0aae34f21966a65367f2",
+  "engineering/design/budget-2s/parameters.yaml": "dfa137890e946a46165f630f610dcc7267965fd66444ac0e66b71246822dec96",
+  "research/sources/budget-driver-sources.md": "a5e5b7f07ea108798a2b033f9e4bb738d9bf678feff3817ca9e074894c42f606"
+ },
+ "kind": "budget-loop-model",
+ "outputs": {
+  "reports/budget-2s/loop-ac.cir": "434d4b0df03742f388b804834e589e042b0d56121e7502297b2c389b04dbeded",
+  "reports/budget-2s/loop-ac.log": "b30ffaf609469fdb01345778e23968bf2cca685198c2593603ee6c1da6e94e6e",
+  "reports/budget-2s/loop-ac.txt": "a6886a22c1e88e9fa891445a604098392ba9f503354ab613a7170cdbd4184a2d",
+  "reports/budget-2s/loop-model.json": "ec0ee5263b70c8e23fceb63dc1c3629f05581878fd7b5c8b10e4927f4618d6c4",
+  "reports/budget-2s/loop-model.md": "b36ec1d916295490c617274f9c7cea7edfb0f965626045289e84f35a5daf910f"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "PyYAML": "6.0.3",
+  "ngspice": "******",
+  "numpy": "2.4.6",
+  "python": "3.11.5"
+ }
+}

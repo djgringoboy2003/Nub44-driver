@@ -22,6 +22,13 @@ independent 5 A backup limit. An ATtiny1616 MCU handles modes and protection beh
 Rationale: [research/architecture-comparison.md](research/architecture-comparison.md) and
 [engineering/design-decisions.md](engineering/design-decisions.md).
 
+The owner also authorised a **separate budget-2s development track** (DD-29/30): two series Li-ion cells,
+unrestricted size and a £60 target per working driver, comparing three and five units. Start with
+[engineering/budget-2s-design.md](engineering/budget-2s-design.md) for its current circuit candidates,
+qualification results, unresolved issues and next steps. Numeric sources and preliminary calculations/models
+exist; budget connectivity, PCB, firmware adaptation and manufacturing files do not yet exist. A/B PASS
+results and the existing dashboard apply only to the original single-cell circuit.
+
 ## Non-negotiable rules
 
 1. **Never invent data.** Datasheet values need a source ID (see [research/source-index.md](research/source-index.md)).
@@ -37,6 +44,12 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
    - Numeric design values: `engineering/design/parameters.yaml`.
    - Connectivity and parts: `engineering/design/connectivity.yaml`.
    - PCB placement: `hardware/<variant>/placement.yaml`.
+
+   For the separate budget circuit, numeric values are in `engineering/design/budget-2s/parameters.yaml`.
+   Its reserved connectivity source is `engineering/design/budget-2s/connectivity.yaml` and placement is
+   `hardware/budget-2s/placement.yaml`; neither exists at the electrical-qualification checkpoint. Resolve
+   paths with `automation/nubm44/variants.py`. Do not repoint the shared A/B sources or add the budget variant
+   to legacy generator defaults before the complete independent circuit workflow supports it.
 
    Generated KiCad files are rebuilt from these. If you edit a generated file in the KiCad GUI, either
    port the change back into the source files or create `hardware/<variant>/MANUAL_EDITS` so the build will not
@@ -57,11 +70,14 @@ Rationale: [research/architecture-comparison.md](research/architecture-compariso
 | `engineering/design/parameters.yaml` | Authoritative numeric design parameters |
 | `engineering/design/connectivity.yaml` | Authoritative parts list and pin-to-net connectivity (drives schematic and netlist checks) |
 | `engineering/design-decisions.md` | Decision log DD-01 onward |
+| `engineering/budget-driver-plan.md`, `engineering/budget-2s-design.md` | Budget rationale, current implementation handover, fault matrix and qualification issues |
+| `engineering/design/budget-2s/parameters.yaml` | Separate numeric candidates, sourced limits and explicit study assumptions; not an approved BOM |
 | `engineering/layout-review.md` | Power-layout review dispositions (generated numbers in `reports/layout-review-<variant>.md`) |
 | `engineering/calculations/` | `power_stage.py` and its generated results (`.md`, `.json`, plots) |
 | `engineering/previous-design-audit.md` | Audit of the earlier concept (every part rejected, with evidence) |
 | `research/` | Topic reports, source tables (`sources/`), local datasheet copies (`datasheets/`, git-ignored) |
 | `automation/nubm44/` | Python package: S-expression I/O, KiCad library access, symbol/footprint generators, schematic writer, calculators |
+| `automation/budget/`, `reports/budget-2s/` | Budget electrical qualification and preliminary ngspice loop model; generated results and hash manifests |
 | `automation/setup/build_library.py` | Generates the project symbol and footprint libraries |
 | `automation/schematic/build_schematic.py` | Writes both schematics from `connectivity.yaml`, runs ERC and the netlist comparison |
 | `automation/placement/` | `build_pcb.py` (pipeline stages place/route/finish/drc/render) and `pcb_builder.py` (KiCad-side builder); `floorplan.py` (fast placement check); `place_opt.py` (small-part optimiser, writes `pos` entries); `grid_route.py` (negotiated-congestion grid router, writes the generated `grid_routes` section) |
@@ -108,6 +124,14 @@ Paths are resolved in code by `automation/nubm44/paths.py`. Run `scripts\setup.p
 it is idempotent and verifies SHA-256 hashes.
 
 ## Regenerating evidence
+
+For the current budget electrical-qualification stage, run
+`rtk proxy .venv/Scripts/python.exe automation/budget/qualify.py` and
+`rtk proxy .venv/Scripts/python.exe automation/budget/loop_model.py` after any budget parameter/model or
+bound source-record change. The first currently exits 1 with unresolved prerequisites; a passing loop
+sensitivity model does not close physical qualification. See the budget handover for the exact scope.
+The legacy full validator still covers A/B only. Budget CAD and release tooling must be implemented
+separately before claiming any budget manufacturing readiness.
 
 Evidence is hash-bound to its sources. After editing `parameters.yaml`, `connectivity.yaml` or a
 `placement.yaml`, regenerate it in this order:

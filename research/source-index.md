@@ -11,7 +11,7 @@ document revision, local path, relevant pages and primary/secondary classificati
 | Supporting components and sourcing | CMP-01 … CMP-42 | [sources/component-sources.md](sources/component-sources.md) | [component-research.md](component-research.md), [component-candidates.csv](component-candidates.csv) |
 | Batteries, polarity, host mechanics | BAT-01 … BAT-44 | [sources/battery-sources.md](sources/battery-sources.md) | [battery-and-mechanics.md](battery-and-mechanics.md) |
 | PCBWay fabrication/assembly, CAD tooling | MFG-01 … MFG-33 | [sources/manufacturing-sources.md](sources/manufacturing-sources.md) | [pcbway-requirements.md](pcbway-requirements.md), [cad-tooling.md](cad-tooling.md) |
-| Separate 2S budget-driver feasibility | BUD-01 … BUD-14 | [sources/budget-driver-sources.md](sources/budget-driver-sources.md) | [budget-driver plan](../engineering/budget-driver-plan.md) |
+| Separate 2S budget-driver qualification | BUD-01 … BUD-22 | [sources/budget-driver-sources.md](sources/budget-driver-sources.md) | [budget-driver plan](../engineering/budget-driver-plan.md), [implementation handover](../engineering/budget-2s-design.md) |
 
 ## Sources added by the lead engineer
 
@@ -136,12 +136,17 @@ QUOTE-01's ISO currency. No unverified placeholder zero price is recorded as a r
 
 Assessment: [Project 450 design notes](project450-design-notes.md). All changes are proposals only.
 
-## Budget two-cell planning sources (retrieved 2026-10-28)
+## Budget two-cell sources (retrieved 2026-10-28/29)
 
-[BUD-01…14 source table](sources/budget-driver-sources.md) records manufacturer specifications, local PDF
-paths/SHA-256 and native GBP distributor snapshots for the separate budget proposal (DD-29). New local PDFs:
-TPS54821, TPS56628, SRP1265A, INA300 and INA180. Documents were parsed with Python `-I`; no downloaded code ran.
+[BUD-01…22 source table](sources/budget-driver-sources.md) records manufacturer specifications, local PDF
+paths/SHA-256 and native GBP distributor snapshots for the separate budget track (DD-29/30). Initial PDFs:
+TPS54821, TPS56628, SRP1265A, INA300 and INA180. Implementation adds DMP2022LSS, DMP2005UFG, AO3400A,
+TLV6700, SN74HCS74, TLV803E, MCP1703A and WSK2512 manufacturer documents, with pin/limit/package notes.
+Documents were parsed with Python `-I`; no downloaded code ran. The encrypted Microchip PDF needed an
+isolated helper under ignored `tools/review-pdf`, without changing the project venv or requirements.
 Retailer search snapshots are explicitly dated with crawl age and VAT basis. Live price/stock/shipping and
 complete delivered cost remain UNKNOWN. No marketplace listing or substitution is qualified by this study.
 The owner's 2S permission / £60 ceiling are requirements; the architecture, parts and remaining targets in
-[the plan](../engineering/budget-driver-plan.md) are proposals, with no CAD or bench verification claimed.
+[the plan](../engineering/budget-driver-plan.md) remain subject to circuit qualification. The
+[implementation handover](../engineering/budget-2s-design.md) records generated electrical screens,
+preliminary model evidence and the issues blocking layout. No CAD or bench verification is claimed.

@@ -46,6 +46,29 @@ per MPN. It is not a complete BOM, a PCBWay attrition allowance or a delivered q
 the existing design and eBay qualifications remain in [the earlier review](../../reports/bom-quote-sourcing-review.md).
 No new AliExpress Choice/UK eBay listing is qualified for the proposed budget circuit.
 
+## Implementation qualification sources (2026-10-29)
+
+Retrieved directly from the manufacturers. These additions support DD-30 and the separate numeric candidate
+in `engineering/design/budget-2s/parameters.yaml`. None supplies a complete delivered price or proves the
+complete driver. Local PDFs were parsed with `python -I`; the encrypted Microchip document additionally
+needed `cryptography` in ignored `tools/review-pdf/`, outside the project venv and requirements. That helper
+installation does not alter the electrical toolchain. Downloads were not executed.
+
+| ID | Manufacturer / document | Primary URL | Reviewed scope / local basename |
+|---|---|---|---|
+| BUD-15 | Diodes DMP2022LSS, DS31373 Rev.6-2, December 2017 | https://www.diodes.com/datasheet/download/DMP2022LSS.pdf | pp.1–2, SO-8 diagram, ratings and drive conditions. `DMP2022LSS-13`; 20 V P-channel, ±12 V gate; max RDS 16 mΩ at −4.5 V, 22 mΩ at −2.5 V. Reverse-input candidate; compare output-pair loss rather than assume low gate threshold means low resistance. `budget_Diodes_DMP2022LSS.pdf`. |
+| BUD-16 | Diodes DMP2005UFG, DS38932 Rev.2-2, November 2016 | https://www.diodes.com/datasheet/download/DMP2005UFG.pdf | pp.1–3, ratings, ordering and typical curves. `DMP2005UFG-7`; PowerDI3333-8, 20 V P-channel, ±10 V gate; max RDS 6.5 mΩ at −2.5 V, 4 mΩ at −4.5 V. Typical Qg 55 nC at −4.5 V. Lower-loss output candidate; exact land/paste, transient margin and hot resistance still OPEN. `budget_Diodes_DMP2005UFG.pdf`. |
+| BUD-17 | Alpha & Omega AO3400A Rev.3.1, July 2023 | https://www.aosmd.com/res/data_sheets/AO3400A.pdf | pp.1–2, SOT-23 N-channel ratings: 30 V VDS, ±12 V VGS, max RDS 48 mΩ at +2.5 V, 32 mΩ at +4.5 V. Candidate low-current gate driver only; a logic output must actually guarantee sufficient voltage. `budget_AOS_AO3400A.pdf`. |
+| BUD-18 | TI TLV6700, SNVSAV2B, November 2019 | https://www.ti.com/lit/ds/symlink/tlv6700.pdf | pp.1,3,5–6. DDC pins 1 OUTA, 2 GND, 3 INA+, 4 INB−, 5 VDD, 6 OUTB. Rising threshold 396–404 mV, falling 387–400 mV over temperature; bias and resistor errors included in candidate calculations. Propagation numbers are not assumed guaranteed system response limits. `budget_TI_TLV6700.pdf`. |
+| BUD-19 | TI SN74HCS74, SCLS782D, December 2021 | https://www.ti.com/lit/ds/symlink/sn74hcs74.pdf | pp.1,3–6. Schmitt inputs on all inputs; 2–6 V supply; asynchronous clear and edge-triggered data. `SN74HCS74DR` SOIC-14 proposed as fault/arm latch. Do not replace with ordinary LVC74A on slowly released fault nodes. Output drive at 3.3 V still needs a documented load/buffer solution. `budget_TI_SN74HCS74.pdf`. |
+| BUD-20 | TI TLV803E family, SLVSES2J, May 2021 | https://www.ti.com/lit/ds/symlink/tlv803e.pdf | pp.1,3–5 and device nomenclature. `TLV803EA29DBZR`: open-drain active-low supervisor, 2.93 V nominal threshold, 200 ms reset delay; chosen DBZ pinout is 1 GND, 2 RESET, 3 VDD. R/V pinout suffixes are different. Complete tolerance/sequencing review OPEN. `budget_TI_TLV803E.pdf`. |
+| BUD-21 | Microchip MCP1703A, DS20005122C, 2023 | https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1703-Data-Sheet-DS20005122.pdf | pp.1–4,12,35. `MCP1703AT-3302E/MB` fixed 3.3 V SOT-89: 1 GND, 2/tab VIN, 3 VOUT. Input 2.7–16 V; output capacitors 1–22 µF. Full-temperature regulation uses ±3%, plus applicable load/line terms; do not call the `02` nominal tolerance a complete ±2% rail guarantee. `budget_Microchip_MCP1703A.pdf`. |
+| BUD-22 | Vishay WSK2512, document 30108, 11 December 2023 | https://www.vishay.com/docs/30108/wsk2512.pdf | pp.1–3, four-terminal construction, exact ordering encoding, resistance-dependent package/land drawing. `WSK2512R0100FEA`: 10 mΩ, 1%, 1 W at 70 °C, ±35 ppm/°C for this value. Use T1.19 mm / 0.005–0.2 Ω land group; a generic two-pad 2512 is not equivalent. Procurement and pin-to-land review OPEN. `budget_Vishay_WSK2512.pdf`. |
+
+All eight new part prices, live stock, UK dispatch and delivered offers are `UNKNOWN`. Candidate status is
+explicit: neither output MOSFET pair nor an exact precision-divider resistor is frozen for manufacturing.
+The original A/B libraries and lands are not changed by these reviews.
+
 ## Download integrity
 
 SHA-256 of new local PDFs, checked with isolated Python after download. These identify source documents;
@@ -58,3 +81,11 @@ they do not constitute generated CAD/simulation/bench evidence.
 | BUD-05 | `budget_Bourns_SRP1265A.pdf` | `30b470999b737a6350ce5b09a917a5f12090c2e0895a78ddc15285e3d44ec649` |
 | BUD-06 | `budget_TI_INA300_SBOS613C.pdf` | `348944688a1bdb7d343a4015ecd29a08bd1b78c63de1934d20f867aa61d34188` |
 | BUD-07 | `budget_TI_INA180_SBOS741H.pdf` | `0466afe9de41f5dac1c3ca902972ad75aabbb91f273202557de05ed415aa16ac` |
+| BUD-15 | `budget_Diodes_DMP2022LSS.pdf` | `94a2a4a80a597bc5e1de4668a484a45cbeda38bebba06eb59977d95f944cb4b8` |
+| BUD-16 | `budget_Diodes_DMP2005UFG.pdf` | `e35ac98fe7f5bf3ef91413fc6132030799d319b91e8fc55e44f36f1df4d6de3d` |
+| BUD-17 | `budget_AOS_AO3400A.pdf` | `9c60d0b6c1ddc7609a4b788a91181468d8ffe6c3e9ba425c3d8ffc5ba88c5033` |
+| BUD-18 | `budget_TI_TLV6700.pdf` | `b97ac5c46caafd69bb762ee3da123e7906fb68394f552455a51b41385890c2fc` |
+| BUD-19 | `budget_TI_SN74HCS74.pdf` | `eac261a31ca71eed79dd051ed66a03bbd5d837f88087023fd864a3599cfa95fa` |
+| BUD-20 | `budget_TI_TLV803E.pdf` | `74ac4474d86c3597c4fff6ffa61a59e850130a40eda28085ece9765fb380e844` |
+| BUD-21 | `budget_Microchip_MCP1703A.pdf` | `6fdfc2f20167c7292c92c9c4c8003fd4d8615e0f2f90e224e1e10dce6ed65b5f` |
+| BUD-22 | `budget_Vishay_WSK2512.pdf` | `2ee8a9067539bd2cabb08845219bac55d506b1ca892a2dbaeed343dd1ed10cff` |

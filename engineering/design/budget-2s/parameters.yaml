@@ -1,0 +1,235 @@
+# Authoritative numeric inputs for BUDGET-2S engineering development (DD-30).
+# These are candidate design values and source limits, NOT an approved circuit.
+# UNKNOWN is intentional. Do not promote an assumption to a guaranteed limit.
+schema: nubm44-budget-parameters.v1
+meta:
+  revision: B0-feasibility
+  date: '2026-10-29'
+  status: ELECTRICAL_QUALIFICATION
+  decision: DD-30
+  variant: budget-2s
+
+targets:  # Owner brief / REQ-BUD-01...09; proposed voltage/efficiency details.
+  current_a: 4.0
+  accuracy_fraction: 0.05
+  normal_peak_a: 4.4
+  laser_v_min: 3.8
+  laser_v_typ: 4.5  # Analysis test point, not measured NUBM44 forward voltage.
+  laser_v_max: 5.2
+  board_c_min: 0
+  board_c_max: 50
+  input_v_min: 6.0  # Proposed connector voltage; dropout remains OPEN.
+  input_v_nominal: 7.4
+  input_v_max: 8.4
+  efficiency_fraction: 0.94  # Proposed at 7.4 V/4 A; report ALL three Vf points.
+  backup_trip_a_min: 4.8  # Proposed qualification window, not normal peak limit.
+  backup_trip_a_max: 5.2
+  board_thermal_trip_c: 85
+  laser_thermal_trip_c: 60
+  arming_hold_s: 2.0
+  flash_hz: 2.0
+  flash_duty: 0.5
+  cost_gbp_per_working_driver: 60
+  compare_working_quantities: [3, 5]
+
+buck:  # BUD-01, SLVSB14B pp.5-6. No inferred limits at an arbitrary RT value.
+  mpn: TPS54821RHLT
+  source: BUD-01
+  reference_v: 0.600
+  reference_v_min: 0.594
+  reference_v_max: 0.606
+  input_operating_v_min: 4.5
+  input_operating_v_max: 17.0
+  rt_ohm: 100000  # Datasheet frequency test point, including 1% timing resistor.
+  frequency_hz: 480000
+  frequency_hz_min: 400000
+  frequency_hz_max: 560000
+  high_side_current_limit_a_max: 17.0
+  high_side_r_ohm_typ: 0.032  # BOOT-PH = 3 V; not a hot maximum.
+  high_side_r_ohm_max: 0.060
+  low_side_r_ohm_typ: 0.019  # VIN = 12 V test condition; applicability OPEN.
+  low_side_r_ohm_max: 0.030
+  min_on_s_max: 0.000000145
+  error_amplifier_gm_s_typ: 0.0013
+  modulator_gm_a_per_v_typ: 21
+  boot_cap_f: 0.000000100
+  ss_cap_f: 0.000000022  # Candidate ~5.74 ms reference ramp, not proven CC ramp.
+  ss_charge_a_typ: 0.0000023
+  switch_loss_w: UNKNOWN
+  minimum_boot_refresh_duty: UNKNOWN
+
+inductor:  # BUD-05; room-temperature catalogue limits, not hot/bias guarantees.
+  mpn: SRP1265A-4R7M
+  source: BUD-05
+  l_h: 0.0000047
+  tolerance_fraction: 0.20
+  dcr_ohm_max_25c: 0.0084
+  irms_a_40c_rise: 13.5
+  isat_a_20pct_l_drop: 28.0
+  minimum_l_h_hot_biased: UNKNOWN
+  core_loss_w: UNKNOWN
+
+current_sense:  # PREORDER-07 / BUD-22. Resistor procurement qualification OPEN.
+  amplifier_mpn: INA186A2IDCKR
+  amplifier_source: PREORDER-07
+  gain: 50
+  gain_error_fraction: 0.01
+  gain_drift_fraction_per_c: 0.000010
+  offset_v_max_25c: 0.000050
+  offset_drift_v_per_c_max: 0.0000005
+  cmrr_db_min: 120
+  offset_test_common_mode_v: 12
+  psrr_v_per_v_max: 0.000010
+  offset_test_supply_v: 1.8
+  shunt_mpn: WSK2512R0100FEA
+  shunt_source: BUD-22
+  shunt_ohm: 0.010
+  shunt_tolerance_fraction: 0.01
+  shunt_tcr_fraction_per_c: 0.000035
+  shunt_power_w_at_70c: 1.0
+  shunt_delta_c_from_25: 50  # ASSUMPTION: includes self heating; bench must bound.
+  fb_top_ohm: 23200
+  fb_bottom_ohm: 10000
+  fb_resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT, not verified MPN.
+  fb_resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
+  fb_resistor_delta_c_from_25: 25
+  fb_resistor_mpns: UNKNOWN
+  amplifier_bandwidth_hz_typ: 37000
+
+backup:  # BUD-06 pp.5,12,15,17-19. Fast mode MUST include 500 uV NAF.
+  mpn: INA300AIDGSR
+  source: BUD-06
+  limit_resistor_ohm: 2520
+  resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT; exact MPN OPEN.
+  resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
+  limit_source_a: 0.000020
+  limit_source_a_min: 0.00001985
+  limit_source_a_max: 0.00002015
+  noise_adjustment_v: 0.000500
+  compensated_offset_v_abs_max: 0.000650  # Conservative +/- envelope, fast mode.
+  offset_drift_v_per_c_max: 0.0000005
+  cmrr_db_min: 100
+  psrr_v_per_v_max: 0.000150
+  propagation_s_typ: 0.000010  # Typical detector setting, NOT total shutdown time.
+  propagation_s_guaranteed_max: UNKNOWN
+  latch: HIGH
+  delay: FLOAT
+  hysteresis: FLOAT
+  enable: VCTRL  # Hard enabled; not controlled by firmware.
+  resistor_mpn: UNKNOWN
+
+voltage_monitor:  # BUD-18, SNVSAV2B pp.3,5-6.
+  mpn: TLV6700DDCR
+  source: BUD-18
+  rising_threshold_v: 0.400
+  rising_threshold_v_min: 0.396
+  rising_threshold_v_max: 0.404
+  falling_threshold_v: 0.3945
+  falling_threshold_v_min: 0.387
+  falling_threshold_v_max: 0.400
+  uv_top_ohm: 147000
+  uv_bottom_ohm: 10000
+  ov_top_ohm: 134000
+  ov_bottom_ohm: 10000
+  resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT.
+  resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
+  uv_input_bias_a_abs_max: 0.000000025
+  ov_input_bias_a_abs_max: 0.000000015
+  ov_sense_net: VBUCK  # Before shunt/disconnect; catches open load while isolated.
+  uv_sense_net: VBAT_PROTECTED
+  guaranteed_delay_s_max: UNKNOWN  # Datasheet timing table gives typical values.
+
+control:  # BUD-19/20/21 + PREORDER-08; complete interface still under design.
+  supply_mpn: MCP1703AT-3302E/MB
+  supply_source: BUD-21
+  supply_v: 3.3
+  supply_regulation_fraction_full_temp: 0.03
+  supply_line_fraction_per_v_max: 0.003
+  supply_load_fraction_max: 0.025
+  supply_line_test_v: 4.2  # Conservative analysis anchor; not a measured input.
+  design_current_a: 0.010  # ASSUMPTION, to be replaced by complete load budget.
+  output_cap_f: 0.0000047  # Candidate nominal; effective 1...22 uF required.
+  latch_mpn: SN74HCS74DR  # Schmitt inputs; do not silently substitute LVC74A.
+  latch_source: BUD-19
+  supervisor_mpn: TLV803EA29DBZR
+  supervisor_source: BUD-20
+  supervisor_threshold_v: 2.93
+  supervisor_delay_s: 0.200
+  mcu_mpn: ATTINY1616-SN
+  mcu_source: PREORDER-08
+  mcu_clock_hz: 10000000  # Candidate; fuse/HAL/target checks not implemented.
+  complete_enable_buffer: UNKNOWN  # HCS74 drive guarantee at 3.3 V needs proof.
+
+disconnect:
+  topology: common_source_back_to_back_pmos
+  reverse_candidate: DMP2022LSS-13  # BUD-15, SO-8, qualified at -4.5 V.
+  reverse_r_ohm_max_25c: 0.016
+  reverse_gate_rating_v_abs: 12
+  candidates:
+    - mpn: DMP2022LSS-13
+      source: BUD-15
+      package: SO-8
+      count: 2
+      r_ohm_max_at_2p5v_25c: 0.022
+      gate_rating_v_abs: 12
+      qg_c_typ_at_4p5v: 0.0000000281
+    - mpn: DMP2005UFG-7
+      source: BUD-16
+      package: PowerDI3333-8
+      count: 2
+      r_ohm_max_at_2p5v_25c: 0.0065
+      gate_rating_v_abs: 10
+      qg_c_typ_at_4p5v: 0.000000055
+  selected_output_mpn: UNKNOWN  # Do not infer adoption from the comparison order.
+  driver_candidate: AO3400A
+  driver_source: BUD-17
+  driver_r_guaranteed_gate_v_min: 2.5
+  gate_pullup_ohm: 2200  # Candidate only; total turn-off remains unbounded.
+  r_hot_multiplier_sensitivity: 1.6  # ASSUMPTION; not a manufacturer maximum.
+  gate_clamp_mpn: UNKNOWN
+  total_shutdown_s_guaranteed_max: UNKNOWN
+
+output_energy:
+  bulk_cap_f_nominal: 0.000100  # Proposed upstream of disconnect; exact BOM OPEN.
+  bulk_cap_f_min_analysis: 0.000050
+  bulk_cap_f_max_analysis: 0.000220
+  bulk_cap_effective_verified: UNKNOWN
+  bulk_cap_voltage_rating_v_required: 16  # Include buck switch-short/8.4 V fault.
+  laser_side_cap_f: 0.000000100  # Proposed; connector/cable/diode capacitance OPEN.
+  bleeder_ohm: 1000
+  bleeder_tolerance_fraction: 0.01
+  discharge_to_v: 0.5  # Test criterion after fault, not an emission threshold.
+  laser_reconnect_max_current_a: 4.4
+  laser_reconnect_peak_verified: UNKNOWN
+  bulk_cap_mpn: UNKNOWN
+
+loop:
+  # ANALYSIS CANDIDATE ONLY. No installed part or complete switching model.
+  compensation_r_ohm: 180
+  compensation_c_f: 0.000001
+  compensation_hf_c_f: 0.0000000047
+  output_cap_f_sweep: [0.000050, 0.000100, 0.000220]  # ASSUMPTION, effective C.
+  load_incremental_ohm_sweep: [0.08, 0.20, 0.35]  # ASSUMPTION, not measured laser Rd.
+  load_incremental_ohm_nominal: 0.20  # ASSUMPTION, nominal AC comparison.
+  error_amplifier_gm_factors: [0.7, 1.0, 1.3]  # Sensitivity, not guaranteed tolerance.
+  modulator_gm_factors: [0.7, 1.0, 1.3]  # Sensitivity, not guaranteed tolerance.
+  sensor_bandwidth_hz_sweep: [20000, 37000, 60000]  # Sensitivity; only 37 kHz typical sourced.
+  inner_pole_fraction_of_fsw: 0.1  # ASSUMPTION; actual inner dynamics UNKNOWN.
+  error_amplifier_dc_gain_min: 1000  # BUD-01 p.5, sets finite EA output resistance.
+  sweep_frequency_hz_min: 1
+  sweep_frequency_hz_max: 2000000
+  sweep_frequency_points: 6000
+  ngspice_points_per_decade: 100
+  ngspice_agreement_relative_tolerance: 0.00001
+  minimum_phase_margin_deg: 45
+  minimum_gain_margin_db: 10
+  verified_model: UNKNOWN
+
+procurement:
+  currency: GBP
+  working_quantities: [3, 5]
+  development_spares_per_unique_mpn: 2  # Not PCBWay's accepted attrition allowance.
+  quoted_component_total_gbp: UNKNOWN
+  quoted_fab_assembly_landed_gbp: UNKNOWN
+  pack_bms_charger_mpn: UNKNOWN
+  assembly_quantity_three_accepted: UNKNOWN

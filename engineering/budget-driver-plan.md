@@ -2,6 +2,11 @@
 
 Planning review: 2026-10-28. Author: Codex (AI review), requested by owner.
 
+Implementation checkpoint, 2026-10-29 (DD-30): [budget-2s design handover](budget-2s-design.md) now records
+the separate numeric sources, executable qualification screens, preliminary ngspice model and open issues.
+The proposed power stage has efficiency and UVLO conflicts to resolve before connectivity/layout. This
+document preserves the original planning rationale; use the handover and PROGRESS for current status.
+
 Develop a separate **two-cell synchronous buck driver**, retaining 4 A constant-current operation and the
 protection functions of the existing design. Use the unrestricted board size to simplify assembly and buy
 genuine parts in small quantities. **£60 per working driver is the spending ceiling, not a verified cost.**
@@ -10,8 +15,9 @@ Compare three and five working drivers: batch ceilings £180 and £300. The comp
 
 The owner accepts two Li-ion cells in series, has removed the size constraint and specified £60 per driver
 (DD-29). The remaining figures below are proposed engineering targets unless attributed to an existing
-requirement or manufacturer source. This is a development plan; the budget design has no schematic, PCB,
-simulation or bench results. The existing A/B release gates describe those boards only.
+requirement or manufacturer source. At the planning review no implementation evidence existed; DD-30 has
+since added calculations and a preliminary small-signal model. There is still no budget schematic, PCB,
+firmware adaptation, manufacturing package or bench result. Existing A/B release gates describe A/B only.
 
 ## 1. What the earlier work established
 

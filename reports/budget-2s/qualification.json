@@ -1,0 +1,205 @@
+{
+  "backup": {
+    "conditional_window_ok": true,
+    "detector_delay_s_typ": 1e-05,
+    "max_a": 5.1746497596761944,
+    "min_a": 4.809760538670621,
+    "nominal_a": 4.99,
+    "qualification": "CONDITIONAL: resistor MPN, response, shared-shunt and sense-fault study OPEN",
+    "total_shutdown_s_max": "UNKNOWN"
+  },
+  "control_rail_screen_v": [
+    3.07692,
+    3.52308
+  ],
+  "current": {
+    "conditional_accuracy_ok": true,
+    "max_a": 4.132104953722096,
+    "min_a": 3.841361212665238,
+    "nominal_a": 3.983999999999999,
+    "offset_envelope_v": 8.793080000000001e-05,
+    "qualification": "CONDITIONAL: exact divider MPNs and hot shunt temperature are not verified",
+    "shunt_error_fraction": 0.01175
+  },
+  "energy": {
+    "bleed_s_to_target_from_ov_max": 0.5460353010978688,
+    "bleeder_fault_w_at_8p4v": 0.07127272727272728,
+    "laser_side_j_cap_only_at_ov_max": 1.7036662663186493e-06,
+    "qualification": "capacitance envelope is an ASSUMPTION; peak/reconnection/inductive energy UNKNOWN",
+    "upstream_j_at_ov_max": 0.003748065785901029,
+    "upstream_j_at_switch_short_8p4v": 0.0077616000000000004
+  },
+  "loss_screens": [
+    {
+      "allowed_total_loss_w_at_target": 0.9702127659574464,
+      "buck_max_resistance_screen_w": 0.7480163852689549,
+      "buck_typ_resistance_screen_w": 0.4211152277824593,
+      "candidate": "DMP2022LSS-13",
+      "external_screen_w": 1.1662920272614468,
+      "laser_w": 15.2,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.9440956465729552,
+      "remaining_for_switching_core_copper_w_typ_buck": -0.6171944890864596,
+      "vf_v": 3.8
+    },
+    {
+      "allowed_total_loss_w_at_target": 1.1489361702127656,
+      "buck_max_resistance_screen_w": 0.7938828419690485,
+      "buck_typ_resistance_screen_w": 0.4409906923524999,
+      "candidate": "DMP2022LSS-13",
+      "external_screen_w": 1.20314393801515,
+      "laser_w": 18.0,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.8480906097714329,
+      "remaining_for_switching_core_copper_w_typ_buck": -0.49519846015488433,
+      "vf_v": 4.5
+    },
+    {
+      "allowed_total_loss_w_at_target": 1.3276595744680848,
+      "buck_max_resistance_screen_w": 0.839749298669142,
+      "buck_typ_resistance_screen_w": 0.4608661569225404,
+      "candidate": "DMP2022LSS-13",
+      "external_screen_w": 1.2461608264863455,
+      "laser_w": 20.8,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.7582505506874028,
+      "remaining_for_switching_core_copper_w_typ_buck": -0.3793674089408011,
+      "vf_v": 5.2
+    },
+    {
+      "allowed_total_loss_w_at_target": 0.9702127659574464,
+      "buck_max_resistance_screen_w": 0.7398914700820812,
+      "buck_typ_resistance_screen_w": 0.41759443120148065,
+      "candidate": "DMP2005UFG-7",
+      "external_screen_w": 0.6693114352614467,
+      "laser_w": 15.2,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.43899013938608145,
+      "remaining_for_switching_core_copper_w_typ_buck": -0.11669310050548087,
+      "vf_v": 3.8
+    },
+    {
+      "allowed_total_loss_w_at_target": 1.1489361702127656,
+      "buck_max_resistance_screen_w": 0.7857579267821748,
+      "buck_typ_resistance_screen_w": 0.43746989577152123,
+      "candidate": "DMP2005UFG-7",
+      "external_screen_w": 0.70598974601515,
+      "laser_w": 18.0,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.34281150258455917,
+      "remaining_for_switching_core_copper_w_typ_buck": 0.005476528426094418,
+      "vf_v": 4.5
+    },
+    {
+      "allowed_total_loss_w_at_target": 1.3276595744680848,
+      "buck_max_resistance_screen_w": 0.8316243834822682,
+      "buck_typ_resistance_screen_w": 0.45734536034156176,
+      "candidate": "DMP2005UFG-7",
+      "external_screen_w": 0.7488330344863454,
+      "laser_w": 20.8,
+      "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS",
+      "remaining_for_switching_core_copper_w_max_buck": -0.2527978435005288,
+      "remaining_for_switching_core_copper_w_typ_buck": 0.12148117964017763,
+      "vf_v": 5.2
+    }
+  ],
+  "manufacturing_ready": false,
+  "readiness": [
+    {
+      "detail": "Setpoint tolerance screen; exact resistor MPNs and hot shunt envelope need qualification.",
+      "id": "BUD-CALC-01",
+      "status": "CONDITIONAL"
+    },
+    {
+      "detail": "Complete loss/hot/dropout model and 94% test points; no efficiency claim.",
+      "id": "BUD-PWR-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "UVLO falling maximum 6.3028 V exceeds proposed minimum input 6.0000 V; resolve operating-range/UVLO policy before layout.",
+      "id": "BUD-UV-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Qualify default-off gate drive, fault latch, output disconnect, total response and single faults.",
+      "id": "BUD-SAFE-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open.",
+      "id": "BUD-LOOP-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet.",
+      "id": "BUD-CAD-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified.",
+      "id": "BUD-FW-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Exact BOM, package/paste/thermal review, quote and checked exports are absent.",
+      "id": "BUD-MFG-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "Complete 3/5-unit delivered GBP quotes UNKNOWN; GBP 180/300 are ceilings.",
+      "id": "BUD-COST-01",
+      "status": "OPEN"
+    },
+    {
+      "detail": "No measured budget-board records. Gate G requires real dummy-load/thermal/fault data.",
+      "id": "BUD-G-01",
+      "status": "OPEN"
+    }
+  ],
+  "ripple": {
+    "catalogue_isat_above_switch_limit": true,
+    "l_h_tolerance_min_25c": 3.76e-06,
+    "peak_a_at_4a": 4.69813829787234,
+    "qualification": "ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN",
+    "ripple_a_pp_global_bound": 1.396276595744681,
+    "rms_a_at_4a": 4.020256918944198
+  },
+  "schema": "nubm44-budget-qualification.v1",
+  "scope": "candidate calculations only; no budget schematic, PCB, firmware or bench validation",
+  "stage": "ELECTRICAL_QUALIFICATION",
+  "unknown_inputs": [
+    "buck.switch_loss_w",
+    "buck.minimum_boot_refresh_duty",
+    "inductor.minimum_l_h_hot_biased",
+    "inductor.core_loss_w",
+    "current_sense.fb_resistor_mpns",
+    "backup.propagation_s_guaranteed_max",
+    "backup.resistor_mpn",
+    "voltage_monitor.guaranteed_delay_s_max",
+    "control.complete_enable_buffer",
+    "disconnect.selected_output_mpn",
+    "disconnect.gate_clamp_mpn",
+    "disconnect.total_shutdown_s_guaranteed_max",
+    "output_energy.bulk_cap_effective_verified",
+    "output_energy.laser_reconnect_peak_verified",
+    "output_energy.bulk_cap_mpn",
+    "loop.verified_model",
+    "procurement.quoted_component_total_gbp",
+    "procurement.quoted_fab_assembly_landed_gbp",
+    "procurement.pack_bms_charger_mpn",
+    "procurement.assembly_quantity_three_accepted"
+  ],
+  "variant": "budget-2s",
+  "voltage_monitor": {
+    "ov": {
+      "max_v": 5.837236103360304,
+      "min_v": 5.683175445209192,
+      "nominal_v": 5.760000000000001
+    },
+    "uv": {
+      "max_v": 6.302822076169479,
+      "min_v": 6.053772042635016,
+      "nominal_v": 6.19365
+    }
+  }
+}

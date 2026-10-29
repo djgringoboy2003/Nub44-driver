@@ -16,6 +16,11 @@ targeting a 22 mm round PCB (plus a larger evaluation board) for PCBWay fabricat
 - **Compact board (Variant A, Ø 22 mm):** routing draft with 20 open signal connections, parked until the
   evaluation prototype has produced bench data (owner decision DD-27; strategy in
   `engineering/pcb-review-2026-10-26.md`). Its fabrication ZIP carries `DO_NOT_FABRICATE.txt`.
+- **Separate budget-2s driver:** owner accepts two series Li-ion cells, unrestricted size and a £60 target
+  per working unit. Electrical qualification has started (DD-30): independent numeric sources, conditional
+  calculations and a preliminary ngspice loop study. Efficiency, UVLO and fault-control issues remain OPEN;
+  no budget PCB/manufacturing package exists. Continue from the
+  [implementation handover](engineering/budget-2s-design.md) and [plan](engineering/budget-driver-plan.md).
 - **Physical validation (Gate G):** not started; it needs an assembled prototype and recorded bench data.
 - **Firmware:** reworked after an independent audit (DD-28); 531 host checks, register-model tests of the hardware
   layer and a mutation check; not yet run on hardware.
@@ -27,7 +32,7 @@ Live state: [PROGRESS.md](PROGRESS.md) and the generated dashboard `reports/dash
 browser). Agents start with [AGENTS.md](AGENTS.md); people with the
 [developer guide](documentation/developer-guide.md). Audit: [reports/comprehensive-project-audit.md](reports/comprehensive-project-audit.md).
 
-## Key specifications (design targets; see `engineering/requirements.md` for status)
+## Key specifications (original A/B design targets; see `engineering/requirements.md` for status)
 
 | Item | Value |
 |---|---|

@@ -375,3 +375,29 @@ review dispositions and release gates remain scoped to their existing 1S circuit
 manufacturing change is authorised by a parts shortlist alone; adopted implementation needs a further DD,
 variant-specific authoritative sources and the full regeneration/review chain. Budget requirements are
 registered separately as REQ-BUD-01…09, all OPEN; no existing PASS verifies this new design.
+
+## DD-30 Start separate budget electrical qualification (owner, 2026-10-29)
+
+The owner instructed implementation towards prototype manufacturing and requested current Markdown/GitHub
+handover at every checkpoint. This authorises development within DD-29's two-cell, unrestricted-size, £60
+scope. Initial batch size remains undecided; compare three and five working units. No order is authorised.
+
+Created independent numeric sources in `engineering/design/budget-2s/parameters.yaml`, variant source
+resolution, executable electrical screens and a preliminary ngspice current-loop model. Current candidates
+include TPS54821, SRP1265A-4R7M, INA186A2, INA300, a four-terminal WSK2512 shunt, separate physical UV/OV
+monitoring, supervised hardware fault latch and SOIC ATtiny1616. The output disconnect and default-off
+buffer are not selected or fully qualified. BUD-15…22 extend the manufacturer evidence; no price, stock,
+complete BOM, fixed circuit or footprint approval is inferred.
+
+The implementation handover and issue register are [budget-2s-design.md](budget-2s-design.md). Calculated
+current/trip windows remain conditional on procurement and thermal assumptions. Loss screens expose risk
+to the proposed 94% target; the proposed UV cutoff conflicts with guaranteed 6.0 V operation. A 180 Ω
+compensation candidate passes the preliminary 243-case sensitivity screen after a 330 Ω candidate failed
+19 cases. This is an assumed incremental model, not a switching/fault or bench qualification.
+
+Keep budget circuit connectivity and layout pending resolution of the power, UV, default-off and
+fault-energy issues. Then create its separate connectivity/placement/library sources and extend every
+affected generator, firmware profile, review and release gate. Do not modify the original A/B electrical
+sources or inherit their PASS results. All nine budget requirements and physical qualification remain
+OPEN; the new tools report unresolved prerequisites explicitly. Commit each milestone with PROGRESS and
+actual checks, then push `main` so another agent can continue from GitHub.

@@ -2,9 +2,10 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-28 (separate budget-driver plan added after the owner accepted 2S and specified £60 per driver; DD-29). The pre-order, quote and GBP/UK reviews `3a6e4c4` / `0faacf8` and Project 450 study are integrated into `main`.
-The electrical design, the 4.0 A setpoint, every protection threshold and both boards' copper are unchanged;
-firmware, evidence handling, release controls, ordering files and tooling changed during the audit._
+_Last updated: 2026-10-29 (budget-2s electrical qualification started at the owner's request, DD-30;
+progress/handover checkpoint requested while work is ongoing). The pre-order, quote, GBP/UK and Project 450
+reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
+protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -47,14 +48,26 @@ now saved locally with hashes. No design/CAD/export change. Dashboard missing bo
 startup, diagnostics and charging inhibition with our existing design. The two-cell TPS56C215 buck is not
 a straight swap for the single-cell TPS552882; costs/savings UNKNOWN. Proposals only; no design change.
 
-**Separate budget track (DD-29):** `engineering/budget-driver-plan.md` consolidates the reviews into a six-stage
-development plan. Owner accepts two series Li-ion cells, no size constraint and £60 per driver; three/five
-working units are compared (£180/£300 batch ceilings). Lead proposal: externally compensated synchronous
-buck, larger inductor/passives, precision high-side sensing, independent overcurrent trip, hardware disconnect
-and SOIC MCU. Parts/thresholds/stack-up remain proposals. Four-role genuine GBP reference baskets with two
-spares per MPN are £32.490/£45.486 ex VAT and delivery; these omit most of the driver and are not build totals.
-Complete delivered/new-development cost UNKNOWN. Sources BUD-01…14 and scoped REQ-BUD-01…09 (all OPEN) added.
-No budget CAD, firmware adaptation or validation exists; the gate table and test results here apply to A/B.
+**Separate budget track (DD-29/30): ELECTRICAL_QUALIFICATION; not ready for fabrication.** Owner accepts two
+series Li-ion cells, no size constraint and £60 per working driver; compare three/five (£180/£300 batch
+ceilings, not quotes). Continue from `engineering/budget-2s-design.md`; the earlier rationale remains in
+`engineering/budget-driver-plan.md`. Independent numeric sources now exist in
+`engineering/design/budget-2s/parameters.yaml`, with a separate source resolver, electrical calculation tool
+and preliminary current-loop model. BUD-01…22 record manufacturer evidence and explicit assumptions.
+
+Actual development results: conditional 3.9840 A setpoint / 3.8414–4.1321 A tolerance envelope and independent
+4.8098–5.1746 A backup-trip window. The 180 Ω candidate passes all 243 assumed loop-sensitivity cases;
+ngspice AC agrees with the analytical equation. This is a small-signal model, not physical or switching-fault
+proof. A 330 Ω candidate failed 19/243 cases and was replaced in the study. Generated evidence lives in
+`reports/budget-2s/`; never hand-edit it.
+
+Layout is held for BUD-ISS-01…04: candidate losses threaten the 94% target, UVLO can trip at 6.303 V despite
+the proposed 6.0 V input minimum, the default-off buffer/driver is incomplete, and total shutdown/fault energy
+is unbounded. No budget connectivity, PCB, firmware adaptation or manufacturing package exists. All nine
+REQ-BUD requirements and physical qualification remain OPEN; `qualify.py` reports ten unresolved prerequisites
+and exits 1 deliberately. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
+four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
+still cover A/B only; their PASS results cannot qualify this circuit.
 
 **Validation (existing A/B only):** full-toolchain rerun after the budget-planning documentation update
 (2026-10-28, base `f136565`, KiCad, ngspice and avr-gcc present): exit 0,
@@ -111,11 +124,13 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 
 ## Next actions (in order)
 
-**Parallel budget planning track:** follow `engineering/budget-driver-plan.md` work packages 1–2: compare the
-repriced existing board with a 2S buck, freeze pack/voltage/cost scope, qualify the current loop and independent
-fault/disconnect circuit, then obtain a complete GBP quote for 3/5 units. Extend variant tooling and record
-implementation decisions before any new source/CAD work. Do not inherit A/B PASS results or spend against
-partial component baskets.
+**Active budget implementation track:** read `engineering/budget-2s-design.md`, its issue/fault matrices and
+the generated qualification/loop reports. First resolve BUD-ISS-01…04: loss/dropout/controller and output-FET
+choice, UVLO/pack operating policy, guaranteed default-off buffer/driver, fault delay/SOA/energy. Then qualify
+startup/flash/open/short/reconnect and exact passive corners; the preliminary AC model cannot prove these.
+Only then create separate connectivity/library/placement sources and extend CAD, firmware, sourcing/export
+and release tooling for this independent circuit. Obtain complete landed GBP quotes for 3/5 working units;
+compare a repriced existing board. Keep unknown prices UNKNOWN and commit/push each documented milestone.
 
 1. **Resolve the pre-order review:** `reports/pre-order-review.md`. Correct or obtain assembler acceptance for
    RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
@@ -135,7 +150,7 @@ partial component baskets.
    fault 6 (R-22).
 6. **After evaluation measurements:** assess the host/heatsink interface and optional arming ideas in
    `research/project450-design-notes.md`; retain hardware interlocks. A/B retain their 1S circuit; the separate
-   budget 2S feasibility plan is DD-29, with no component or implementation adoption yet.
+   budget 2S track is DD-29/30, with calculations/models implemented but its circuit and CAD not frozen.
 7. **Compact board:** with the bench data, choose its direction (`engineering/pcb-review-2026-10-26.md`), then re-run
    the compact chain (`grid_route.py --variant compact-22mm --rebuild --partial --write`; `place`, `route`, `finish`,
    `drc`; `power_layout.py`). Accept it only with 0 unconnected, 0 DRC errors and every power path connected.
@@ -158,6 +173,25 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget-2s electrical qualification and handover checkpoint
+- Owner requested implementation towards prototype manufacturing, with Markdown/GitHub kept current for
+  another agent, then explicitly requested an immediate progress update. Recorded DD-30 and a separate
+  implementation handover/fault matrix; updated AGENTS, README, plan, source index and scoped requirements.
+- Added independent numeric candidate sources and variant path resolution without changing A/B defaults.
+  Implemented tolerance, backup-trip/NAF, UV/OV, ripple, partial loss and stored-energy/discharge calculations,
+  with explicit UNKNOWN inputs, generated JSON/Markdown and source/output hash manifests.
+- Added an inspectable ngspice AC circuit and independent analytical transfer equation. Revised the study
+  compensation from 330 Ω (19/243 cases fail) to 180 Ω (243/243 meet the assumed margin screen). This does
+  not verify switching dynamics, complete component corners, ≤4.4 A transients or physical behaviour.
+- Found and recorded BUD-ISS-01…05: efficiency risk, UVLO/input-range conflict, incomplete default-off drive,
+  unknown total fault response/energy, and the mitigated preliminary loop issue. Budget qualification stays
+  unresolved; no connectivity/PCB/firmware/manufacturing release or order is claimed.
+- Added eight locally parsed manufacturer PDFs (BUD-15…22) with revisions, limits, package/pin notes and
+  hashes. Download folders remain ignored. The encrypted Microchip PDF used an isolated helper under ignored
+  tools, without changing requirements or the project venv. All new part prices/stock remain UNKNOWN.
+- Focused verification: 29 new tests passed in 3.10 s. Full-suite and legacy full-validator checkpoint
+  results will be recorded before this milestone is committed. Preserve pre-existing `reports/setup.log`.
 
 ### 2026-10-28: separate £60 / two-cell budget-driver plan
 - Owner requested similar specifications with no size limit, accepted two Li-ion cells in series and gave a
