@@ -401,3 +401,45 @@ affected generator, firmware profile, review and release gate. Do not modify the
 sources or inherit their PASS results. All nine budget requirements and physical qualification remain
 OPEN; the new tools report unresolved prerequisites explicitly. Commit each milestone with PROGRESS and
 actual checks, then push `main` so another agent can continue from GitHub.
+
+## DD-31 Budget output disconnect, UV backstop and operating-point model (engineering, 2026-10-29)
+
+Engineering choice by Claude Code (AI agent) within the DD-30 development authority; the owner may override.
+It addresses BUD-ISS-01/02 of [budget-2s-design.md](budget-2s-design.md). Generated numbers are in
+`reports/budget-2s/qualification.md`.
+
+**One output P-FET instead of a back-to-back pair.** With its source at VBUCK, the P-FET's body diode
+(drain → source) already blocks VBUCK → laser when the gate is released. The second FET of a common-source
+pair only blocks laser → VBUCK, a path a passive diode load cannot drive. It adds no forward-blocking
+redundancy either: if the forward-blocking FET fails short, the other FET's body diode conducts forward. The
+pair therefore doubled disconnect loss without adding protection. A shorted output FET remains a single fault
+handled by the buck EN path, the independent OC latch and the fuse. It is not handled by a second FET.
+
+**DMP2005UFG-7 selected for development** (BUD-16). It loses less than DMP2022LSS-13 at every generated
+operating point. Its ±10 V gate rating exceeds the 8.4 V buck-switch-short fault, but a gate clamp for plug and
+switching transients is still to be designed. Its exposed-drain land, paste and X-ray inspection need the same
+review as U1's exposed pad. The reverse-input FET stays DMP2022LSS-13 (±12 V gate).
+
+**UV divider 147 kΩ → 130 kΩ.** The hardware UV comparator becomes a backstop below the loaded 6.0 V operating
+floor (falling window about 5.40–5.62 V, i.e. 2.70–2.81 V per cell). The normal stop is a firmware policy that
+is still to be written. It must stop emission before dropout and refuse arming on a low resting pack. The
+`pack_cutoff_floor_v` assumption needs cells rated for a 2.5 V/cell discharge cutoff. The exact pack and
+BMS remain REQ-BUD-05.
+
+**Operating-point model** (`automation/budget/power.py`) replaces the resistance-only screen. It solves the
+averaged steady state with energy balance, using datasheet limits, labelled efficiency `estimates` and
+`power_model` allocations. The allocations are limits the BOM and layout must meet: 15 mΩ connector + fuse +
+input copper, 3 mΩ output copper. TPS54821 specifies a 0 ns minimum off-time (BOOT-PH ≥ 3 V), so dropout is
+set by series resistance, not a duty limit. Results: regulation at 5.2 V / maximum setpoint down to about
+5.78 V input at the maximum-resistance corner; UV and OVP margins each about 0.21 V. Its converter terms agree
+with TI's typical curve to about half a point (slightly pessimistic).
+
+**Finding for the owner: the 94% target is not met by estimate.** At 7.4 V input, 4.5 V diode, 4 A and the
+typical corner, the estimate is about 93.4%. The comparable A/B definition (REQ-PWR-02) is typical diode,
+including the shunt. The gap is the system losses that the converter curve leaves out: shunt, protection FETs,
+input path and control load. No REQ-BUD-07 change is made. The owner chooses:
+(a) accept a lower budget target at 7.4 V / typical diode / 4 A, judged by bench measurement; or
+(b) keep 94% and change the architecture (e.g. an external-FET controller or lower-resistance converter, at
+added cost and complexity). The 10 mΩ shunt sets the backup-trip accuracy and should not be reduced alone.
+Recommendation: (a). About 0.1 W of extra loss is thermally negligible on an unrestricted board and costs well
+under 1% of runtime.

@@ -1,6 +1,7 @@
 # Budget-2S implementation and handover
 
-Updated 2026-10-29. Codex (AI review), requested by owner. Decision DD-30.
+Updated 2026-10-29. Codex (AI review), requested by owner, decision DD-30; continued by Claude Code
+(AI), decision DD-31 (single output P-FET, UV backstop, operating-point model).
 
 **Stage: electrical qualification. No budget fabrication package exists and no order is authorised by this
 document.** The owner requested implementation of the separate two-cell, unrestricted-size, £60 driver.
@@ -17,6 +18,7 @@ the original single-cell boards' CAD, firmware or release results.
 | Circuit connectivity | Reserved `engineering/design/budget-2s/connectivity.yaml`; **not created until the circuit is qualified** |
 | Placement | Reserved `hardware/budget-2s/placement.yaml`; **not created** |
 | Electrical qualification | `automation/budget/qualify.py` → `reports/budget-2s/qualification.md`, JSON and hash manifest |
+| Operating point, dropout, UV/OV margins, efficiency estimate | `automation/budget/power.py` (called by `qualify.py`; results in the same report) |
 | Preliminary current loop | `automation/budget/loop_model.py` → `reports/budget-2s/loop-model.md`, all 243 corners in JSON, ngspice `.cir`/raw data/log, hash manifest |
 | Manufacturer records | BUD-01…22 in `research/sources/budget-driver-sources.md`; downloaded PDFs ignored, hashes recorded |
 | Earlier costs and design rationale | `engineering/budget-driver-plan.md`, `reports/bom-quote-sourcing-review.md` |
@@ -30,8 +32,9 @@ rtk proxy .venv/Scripts/python.exe -m pytest tests -q
 rtk proxy .venv/Scripts/python.exe automation/validation/validate.py
 ```
 
-`qualify.py` currently **exits 1**, because all ten manufacturing prerequisites remain unresolved (one
-conditional calculation, nine OPEN). That is the intended readiness result, not a failed Python invocation.
+`qualify.py` currently **exits 1**, because all twelve manufacturing prerequisites remain unresolved: four
+CONDITIONAL calculations (setpoint, dropout, UV, OVP margin), one FAIL (efficiency estimate below 94%, owner
+decision) and seven OPEN. That is the intended readiness result, not a failed Python invocation.
 `loop_model.py` exits 0 only when its actual sensitivity margins and independent ngspice/equation agreement
 pass; its physical qualification stays OPEN. Existing `validate.py` still validates **A/B only**. A return
 code of zero there is not evidence for budget-2s. Do not add budget failures to the A/B known-limitations
@@ -40,9 +43,10 @@ firmware/sourcing check, layout model and release gate supports the independent 
 
 ## Development architecture
 
-Protected balanced 2S pack → fuse → reverse-polarity protection → TPS54821 buck and bulk output filter →
-four-terminal 10 mΩ shunt → hardware output disconnect → grounded-cathode laser. Keep bulk capacitance
-upstream of the disconnect. The INA186A2 primary current loop and separate INA300 comparator use distinct
+Protected balanced 2S pack → fuse → reverse-polarity P-FET → TPS54821 buck and bulk output filter →
+four-terminal 10 mΩ shunt → single P-FET output disconnect (source at VBUCK, gate grounded when on, DD-31)
+→ grounded-cathode laser. Keep bulk capacitance upstream of the disconnect. The disconnect's body diode
+blocks VBUCK → laser; a back-to-back second FET would only block the reverse path and was removed. The INA186A2 primary current loop and separate INA300 comparator use distinct
 Kelvin traces from the shunt; they still share its physical failure modes. OVP must observe physical VBUCK
 upstream of the disconnect, rather than the converter's current-derived feedback or only an isolated laser.
 
@@ -64,8 +68,8 @@ or absence-of-supply behaviour. Preserve fault/default-off behaviour on a stoppe
 | Control reset supervisor | TLV803EA29DBZR, BUD-20 | 2.93 V nominal/200 ms; exact DBZ pinout. Apply threshold/delay bounds and rail sequencing. |
 | 3.3 V control supply | MCP1703AT-3302E/MB, BUD-21 | SOT-89 pin 1 GND, 2/tab VIN, 3 VOUT. Use full-temperature ±3% plus load/line terms, actual effective output C, thermal and reverse-current review. |
 | MCU | ATTINY1616-SN, PREORDER-08 | SOIC-20 port map below. Candidate 10 MHz; HAL, ADC/reference, fuses, brownout and target build not yet adapted. |
-| Reverse input FET | DMP2022LSS-13, BUD-15 | SO-8, resistance specified at −4.5 V, ±12 V gate. Qualify orientation, fuse and hot/transient stress. |
-| Output back-to-back pair | DMP2022LSS-13 **or** DMP2005UFG-7, BUD-15/16 | Neither selected. SO-8 pair has much higher loss. PowerDI pair needs separate exact land/paste/hidden-joint review. |
+| Reverse input FET | DMP2022LSS-13, BUD-15 | SO-8, ±12 V gate; gate grounded, so \|Vgs\| = VBAT_PROTECTED ≥ 4.5 V in operation. Qualify orientation, fuse and hot/transient stress. |
+| Output disconnect (single) | **DMP2005UFG-7** selected for development (DD-31), BUD-16; DMP2022LSS-13 compared | Lower loss at every generated operating point. \|Vgs\| ≥ 3.84 V in operation (2.5 V specification applies); ±10 V gate versus 8.4 V switch-short fault, transient clamp OPEN. Exposed-drain land/paste/X-ray review OPEN. |
 | Low-current gate driver | AO3400A, BUD-17 | Requires sufficient guaranteed gate drive; typical threshold is not an on-resistance guarantee. Exact bias/buffer/clamp still OPEN. |
 
 No commercial precision-resistor/capacitor/connector/fuse suffix is invented to complete a BOM. Those lines,
@@ -76,8 +80,8 @@ choices, not authorised substitutions into A/B or an orderable approved BOM.
 
 | ID | Finding | Remedy / evidence needed | State |
 |---|---|---|---|
-| BUD-ISS-01 | Original easy-SOIC disconnect proposal consumes too much loss allowance in several 94% scenarios. Lower-loss candidate improves the screen but does not prove efficiency. | Select exact output stage/controller after complete loss/hot/dropout analysis. State which Vf points must meet 94%; do not silently relax REQ-BUD-07 or remove protection. | OPEN |
-| BUD-ISS-02 | 147 kΩ / 10 kΩ UV comparator can trip at 6.303 V; proposed operating minimum is 6.0 V. | Choose a defensible pack/UVLO/firmware operating policy, a more accurate monitor or revised proposed range. Bound dropout after connector/fuse/reverse FET/shunt/disconnect losses. Protected balanced pack/per-cell BMS remains mandatory. | OPEN |
+| BUD-ISS-01 | Original easy-SOIC disconnect proposal consumed too much loss allowance. DD-31: back-to-back pair replaced by one DMP2005UFG-7; the operating-point model bounds dropout (BUD-PWR-01 CONDITIONAL). The efficiency **estimate** at 7.4 V / 4.5 V / 4 A is still below 94% (BUD-EFF-01 FAIL). | **Owner decision** (DD-31): accept a lower budget target judged on the bench, or change the architecture. REQ-BUD-07 is not relaxed silently. Then make the fuse, connector and copper meet the `power_model` allocations, and measure efficiency. | MITIGATED IN MODEL; efficiency target needs owner decision |
+| BUD-ISS-02 | 147 kΩ / 10 kΩ UV comparator could trip at 6.303 V, inside the proposed 6.0 V operating range. DD-31: 130 kΩ makes the hardware UV a backstop below the loaded floor (BUD-UV-01 CONDITIONAL, margin in the report). | Write the firmware operating cutoff (stop before dropout; refuse arming on a low resting pack). Choose a pack whose cells are rated to the `pack_cutoff_floor_v` assumption. Verify the input allocation with the real fuse/connector. Protected balanced pack/per-cell BMS remains mandatory. | MITIGATED IN CALCULATION; firmware policy and pack OPEN |
 | BUD-ISS-03 | Bare latch/EN/FET interfaces have no complete guaranteed 3.3 V drive/loss-of-supply proof. | Finish a default-off buffer/driver/bias design, prove high/low voltages and current over supply/tolerance, supervisor and interlock sequencing, and absence of back-power. Then model and bench inject rail/CPU faults. | OPEN |
 | BUD-ISS-04 | Catalogue 10 µs OC is a typical detector setting, not a guaranteed total shutdown or laser-safe fault energy. | Include comparator window/overdrive, fault wiring, latch, buffer, FET charge, SOA, capacitors and inductive paths. Obtain guaranteed bounds where available; record remaining UNKNOWNs and measure the complete chain. | OPEN |
 | BUD-ISS-05 | A simple loop study initially failed 19/243 corners with 330 Ω compensation; a 180 Ω analysis candidate passes the stated assumed sweep. | Keep the generated 180 Ω evidence; qualify actual controller/laser/capacitor dynamics, component tolerances and switching faults. The earlier 330 Ω result explains why the candidate changed, not a reason to waive margins. | MITIGATED IN MODEL; real-circuit qualification OPEN |
@@ -134,7 +138,8 @@ rated dummy load before any laser. Only actual MEASURED records may enter the be
 | Buck high-side switch fails short | Output disconnect interrupts raw-pack fault; clamp/TVS/SOA and current paths remain rated | 8.4 V capacitor-energy screen only; fault delay/SOA/inductor paths OPEN |
 | Output FET fails short / body diode conducts | Single-fault disposition documented; avoid claiming isolation from EN alone | Body-diode orientation and single-FET/driver faults OPEN |
 | Reversed 2S input / plug transient | Defined reverse-blocking, fuse and voltage-clamp response; no control-rail backfeed | Exact fuse/clamp, orientation and transient test OPEN |
-| Pack UV / one weak cell | Driver stops under approved policy; BMS protects individual cells | Aggregate pack ADC cannot detect every imbalance; exact pack/BMS and policy OPEN |
+| Pack UV / one weak cell | Firmware stops at the operating cutoff; hardware UV (5.40–5.62 V falling) latches if firmware does not; BMS protects individual cells | UV backstop margin calculated (DD-31). Aggregate pack ADC cannot detect every imbalance; exact pack/BMS and firmware policy OPEN |
+| Input sags into dropout, then recovers | Current must not overshoot 4.4 A while COMP unwinds; firmware stops before dropout | Dropout bound calculated. TPS54821 PWRGD falls when VSENSE < 92% of Vref (BUD-01 p.6), i.e. when current regulation is lost, and can serve as an MCU indication. Recovery transient needs a switching model and bench test |
 | Board/laser NTC open, short or overtemperature | Fault latch/default off; optional sensor rules cannot disable board protection | New rail/reference/ADC profile and placement/bench OPEN |
 | Disabled output / external hot-plug | Discharge criterion met; no stored-energy reconnection spike | Bleed arithmetic only; verify worst C, cable and detector/disconnect behaviour |
 
@@ -142,9 +147,14 @@ rated dummy load before any laser. Only actual MEASURED records may enter the be
 
 1. Read AGENTS.md, PROGRESS Current state, this file and both generated budget reports. Verify hashes via
    `nubm44.evidence.problems`; regenerate with the producing scripts, never edit results.
-2. Resolve BUD-ISS-01…04: complete the power/loss/dropout choice and guaranteed default-off buffer/driver;
-   choose exact passives, fuse/clamps, connectors and protected 2S pack interface. Keep price/stock UNKNOWN
-   until supported by dated supplier evidence. Request 3/5-unit quotes only through an owner-approved contact.
+2. BUD-ISS-01/02 are mitigated in calculation (DD-31). The efficiency target needs an owner decision. Next,
+   resolve BUD-ISS-03/04: the guaranteed default-off buffer/driver and the total fault response and energy.
+   The SN74HCS74 guarantees VOH ≥ VCC − 0.1 V and VOL ≤ 0.1 V only at |IO| ≤ 20 µA (BUD-19 p.5), so keep its
+   loads high-impedance. TPS54821 EN has an internal pull-up whose current is given only as typical
+   (BUD-01 p.5), so a default-off pulldown needs explicit margin. Choose exact passives, a fuse and connector
+   that meet the `power_model` allocations, gate clamps and the protected 2S pack interface. Keep price/stock
+   UNKNOWN until supported by dated supplier evidence. Request 3/5-unit quotes only through an owner-approved
+   contact.
 3. Extend the preliminary model to startup/flash/open/short/reconnect, finite voltage/COMP/SS limits and
    component corners. Record assumptions and actual failures. A laser survival bound remains a bench task.
 4. Then create the **separate** canonical connectivity and reviewed symbol/land sources. Extend schematic,

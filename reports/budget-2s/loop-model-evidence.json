@@ -1,13 +1,13 @@
 {
- "generated_utc": "2026-10-29T00:44:18+00:00",
+ "generated_utc": "2026-10-29T01:04:04+00:00",
  "generator": "automation/budget/loop_model.py",
  "inputs": {
   "automation/budget/loop_model.py": "f49e7f9596f942aba372e6b6e7a1222603b1f72cf32b5e8702a6172f32ca3570",
   "automation/nubm44/evidence.py": "82197c83b892aca47d180d0f24fef5b5a2deb026c0d19cf1898087189fd266cf",
   "automation/nubm44/paths.py": "d890d66eab7677f4532be76fd68ec36772b4da11f39eafdc4131735bcf18fcbe",
   "automation/nubm44/variants.py": "8e81e9eb3b9bf1ff86bc611ed5c43b58ea1780d4107f0aae34f21966a65367f2",
-  "engineering/design/budget-2s/parameters.yaml": "dfa137890e946a46165f630f610dcc7267965fd66444ac0e66b71246822dec96",
-  "research/sources/budget-driver-sources.md": "a5e5b7f07ea108798a2b033f9e4bb738d9bf678feff3817ca9e074894c42f606"
+  "engineering/design/budget-2s/parameters.yaml": "7c46d0200165446edca6c22460d7f732e6b9aa6a4eb49d2c0c6749edc3f97f2a",
+  "research/sources/budget-driver-sources.md": "0df90fd3cd4f77d6da6e8a3bfb7243a6514f26758b5a28c0f58c1a818f5fc560"
  },
  "kind": "budget-loop-model",
  "outputs": {

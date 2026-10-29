@@ -18,13 +18,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 
+from budget import power  # noqa: E402
 from nubm44 import evidence  # noqa: E402
 from nubm44.variants import BUDGET_VARIANT, sources_for  # noqa: E402
 
 PARAMETERS = sources_for(BUDGET_VARIANT).parameters
 OUT = ROOT / "reports/budget-2s"
-REQUIRED_TOP = {"targets", "buck", "inductor", "current_sense", "backup",
-                "voltage_monitor", "control", "disconnect", "output_energy", "loop", "procurement"}
+REQUIRED_TOP = {"targets", "buck", "inductor", "current_sense", "backup", "voltage_monitor", "control",
+                "disconnect", "output_energy", "power_model", "estimates", "loop", "procurement"}
 
 
 def number(value, label: str, *, zero_ok: bool = False) -> float:
@@ -95,6 +96,9 @@ def validate_parameters(p: dict) -> None:
         raise ValueError("INA300 fast-mode calculation requires the BUD-06 500 uV NAF")
     if p["voltage_monitor"]["ov_sense_net"] != "VBUCK":
         raise ValueError("open-load study requires OVP sensing upstream of the disconnect")
+    if p["disconnect"]["topology"] != "single_pmos_source_at_vbuck":
+        raise ValueError("power model assumes one output P-FET with its source at VBUCK (DD-31)")
+    power.output_fet(p, p["disconnect"]["selected_output_mpn"])
 
 
 def control_rail(p: dict) -> tuple[float, float]:
@@ -185,48 +189,19 @@ def ripple(p: dict) -> dict:
             "qualification": "ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN"}
 
 
-def losses(p: dict, r: dict) -> list[dict]:
-    """An explicit conduction screen, never a measured or complete efficiency value."""
-    t, s, d, b, e, l = (p[k] for k in ("targets", "current_sense", "disconnect", "buck", "output_energy", "inductor"))
-    i, vin, eta = t["current_a"], t["input_v_nominal"], t["efficiency_fraction"]
-    rows = []
-    for cand, vf in itertools.product(d["candidates"], (t["laser_v_min"], t["laser_v_typ"], t["laser_v_max"])):
-        # Deliberately do not interpolate guaranteed Rds between gate voltages.
-        r_pair = cand["count"] * cand["r_ohm_max_at_2p5v_25c"]
-        vo = vf + i * (s["shunt_ohm"] + r_pair)
-        duty = vo / vin  # First-order estimate; buck/reverse drops are omitted here.
-        pout = i * vf
-        allowed = pout * (1 / eta - 1)
-        assumed_iin = pout / (eta * vin)
-        external = i ** 2 * (s["shunt_ohm"] + r_pair)
-        external += r["rms_a_at_4a"] ** 2 * l["dcr_ohm_max_25c"]
-        external += assumed_iin ** 2 * d["reverse_r_ohm_max_25c"]
-        external += vo ** 2 / e["bleeder_ohm"] + vin * p["control"]["design_current_a"]
-        typical_buck = r["rms_a_at_4a"] ** 2 * (duty * b["high_side_r_ohm_typ"] + (1 - duty) * b["low_side_r_ohm_typ"])
-        max_buck = r["rms_a_at_4a"] ** 2 * (duty * b["high_side_r_ohm_max"] + (1 - duty) * b["low_side_r_ohm_max"])
-        rows.append({"candidate": cand["mpn"], "vf_v": vf, "laser_w": pout,
-                     "allowed_total_loss_w_at_target": allowed, "external_screen_w": external,
-                     "buck_typ_resistance_screen_w": typical_buck,
-                     "buck_max_resistance_screen_w": max_buck,
-                     "remaining_for_switching_core_copper_w_typ_buck": allowed - external - typical_buck,
-                     "remaining_for_switching_core_copper_w_max_buck": allowed - external - max_buck,
-                     "qualification": "INCOMPLETE: mixed test conditions, assumed input current/control load; no efficiency PASS"})
-    return rows
-
-
 def calculate(p: dict) -> dict:
     validate_parameters(p)
     cc = current_bounds(p)
     vb = voltage_bounds(p)
     rr = ripple(p)
+    pw = power.evaluate(p, cc["max_a"], vb["uv"], vb["ov"])
     e = p["output_energy"]
     vcap = vb["ov"]["max_v"]
     return {"schema": "nubm44-budget-qualification.v1", "variant": BUDGET_VARIANT,
             "stage": "ELECTRICAL_QUALIFICATION", "manufacturing_ready": False,
             "scope": "candidate calculations only; no budget schematic, PCB, firmware or bench validation",
             "control_rail_screen_v": list(control_rail(p)), "current": cc,
-            "backup": backup_bounds(p, cc), "voltage_monitor": vb, "ripple": rr,
-            "loss_screens": losses(p, rr),
+            "backup": backup_bounds(p, cc), "voltage_monitor": vb, "ripple": rr, "power": pw,
             "energy": {"upstream_j_at_ov_max": 0.5 * e["bulk_cap_f_max_analysis"] * vcap ** 2,
                        "upstream_j_at_switch_short_8p4v": 0.5 * e["bulk_cap_f_max_analysis"] * p["targets"]["input_v_max"] ** 2,
                        "laser_side_j_cap_only_at_ov_max": 0.5 * e["laser_side_cap_f"] * vcap ** 2,
@@ -235,19 +210,34 @@ def calculate(p: dict) -> dict:
                        "bleeder_fault_w_at_8p4v": p["targets"]["input_v_max"] ** 2
                        / (e["bleeder_ohm"] * (1 - e["bleeder_tolerance_fraction"])),
                        "qualification": "capacitance envelope is an ASSUMPTION; peak/reconnection/inductive energy UNKNOWN"},
-            "unknown_inputs": unknowns(p), "readiness": readiness(p, cc, vb)}
+            "unknown_inputs": unknowns(p), "readiness": readiness(p, cc, pw)}
 
 
-def readiness(p: dict, cc: dict, vb: dict) -> list[dict]:
+def readiness(p: dict, cc: dict, pw: dict) -> list[dict]:
     """Computed gates: existing A/B PASS results cannot satisfy any budget gate."""
     def row(identifier, status, detail):
         return {"id": identifier, "status": status, "detail": detail}
+    t, dr, uv, ov, eff = p["targets"], pw["dropout"], pw["uv"], pw["ov"], pw["efficiency"]
+    conditional = lambda ok: "CONDITIONAL" if ok else "FAIL"
     return [
-        row("BUD-CALC-01", "CONDITIONAL" if cc["conditional_accuracy_ok"] else "FAIL",
+        row("BUD-CALC-01", conditional(cc["conditional_accuracy_ok"]),
             "Setpoint tolerance screen; exact resistor MPNs and hot shunt envelope need qualification."),
-        row("BUD-PWR-01", "OPEN", "Complete loss/hot/dropout model and 94% test points; no efficiency claim."),
-        row("BUD-UV-01", "OPEN", f"UVLO falling maximum {vb['uv']['max_v']:.4f} V exceeds proposed minimum input "
-            f"{p['targets']['input_v_min']:.4f} V; resolve operating-range/UVLO policy before layout."),
+        row("BUD-PWR-01", conditional(dr["ok"] and pw["all_regulating"]),
+            f"Maximum-resistance model regulates {dr['current_a']:.4f} A at {t['laser_v_max']:g} V down to "
+            f"{dr['connector_v_at_vf_max_i_max']:.4f} V input ({dr['margin_v']:.4f} V margin, "
+            f"{dr['required_margin_v']:g} V required). Conditional on the input/output resistance allocations, "
+            "boot-regulator level and low-side resistance below 12 V; thermal/bench dropout OPEN."),
+        row("BUD-EFF-01", "CONDITIONAL" if eff["meets_target"] else "FAIL",
+            f"Estimate {100 * eff['estimate_at_nominal']:.2f}% at {eff['condition']} versus "
+            f"{100 * eff['target']:g}% target. " + ("Estimate only; bench efficiency decides." if eff["meets_target"]
+            else "Owner decision: accept a lower budget target or change the architecture; bench efficiency decides.")),
+        row("BUD-UV-01", conditional(uv["ok"]),
+            f"UV falling {uv['falling_min_v']:.4f}–{uv['falling_max_v']:.4f} V versus loaded sense minimum "
+            f"{uv['sense_min_v_at_input_min']:.4f} V at {t['input_v_min']:g} V input ({uv['margin_v']:.4f} V margin, "
+            f"{uv['required_margin_v']:g} V required; floor {uv['floor_v']:g} V). Pack rating, firmware cutoff OPEN."),
+        row("BUD-OV-01", conditional(ov["ok"]),
+            f"OVP rising minimum {ov['rising_min_v']:.4f} V versus highest normal VBUCK {ov['vbuck_normal_peak_v']:.4f} V "
+            f"at {t['normal_peak_a']:g} A ({ov['margin_v']:.4f} V margin). Open-load response and laser survival OPEN."),
         row("BUD-SAFE-01", "OPEN", "Qualify default-off gate drive, fault latch, output disconnect, total response and single faults."),
         row("BUD-LOOP-01", "OPEN", "Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open."),
         row("BUD-CAD-01", "OPEN", "Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet."),
@@ -259,7 +249,7 @@ def readiness(p: dict, cc: dict, vb: dict) -> list[dict]:
 
 
 def markdown(r: dict, p: dict) -> str:
-    cc, oc, vm, rr = (r[k] for k in ("current", "backup", "voltage_monitor", "ripple"))
+    cc, oc, vm, rr, pw = (r[k] for k in ("current", "backup", "voltage_monitor", "ripple", "power"))
     targets, energy = p["targets"], p["output_energy"]
     efficiency_percent = targets["efficiency_fraction"] * 100
     lines = ["# Budget-2S electrical qualification", "",
@@ -270,27 +260,49 @@ def markdown(r: dict, p: dict) -> str:
              "| Screen | Result | Qualification |", "|---|---|---|",
              f"| Current setpoint | {cc['nominal_a']:.4f} A nominal; {cc['min_a']:.4f}–{cc['max_a']:.4f} A envelope | {cc['qualification']} |",
              f"| Independent trip | {oc['nominal_a']:.4f} A nominal; {oc['min_a']:.4f}–{oc['max_a']:.4f} A envelope | {p['backup']['noise_adjustment_v']*1e6:g} µV NAF included; {oc['qualification']} |",
-             f"| UVLO falling | {vm['uv']['nominal_v']:.4f} V nominal; {vm['uv']['min_v']:.4f}–{vm['uv']['max_v']:.4f} V | Proposed minimum input {targets['input_v_min']:g} V; UV policy remains OPEN |",
+             f"| UVLO falling | {vm['uv']['nominal_v']:.4f} V nominal; {vm['uv']['min_v']:.4f}–{vm['uv']['max_v']:.4f} V | Hardware backstop below the loaded {targets['input_v_min']:g} V operating floor; margins below |",
              f"| Physical VBUCK OVP | {vm['ov']['nominal_v']:.4f} V nominal; {vm['ov']['min_v']:.4f}–{vm['ov']['max_v']:.4f} V | Upstream of disconnect; laser survival/response UNKNOWN |",
              f"| Buck ripple, 25 °C L tolerance / {p['buck']['frequency_hz_min']/1000:g} kHz minimum | ≤{rr['ripple_a_pp_global_bound']:.4f} A p-p; {rr['peak_a_at_4a']:.4f} A peak at {targets['current_a']:g} A average | {rr['qualification']} |",
              f"| Control rail additive screen | {r['control_rail_screen_v'][0]:.4f}–{r['control_rail_screen_v'][1]:.4f} V | LDO load budget, exact line anchor and brownout sequencing OPEN |", "",
              f"Current accuracy assumes the specified {p['current_sense']['fb_resistor_tolerance_fraction']*100:g}% / {p['current_sense']['fb_resistor_tcr_fraction_per_c']*1e6:g} ppm/°C resistors and the stated shunt-temperature",
              "envelope. They are procurement/thermal requirements, not verified purchased parts or temperatures.", "",
-             "## Efficiency spending allowance", "",
-             "These are resistance-based loss screens, not predicted measured efficiencies. External losses use",
-             f"25 °C maximum FET/shunt/inductor resistances, an assumed {p['control']['design_current_a']*1000:g} mA control load and target-efficiency",
-             "input current. Buck columns use its typical or maximum resistances at datasheet test conditions.",
-             "Switching, core, capacitor, copper and connector loss and hot resistance are not included.",
-             "A negative remainder already exhausts the allowance in that scenario; a positive one is not a PASS.", "",
-             f"| Output pair candidate | Laser V | Allowed total loss at {efficiency_percent:g}% (W) | External screen (W) | Buck typical R screen (W) | Remainder with typical R (W) | Remainder with max R (W) |",
-             "|---|---:|---:|---:|---:|---:|---:|"]
-    for x in r["loss_screens"]:
-        lines.append(f"| {x['candidate']} | {x['vf_v']:.1f} | {x['allowed_total_loss_w_at_target']:.4f} | {x['external_screen_w']:.4f} | "
-                     f"{x['buck_typ_resistance_screen_w']:.4f} | {x['remaining_for_switching_core_copper_w_typ_buck']:.4f} | "
-                     f"{x['remaining_for_switching_core_copper_w_max_buck']:.4f} |")
+             "## Operating points, dropout and efficiency estimate", "",
+             "Averaged steady-state model in `automation/budget/power.py`: connector → input allocation → reverse FET →",
+             "TPS54821 → shunt → one output P-FET → board terminals (DD-31). The **typical** corner uses typical resistances",
+             "at 25 °C; the **maximum** corner uses full-temperature TPS54821 maxima, FET 25 °C maxima × "
+             f"{p['disconnect']['r_hot_multiplier_sensitivity']:g} (assumption), hot inductor DCR, minimum L and worst ripple frequency.",
+             "Switching, dead-time, gate-drive and core terms are labelled `estimates`; copper, fuse and connector values are",
+             "`power_model` allocations the BOM/layout must meet. Efficiency is board-terminal power over connector power.",
+             f"The model's largest energy-balance error is {pw['max_energy_balance_error_w']:.1e} W.", "",
+             "| Output FET | Corner | Input V | Diode V | Duty | Input A | Loss (W) | Efficiency estimate |",
+             "|---|---|---:|---:|---:|---:|---:|---:|"]
+    lines += [f"| {x['output_fet']}{' (selected)' if x['output_fet'] == pw['selected_output_mpn'] else ''} | {x['corner']} | "
+              f"{x['vin_v']:g} | {x['vf_v']:g} | {x['duty']:.4f} | {x['i_in_a']:.4f} | {x['p_in_w'] - x['p_out_w']:.4f} | "
+              f"{100 * x['efficiency_estimate']:.2f}% |" for x in pw["operating_points"]]
+    nominal = next(x for x in pw["operating_points"] if x["output_fet"] == pw["selected_output_mpn"]
+                   and x["corner"] == "typical" and x["vin_v"] == targets["input_v_nominal"] and x["vf_v"] == targets["laser_v_typ"])
+    dr, uv, ov, gd, eff = (pw[k] for k in ("dropout", "uv", "ov", "gate_drive", "efficiency"))
+    lines += ["", f"Loss breakdown at the efficiency condition ({eff['condition']}, {pw['selected_output_mpn']}):", "",
+              "| Term | W |", "|---|---:|"]
+    lines += [f"| {k} | {v:.4f} |" for k, v in sorted(nominal["losses_w"].items(), key=lambda kv: -kv[1])]
+    xc = pw["converter_crosscheck"]
+    lines += ["", f"Estimate {100 * eff['estimate_at_nominal']:.2f}% versus the {efficiency_percent:g}% target: "
+              + ("meets the target as an estimate only." if eff["meets_target"] else
+                 "**below target**; owner decision required (DD-31).") + " Bench efficiency is the evidence of record.", "",
+              f"Converter terms alone, {xc['condition']}: {100 * xc['model_estimate']:.2f}% versus an approximate read of "
+              f"{100 * xc['manufacturer_typical_read']:.1f}% from BUD-01's typical curve ({100 * xc['difference']:+.2f} points).",
+              "This is a plausibility check of the estimate terms, not a guarantee. It does not include the shunt, protection",
+              "FETs, input path or control load.", "",
+              "| Margin check (selected FET, maximum corner) | Result | Required |", "|---|---:|---:|",
+              f"| Dropout: lowest regulating input at {targets['laser_v_max']:g} V / {dr['current_a']:.4f} A | {dr['connector_v_at_vf_max_i_max']:.4f} V; margin {dr['margin_v']:.4f} V | ≥{dr['required_margin_v']:g} V below {targets['input_v_min']:g} V |",
+              f"| UV sense node at {targets['input_v_min']:g} V input versus UV falling maximum | {uv['sense_min_v_at_input_min']:.4f} V vs {uv['falling_max_v']:.4f} V; margin {uv['margin_v']:.4f} V | ≥{uv['required_margin_v']:g} V; UV minimum ≥{uv['floor_v']:g} V |",
+              f"| Highest normal VBUCK at {targets['normal_peak_a']:g} A versus OVP rising minimum | {ov['vbuck_normal_peak_v']:.4f} V vs {ov['rising_min_v']:.4f} V; margin {ov['margin_v']:.4f} V | ≥{ov['required_margin_v']:g} V |",
+              f"| Output P-FET \\|Vgs\\| (gate grounded) | ≥{gd['output_fet_vgs_abs_min_v']:.4f} V normal; {gd['output_fet_vgs_abs_fault_v']:g} V switch-short fault | rating ±{gd['output_fet_gate_rating_v']:g} V |",
+              f"| Reverse P-FET \\|Vgs\\| maximum | {gd['reverse_fet_vgs_abs_max_v']:g} V | rating ±{gd['reverse_fet_gate_rating_v']:g} V |",
+              "", "Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's",
+              "exposed-drain land, paste and X-ray inspection review remain OPEN.", ""]
     en = r["energy"]
-    lines += ["", "The lower-resistance PowerDI candidate adds hidden-joint assembly work. Neither output pair is selected.", "",
-              "## Stored energy and discharge", "",
+    lines += ["## Stored energy and discharge", "",
               f"At the assumed {energy['bulk_cap_f_max_analysis']*1e6:g} µF maximum: {1000*en['upstream_j_at_ov_max']:.4f} mJ at calculated OVP maximum,",
               f"or {1000*en['upstream_j_at_switch_short_8p4v']:.4f} mJ at a {targets['input_v_max']:g} V switch-short fault. The proposed {energy['laser_side_cap_f']*1e9:g} nF",
               f"laser-side capacitor alone stores {1e6*en['laser_side_j_cap_only_at_ov_max']:.4f} µJ at OVP maximum.",
@@ -322,7 +334,7 @@ def main(argv: list[str] | None = None) -> int:
     jp.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
     md.write_text(markdown(result, p), encoding="utf-8")
     evidence.write(evidence.build(
-        "budget-qualification", inputs=[PARAMETERS, Path(__file__),
+        "budget-qualification", inputs=[PARAMETERS, Path(__file__), Path(power.__file__),
             ROOT / "automation/nubm44/variants.py", ROOT / "automation/nubm44/evidence.py",
             ROOT / "research/sources/budget-driver-sources.md"],
         outputs=[jp, md], tools=evidence.python_tools(["PyYAML"])), manifest)

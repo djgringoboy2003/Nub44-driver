@@ -2,8 +2,8 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-29 (budget-2s electrical qualification started at the owner's request, DD-30;
-progress/handover checkpoint requested while work is ongoing). The pre-order, quote, GBP/UK and Project 450
+_Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
+Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -61,11 +61,20 @@ ngspice AC agrees with the analytical equation. This is a small-signal model, no
 proof. A 330 Ω candidate failed 19/243 cases and was replaced in the study. Generated evidence lives in
 `reports/budget-2s/`; never hand-edit it.
 
-Layout is held for BUD-ISS-01…04: candidate losses threaten the 94% target, UVLO can trip at 6.303 V despite
-the proposed 6.0 V input minimum, the default-off buffer/driver is incomplete, and total shutdown/fault energy
-is unbounded. No budget connectivity, PCB, firmware adaptation or manufacturing package exists. All nine
-REQ-BUD requirements and physical qualification remain OPEN; `qualify.py` reports ten unresolved prerequisites
-and exits 1 deliberately. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
+DD-31 (2026-10-29): the back-to-back output pair is replaced by one P-FET (source at VBUCK; the second FET
+added loss but no protection), with DMP2005UFG-7 selected for development. The UV divider is now 130 kΩ, so the
+hardware UV is a backstop below the loaded 6.0 V floor. A new operating-point model (`automation/budget/power.py`)
+replaces the resistance-only screen. Results, at the maximum-resistance corner and conditional on the 15 mΩ
+input and 3 mΩ output-copper allocations: regulation at 5.2 V / maximum setpoint down to about 5.78 V input;
+UV and OVP margins about 0.21 V each. The efficiency **estimate** at 7.4 V / 4.5 V / 4 A is about 93.4%,
+**below the 94% target**. That needs an owner decision (below). The converter terms agree with TI's typical curve
+to within about half a point.
+
+Layout is still held for BUD-ISS-03/04 (the default-off buffer/driver is incomplete and total shutdown/fault
+energy is unbounded) and for the efficiency decision. No budget connectivity, PCB, firmware adaptation or
+manufacturing package exists. All nine REQ-BUD requirements and physical qualification remain OPEN.
+`qualify.py` reports twelve unresolved prerequisites and exits 1 deliberately: four CONDITIONAL, one FAIL
+(efficiency estimate), seven OPEN. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
 four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
 still cover A/B only; their PASS results cannot qualify this circuit.
 
@@ -107,6 +116,10 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
    (`engineering/pcb-review-2026-10-26.md`).
 5. **Fab choice** (PCBWay preferred for assembly) and acceptance of the pre-order review results.
+6. **Budget-2s efficiency target (REQ-BUD-07, DD-31):** the estimate at 7.4 V / typical diode / 4 A is about 93.4%,
+   below 94%, because of the shunt, protection FETs, input path and control load that the converter does not
+   include. Either (a) accept a lower budget target judged by bench measurement (recommended: about 0.1 W extra
+   loss, under 1% runtime), or (b) keep 94% and change the architecture, at added cost and complexity.
 
 **Open limitations.**
 1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
@@ -125,8 +138,10 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 ## Next actions (in order)
 
 **Active budget implementation track:** read `engineering/budget-2s-design.md`, its issue/fault matrices and
-the generated qualification/loop reports. First resolve BUD-ISS-01…04: loss/dropout/controller and output-FET
-choice, UVLO/pack operating policy, guaranteed default-off buffer/driver, fault delay/SOA/energy. Then qualify
+the generated qualification/loop reports. BUD-ISS-01/02 are mitigated in calculation (DD-31); record the
+owner's efficiency decision (owner decision 6). Next resolve BUD-ISS-03/04: guaranteed default-off
+buffer/driver (keep SN74HCS74 loads ≤ 20 µA; margin the TPS54821 EN pulldown against its typical-only pull-up
+current) and fault delay/SOA/energy. Choose a fuse and connector that meet the input allocation. Then qualify
 startup/flash/open/short/reconnect and exact passive corners; the preliminary AC model cannot prove these.
 Only then create separate connectivity/library/placement sources and extend CAD, firmware, sourcing/export
 and release tooling for this independent circuit. Obtain complete landed GBP quotes for 3/5 working units;
@@ -173,6 +188,24 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget-2s output disconnect, UV backstop and operating-point model (DD-31)
+- Claude Code continued from the uncommitted Codex checkpoint. It verified the checkpoint (236 tests pass, both
+  budget manifests verify, reports reproducible, fast A/B validator exit 0) and committed it as `2c3786b`.
+- Removed the back-to-back output pair: with its source at VBUCK, one P-FET's body diode already blocks
+  VBUCK → laser, and the second FET added loss without forward-blocking redundancy. Selected DMP2005UFG-7
+  for development. The reverse FET remains DMP2022LSS-13.
+- Added `automation/budget/power.py`: an averaged operating point with energy balance (error ~1e-14 W), dropout
+  bisection and UV-sense, OVP false-trip and gate-drive checks. FET resistance uses the weakest specified gate
+  drive reached, with no interpolation. It uses sourced TPS54821 limits (full-temperature table maxima, 0 ns
+  minimum off-time, supply current), labelled efficiency `estimates` and `power_model` allocations that the
+  BOM/layout must meet. The converter terms are cross-checked against TI's typical curve (−0.51 points).
+- UV divider 147 → 130 kΩ: falling window 5.40–5.62 V against a loaded sense minimum of 5.84 V at 6.0 V input.
+  Readiness now computes BUD-PWR-01, BUD-UV-01 and the new BUD-OV-01 as CONDITIONAL. New BUD-EFF-01 is FAIL
+  (estimate 93.38% < 94%), and the efficiency target is put to the owner. REQ-BUD-07 is not relaxed.
+- Corrected the TPS54821 parameter comments (p.5 limits apply over TJ −40…125 °C). Extended the BUD-01/15/16/19
+  source scopes (EN currents typical-only; HCS74 output levels guaranteed only at 20 µA).
+- Checks: see the commit message for the full-suite, regenerated-evidence and validator results.
 
 ### 2026-10-29: budget-2s electrical qualification and handover checkpoint
 - Owner requested implementation towards prototype manufacturing, with Markdown/GitHub kept current for

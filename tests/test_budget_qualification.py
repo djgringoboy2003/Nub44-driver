@@ -92,16 +92,84 @@ def test_backup_fast_mode_includes_naf_and_cannot_be_disabled_by_mcu(params):
             qualify.calculate(p)
 
 
-def test_uvlo_incompatibility_and_efficiency_risk_remain_visible(params):
+def status(r, identifier):
+    return next(x["status"] for x in r["readiness"] if x["id"] == identifier)
+
+
+def test_uv_backstop_sits_below_loaded_operating_floor(params):
     r = qualify.calculate(params)
-    assert r["voltage_monitor"]["uv"]["max_v"] > params["targets"]["input_v_min"]
-    screens = r["loss_screens"]
-    assert len(screens) == 6
-    assert any(x["remaining_for_switching_core_copper_w_typ_buck"] < 0 for x in screens)
-    assert "efficiency" not in r  # No invented complete efficiency percentage.
-    for vf in (3.8, 4.5, 5.2):
-        rows = [x for x in screens if x["vf_v"] == vf]
-        assert rows[1]["external_screen_w"] < rows[0]["external_screen_w"]
+    uv = r["power"]["uv"]
+    assert uv["falling_max_v"] < uv["sense_min_v_at_input_min"] < params["targets"]["input_v_min"]
+    assert uv["ok"] and status(r, "BUD-UV-01") == "CONDITIONAL"
+    # The earlier 147k divider tripped inside the operating range; the check must catch it.
+    params["voltage_monitor"]["uv_top_ohm"] = 147000
+    old = qualify.calculate(params)
+    assert old["voltage_monitor"]["uv"]["max_v"] > params["targets"]["input_v_min"]
+    assert status(old, "BUD-UV-01") == "FAIL"
+    # A divider that trips below the pack floor fails too.
+    params["voltage_monitor"]["uv_top_ohm"] = 100000
+    assert status(qualify.calculate(params), "BUD-UV-01") == "FAIL"
+
+
+def test_operating_points_conserve_energy_and_stay_labelled_estimates(params):
+    r = qualify.calculate(params)
+    pw = r["power"]
+    assert len(pw["operating_points"]) == 2 * 2 * 3 * 3
+    assert pw["max_energy_balance_error_w"] < 1e-9
+    assert pw["all_regulating"]
+    assert all(0.5 < x["efficiency_estimate"] < 1 for x in pw["operating_points"])
+    assert "efficiency" not in r  # Only labelled estimates; no unqualified efficiency claim.
+    assert "estimate" in pw["qualification"].lower()
+    # Every maximum corner is worse than its typical counterpart.
+    key = lambda x: (x["output_fet"], x["vin_v"], x["vf_v"])
+    typical = {key(x): x for x in pw["operating_points"] if x["corner"] == "typical"}
+    for x in pw["operating_points"]:
+        if x["corner"] == "maximum":
+            assert x["efficiency_estimate"] < typical[key(x)]["efficiency_estimate"]
+
+
+def test_efficiency_shortfall_is_reported_and_never_passes(params):
+    r = qualify.calculate(params)
+    assert not r["power"]["efficiency"]["meets_target"]
+    assert status(r, "BUD-EFF-01") == "FAIL"
+    params["targets"]["efficiency_fraction"] = 0.90
+    assert status(qualify.calculate(params), "BUD-EFF-01") == "CONDITIONAL"
+
+
+def test_lower_resistance_output_fet_always_loses_less(params):
+    pts = qualify.calculate(params)["power"]["operating_points"]
+    loss = {(x["output_fet"], x["corner"], x["vin_v"], x["vf_v"]): x["p_in_w"] - x["p_out_w"] for x in pts}
+    for (mpn, corner, vin, vf), w in loss.items():
+        if mpn == "DMP2005UFG-7":
+            assert w < loss[("DMP2022LSS-13", corner, vin, vf)]
+
+
+def test_dropout_and_ovp_margins_respond_to_resistance(params):
+    base = qualify.calculate(params)["power"]
+    params["power_model"]["input_path_ohm_allocation"] *= 4
+    worse = qualify.calculate(params)
+    assert worse["power"]["dropout"]["connector_v_at_vf_max_i_max"] > base["dropout"]["connector_v_at_vf_max_i_max"]
+    assert status(worse, "BUD-PWR-01") == "FAIL"
+    params["power_model"]["input_path_ohm_allocation"] /= 4
+    params["voltage_monitor"]["ov_top_ohm"] = 126000  # OVP inside the normal VBUCK range
+    assert status(qualify.calculate(params), "BUD-OV-01") == "FAIL"
+
+
+def test_fet_resistance_uses_weakest_specified_gate_drive(params):
+    fet = qualify.power.output_fet(params, "DMP2005UFG-7")
+    assert qualify.power.fet_r(fet, 4.5, "maximum") == 0.0040
+    assert qualify.power.fet_r(fet, 4.49, "maximum") == 0.0065  # no interpolation
+    assert qualify.power.fet_r(fet, 3.0, "typical") == 0.0054
+    with pytest.raises(ValueError):
+        qualify.power.fet_r(fet, 2.4, "maximum")
+
+
+def test_disconnect_topology_and_selection_are_enforced(params):
+    for key, bad in [("topology", "common_source_back_to_back_pmos"), ("selected_output_mpn", "UNKNOWN")]:
+        p = copy.deepcopy(params)
+        p["disconnect"][key] = bad
+        with pytest.raises(ValueError):
+            qualify.calculate(p)
 
 
 def test_ripple_uses_guaranteed_frequency_minimum_not_nominal(params):

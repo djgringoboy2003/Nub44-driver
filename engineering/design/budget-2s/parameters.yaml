@@ -3,7 +3,7 @@
 # UNKNOWN is intentional. Do not promote an assumption to a guaranteed limit.
 schema: nubm44-budget-parameters.v1
 meta:
-  revision: B0-feasibility
+  revision: B1-power-model  # DD-31: single output P-FET, UV backstop retarget, operating-point model
   date: '2026-10-29'
   status: ELECTRICAL_QUALIFICATION
   decision: DD-30
@@ -18,9 +18,10 @@ targets:  # Owner brief / REQ-BUD-01...09; proposed voltage/efficiency details.
   laser_v_max: 5.2
   board_c_min: 0
   board_c_max: 50
-  input_v_min: 6.0  # Proposed connector voltage; dropout remains OPEN.
+  input_v_min: 6.0  # Proposed connector voltage; dropout bound computed by automation/budget/power.py.
   input_v_nominal: 7.4
   input_v_max: 8.4
+  pack_cutoff_floor_v: 5.0  # ASSUMPTION: 2 x 2.5 V/cell rated discharge cutoff; exact pack OPEN (REQ-BUD-05).
   efficiency_fraction: 0.94  # Proposed at 7.4 V/4 A; report ALL three Vf points.
   backup_trip_a_min: 4.8  # Proposed qualification window, not normal peak limit.
   backup_trip_a_max: 5.2
@@ -45,11 +46,16 @@ buck:  # BUD-01, SLVSB14B pp.5-6. No inferred limits at an arbitrary RT value.
   frequency_hz_min: 400000
   frequency_hz_max: 560000
   high_side_current_limit_a_max: 17.0
-  high_side_r_ohm_typ: 0.032  # BOOT-PH = 3 V; not a hot maximum.
+  # p.5 table limits apply over TJ -40...125 C and are measured at pins. BOOT-PH = 3 V is the
+  # conservative condition (BOOT-PH = 6 V gives 26/40 mOhm); the boot regulator level is not specified.
+  high_side_r_ohm_typ: 0.032
   high_side_r_ohm_max: 0.060
-  low_side_r_ohm_typ: 0.019  # VIN = 12 V test condition; applicability OPEN.
+  low_side_r_ohm_typ: 0.019  # VIN = 12 V test condition; applicability at 5.4-8.4 V OPEN.
   low_side_r_ohm_max: 0.030
   min_on_s_max: 0.000000145
+  min_off_s_max: 0  # p.6, BOOT-PH >= 3 V; p.15 100% duty until BOOT-PH UVLO (3 V max) forces a refresh.
+  nonswitching_iq_a_typ: 0.0006  # p.5, VSENSE = 610 mV; switching gate drive is in `estimates`.
+  nonswitching_iq_a_max: 0.0008
   error_amplifier_gm_s_typ: 0.0013
   modulator_gm_a_per_v_typ: 21
   boot_cap_f: 0.000000100
@@ -63,6 +69,7 @@ inductor:  # BUD-05; room-temperature catalogue limits, not hot/bias guarantees.
   source: BUD-05
   l_h: 0.0000047
   tolerance_fraction: 0.20
+  dcr_ohm_typ_25c: 0.0070
   dcr_ohm_max_25c: 0.0084
   irms_a_40c_rise: 13.5
   isat_a_20pct_l_drop: 28.0
@@ -127,7 +134,7 @@ voltage_monitor:  # BUD-18, SNVSAV2B pp.3,5-6.
   falling_threshold_v: 0.3945
   falling_threshold_v_min: 0.387
   falling_threshold_v_max: 0.400
-  uv_top_ohm: 147000
+  uv_top_ohm: 130000  # DD-31: hardware backstop below the loaded 6.0 V operating floor (was 147k).
   uv_bottom_ohm: 10000
   ov_top_ohm: 134000
   ov_bottom_ohm: 10000
@@ -161,26 +168,41 @@ control:  # BUD-19/20/21 + PREORDER-08; complete interface still under design.
   complete_enable_buffer: UNKNOWN  # HCS74 drive guarantee at 3.3 V needs proof.
 
 disconnect:
-  topology: common_source_back_to_back_pmos
-  reverse_candidate: DMP2022LSS-13  # BUD-15, SO-8, qualified at -4.5 V.
-  reverse_r_ohm_max_25c: 0.016
-  reverse_gate_rating_v_abs: 12
+  # DD-31: one P-FET, source at VBUCK, gate pulled to ground when on. Its body diode blocks VBUCK -> laser;
+  # a second back-to-back FET would only block laser -> VBUCK, which a passive diode load cannot drive,
+  # and adds no forward-blocking redundancy. Resistances are 25 C datasheet values (no interpolation).
+  topology: single_pmos_source_at_vbuck
+  reverse:  # Input reverse-polarity P-FET, gate grounded: |Vgs| = VBAT_PROTECTED.
+    mpn: DMP2022LSS-13
+    source: BUD-15
+    package: SO-8
+    r_ohm_typ_at_4p5v_25c: 0.011
+    r_ohm_max_at_4p5v_25c: 0.016
+    r_ohm_typ_at_2p5v_25c: 0.017
+    r_ohm_max_at_2p5v_25c: 0.022
+    gate_rating_v_abs: 12
   candidates:
     - mpn: DMP2022LSS-13
       source: BUD-15
       package: SO-8
-      count: 2
+      r_ohm_typ_at_4p5v_25c: 0.011
+      r_ohm_max_at_4p5v_25c: 0.016
+      r_ohm_typ_at_2p5v_25c: 0.017
       r_ohm_max_at_2p5v_25c: 0.022
       gate_rating_v_abs: 12
       qg_c_typ_at_4p5v: 0.0000000281
     - mpn: DMP2005UFG-7
       source: BUD-16
       package: PowerDI3333-8
-      count: 2
+      r_ohm_typ_at_4p5v_25c: 0.0035
+      r_ohm_max_at_4p5v_25c: 0.0040
+      r_ohm_typ_at_2p5v_25c: 0.0054
       r_ohm_max_at_2p5v_25c: 0.0065
       gate_rating_v_abs: 10
       qg_c_typ_at_4p5v: 0.000000055
-  selected_output_mpn: UNKNOWN  # Do not infer adoption from the comparison order.
+  # DD-31 development selection from the generated operating-point comparison. Exposed-drain land,
+  # paste and X-ray inspection review remain OPEN; this is not an approved BOM line.
+  selected_output_mpn: DMP2005UFG-7
   driver_candidate: AO3400A
   driver_source: BUD-17
   driver_r_guaranteed_gate_v_min: 2.5
@@ -202,6 +224,27 @@ output_energy:
   laser_reconnect_max_current_a: 4.4
   laser_reconnect_peak_verified: UNKNOWN
   bulk_cap_mpn: UNKNOWN
+
+power_model:  # automation/budget/power.py. ALLOCATIONs are limits the BOM/layout must meet at temperature.
+  input_path_ohm_allocation: 0.015  # ALLOCATION: connector + fuse (hot) + copper up to the reverse FET.
+  output_copper_ohm_allocation: 0.003  # ALLOCATION: board copper VBUCK -> output terminals, excl. shunt/FET.
+  laser_wiring_ohm: 0.010  # ESTIMATE: off-board leads, same as A/B laser.wiring_resistance_ohm.
+  copper_hot_factor: 1.2  # Copper resistance at ~50 K rise (0.39 %/K); applied to the 25 C inductor DCR.
+  dropout_margin_v_allocation: 0.10  # ALLOCATION: BOOT refresh, ripple, pack transient below 6.0 V.
+  uv_margin_v_allocation: 0.10  # ALLOCATION: residual ripple/transient at the filtered UV sense node.
+  ov_margin_v_allocation: 0.10  # ALLOCATION: overshoot above the highest normal VBUCK before OVP.
+
+estimates:  # ESTIMATE, efficiency only; not datasheet limits. Bench efficiency is the evidence of record.
+  buck_transition_s: 0.000000004  # Per edge, integrated stage; same assumption as the A/B model.
+  buck_dead_time_s: 0.000000020
+  body_diode_v: 0.7
+  buck_gate_drive_w: 0.02
+  inductor_core_loss_w: 0.05  # Bourns gives no core-loss data (inductor.core_loss_w stays UNKNOWN).
+  # Consistency check of the converter terms against BUD-01 p.1 "Efficiency, VOUT = 3.3 V, FSW = 480 kHz".
+  crosscheck_vin_v: 8.0
+  crosscheck_vout_v: 3.3
+  crosscheck_i_a: 4.0
+  crosscheck_typical_curve_read: 0.955  # APPROXIMATE graph read (VIN = 8 V curve, +/-0.5 points); typical, not a limit.
 
 loop:
   # ANALYSIS CANDIDATE ONLY. No installed part or complete switching model.
