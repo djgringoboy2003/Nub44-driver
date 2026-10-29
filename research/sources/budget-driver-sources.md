@@ -65,6 +65,25 @@ installation does not alter the electrical toolchain. Downloads were not execute
 | BUD-21 | Microchip MCP1703A, DS20005122C, 2023 | https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1703-Data-Sheet-DS20005122.pdf | pp.1–4,12,35. `MCP1703AT-3302E/MB` fixed 3.3 V SOT-89: 1 GND, 2/tab VIN, 3 VOUT. Input 2.7–16 V; output capacitors 1–22 µF. Full-temperature regulation uses ±3%, plus applicable load/line terms; do not call the `02` nominal tolerance a complete ±2% rail guarantee. `budget_Microchip_MCP1703A.pdf`. |
 | BUD-22 | Vishay WSK2512, document 30108, 11 December 2023 | https://www.vishay.com/docs/30108/wsk2512.pdf | pp.1–3, four-terminal construction, exact ordering encoding, resistance-dependent package/land drawing. `WSK2512R0100FEA`: 10 mΩ, 1%, 1 W at 70 °C, ±35 ppm/°C for this value. Use T1.19 mm / 0.005–0.2 Ω land group; a generic two-pad 2512 is not equivalent. Procurement and pin-to-land review OPEN. `budget_Vishay_WSK2512.pdf`. |
 
+### Default-off interface additions (DD-32, 2026-10-29)
+
+| ID | Manufacturer / document | Primary URL | Reviewed scope / local basename |
+|---|---|---|---|
+| BUD-23 | Diodes DMG1013T, DS31784 Rev.7-2, June 2024 | https://www.diodes.com/assets/Datasheets/ds31784.pdf | p.3 (TA = 25 °C): `DMG1013T-7` P-channel −20 V, VGSS ±6 V, VGS(th) −0.5…−1.0 V, RDS max 0.7/0.9/1.3 Ω at −4.5/−2.5/−1.8 V, IDSS ≤ 100 nA at −20 V, IGSS ≤ ±2 µA at ±4.5 V. P1 EN source. Existing local copy `cmp_Diodes_DMG1013T.pdf` (earlier CMP-27 comparison). |
+
+Further limits used from existing records (no new download):
+- LEAD-04 DMG1012T (DS31783 Rev.8-2), p.2 at 25 °C: VGS(th) 0.5–1.0 V, RDS max 0.4/0.5/0.7 Ω at 4.5/2.5/1.8 V,
+  IDSS ≤ 100 nA, IGSS ≤ ±1 µA, VGSS ±6 V. These are for N1–N5.
+- BUD-18 TLV6700, p.5: VOL ≤ 250 mV at 3 mA (VDD 1.8 V) and at 5 mA (VDD 5 V); open-drain leakage ≤ 300 nA.
+- BUD-20 TLV803E, p.8–9: VIT− accuracy ±2% (−40…125 °C), hysteresis 0.9–1.5%; VOL ≤ 300 mV at 500 µA
+  (VDD 1.7 V) and at 2 mA (VDD 3.3 V); leakage ≤ 350 nA; VPOR 0.7 V; reset delay A 130/200/270 ms.
+- BUD-06 INA300, p.5: ALERT VOL ≤ 400 mV at 3 mA, leakage ≤ 1 µA at 3.3 V.
+- BUD-19 SN74HCS74, p.4–5: VCC 2–6 V; VT+/VT− rows at 2/4.5/6 V only; input leakage ≤ ±1 µA at 6 V.
+- PREORDER-08 ATtiny1614/16/17 DS40002204A: p.2 speed grade 0–10 MHz at 2.7–5.5 V. p.513: VIH 0.7 VDD,
+  VIL 0.3 VDD, VOL ≤ 0.6 V and VOH ≥ 2.4 V at VDD 3.0 V and 7.5 mA. Pin leakage is given only as typical
+  (< 0.05 µA).
+- BUD-01 TPS54821, p.3: EN absolute maximum 6 V.
+
 All eight new part prices, live stock, UK dispatch and delivered offers are `UNKNOWN`. Candidate status is
 explicit: neither output MOSFET pair nor an exact precision-divider resistor is frozen for manufacturing.
 The original A/B libraries and lands are not changed by these reviews.
@@ -89,3 +108,4 @@ they do not constitute generated CAD/simulation/bench evidence.
 | BUD-20 | `budget_TI_TLV803E.pdf` | `74ac4474d86c3597c4fff6ffa61a59e850130a40eda28085ece9765fb380e844` |
 | BUD-21 | `budget_Microchip_MCP1703A.pdf` | `6fdfc2f20167c7292c92c9c4c8003fd4d8615e0f2f90e224e1e10dce6ed65b5f` |
 | BUD-22 | `budget_Vishay_WSK2512.pdf` | `2ee8a9067539bd2cabb08845219bac55d506b1ca892a2dbaeed343dd1ed10cff` |
+| BUD-23 | `cmp_Diodes_DMG1013T.pdf` | `cf040fbdd079a8309c61065c347b6e9f85c3aed460fc3cd7a407fda9daf2f820` |

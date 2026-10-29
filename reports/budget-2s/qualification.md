@@ -84,7 +84,7 @@ Loss breakdown at the efficiency condition (7.4 V input, 4.5 V diode, 4 A, typic
 | vbuck_aux_loads | 0.0310 |
 | buck_quiescent | 0.0044 |
 
-Estimate 93.38% versus the 94% target: **below target**; owner decision required (DD-31). Bench efficiency is the evidence of record.
+Estimate 93.38% versus the 93% target: meets the target as an estimate only. Bench efficiency is the evidence of record.
 
 Converter terms alone, 8 V to 3.3 V, 4 A, typical corner, this inductor: 94.99% versus an approximate read of 95.5% from BUD-01's typical curve (-0.51 points).
 This is a plausibility check of the estimate terms, not a guarantee. It does not include the shunt, protection
@@ -100,6 +100,52 @@ FETs, input path or control load.
 
 Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's
 exposed-drain land, paste and X-ray inspection review remain OPEN.
+
+## Default-off interface (static, DD-32)
+
+nFAULT is the wired-AND fault line and the latch CLR. Series N-MOSFET pairs N1/N2 (output P-FET gate) and
+N3/N4 (gate of P1, which sources the EN divider from VCTRL) each need ARM_Q **and** nFAULT high, so any
+asserted fault turns both outputs off without relying on the latch. N5 holds nFAULT low unless firmware
+drives its permit pin low. Worst cases use the control-rail screen 3.0769–3.5231 V. Static only; timing and energy are BUD-SAFE-01.
+
+| Check | Worst case | Limit | Margin | Basis |
+|---|---:|---:|---:|---|
+| nFAULT leakage out of node, datasheet sum | 6.05e-06 A | ≤1e-05 A | 3.95e-06 A | 25 C maxima of all sinks and loads |
+| nFAULT leakage into node, datasheet sum | 4e-06 A | ≤5e-06 A | 1e-06 A | 25 C maxima of all inputs |
+| nFAULT high (no fault) at VCTRL 3.0769 V | 2.444 V | ≥2.311 V | 0.1337 V | HCS74 VT+ (interpolated), N2/N4 RDS drive, MCU VIH; leakage allocation |
+| nFAULT high (no fault) at VCTRL 3.5231 V | 2.811 V | ≥2.605 V | 0.2058 V | HCS74 VT+ (interpolated), N2/N4 RDS drive, MCU VIH; leakage allocation |
+| nFAULT with interlock loop open | 0.235 V | ≤0.4 V | 0.165 V | pulldown against input-leakage allocation |
+| nFAULT low, TLV6700 OUTA/OUTB asserting at VCTRL 3.0769 V | 0.0258 V | ≤0.4 V | 0.3742 V | BUD-18 p.5; VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, TLV6700 OUTA/OUTB asserting at VCTRL 3.5231 V | 0.02948 V | ≤0.4 V | 0.3705 V | BUD-18 p.5; VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, TLV803EA29 RESET asserting at VCTRL 1.7000 V | 0.104 V | ≤0.4 V | 0.296 V | BUD-20 p.8 (VDD 1.7 V row); VOL scaled linearly (ASSUMPTION); latch unspecified, N2/N4 off only |
+| nFAULT low, TLV803EA29 RESET asserting at VCTRL 2.9886 V | 0.1805 V | ≤0.4 V | 0.2195 V | BUD-20 p.8 (VDD 1.7 V row); VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, INA300 ALERT asserting at VCTRL 3.0769 V | 0.04129 V | ≤0.4 V | 0.3587 V | BUD-06 p.5; VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, INA300 ALERT asserting at VCTRL 3.5231 V | 0.04718 V | ≤0.4 V | 0.3528 V | BUD-06 p.5; VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, DMG1012T inhibit N5 asserting at VCTRL 3.0769 V | 0.0002168 V | ≤0.4 V | 0.3998 V | LEAD-04 p.2; VOL scaled linearly (ASSUMPTION) |
+| nFAULT low, DMG1012T inhibit N5 asserting at VCTRL 3.5231 V | 0.0002477 V | ≤0.4 V | 0.3998 V | LEAD-04 p.2; VOL scaled linearly (ASSUMPTION) |
+| ARM_Q load current | 8.976e-06 A | ≤2e-05 A | 1.102e-05 A | BUD-19 levels hold only at |IO| <= 20 uA |
+| N1/N3 gate when armed | 2.938 V | ≥1.9 V | 1.038 V | VOH >= VCC - 0.1 V; RDS specified at 1.8 V |
+| N1/N3 gate when cleared | 0.1099 V | ≤0.4 V | 0.2901 V | VOL <= 0.1 V plus gate leakage |
+| Series pair leakage, datasheet | 1e-07 A | ≤1e-05 A | 9.9e-06 A | LEAD-04 IDSS, 25 C |
+| Output P-FET |Vgs| when off | 0.022 V | ≤0.2 V | 0.178 V | pull-up to VBUCK against the leakage allocation |
+| Output P-FET |Vgs| when on | 3.835 V | ≥2.6 V | 1.235 V | minimum operating VBUCK; 2.5 V is the resistance condition used by the power model |
+| N1/N2 drain voltage at a buck switch-short | 8.4 V | ≤20 V | 11.6 V | VBUCK can reach the pack voltage |
+| P1 |Vgs| when off | 0.12 V | ≤0.4 V | 0.28 V | BUD-23 VGS(th) against leakage allocation |
+| P1 |Vgs| when on | 3.076 V | ≥2.6 V | 0.4765 V | RDS specified at -2.5 V |
+| P1 gate-source voltage rating | 3.523 V | ≤6 V | 2.477 V | BUD-23 VGSS |
+| EN when armed | 1.538 V | ≥1.36 V | 0.1784 V | BUD-01 p.5 rising maximum; internal pull-up ignored (it only helps) |
+| EN absolute maximum | 1.984 V | ≤6 V | 4.016 V | BUD-01 p.3 |
+| EN pull-up tolerated when disarmed (x typical) | 86.96 x | ≥10 x | 76.96 x | BUD-01 gives the pull-up as typical only |
+| EN with any logic state at VCTRL <= 1.7 V | 0.9075 V | ≤1 V | 0.0925 V | P1 can only source VCTRL; holds below the supervisor's specified range |
+| Supervisor falling threshold minimum | 2.871 V | ≥2.73 V | 0.1414 V | HCS74 2.0 V and ATtiny 10 MHz 2.7 V minimum supplies |
+| Supervisor release threshold maximum | 3.033 V | ≤3.047 V | 0.01349 V | control-rail screen minimum |
+| N5 gate with MCU pin tristated | 2.877 V | ≥1.9 V | 0.9769 V | default inhibit; MCU leakage ASSUMPTION |
+| N5 gate with MCU permitting | 0.002898 V | ≤0.4 V | 0.3971 V | PREORDER-08 VOL scaled linearly (ASSUMPTION) |
+| Latch CLK high from MCU | 3.077 V | ≥2.311 V | 0.7661 V | PREORDER-08 VOH scaled linearly (ASSUMPTION); HCS74 VT+ interpolated |
+| Latch CLK low from MCU | 8e-05 V | ≤0.4585 V | 0.4584 V | PREORDER-08 VOL scaled linearly (ASSUMPTION); HCS74 VT- interpolated |
+| Back-powered VCTRL | 0.3 V | ≤0.4 V | 0.1 V | injection allocation into the VCTRL bleed resistor |
+
+Assumptions: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts.
 
 ## Stored energy and discharge
 
@@ -117,10 +163,11 @@ Voltage and energy arithmetic do not establish laser safety. See the budget faul
 |---|---|---|
 | BUD-CALC-01 | CONDITIONAL | Setpoint tolerance screen; exact resistor MPNs and hot shunt envelope need qualification. |
 | BUD-PWR-01 | CONDITIONAL | Maximum-resistance model regulates 4.1321 A at 5.2 V down to 5.7820 V input (0.2180 V margin, 0.1 V required). Conditional on the input/output resistance allocations, boot-regulator level and low-side resistance below 12 V; thermal/bench dropout OPEN. |
-| BUD-EFF-01 | FAIL | Estimate 93.38% at 7.4 V input, 4.5 V diode, 4 A, typical corner versus 94% target. Owner decision: accept a lower budget target or change the architecture; bench efficiency decides. |
+| BUD-EFF-01 | CONDITIONAL | Estimate 93.38% at 7.4 V input, 4.5 V diode, 4 A, typical corner versus 93% target. Estimate only; bench efficiency decides. |
 | BUD-UV-01 | CONDITIONAL | UV falling 5.3984–5.6202 V versus loaded sense minimum 5.8368 V at 6 V input (0.2166 V margin, 0.1 V required; floor 5 V). Pack rating, firmware cutoff OPEN. |
 | BUD-OV-01 | CONDITIONAL | OVP rising minimum 5.6832 V versus highest normal VBUCK 5.4699 V at 4.4 A (0.2133 V margin). Open-load response and laser survival OPEN. |
-| BUD-SAFE-01 | OPEN | Qualify default-off gate drive, fault latch, output disconnect, total response and single faults. |
+| BUD-IF-01 | CONDITIONAL | 34/34 static default-off checks pass; smallest voltage margin 0.0135 V (Supervisor release threshold maximum). Conditional on: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts. |
+| BUD-SAFE-01 | OPEN | Total fault response time and energy, output-FET turn-off, single and latent faults (power-on self-test), interlock cable faults and bench fault injection. |
 | BUD-LOOP-01 | OPEN | Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open. |
 | BUD-CAD-01 | OPEN | Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet. |
 | BUD-FW-01 | OPEN | Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified. |

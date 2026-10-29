@@ -18,14 +18,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "automation"))
 
-from budget import power  # noqa: E402
+from budget import interface, power  # noqa: E402
 from nubm44 import evidence  # noqa: E402
 from nubm44.variants import BUDGET_VARIANT, sources_for  # noqa: E402
 
 PARAMETERS = sources_for(BUDGET_VARIANT).parameters
 OUT = ROOT / "reports/budget-2s"
 REQUIRED_TOP = {"targets", "buck", "inductor", "current_sense", "backup", "voltage_monitor", "control",
-                "disconnect", "output_energy", "power_model", "estimates", "loop", "procurement"}
+                "disconnect", "interface", "output_energy", "power_model", "estimates", "loop", "procurement"}
 
 
 def number(value, label: str, *, zero_ok: bool = False) -> float:
@@ -195,13 +195,14 @@ def calculate(p: dict) -> dict:
     vb = voltage_bounds(p)
     rr = ripple(p)
     pw = power.evaluate(p, cc["max_a"], vb["uv"], vb["ov"])
+    itf = interface.evaluate(p, control_rail(p), pw["gate_drive"]["output_fet_vgs_abs_min_v"])
     e = p["output_energy"]
     vcap = vb["ov"]["max_v"]
     return {"schema": "nubm44-budget-qualification.v1", "variant": BUDGET_VARIANT,
             "stage": "ELECTRICAL_QUALIFICATION", "manufacturing_ready": False,
             "scope": "candidate calculations only; no budget schematic, PCB, firmware or bench validation",
             "control_rail_screen_v": list(control_rail(p)), "current": cc,
-            "backup": backup_bounds(p, cc), "voltage_monitor": vb, "ripple": rr, "power": pw,
+            "backup": backup_bounds(p, cc), "voltage_monitor": vb, "ripple": rr, "power": pw, "interface": itf,
             "energy": {"upstream_j_at_ov_max": 0.5 * e["bulk_cap_f_max_analysis"] * vcap ** 2,
                        "upstream_j_at_switch_short_8p4v": 0.5 * e["bulk_cap_f_max_analysis"] * p["targets"]["input_v_max"] ** 2,
                        "laser_side_j_cap_only_at_ov_max": 0.5 * e["laser_side_cap_f"] * vcap ** 2,
@@ -210,14 +211,15 @@ def calculate(p: dict) -> dict:
                        "bleeder_fault_w_at_8p4v": p["targets"]["input_v_max"] ** 2
                        / (e["bleeder_ohm"] * (1 - e["bleeder_tolerance_fraction"])),
                        "qualification": "capacitance envelope is an ASSUMPTION; peak/reconnection/inductive energy UNKNOWN"},
-            "unknown_inputs": unknowns(p), "readiness": readiness(p, cc, pw)}
+            "unknown_inputs": unknowns(p), "readiness": readiness(p, cc, pw, itf)}
 
 
-def readiness(p: dict, cc: dict, pw: dict) -> list[dict]:
+def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
     """Computed gates: existing A/B PASS results cannot satisfy any budget gate."""
     def row(identifier, status, detail):
         return {"id": identifier, "status": status, "detail": detail}
     t, dr, uv, ov, eff = p["targets"], pw["dropout"], pw["uv"], pw["ov"], pw["efficiency"]
+    small = itf["smallest_voltage_margin"]
     conditional = lambda ok: "CONDITIONAL" if ok else "FAIL"
     return [
         row("BUD-CALC-01", conditional(cc["conditional_accuracy_ok"]),
@@ -238,7 +240,13 @@ def readiness(p: dict, cc: dict, pw: dict) -> list[dict]:
         row("BUD-OV-01", conditional(ov["ok"]),
             f"OVP rising minimum {ov['rising_min_v']:.4f} V versus highest normal VBUCK {ov['vbuck_normal_peak_v']:.4f} V "
             f"at {t['normal_peak_a']:g} A ({ov['margin_v']:.4f} V margin). Open-load response and laser survival OPEN."),
-        row("BUD-SAFE-01", "OPEN", "Qualify default-off gate drive, fault latch, output disconnect, total response and single faults."),
+        row("BUD-IF-01", conditional(itf["ok"]),
+            f"{sum(x['ok'] for x in itf['checks'])}/{len(itf['checks'])} static default-off checks pass"
+            + (f" (failed: {', '.join(itf['failed'])})" if itf["failed"] else "")
+            + f"; smallest voltage margin {small['margin_v']:.4f} V ({small['check']}). Conditional on: "
+            + "; ".join(itf["assumptions"]) + "."),
+        row("BUD-SAFE-01", "OPEN", "Total fault response time and energy, output-FET turn-off, single and latent "
+            "faults (power-on self-test), interlock cable faults and bench fault injection."),
         row("BUD-LOOP-01", "OPEN", "Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open."),
         row("BUD-CAD-01", "OPEN", "Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet."),
         row("BUD-FW-01", "OPEN", "Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified."),
@@ -301,6 +309,17 @@ def markdown(r: dict, p: dict) -> str:
               f"| Reverse P-FET \\|Vgs\\| maximum | {gd['reverse_fet_vgs_abs_max_v']:g} V | rating ±{gd['reverse_fet_gate_rating_v']:g} V |",
               "", "Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's",
               "exposed-drain land, paste and X-ray inspection review remain OPEN.", ""]
+    itf = r["interface"]
+    lines += ["## Default-off interface (static, DD-32)", "",
+              "nFAULT is the wired-AND fault line and the latch CLR. Series N-MOSFET pairs N1/N2 (output P-FET gate) and",
+              "N3/N4 (gate of P1, which sources the EN divider from VCTRL) each need ARM_Q **and** nFAULT high, so any",
+              "asserted fault turns both outputs off without relying on the latch. N5 holds nFAULT low unless firmware",
+              "drives its permit pin low. Worst cases use the control-rail screen "
+              f"{r['control_rail_screen_v'][0]:.4f}–{r['control_rail_screen_v'][1]:.4f} V. Static only; timing and energy are BUD-SAFE-01.", "",
+              "| Check | Worst case | Limit | Margin | Basis |", "|---|---:|---:|---:|---|"]
+    lines += [f"| {x['check']} | {x['value']:.4g} {x['unit']} | {'≥' if x['kind'] == 'min' else '≤'}{x['limit']:.4g} {x['unit']} | "
+              f"{'' if x['ok'] else '**FAIL** '}{x['margin']:.4g} {x['unit']} | {x['basis']} |" for x in itf["checks"]]
+    lines += ["", "Assumptions: " + "; ".join(itf["assumptions"]) + ".", ""]
     en = r["energy"]
     lines += ["## Stored energy and discharge", "",
               f"At the assumed {energy['bulk_cap_f_max_analysis']*1e6:g} µF maximum: {1000*en['upstream_j_at_ov_max']:.4f} mJ at calculated OVP maximum,",
@@ -334,7 +353,7 @@ def main(argv: list[str] | None = None) -> int:
     jp.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
     md.write_text(markdown(result, p), encoding="utf-8")
     evidence.write(evidence.build(
-        "budget-qualification", inputs=[PARAMETERS, Path(__file__), Path(power.__file__),
+        "budget-qualification", inputs=[PARAMETERS, Path(__file__), Path(power.__file__), Path(interface.__file__),
             ROOT / "automation/nubm44/variants.py", ROOT / "automation/nubm44/evidence.py",
             ROOT / "research/sources/budget-driver-sources.md"],
         outputs=[jp, md], tools=evidence.python_tools(["PyYAML"])), manifest)

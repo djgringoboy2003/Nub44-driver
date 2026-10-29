@@ -77,7 +77,7 @@ results and the existing dashboard apply only to the original single-cell circui
 | `engineering/previous-design-audit.md` | Audit of the earlier concept (every part rejected, with evidence) |
 | `research/` | Topic reports, source tables (`sources/`), local datasheet copies (`datasheets/`, git-ignored) |
 | `automation/nubm44/` | Python package: S-expression I/O, KiCad library access, symbol/footprint generators, schematic writer, calculators |
-| `automation/budget/`, `reports/budget-2s/` | Budget electrical qualification (`qualify.py`), operating-point/dropout/margin model (`power.py`) and preliminary ngspice loop model; generated results and hash manifests |
+| `automation/budget/`, `reports/budget-2s/` | Budget electrical qualification (`qualify.py`), operating-point/dropout/margin model (`power.py`), static default-off interface checks (`interface.py`) and preliminary ngspice loop model; generated results and hash manifests |
 | `automation/setup/build_library.py` | Generates the project symbol and footprint libraries |
 | `automation/schematic/build_schematic.py` | Writes both schematics from `connectivity.yaml`, runs ERC and the netlist comparison |
 | `automation/placement/` | `build_pcb.py` (pipeline stages place/route/finish/drc/render) and `pcb_builder.py` (KiCad-side builder); `floorplan.py` (fast placement check); `place_opt.py` (small-part optimiser, writes `pos` entries); `grid_route.py` (negotiated-congestion grid router, writes the generated `grid_routes` section) |

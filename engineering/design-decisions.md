@@ -443,3 +443,50 @@ input path and control load. No REQ-BUD-07 change is made. The owner chooses:
 added cost and complexity). The 10 mΩ shunt sets the backup-trip accuracy and should not be reduced alone.
 Recommendation: (a). About 0.1 W of extra loss is thermally negligible on an unrestricted board and costs well
 under 1% of runtime.
+
+**Owner decision (2026-10-29): option (a).** The budget target becomes ≥ 93% at 7.4 V input, typical diode
+(4.5 V point) and 4 A, judged by bench measurement (`targets.efficiency_fraction`). The 93% value was proposed by
+Claude Code because the owner chose (a) without a figure; the owner may change it. All corners stay reported.
+The estimate's margin is small (about 0.4 points at the typical corner; the maximum-resistance corner is near
+90.6%), so a prototype built with near-maximum parts may measure below target.
+
+## DD-32 Budget default-off interface (engineering, 2026-10-29)
+
+Engineering proposal by Claude Code within DD-30; it addresses BUD-ISS-03 of [budget-2s-design.md](budget-2s-design.md).
+Margins are generated in `reports/budget-2s/qualification.md` by `automation/budget/interface.py`.
+
+**Problem.** The SN74HCS74 latch guarantees its output levels only at |IO| ≤ 20 µA and is specified only for
+VCC ≥ 2 V. TPS54821 EN has an internal pull-up whose current is given only as typical (an open EN enables
+the converter). Driving EN and the output-FET driver from the latch alone would make default-off depend on an
+unspecified supply window, a typical-only current and the latch never sticking high.
+
+**Interface.**
+- **nFAULT** is the wired-AND fault line and the latch CLR. Its sources are the TLV803 reset, TLV6700 UV/OV,
+  INA300 alert and N5. It is pulled up from VCTRL through the external interlock loop, split 1.0 kΩ / 9.1 kΩ
+  around the connector, with a 47 kΩ pulldown, so an open loop is a fault.
+- **Latch:** D and PRE are tied high. The MCU's arm edge drives CLK, and Q (ARM_Q) feeds only two 10 kΩ /
+  1 MΩ gate networks.
+- **Output disconnect:** N1 (gate ARM_Q) in series with N2 (gate nFAULT) pulls the output P-FET gate against
+  its 2.2 kΩ pull-up to VBUCK.
+- **Buck enable:** N3 (ARM_Q) in series with N4 (nFAULT) pulls the gate of P1 (DMG1013T-7, source at VCTRL,
+  10 kΩ gate pull-up). P1 drives EN through 10 kΩ, with 10 kΩ from EN to ground. The pulldown tolerates
+  roughly 87× the typical EN pull-up. EN can never exceed half of VCTRL plus a small pull-up drop, so it stays
+  below the guaranteed disable level while VCTRL < 1.7 V, the lowest supply at which the supervisor output is specified. This holds
+  whatever state the logic is in.
+- **N5** (firmware permit) holds nFAULT low through a 100 kΩ gate pull-up. The MCU must drive its pin low to
+  permit emission, so MCU reset, a tristated pin or a watchdog reset clears the latch. Re-arming then needs a
+  new arm edge.
+- **Parts and bleed:** N1–N5 are DMG1012T-7 (RDS specified at 1.8 V). A 15 kΩ VCTRL bleed bounds back-powering.
+
+Every asserted fault turns both outputs off through the series pairs, independent of the latch. A latch stuck
+high leaves fault, interlock and firmware-inhibit shutdown intact; only arming loses its second condition. The
+34 static checks pass, conditional on these assumptions:
+- latch thresholds interpolated between TI's 2 V and 4.5 V rows;
+- open-drain VOL/VOH scaled linearly from their test currents;
+- leakage allocations covering 25 °C datasheet maxima;
+- typical-only EN pull-up and MCU pin leakage;
+- allocations for the interlock loop and back-power injection.
+
+The smallest voltage margin is the supervisor release threshold against the conservative rail screen (about
+13 mV beyond its 30 mV allocation). Timing, fault energy, single and latent faults (a power-on self-test of the
+series pairs) and interlock cable faults remain BUD-SAFE-01 / BUD-ISS-04.

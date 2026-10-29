@@ -128,12 +128,55 @@ def test_operating_points_conserve_energy_and_stay_labelled_estimates(params):
             assert x["efficiency_estimate"] < typical[key(x)]["efficiency_estimate"]
 
 
-def test_efficiency_shortfall_is_reported_and_never_passes(params):
+def test_efficiency_estimate_is_conditional_at_most_and_shortfall_fails(params):
     r = qualify.calculate(params)
-    assert not r["power"]["efficiency"]["meets_target"]
-    assert status(r, "BUD-EFF-01") == "FAIL"
-    params["targets"]["efficiency_fraction"] = 0.90
-    assert status(qualify.calculate(params), "BUD-EFF-01") == "CONDITIONAL"
+    assert params["targets"]["efficiency_fraction"] == 0.93  # owner decision, DD-31 option (a)
+    assert r["power"]["efficiency"]["meets_target"]
+    assert status(r, "BUD-EFF-01") == "CONDITIONAL"
+    params["targets"]["efficiency_fraction"] = 0.94  # the earlier target is still detected as unmet
+    assert status(qualify.calculate(params), "BUD-EFF-01") == "FAIL"
+
+
+def interface_checks(r):
+    return {x["check"]: x for x in r["interface"]["checks"]}
+
+
+def test_default_off_interface_passes_static_checks_conditionally(params):
+    r = qualify.calculate(params)
+    assert r["interface"]["ok"] and not r["interface"]["failed"]
+    assert status(r, "BUD-IF-01") == "CONDITIONAL"
+    assert status(r, "BUD-SAFE-01") == "OPEN"
+    assert len(r["interface"]["assumptions"]) >= 4
+    checks = interface_checks(r)
+    # Both supervisor-asserting corners and both rail corners are evaluated.
+    assert sum("TLV803EA29" in name for name in checks) == 2
+    assert sum(name.startswith("nFAULT high") for name in checks) == 2
+
+
+@pytest.mark.parametrize("section, key, value, failing", [
+    ("interface", "fault_pulldown_ohm", 470000, "nFAULT with interlock loop open"),
+    ("interface", "en_pulldown_ohm", 200000, "EN pull-up tolerated when disarmed (x typical)"),
+    ("interface", "nmos_gate_pulldown_ohm", 100000, "ARM_Q load current"),
+    ("interface", "en_series_ohm", 1000, "EN with any logic state at VCTRL <= 1.7 V"),
+    ("interface", "vctrl_bleed_ohm", 100000, "Back-powered VCTRL"),
+    ("control", "supervisor_threshold_v", 3.0, "Supervisor release threshold maximum"),
+    ("interface", "fault_pullup_ohm", 3300, "nFAULT low, TLV803EA29 RESET asserting at VCTRL 2.9886 V"),
+])
+def test_interface_checks_detect_bad_networks(params, section, key, value, failing):
+    params[section][key] = value
+    r = qualify.calculate(params)
+    failed = r["interface"]["failed"]
+    assert any(name.startswith(failing.split(" at VCTRL")[0]) for name in failed), failed
+    assert status(r, "BUD-IF-01") == "FAIL"
+
+
+def test_latch_thresholds_interpolate_but_never_extrapolate():
+    rows, vals = [2.0, 4.5, 6.0], [0.3, 0.9, 1.2]
+    assert qualify.interface.interp(3.25, rows, vals) == pytest.approx(0.6)
+    assert qualify.interface.interp(4.5, rows, vals) == pytest.approx(0.9)
+    for outside in (1.7, 6.5):
+        with pytest.raises(ValueError):
+            qualify.interface.interp(outside, rows, vals)
 
 
 def test_lower_resistance_output_fet_always_loses_less(params):

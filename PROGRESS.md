@@ -3,7 +3,8 @@
 ## Current state (handover)
 
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
-Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model). The pre-order, quote, GBP/UK and Project 450
+Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
+efficiency decision; and DD-32: static default-off interface). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -66,15 +67,25 @@ added loss but no protection), with DMP2005UFG-7 selected for development. The U
 hardware UV is a backstop below the loaded 6.0 V floor. A new operating-point model (`automation/budget/power.py`)
 replaces the resistance-only screen. Results, at the maximum-resistance corner and conditional on the 15 mΩ
 input and 3 mΩ output-copper allocations: regulation at 5.2 V / maximum setpoint down to about 5.78 V input;
-UV and OVP margins about 0.21 V each. The efficiency **estimate** at 7.4 V / 4.5 V / 4 A is about 93.4%,
-**below the 94% target**. That needs an owner decision (below). The converter terms agree with TI's typical curve
-to within about half a point.
+UV and OVP margins about 0.21 V each. The efficiency **estimate** at 7.4 V / 4.5 V / 4 A is about 93.4%. That
+was below the proposed 94%, and the owner chose option (a): a budget target of ≥ 93%, judged by bench
+measurement (the 93% value was proposed by Claude Code). The estimate margin is only about 0.4 points. The
+converter terms agree with TI's typical curve to within about half a point.
 
-Layout is still held for BUD-ISS-03/04 (the default-off buffer/driver is incomplete and total shutdown/fault
-energy is unbounded) and for the efficiency decision. No budget connectivity, PCB, firmware adaptation or
+DD-32 (2026-10-29): the static default-off interface is designed (BUD-ISS-03). The fault line nFAULT (supervisor,
+UV/OV, INA300 alert, firmware-permit inhibit, external interlock loop) and the latch output each drive one
+DMG1012T of a series pair. N1/N2 hold the output P-FET and N3/N4 hold P1, which sources the EN divider from
+VCTRL. Any fault therefore turns both outputs off without relying on the latch. The firmware-permit FET
+defaults to inhibit during MCU reset, so re-arming needs a new edge. EN stays below its guaranteed disable
+level at VCTRL < 1.7 V whatever the logic state. `automation/budget/interface.py` passes 34/34 static checks
+(BUD-IF-01 CONDITIONAL). Its assumptions are listed in the report: interpolated latch thresholds at 3.3 V,
+linearly scaled VOL, 25 °C leakage allocations, typical-only EN pull-up and MCU leakage. The smallest margin
+is the supervisor release threshold, about 13 mV beyond its 30 mV allocation.
+
+Layout is still held for BUD-ISS-04: total shutdown time and fault energy are unbounded, including the output
+P-FET turn-off through its 2.2 kΩ pull-up. No budget connectivity, PCB, firmware adaptation or
 manufacturing package exists. All nine REQ-BUD requirements and physical qualification remain OPEN.
-`qualify.py` reports twelve unresolved prerequisites and exits 1 deliberately: four CONDITIONAL, one FAIL
-(efficiency estimate), seven OPEN. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
+`qualify.py` reports thirteen unresolved prerequisites and exits 1 deliberately: six CONDITIONAL, seven OPEN. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
 four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
 still cover A/B only; their PASS results cannot qualify this circuit.
 
@@ -103,7 +114,8 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 - **New tooling:** sourcing verification, bench-test recording (`automation/bench/bench.py`), status dashboard
   (`reports/dashboard/index.html`), CI.
 
-**Owner decisions in force:** battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
+**Owner decisions in force:** budget-2s efficiency target ≥ 93% at 7.4 V / typical diode / 4 A, bench-judged
+(DD-31, 2026-10-29); battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
 (DD-13); efficiency target ≥ 94 % (DD-26); evaluation board first, compact parked (DD-27).
 
 **Decisions now required from the owner:**
@@ -116,10 +128,6 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
    (`engineering/pcb-review-2026-10-26.md`).
 5. **Fab choice** (PCBWay preferred for assembly) and acceptance of the pre-order review results.
-6. **Budget-2s efficiency target (REQ-BUD-07, DD-31):** the estimate at 7.4 V / typical diode / 4 A is about 93.4%,
-   below 94%, because of the shunt, protection FETs, input path and control load that the converter does not
-   include. Either (a) accept a lower budget target judged by bench measurement (recommended: about 0.1 W extra
-   loss, under 1% runtime), or (b) keep 94% and change the architecture, at added cost and complexity.
 
 **Open limitations.**
 1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
@@ -138,10 +146,11 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 ## Next actions (in order)
 
 **Active budget implementation track:** read `engineering/budget-2s-design.md`, its issue/fault matrices and
-the generated qualification/loop reports. BUD-ISS-01/02 are mitigated in calculation (DD-31); record the
-owner's efficiency decision (owner decision 6). Next resolve BUD-ISS-03/04: guaranteed default-off
-buffer/driver (keep SN74HCS74 loads ≤ 20 µA; margin the TPS54821 EN pulldown against its typical-only pull-up
-current) and fault delay/SOA/energy. Choose a fuse and connector that meet the input allocation. Then qualify
+the generated qualification/loop reports. BUD-ISS-01/02/03 are mitigated in calculation (DD-31, DD-32), and
+the owner set a 93% bench-judged efficiency target. Next resolve BUD-ISS-04: chain the fault-detection delays,
+the series-pair and output P-FET turn-off (2.2 kΩ pull-up against its gate charge), buck EN shutdown,
+inductor/bulk-capacitor energy and SOA into a total response and energy bound. Use guaranteed limits where
+given; mark the rest UNKNOWN for the bench. Choose a fuse and connector that meet the input allocation. Then qualify
 startup/flash/open/short/reconnect and exact passive corners; the preliminary AC model cannot prove these.
 Only then create separate connectivity/library/placement sources and extend CAD, firmware, sourcing/export
 and release tooling for this independent circuit. Obtain complete landed GBP quotes for 3/5 working units;
@@ -188,6 +197,23 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget-2s efficiency decision and default-off interface (DD-31 owner decision, DD-32)
+- The owner chose DD-31 option (a) without a figure. Set `targets.efficiency_fraction` to 0.93 (proposed by Claude
+  Code; owner may change it). BUD-EFF-01 is now CONDITIONAL with about 0.4 points of estimate margin.
+  REQ-BUD-07 has been rewritten as an owner deviation and stays OPEN until bench measurement.
+- Designed the default-off interface for BUD-ISS-03 (DD-32). nFAULT is the wired-AND fault line and the HCS74
+  CLR, with a split pull-up around the external interlock loop and a 47 kΩ pulldown. Series DMG1012T pairs
+  N1/N2 (output P-FET gate) and N3/N4 (gate of DMG1013T P1, which sources the EN 10k/10k divider from VCTRL)
+  need both ARM_Q and nFAULT. N5 is a firmware-permit inhibit that defaults on. A 15 kΩ VCTRL bleed bounds
+  back-power. Rejected options: diode-OR to the fault line (Schottky leakage up to 30 µA; silicon forward drop
+  above the driver threshold), AO3400A logic switches (5 µA leakage at 55 °C dominated the fault-line budget)
+  and resistive AND networks (not realisable with the required thresholds).
+- Added `automation/budget/interface.py` (34 static checks, explicit assumptions, refuses threshold
+  extrapolation) and BUD-IF-01. BUD-SAFE-01 now lists only timing/energy/single-fault/self-test work.
+  Registered BUD-23 (DMG1013T, existing local copy, hash) and the extra limits used from LEAD-04, BUD-06/18/19/20
+  and PREORDER-08.
+- Checks: see the commit message.
 
 ### 2026-10-29: budget-2s output disconnect, UV backstop and operating-point model (DD-31)
 - Claude Code continued from the uncommitted Codex checkpoint. It verified the checkpoint (236 tests pass, both

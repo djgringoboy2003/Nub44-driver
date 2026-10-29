@@ -22,7 +22,9 @@ targets:  # Owner brief / REQ-BUD-01...09; proposed voltage/efficiency details.
   input_v_nominal: 7.4
   input_v_max: 8.4
   pack_cutoff_floor_v: 5.0  # ASSUMPTION: 2 x 2.5 V/cell rated discharge cutoff; exact pack OPEN (REQ-BUD-05).
-  efficiency_fraction: 0.94  # Proposed at 7.4 V/4 A; report ALL three Vf points.
+  # Owner decision 2026-10-29 (DD-31 option a): lower budget target, judged by bench measurement at
+  # 7.4 V / typical diode / 4 A. Was 0.94. All corners stay reported.
+  efficiency_fraction: 0.93
   backup_trip_a_min: 4.8  # Proposed qualification window, not normal peak limit.
   backup_trip_a_max: 5.2
   board_thermal_trip_c: 85
@@ -56,6 +58,11 @@ buck:  # BUD-01, SLVSB14B pp.5-6. No inferred limits at an arbitrary RT value.
   min_off_s_max: 0  # p.6, BOOT-PH >= 3 V; p.15 100% duty until BOOT-PH UVLO (3 V max) forces a refresh.
   nonswitching_iq_a_typ: 0.0006  # p.5, VSENSE = 610 mV; switching gate drive is in `estimates`.
   nonswitching_iq_a_max: 0.0008
+  en_rising_v_max: 1.26  # p.5; no rising minimum is given.
+  en_falling_v_min: 1.10  # p.5; below this the converter is guaranteed disabled.
+  en_pullup_a_typ: 0.00000115  # p.5, EN = 1.1 V. TYPICAL ONLY: no maximum specified.
+  en_hysteresis_a_typ: 0.0000033  # p.5, EN = 1.3 V. TYPICAL ONLY.
+  en_abs_max_v: 6.0  # p.3
   error_amplifier_gm_s_typ: 0.0013
   modulator_gm_a_per_v_typ: 21
   boot_cap_f: 0.000000100
@@ -189,6 +196,7 @@ disconnect:
       r_ohm_max_at_4p5v_25c: 0.016
       r_ohm_typ_at_2p5v_25c: 0.017
       r_ohm_max_at_2p5v_25c: 0.022
+      vth_v_min_abs: 0.6  # p.2, VGS(th) -0.6...-1.1 V
       gate_rating_v_abs: 12
       qg_c_typ_at_4p5v: 0.0000000281
     - mpn: DMP2005UFG-7
@@ -198,6 +206,7 @@ disconnect:
       r_ohm_max_at_4p5v_25c: 0.0040
       r_ohm_typ_at_2p5v_25c: 0.0054
       r_ohm_max_at_2p5v_25c: 0.0065
+      vth_v_min_abs: 0.3  # p.2, VGS(th) -0.3...-0.9 V
       gate_rating_v_abs: 10
       qg_c_typ_at_4p5v: 0.000000055
   # DD-31 development selection from the generated operating-point comparison. Exposed-drain land,
@@ -224,6 +233,79 @@ output_energy:
   laser_reconnect_max_current_a: 4.4
   laser_reconnect_peak_verified: UNKNOWN
   bulk_cap_mpn: UNKNOWN
+
+interface:  # DD-32 default-off interface proposal; margins computed by automation/budget/interface.py.
+  # nFAULT: wired-AND fault line = HCS74 CLR. Pull-up from VCTRL is split around the external interlock
+  # loop (1.0k on the VCTRL side, 9.1k on the nFAULT side); an open loop lets the pulldown clear the latch.
+  fault_pullup_ohm: 10100
+  interlock_loop_ohm_max: 100  # ALLOCATION: external contacts and cable.
+  fault_pulldown_ohm: 47000
+  # Open-drain sources. Low level: VOL at its test current scaled linearly to the actual sink current
+  # (ASSUMPTION: output transistor in its triode region), or a switch resistance.
+  fault_sinks:
+    - {part: TLV6700 OUTA/OUTB, source: BUD-18 p.5, vol_v: 0.250, at_a: 0.003, leak_a_max: 0.0000003, count: 2}
+    - {part: TLV803EA29 RESET, source: BUD-20 p.8 (VDD 1.7 V row), vol_v: 0.300, at_a: 0.0005, leak_a_max: 0.00000035, count: 1}
+    - {part: INA300 ALERT, source: BUD-06 p.5, vol_v: 0.400, at_a: 0.003, leak_a_max: 0.000001, count: 1}
+    - {part: DMG1012T inhibit N5, source: LEAD-04 p.2, r_ohm_max: 0.7, leak_a_max: 0.0000001, count: 1}
+  fault_loads:  # Inputs on nFAULT; their leakage may flow either way.
+    - {part: SN74HCS74 CLR, source: BUD-19 p.5 (6 V), leak_a_max: 0.000001, count: 1}
+    - {part: ATTINY1616 monitor pin, source: PREORDER-08 p.513 (typical < 0.05 uA only; ASSUMPTION), leak_a_max: 0.000001, count: 1}
+    - {part: DMG1012T gates N2/N4, source: LEAD-04 p.2, leak_a_max: 0.000001, count: 2}
+  fault_leak_out_a_allocation: 0.000010  # ALLOCATION >= datasheet sum; 25 C limits, hot leakage UNKNOWN.
+  fault_leak_in_a_allocation: 0.000005
+  # SN74HCS74 latch (BUD-19 p.4-5). Thresholds are given at VCC 2/4.5/6 V only.
+  latch_vcc_min_v: 2.0
+  latch_vo_delta_v: 0.1  # VOH >= VCC - 0.1 V, VOL <= 0.1 V at |IO| = 20 uA, VCC 2-6 V.
+  latch_io_a_max: 0.000020
+  latch_vt_vcc_v: [2.0, 4.5, 6.0]
+  latch_vt_pos_v_max: [1.5, 3.15, 4.2]
+  latch_vt_neg_v_min: [0.3, 0.9, 1.2]  # ASSUMPTION: linear between rows at 3.1-3.5 V.
+  logic_margin_v: 0.1  # ALLOCATION
+  # N1-N5: DMG1012T-7 N-MOSFET (LEAD-04 p.2, 25 C). N1/N2 in series pull the output P-FET gate
+  # (ARM_Q AND nFAULT); N3/N4 likewise pull the P1 gate; N5 is the firmware-permit inhibit.
+  nmos_mpn: DMG1012T-7
+  nmos_vth_v_min: 0.5
+  nmos_vgs_for_r_v: 1.8
+  nmos_r_ohm_max: 0.7
+  nmos_idss_a_max: 0.0000001
+  nmos_igss_a_max: 0.000001
+  nmos_vds_rating_v: 20
+  nmos_gate_rating_v: 6
+  nmos_gate_series_ohm: 10000  # ARM_Q -> N1 and N3 gates
+  nmos_gate_pulldown_ohm: 1000000
+  latch_driven_gates: 2
+  switch_leak_a_allocation: 0.000010  # ALLOCATION per series pair, off state.
+  # P1: DMG1013T-7 P-MOSFET (BUD-23 p.3, 25 C) sources EN from VCTRL through the EN divider.
+  pmos_mpn: DMG1013T-7
+  pmos_vth_v_min_abs: 0.5
+  pmos_vgs_for_r_v: 2.5
+  pmos_r_ohm_max: 0.9
+  pmos_igss_a_max: 0.000002
+  pmos_gate_rating_v: 6
+  pmos_gate_pullup_ohm: 10000
+  en_series_ohm: 10000
+  en_pulldown_ohm: 10000
+  en_margin_v: 0.10  # ALLOCATION
+  en_pullup_factor_min: 10  # REQUIREMENT: default-off tolerates 10x the typical-only EN pull-up.
+  # TLV803EA29 supervisor (BUD-20 p.8-9), on VCTRL, open drain onto nFAULT.
+  supervisor_accuracy_fraction: 0.02  # TA -40...125 C
+  supervisor_hysteresis_fraction_max: 0.015
+  supervisor_vdd_min_v: 1.7  # Lowest VDD with a specified VOL row.
+  supervisor_delay_s_min: 0.130
+  supervisor_delay_s_max: 0.270
+  supervisor_margin_v: 0.03  # ALLOCATION
+  # ATTINY1616 (PREORDER-08 p.2 speed grade, p.513 I/O). Firmware permit pin drives the N5 gate.
+  mcu_vdd_min_at_clock_v: 2.7  # 0-10 MHz at 2.7-5.5 V
+  mcu_vih_fraction: 0.7
+  mcu_vil_fraction: 0.3
+  mcu_vol_v: 0.6  # VDD 3.0 V, IOL 7.5 mA
+  mcu_voh_drop_v: 0.6  # VOH >= 2.4 V at VDD 3.0 V, IOH 7.5 mA
+  mcu_drive_test_a: 0.0075
+  mcu_pin_leak_a_assumed: 0.000001  # ASSUMPTION: typical < 0.05 uA only.
+  inhibit_gate_pullup_ohm: 100000  # N5 defaults ON (inhibit) while the MCU is reset or its pin tristates.
+  # Back-power: with VCTRL unpowered, any pin current from VBAT/VBUCK networks lands in this bleed.
+  vctrl_bleed_ohm: 15000
+  backpower_injection_a_allocation: 0.000020  # ALLOCATION for all VBAT/VBUCK-referenced pins.
 
 power_model:  # automation/budget/power.py. ALLOCATIONs are limits the BOM/layout must meet at temperature.
   input_path_ohm_allocation: 0.015  # ALLOCATION: connector + fuse (hot) + copper up to the reverse FET.

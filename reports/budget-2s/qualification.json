@@ -29,6 +29,363 @@
     "upstream_j_at_ov_max": 0.003748065785901029,
     "upstream_j_at_switch_short_8p4v": 0.0077616000000000004
   },
+  "interface": {
+    "assumptions": [
+      "HCS74 thresholds interpolated between the 2 V and 4.5 V rows",
+      "open-drain/MCU VOL and VOH scaled linearly from their test currents",
+      "leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN",
+      "TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures",
+      "interlock loop and back-power injection are allocations for later parts"
+    ],
+    "checks": [
+      {
+        "basis": "25 C maxima of all sinks and loads",
+        "check": "nFAULT leakage out of node, datasheet sum",
+        "kind": "max",
+        "limit": 1e-05,
+        "margin": 3.950000000000001e-06,
+        "ok": true,
+        "unit": "A",
+        "value": 6.05e-06
+      },
+      {
+        "basis": "25 C maxima of all inputs",
+        "check": "nFAULT leakage into node, datasheet sum",
+        "kind": "max",
+        "limit": 5e-06,
+        "margin": 1.0000000000000006e-06,
+        "ok": true,
+        "unit": "A",
+        "value": 4e-06
+      },
+      {
+        "basis": "HCS74 VT+ (interpolated), N2/N4 RDS drive, MCU VIH; leakage allocation",
+        "check": "nFAULT high (no fault) at VCTRL 3.0769 V",
+        "kind": "min",
+        "limit": 2.3107672,
+        "margin": 0.13366007272727298,
+        "ok": true,
+        "unit": "V",
+        "value": 2.444427272727273
+      },
+      {
+        "basis": "HCS74 VT+ (interpolated), N2/N4 RDS drive, MCU VIH; leakage allocation",
+        "check": "nFAULT high (no fault) at VCTRL 3.5231 V",
+        "kind": "min",
+        "limit": 2.6052328,
+        "margin": 0.20579447272727291,
+        "ok": true,
+        "unit": "V",
+        "value": 2.811027272727273
+      },
+      {
+        "basis": "pulldown against input-leakage allocation",
+        "check": "nFAULT with interlock loop open",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.165,
+        "ok": true,
+        "unit": "V",
+        "value": 0.23500000000000001
+      },
+      {
+        "basis": "BUD-18 p.5; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, TLV6700 OUTA/OUTB asserting at VCTRL 3.0769 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.37419620462046205,
+        "ok": true,
+        "unit": "V",
+        "value": 0.025803795379537954
+      },
+      {
+        "basis": "BUD-18 p.5; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, TLV6700 OUTA/OUTB asserting at VCTRL 3.5231 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.3705150165016502,
+        "ok": true,
+        "unit": "V",
+        "value": 0.02948498349834984
+      },
+      {
+        "basis": "BUD-20 p.8 (VDD 1.7 V row); VOL scaled linearly (ASSUMPTION); latch unspecified, N2/N4 off only",
+        "check": "nFAULT low, TLV803EA29 RESET asserting at VCTRL 1.7000 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.29600990099009905,
+        "ok": true,
+        "unit": "V",
+        "value": 0.10399009900990099
+      },
+      {
+        "basis": "BUD-20 p.8 (VDD 1.7 V row); VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, TLV803EA29 RESET asserting at VCTRL 2.9886 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.21945940594059407,
+        "ok": true,
+        "unit": "V",
+        "value": 0.18054059405940595
+      },
+      {
+        "basis": "BUD-06 p.5; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, INA300 ALERT asserting at VCTRL 3.0769 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.3587139273927393,
+        "ok": true,
+        "unit": "V",
+        "value": 0.04128607260726073
+      },
+      {
+        "basis": "BUD-06 p.5; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, INA300 ALERT asserting at VCTRL 3.5231 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.35282402640264027,
+        "ok": true,
+        "unit": "V",
+        "value": 0.04717597359735975
+      },
+      {
+        "basis": "LEAD-04 p.2; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, DMG1012T inhibit N5 asserting at VCTRL 3.0769 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.3997832481188119,
+        "ok": true,
+        "unit": "V",
+        "value": 0.0002167518811881188
+      },
+      {
+        "basis": "LEAD-04 p.2; VOL scaled linearly (ASSUMPTION)",
+        "check": "nFAULT low, DMG1012T inhibit N5 asserting at VCTRL 3.5231 V",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.3997523261386139,
+        "ok": true,
+        "unit": "V",
+        "value": 0.00024767386138613864
+      },
+      {
+        "basis": "BUD-19 levels hold only at |IO| <= 20 uA",
+        "check": "ARM_Q load current",
+        "kind": "max",
+        "limit": 2e-05,
+        "margin": 1.1023603960396041e-05,
+        "ok": true,
+        "unit": "A",
+        "value": 8.97639603960396e-06
+      },
+      {
+        "basis": "VOH >= VCC - 0.1 V; RDS specified at 1.8 V",
+        "check": "N1/N3 gate when armed",
+        "kind": "min",
+        "limit": 1.9000000000000001,
+        "margin": 1.0375445544554454,
+        "ok": true,
+        "unit": "V",
+        "value": 2.9375445544554455
+      },
+      {
+        "basis": "VOL <= 0.1 V plus gate leakage",
+        "check": "N1/N3 gate when cleared",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.29009900990099013,
+        "ok": true,
+        "unit": "V",
+        "value": 0.1099009900990099
+      },
+      {
+        "basis": "LEAD-04 IDSS, 25 C",
+        "check": "Series pair leakage, datasheet",
+        "kind": "max",
+        "limit": 1e-05,
+        "margin": 9.9e-06,
+        "ok": true,
+        "unit": "A",
+        "value": 1e-07
+      },
+      {
+        "basis": "pull-up to VBUCK against the leakage allocation",
+        "check": "Output P-FET |Vgs| when off",
+        "kind": "max",
+        "limit": 0.19999999999999998,
+        "margin": 0.178,
+        "ok": true,
+        "unit": "V",
+        "value": 0.022000000000000002
+      },
+      {
+        "basis": "minimum operating VBUCK; 2.5 V is the resistance condition used by the power model",
+        "check": "Output P-FET |Vgs| when on",
+        "kind": "min",
+        "limit": 2.6,
+        "margin": 1.234654545454545,
+        "ok": true,
+        "unit": "V",
+        "value": 3.834654545454545
+      },
+      {
+        "basis": "VBUCK can reach the pack voltage",
+        "check": "N1/N2 drain voltage at a buck switch-short",
+        "kind": "max",
+        "limit": 20,
+        "margin": 11.6,
+        "ok": true,
+        "unit": "V",
+        "value": 8.4
+      },
+      {
+        "basis": "BUD-23 VGS(th) against leakage allocation",
+        "check": "P1 |Vgs| when off",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.28,
+        "ok": true,
+        "unit": "V",
+        "value": 0.12000000000000001
+      },
+      {
+        "basis": "RDS specified at -2.5 V",
+        "check": "P1 |Vgs| when on",
+        "kind": "min",
+        "limit": 2.6,
+        "margin": 0.4764892312,
+        "ok": true,
+        "unit": "V",
+        "value": 3.0764892312
+      },
+      {
+        "basis": "BUD-23 VGSS",
+        "check": "P1 gate-source voltage rating",
+        "kind": "max",
+        "limit": 6,
+        "margin": 2.47692,
+        "ok": true,
+        "unit": "V",
+        "value": 3.52308
+      },
+      {
+        "basis": "BUD-01 p.5 rising maximum; internal pull-up ignored (it only helps)",
+        "check": "EN when armed",
+        "kind": "min",
+        "limit": 1.36,
+        "margin": 0.17839076929999975,
+        "ok": true,
+        "unit": "V",
+        "value": 1.5383907692999998
+      },
+      {
+        "basis": "BUD-01 p.3",
+        "check": "EN absolute maximum",
+        "kind": "max",
+        "limit": 6.0,
+        "margin": 4.01596,
+        "ok": true,
+        "unit": "V",
+        "value": 1.98404
+      },
+      {
+        "basis": "BUD-01 gives the pull-up as typical only",
+        "check": "EN pull-up tolerated when disarmed (x typical)",
+        "kind": "min",
+        "limit": 10,
+        "margin": 76.95652173913044,
+        "ok": true,
+        "unit": "x",
+        "value": 86.95652173913044
+      },
+      {
+        "basis": "P1 can only source VCTRL; holds below the supervisor's specified range",
+        "check": "EN with any logic state at VCTRL <= 1.7 V",
+        "kind": "max",
+        "limit": 1.0,
+        "margin": 0.09250000000000003,
+        "ok": true,
+        "unit": "V",
+        "value": 0.9075
+      },
+      {
+        "basis": "HCS74 2.0 V and ATtiny 10 MHz 2.7 V minimum supplies",
+        "check": "Supervisor falling threshold minimum",
+        "kind": "min",
+        "limit": 2.73,
+        "margin": 0.14139999999999997,
+        "ok": true,
+        "unit": "V",
+        "value": 2.8714
+      },
+      {
+        "basis": "control-rail screen minimum",
+        "check": "Supervisor release threshold maximum",
+        "kind": "max",
+        "limit": 3.04692,
+        "margin": 0.013491000000000142,
+        "ok": true,
+        "unit": "V",
+        "value": 3.033429
+      },
+      {
+        "basis": "default inhibit; MCU leakage ASSUMPTION",
+        "check": "N5 gate with MCU pin tristated",
+        "kind": "min",
+        "limit": 1.9000000000000001,
+        "margin": 0.9769199999999996,
+        "ok": true,
+        "unit": "V",
+        "value": 2.8769199999999997
+      },
+      {
+        "basis": "PREORDER-08 VOL scaled linearly (ASSUMPTION)",
+        "check": "N5 gate with MCU permitting",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.39710153600000003,
+        "ok": true,
+        "unit": "V",
+        "value": 0.002898464
+      },
+      {
+        "basis": "PREORDER-08 VOH scaled linearly (ASSUMPTION); HCS74 VT+ interpolated",
+        "check": "Latch CLK high from MCU",
+        "kind": "min",
+        "limit": 2.3107672,
+        "margin": 0.7660727999999999,
+        "ok": true,
+        "unit": "V",
+        "value": 3.07684
+      },
+      {
+        "basis": "PREORDER-08 VOL scaled linearly (ASSUMPTION); HCS74 VT- interpolated",
+        "check": "Latch CLK low from MCU",
+        "kind": "max",
+        "limit": 0.4584608,
+        "margin": 0.4583808,
+        "ok": true,
+        "unit": "V",
+        "value": 7.999999999999999e-05
+      },
+      {
+        "basis": "injection allocation into the VCTRL bleed resistor",
+        "check": "Back-powered VCTRL",
+        "kind": "max",
+        "limit": 0.4,
+        "margin": 0.09999999999999998,
+        "ok": true,
+        "unit": "V",
+        "value": 0.30000000000000004
+      }
+    ],
+    "failed": [],
+    "ok": true,
+    "smallest_voltage_margin": {
+      "check": "Supervisor release threshold maximum",
+      "margin_v": 0.013491000000000142
+    }
+  },
   "manufacturing_ready": false,
   "power": {
     "all_regulating": true,
@@ -48,8 +405,8 @@
     "efficiency": {
       "condition": "7.4 V input, 4.5 V diode, 4 A, typical corner",
       "estimate_at_nominal": 0.9338275479992496,
-      "meets_target": false,
-      "target": 0.94
+      "meets_target": true,
+      "target": 0.93
     },
     "gate_drive": {
       "ok": true,
@@ -1281,9 +1638,9 @@
       "status": "CONDITIONAL"
     },
     {
-      "detail": "Estimate 93.38% at 7.4 V input, 4.5 V diode, 4 A, typical corner versus 94% target. Owner decision: accept a lower budget target or change the architecture; bench efficiency decides.",
+      "detail": "Estimate 93.38% at 7.4 V input, 4.5 V diode, 4 A, typical corner versus 93% target. Estimate only; bench efficiency decides.",
       "id": "BUD-EFF-01",
-      "status": "FAIL"
+      "status": "CONDITIONAL"
     },
     {
       "detail": "UV falling 5.3984\u20135.6202 V versus loaded sense minimum 5.8368 V at 6 V input (0.2166 V margin, 0.1 V required; floor 5 V). Pack rating, firmware cutoff OPEN.",
@@ -1296,7 +1653,12 @@
       "status": "CONDITIONAL"
     },
     {
-      "detail": "Qualify default-off gate drive, fault latch, output disconnect, total response and single faults.",
+      "detail": "34/34 static default-off checks pass; smallest voltage margin 0.0135 V (Supervisor release threshold maximum). Conditional on: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts.",
+      "id": "BUD-IF-01",
+      "status": "CONDITIONAL"
+    },
+    {
+      "detail": "Total fault response time and energy, output-FET turn-off, single and latent faults (power-on self-test), interlock cable faults and bench fault injection.",
       "id": "BUD-SAFE-01",
       "status": "OPEN"
     },
