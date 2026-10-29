@@ -1,26 +1,26 @@
 {
- "generated_utc": "2026-10-29T19:31:40+00:00",
+ "generated_utc": "2026-10-29T21:53:54+00:00",
  "generator": "automation/budget/qualify.py",
  "inputs": {
   "automation/budget/interface.py": "890b149df8df2bc07e918cb0d305d8f8f408c03430d3451ec76c5f06f4d99dd4",
   "automation/budget/power.py": "36286602e2185c870d61d98c41ab8a5819058092a58181c060c0c585c8108297",
-  "automation/budget/qualify.py": "d85053a9e054634499b853ecbc787996be5334e888130d504f88a2449d7d619a",
+  "automation/budget/qualify.py": "ba08d2342e89b07744214d933e3fd3709cbcc9eb4bdca2f58f4777d799d4c97a",
   "automation/nubm44/evidence.py": "82197c83b892aca47d180d0f24fef5b5a2deb026c0d19cf1898087189fd266cf",
   "automation/nubm44/variants.py": "8e81e9eb3b9bf1ff86bc611ed5c43b58ea1780d4107f0aae34f21966a65367f2",
-  "engineering/design/budget-2s/parameters.yaml": "2bf8511f92ad3bfd66ddaac4ecc8a5deaea0ede3121fbd047c8baf936a46232f",
-  "reports/budget-2s/drc-evidence.json": "ea4a4dae2d672a1ada61943319b4d5c11d024541e2899183a285b9b8c4239e63",
-  "reports/budget-2s/drc.json": "7b4f31491e2beea2a6a5d6c5f079e7140db084076591ed39c804ade3c7e91a42",
-  "reports/budget-2s/export-evidence.json": "543e6f0495320165fd998cfb792ca670da9c971a0704ac408ac25db7a7368f7e",
-  "reports/budget-2s/layout-review-evidence.json": "422b421ffdfdf186d67be8e655a416bedb62020841cf5b32e13386b0ec0dcd18",
-  "reports/budget-2s/layout-review.json": "a55cfbaf62e78dc488ed77a498f34979645a8df51f02836a942549042b19f728",
-  "reports/budget-2s/schematic-evidence.json": "6d2f944ed7c426219e8bea502a887ad27f5cf1b1269e8fe7d7601a2356a6c8ee",
+  "engineering/design/budget-2s/parameters.yaml": "7d76de1520cb2eba53bcbe118f6ec219063e2b8ac8958e921ecd1cc39e86ad52",
+  "reports/budget-2s/drc-evidence.json": "f0c8cdd3c096adcf943fbdd86c6c9651edc5ff5842d79baba63c459f1b4de784",
+  "reports/budget-2s/drc.json": "90b39fa523079d12be45e22e1b84cca07b0417b8ab6b7e02ce61901ea3bae0cf",
+  "reports/budget-2s/export-evidence.json": "5c7c8cef85ebacbbfe11799327916d811d43f2db17339cdd2a929665ad429d20",
+  "reports/budget-2s/layout-review-evidence.json": "7e29d89c4ce50f7ca44b4e0da0811b333e4998d3dcc0e5ea6835677ff956ff73",
+  "reports/budget-2s/layout-review.json": "1569fe678dad9adeb88a732f3c7028142566271ac59b2ec34c8453a665a153b1",
+  "reports/budget-2s/schematic-evidence.json": "e190cf547814f4d13828fea77fcd3be6b331d70a01fe2706fabde80e0ff5bd1a",
   "reports/budget-2s/schematic.json": "3e47f13b90c88e7517bc7b1e487bab6e0cd8e8f0a0f561214cd8e7ad09c42b05",
-  "research/sources/budget-driver-sources.md": "fd1ff06cfc2bec227573632c7e568084617dd37ec7d23f2a71e2670055d4600a"
+  "research/sources/budget-driver-sources.md": "81beca191c2a28155e1117d3977e99d768ec5a1732a1d8dedd339a7dc8a93d5b"
  },
  "kind": "budget-qualification",
  "outputs": {
-  "reports/budget-2s/qualification.json": "27a704c3bb98fa5185c215a5fab7ac5b6f53f679b8e39b4cf8eb128a956c69fa",
-  "reports/budget-2s/qualification.md": "1eb821700a737841f05237abcfdffb26366f0abc111bd41d94891823cbe20a0c"
+  "reports/budget-2s/qualification.json": "891983d3aacd41f5e551c01472d6ac7610a7347046600e3a085d4267bb8e72b9",
+  "reports/budget-2s/qualification.md": "08dcf083d253405429b3ddc198e6af26ca56a8d80c50163e59384f3e4173ae6e"
  },
  "schema": "nubm44-evidence-manifest.v1",
  "tools": {

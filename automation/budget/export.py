@@ -77,13 +77,15 @@ def drc_state() -> dict:
 
 
 def order_codes() -> dict:
-    """MPN -> {lcsc, uk}; UNKNOWN codes become blank cells, never a guessed code."""
+    """MPN -> {lcsc, lcsc_mpn, uk, equiv}; UNKNOWN codes become blank cells, never a guessed code. equiv is the
+    separately coded LCSC equivalent of a part LCSC does not list (DD-40), so no code is shown against another MPN."""
     parts = yaml.safe_load(SOURCING.read_text(encoding="utf-8"))["parts"]
     known = lambda v: v if v and v != "UNKNOWN" else ""
-    return {str(m): {"lcsc": known(c.get("lcsc")), "uk": "; ".join(c.get("uk", []))} for m, c in parts.items()}
+    return {str(m): {"lcsc": known(c.get("lcsc")), "lcsc_mpn": c.get("lcsc_mpn", ""), "uk": "; ".join(c.get("uk", [])),
+                     "equiv": None if known(c.get("lcsc")) else c.get("lcsc_equivalent")} for m, c in parts.items()}
 
 
-def write_bom(out: Path, fps: list[dict], spec: dict, codes: dict) -> tuple[int, int, list[str], list[str]]:
+def write_bom(out: Path, fps: list[dict], spec: dict, codes: dict) -> tuple[int, int, list[str], list[str], list[str]]:
     def key(f):
         part = spec[f["ref"]]
         k = (f["mpn"], f["mfr"], f["value"], f["fpid"], part.get("lib", ""))
@@ -94,7 +96,7 @@ def write_bom(out: Path, fps: list[dict], spec: dict, codes: dict) -> tuple[int,
     groups: OrderedDict[tuple, list] = OrderedDict()
     for f in sorted((f for f in fps if f["in_bom"]), key=lambda f: (f["mpn"], f["value"], ref_key(f["ref"]))):
         groups.setdefault(key(f), []).append(f["ref"])
-    unknown, no_lcsc = [], []
+    unknown, no_lcsc, notes = [], [], []
     with open(out / "assembly/BOM.csv", "w", newline="", encoding="utf-8-sig") as fh, \
             open(out / "assembly/BOM_JLCPCB.csv", "w", newline="", encoding="utf-8-sig") as fj:
         w, j = csv.writer(fh), csv.writer(fj)
@@ -105,16 +107,22 @@ def write_bom(out: Path, fps: list[dict], spec: dict, codes: dict) -> tuple[int,
             mpn, mfr, val, fpid = k[:4]
             refs = sorted(refs, key=ref_key)
             desc = "; ".join(dict.fromkeys(spec[r].get("desc", "") for r in refs))
-            code = codes.get(mpn, {"lcsc": "", "uk": ""})
+            code = codes.get(mpn, {"lcsc": "", "lcsc_mpn": "", "uk": "", "equiv": None})
+            eq, lcsc = code["equiv"], code["lcsc"]
             if mpn in ("", "UNKNOWN"):
                 unknown.append(f"{','.join(refs)}: {val} {fpid.split(':')[-1]} - {desc}")
-            elif not code["lcsc"]:
+            elif eq:
+                notes.append(f"{','.join(refs)}: {mpn} is not listed by LCSC; BOM_JLCPCB.csv uses the equivalent "
+                             f"{eq['mfr']} {eq['mpn']} ({eq['lcsc']})")
+            elif not lcsc:
                 no_lcsc.append(f"{','.join(refs)}: {mpn}" + (f" ({code['uk']})" if code["uk"] else ""))
+            elif code["lcsc_mpn"]:
+                notes.append(f"{','.join(refs)}: {mpn} is listed by LCSC as {code['lcsc_mpn']} ({lcsc})")
             w.writerow([i, ",".join(refs), len(refs), val, fpid.split(":", 1)[-1], mfr, mpn or "UNKNOWN",
-                        code["lcsc"], code["uk"], desc])
-            j.writerow([f"{val} {mpn}" if mpn not in ("", "UNKNOWN") else f"{val} (select: {desc[:60]})",
-                        ",".join(refs), fpid.split(":", 1)[-1], code["lcsc"]])
-    return len(groups), sum(len(v) for v in groups.values()), unknown, no_lcsc
+                        f"{eq['lcsc']} = {eq['mfr']} {eq['mpn']} (equivalent)" if eq else lcsc, code["uk"], desc])
+            j.writerow([f"{val} {eq['mpn'] if eq else mpn}" if mpn not in ("", "UNKNOWN") else f"{val} (select: {desc[:60]})",
+                        ",".join(refs), fpid.split(":", 1)[-1], eq["lcsc"] if eq else lcsc])
+    return len(groups), sum(len(v) for v in groups.values()), unknown, no_lcsc, notes
 
 
 def write_cpl(out: Path, fps: list[dict], origin: tuple[float, float]) -> int:
@@ -148,7 +156,7 @@ def main() -> int:
     fps, origin = ab.board_footprints(BOARD)
     spec = {p["ref"]: p for p in yaml.safe_load(SOURCES.connectivity.read_text(encoding="utf-8"))["parts"]}
     missing = sorted(set(spec) ^ {f["ref"] for f in fps})
-    lines, placed, unknown, no_lcsc = write_bom(stage, fps, spec, order_codes())
+    lines, placed, unknown, no_lcsc, notes = write_bom(stage, fps, spec, order_codes())
     cpl = write_cpl(stage, fps, origin)
     tht = [r for r in through_hole_refs(BOARD) if spec.get(r, {}).get("in_bom", True)]
     with zipfile.ZipFile(stage / f"{BUDGET_VARIANT}-gerbers.zip", "w", zipfile.ZIP_DEFLATED) as z:
@@ -189,6 +197,10 @@ def main() -> int:
         "and stay UNKNOWN until quoted. For a JLCPCB/LCSC-assembled board these lines must be matched by MPN in the",
         "assembler's BOM tool, consigned, or fitted by hand (UK distributor in brackets where one was found):", "",
         *([f"- {u}" for u in no_lcsc] or ["- None."]), "",
+        "## LCSC listing names and equivalents (DD-40)", "",
+        "The same part under LCSC's full ordering name, or, where LCSC does not list the part, the equivalent used in",
+        "`BOM_JLCPCB.csv` (same value, package, tolerance and TCR; a hand-built board uses the MPN in `BOM.csv`):", "",
+        *([f"- {u}" for u in notes] or ["- None."]), "",
         "Precision lines (0.1 %, 25 ppm/C) set the laser current and protection thresholds: buy genuine parts from a",
         "UK distributor or LCSC and keep the exact values; do not substitute 1 % parts. Verify the XT30 moulded +/- marks",
         "against the B+/B- silkscreen before first power (Q1 blocks a reversed pack). See",
@@ -210,7 +222,7 @@ def main() -> int:
                                   outputs=outputs, tools={"kicad-cli": evidence.command_version([str(paths.kicad_cli()), "version"])}),
                    REPORTS / "export-evidence.json")
     print(f"budget-2s export: {status}; BOM {lines} lines/{placed} parts, CPL {cpl}, select-at-order {len(unknown)}, "
-          f"lines without an LCSC code {len(no_lcsc)}")
+          f"lines without an LCSC code {len(no_lcsc)}, LCSC equivalents {sum(' equivalent ' in n for n in notes)}")
     return 0 if fab_ok else 1
 
 

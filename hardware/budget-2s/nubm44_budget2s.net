@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "E:\\NUBM44 driver\\hardware\\budget-2s\\nubm44_budget2s.kicad_sch")
-		(date "2026-10-29T19:27:59")
+		(date "2026-10-29T21:50:50")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -3066,7 +3066,7 @@
 			(ref "J2")
 			(value "Laser out")
 			(footprint "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm")
-			(description "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify")
+			(description "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Cixi MaiXu MX126: UL 300 V/10 A, IEC 250 V/15 A, 26-14 AWG (BUD-31)")
 			(fields
 				(field
 					(name "MPN") "MX126-5.0-02P")
@@ -3080,7 +3080,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify")
+					(name "Description") "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Cixi MaiXu MX126: UL 300 V/10 A, IEC 250 V/15 A, 26-14 AWG (BUD-31)")
 			)
 			(libsource
 				(lib "Connector")

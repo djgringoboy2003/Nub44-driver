@@ -823,3 +823,88 @@ costing and stay UNKNOWN until quoted.
 - The thermistor's B value in firmware.
 - LCSC codes for the 21 lines if JLCPCB assembly is used.
 - Effective output capacitance under bias.
+
+## DD-40 Budget BOM: LCSC codes for the remaining 21 lines (engineering, 2026-10-29)
+
+Owner request: look up LCSC codes for the 21 lines DD-39 left without one, so that JLCPCB/LCSC can assemble the
+board. The lookups and choices are Claude Code's (AI); the owner may change any of them. Each code was read on
+its LCSC product page (BUD-29): MPN, manufacturer, package and the stated key attributes. The codes are in
+`engineering/design/budget-2s/sourcing.yaml`. Stock and prices are not recorded and stay UNKNOWN until quoted.
+
+**Exact parts (19 lines).**
+- ICs:
+  - U4 TLV803EA29DBZR: C1852114 (2.93 V, 200 ms, open-drain).
+  - U2 INA186A2IDCKR: C2058238.
+  - U5 TLV6700DDCR: C2868382.
+  - U7 MCP1703AT-3302E/MB: C148015.
+  - U8 ATTINY1616-SN: C614136 (SOIC-20 300 mil).
+- Transistors:
+  - Q1 DMP2022LSS-13: C154919.
+  - Q2 SISS23DN-T1-GE3: C222439.
+  - Q3–Q6, Q8 DMG1012T-7: C20512.
+  - Q7 DMG1013T-7: C96676.
+- Zener diodes:
+  - D1 BZX585-C10,115: C550626 (9.5–10.5 V).
+  - D3 BZX585-C6V2,115: C550667 (5.89–6.51 V, the window DD-34 assumed).
+- L1 SRP1265A-4R7M: C780205.
+- Connectors and holder:
+  - J1 XT30PW-M: C431092.
+  - F1 Keystone 3568: C5249699.
+  - J2 MX126-5.0-02P: C5188434.
+  - J3, J5 B2B-PH-K-S(LF)(SN): C131337.
+- Precision resistors:
+  - R6/R15/R17 ERA3AEB103V: C190610.
+  - R16 RT0603BRD07133KL: C861111.
+- LCSC lists six of these under its full ordering name for the same part, with a packing or plating suffix
+  (`lcsc_mpn` in `sourcing.yaml`). For J1 that is XT30PW-M30.G.Y: 3.0 mm solder tail, gold plated, yellow
+  (BUD-30). For J2 it is MX126-5.0-02P-GN01-Cu-S-A: green, copper block, cross-head screw (BUD-31).
+- C1852114 and C861111 do not come up in web search. They were found by reading the codes next to known
+  TLV803E and RT0603BRD07 listings.
+
+**LCSC equivalents (2 lines).** LCSC does not list R5 ERA-3AEB2742V or R7 TNPW06032K67BEEA, so the JLCPCB
+BOM uses Yageo parts of the same specification:
+- R5: AT0603BRD0727K4L, C855755 (27.4 kΩ).
+- R7: AT0603BRD072K67L, C855783 (2.67 kΩ).
+- Both are 0603 thin film, ±0.1 %, ±25 ppm/°C, as the requirement states.
+- A hand-built board keeps the UK parts.
+- `sourcing.yaml` stores each as `lcsc_equivalent` with its own MPN and code, so no code is ever shown against
+  a different MPN.
+
+**Rejected.**
+- C1852118 TLV803EA29RDBZR: its "R" pinout puts RESET on pin 1 (BUD-20 p.3) and does not fit U4's land.
+- TLV803EC29DBZR (C2867948) and TLV803EB29DBZR (C2869935): the right pinout, but 10 ms and 40 µs delays
+  instead of 200 ms.
+- INA186A2QDCKRQ1 (C2862618): not needed, because the exact part was found.
+
+**Datasheet findings (LCSC copies, read as page images).**
+- **J1 contact resistance** (BUD-30): the current Amass specification gives 1.20 mΩ; the older drawing (BUD-26)
+  gives 0.80 mΩ. `power_model.connector_contact_ohm_each` now uses 1.20 mΩ. With two contacts and 2.288 mΩ of
+  hot copper, the 15 mΩ input allocation leaves 10.312 mΩ for the fuse and holder (DD-38 had 11.1 mΩ).
+- **J1 land** (BUD-30): the specification's holes are 2 × Ø1.90 on 5.00 mm plus 2 × Ø1.00 locating holes
+  11.00 mm apart. They match the KiCad footprint. Neither the specification nor the older drawing shows the
+  polarity moulding.
+- **J2 rating** (BUD-31): the Cixi MaiXu MX126 drawing gives UL 300 V / 10 A and IEC 250 V / 15 A for
+  26–14 AWG, with Ø1.30 mm holes. That closes the "≥ 6 A to verify" note.
+- **Q2 package:** LCSC names it PowerPAK 1212-8S. The open FP-POWERPAK land review must use that drawing.
+
+**Tooling.**
+- `export.py` writes the equivalent's MPN and code into `BOM_JLCPCB.csv`, and marks it as an equivalent in
+  `BOM.csv`. `ORDERING.md` lists LCSC's listing names and the equivalents.
+- `qualify.py` counted every bullet after the "Lines to select" heading. Its DD-39 report therefore claimed
+  21 lines to select; there were none. It now counts only that section, and a test covers it.
+- New test: the JLCPCB BOM names and codes the equivalent, never the unlisted part.
+
+**Results (generated).**
+- ERC 0/0, with an exact netlist.
+- `restore` gives DRC 0/0/0/0. Tracks, vias and drawings are identical to 61bebf9. Footprints differ only in
+  J2's description field. Three F.Cu fills differ by under 0.01 mm², from KiCad's refill.
+- Copper check: output loop 2.836 mΩ hot; fuse and holder budget 10.312 mΩ.
+- Export: 55 lines / 99 parts; 0 to select; 0 without an LCSC code; 2 equivalents.
+- Qualification: 8 CONDITIONAL, 5 OPEN. Loop model: 243/243. Tests: 275 pass.
+
+**OPEN.**
+- Live LCSC stock and the JLCPCB library class (Basic/Extended) of these lines. Out-of-stock parts need
+  pre-order, global sourcing or consigning.
+- Through-hole assembly or hand-fitting for J1, J2, J3, J5, F1 and J4.
+- The fuse and holder against the 10.312 mΩ budget.
+- The XT30 moulded marks and J2's wire-entry side (DD-38).

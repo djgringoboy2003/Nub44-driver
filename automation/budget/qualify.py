@@ -305,6 +305,13 @@ def layout_state() -> dict:
         f"{s['fuse_and_holder_budget_ohm_hot'] * 1e3:.3f} mΩ hot. Necks for review: {', '.join(s['necks_flagged']) or 'none'}.")}
 
 
+def selections_in(ordering: str) -> int:
+    """Bullets of the ORDERING.md "Lines to select at order time" section only; later sections list other lines."""
+    head = "## Lines to select at order time"
+    section = ordering.split(head, 1)[1].split("\n## ", 1)[0] if head in ordering else ""
+    return sum(1 for ln in section.splitlines() if ln.startswith("- "))
+
+
 def export_state() -> dict:
     """Budget manufacturing package (automation/budget/export.py), re-verified against its hash manifest."""
     if not EXPORT_MANIFEST.is_file():
@@ -315,8 +322,7 @@ def export_state() -> dict:
     ordering = ROOT / "manufacturing" / "budget-2s" / "ORDERING.md"
     text = ordering.read_text(encoding="utf-8") if ordering.is_file() else ""
     blocked = (ROOT / "manufacturing" / "budget-2s" / "DO_NOT_FABRICATE.txt").is_file()
-    selections = sum(1 for ln in text.split("## Lines to select at order time", 1)[-1].splitlines()
-                     if ln.startswith("- ")) if "## Lines to select" in text else 0
+    selections = selections_in(text)
     return {"ok": not blocked, "selections": selections,
             "detail": ("Package marked DO_NOT_FABRICATE. " if blocked else
                        "Prototype Gerbers/drill/CPL checked against the DRC-clean board. ")

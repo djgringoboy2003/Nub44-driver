@@ -1,12 +1,13 @@
 # Budget-2S implementation and handover
 
 Updated 2026-10-29. Codex (AI review), requested by owner, decision DD-30; continued by Claude Code
-(AI), decisions DD-31…DD-35 and DD-38 (PCB and prototype manufacturing package).
+(AI), decisions DD-31…DD-35, DD-38 (PCB and prototype manufacturing package), DD-39 (BOM sourced) and DD-40
+(LCSC codes).
 
 **Stage: prototype PCB files checked; electrical qualification CONDITIONAL; not released.** DD-38 produced a
 DRC-clean 90 × 60 mm four-layer board and a bare-board manufacturing package (`manufacturing/budget-2s/`) for
-a dummy-load prototype. Its BOM still has lines to select at order (MPN UNKNOWN, requirement stated), and the
-footprint and layout reviews below are open. No order is authorised by this document or placed by any tool.
+a dummy-load prototype. Every BOM line has a sourced MPN (DD-39) and an LCSC code or a labelled LCSC
+equivalent (DD-40). The footprint and layout reviews below are open. No order is authorised by this document or placed by any tool.
 The owner requested implementation of the separate two-cell, unrestricted-size, £60 driver. This work does
 not inherit the original single-cell boards' CAD, firmware or release results.
 
@@ -21,7 +22,7 @@ not inherit the original single-cell boards' CAD, firmware or release results.
 | Placement and routing | `hardware/budget-2s/placement.yaml` (positions, pours, fixed tracks/vias, router keep-outs); `automation/budget/build_pcb.py --stage place/route/finish/drc/render` (shared builder via `pcb_builder_budget.py`); accepted session archived in `hardware/budget-2s/routing/`, re-applied with `--stage restore` |
 | DRC | `reports/budget-2s/drc.json` and `drc-evidence.json` (kicad-cli, all severities, schematic parity) |
 | Routed-copper check | `automation/budget/layout_review.py` → `reports/budget-2s/layout-review.md/.json` and a hash manifest: DC path resistances against the `power_model` allocations |
-| BOM order codes | `engineering/design/budget-2s/sourcing.yaml` (DD-39): LCSC/JLCPCB code, UK-distributor listings and evidence ID per MPN; stock and prices not recorded |
+| BOM order codes | `engineering/design/budget-2s/sourcing.yaml` (DD-39, DD-40), per MPN: LCSC/JLCPCB code (with LCSC's listing name where it adds a suffix), UK-distributor listings, a separately coded LCSC equivalent where LCSC does not list the part, and the evidence ID. Stock and prices are not recorded. |
 | Manufacturing package | `automation/budget/export.py` → `manufacturing/budget-2s/` (Gerbers/drill ZIP, BOM, JLCPCB BOM/CPL, PDFs, renders, `ORDERING.md`) and `reports/budget-2s/export-evidence.json`; marks DO_NOT_FABRICATE unless DRC is clean and current |
 | Static default-off interface checks (DD-32) | `automation/budget/interface.py` (called by `qualify.py`; results in the same report) |
 | Electrical qualification | `automation/budget/qualify.py` → `reports/budget-2s/qualification.md`, JSON and hash manifest |
@@ -91,6 +92,14 @@ DD-39 gave every BOM line an MPN checked against a distributor or manufacturer l
 are in the connectivity file, and the order codes and evidence in `engineering/design/budget-2s/sourcing.yaml`.
 No suffix was invented. Prices, live stock and complete delivered GBP totals remain UNKNOWN until quoted. The
 selections are new-circuit choices, not authorised substitutions into A/B.
+
+DD-40 gave every line an LCSC code read on its product page (BUD-29). Nineteen lines use the exact part. LCSC
+does not list R5 and R7, so the JLCPCB BOM uses Yageo AT0603BRD0727K4L (C855755) and AT0603BRD072K67L (C855783):
+same value, 0603 thin film, ±0.1 %, ±25 ppm/°C. A hand-built board keeps the UK parts. The LCSC datasheets also
+changed two figures:
+- XT30 contact resistance: 1.20 mΩ (BUD-30) instead of 0.80 mΩ, so the fuse and holder may now be at most
+  10.312 mΩ hot.
+- J2: rated UL 10 A / IEC 15 A (BUD-31).
 
 ## Qualification findings (open until bench data)
 
@@ -167,12 +176,16 @@ rated dummy load before any laser. Only actual MEASURED records may enter the be
    hashes via `nubm44.evidence.problems`; regenerate with the producing scripts, never edit results.
 2. **Reviews before any order** (DD-38 OPEN list):
    - U1 RHL land and stencil against TI's drawing, using `budget2s.pretty` and the F.Paste Gerber.
-   - The Q2 PowerPAK land (the open A/B FP-POWERPAK review applies).
+   - The Q2 PowerPAK land (the open A/B FP-POWERPAK review applies; LCSC names the package PowerPAK 1212-8S).
    - The XT30 moulded +/− marks against the B+/B− silkscreen, and J2's wire-entry side.
    - The PH neck flagged by `layout_review.py`.
-3. **BOM:** every line has a sourced MPN (DD-39). Still to do before ordering:
-   - Choose a 10 A mini-blade fuse whose fuse-plus-holder resistance is at most 11.1 mΩ hot (`layout-review.md`).
-   - Find LCSC codes for the 21 lines without one if JLCPCB assembles the board; otherwise consign or hand-fit.
+3. **BOM:** every line has a sourced MPN (DD-39) and an LCSC code or a labelled equivalent (DD-40). Still to
+   do before ordering:
+   - Choose a 10 A mini-blade fuse whose fuse-plus-holder resistance is at most 10.312 mΩ hot
+     (`layout-review.md`; XT30 contacts at 1.20 mΩ each, BUD-30).
+   - For JLCPCB assembly, check live LCSC stock and the JLCPCB library class (Basic/Extended) of each line.
+     Out-of-stock parts need pre-order, global sourcing or consigning. Decide through-hole assembly or
+     hand-fitting for J1, J2, J3, J5, F1 and J4.
    - Confirm live stock, especially the 0.1 % parts from RS/Farnell/DigiKey UK.
    - Use the NTC's B25/50 = 3380 K in firmware.
    Keep prices and stock UNKNOWN until quoted.

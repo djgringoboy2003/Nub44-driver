@@ -241,9 +241,9 @@
   "output_allocation_ohm": 0.003,
   "output_ok": true,
   "input_copper_ohm_hot": 0.0022879999999999997,
-  "connector_contacts_ohm": 0.0016,
+  "connector_contacts_ohm": 0.0024,
   "input_allocation_ohm": 0.015,
-  "fuse_and_holder_budget_ohm_hot": 0.011111999999999999,
+  "fuse_and_holder_budget_ohm_hot": 0.010312,
   "input_ok": true,
   "necks_flagged": [
    "PH (U1 switch node to L1 (not in an allocation))"

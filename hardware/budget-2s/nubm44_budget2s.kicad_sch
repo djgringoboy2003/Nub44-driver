@@ -23264,7 +23264,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify"
+		(property "Description" "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Cixi MaiXu MX126: UL 300 V/10 A, IEC 250 V/15 A, 26-14 AWG (BUD-31)"
 			(at 254 320.04 0)
 			(hide yes)
 			(show_name no)

@@ -322,7 +322,7 @@ power_model:  # automation/budget/power.py. ALLOCATIONs are limits the BOM/layou
   output_copper_ohm_allocation: 0.003  # ALLOCATION: board copper VBUCK -> output terminals, excl. shunt/FET.
   laser_wiring_ohm: 0.010  # ESTIMATE: off-board leads, same as A/B laser.wiring_resistance_ohm.
   copper_hot_factor: 1.2  # Copper resistance at ~50 K rise (0.39 %/K); applied to the 25 C inductor DCR.
-  connector_contact_ohm_each: 0.0008  # BUD-26 XT30PW-M catalogue contact resistance; J1 carries two contacts.
+  connector_contact_ohm_each: 0.0012  # BUD-30 Amass spec of the LCSC XT30PW-M (C431092), 1.20 mOhm; the older BUD-26 drawing's 0.80 is not used (DD-40). J1 carries two contacts.
   dropout_margin_v_allocation: 0.10  # ALLOCATION: BOOT refresh, ripple, pack transient below 6.0 V.
   uv_margin_v_allocation: 0.10  # ALLOCATION: residual ripple/transient at the filtered UV sense node.
   ov_margin_v_allocation: 0.10  # ALLOCATION: overshoot above the highest normal VBUCK before OVP.

@@ -5,7 +5,7 @@
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
 efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
-sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package; DD-39: budget BOM sourced). The pre-order, quote, GBP/UK and Project 450
+sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package; DD-39: budget BOM sourced; DD-40: LCSC codes for every budget BOM line). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -107,19 +107,22 @@ layers, all parts on the top.
 - **U1 footprint:** project TI RHL land, thermal vias, corner paste kept clear of the drills.
 - **J1:** XT30 pins swapped to match KiCad's "+" mark.
 - **Routed copper** (`automation/budget/layout_review.py`): the output loop is 2.84 mΩ hot against the 3 mΩ
-  allocation, after LASER_P was repeated on In2/B.Cu (it was 4.29 mΩ). The input leaves 11.1 mΩ hot for the
-  fuse and holder.
+  allocation, after LASER_P was repeated on In2/B.Cu (it was 4.29 mΩ). The input leaves 10.3 mΩ hot for the
+  fuse and holder. DD-40 took the XT30 contacts at 1.20 mΩ each, from the current Amass specification (BUD-30).
+  The 0.80 mΩ older drawing gave 11.1 mΩ.
 - **Package** (`manufacturing/budget-2s/`): Gerber/drill ZIP, BOM 55 lines / 99 parts, CPL, PDFs, renders,
   `ORDERING.md`. DD-39: every line has an MPN checked against a distributor listing. Order codes and evidence
   are in `engineering/design/budget-2s/sourcing.yaml`; prices and stock stay UNKNOWN. R16 changed 134 k → 133 k,
-  because 134 k is not a purchasable value (OV margin 0.136 V).
+  because 134 k is not a purchasable value (OV margin 0.136 V). DD-40: every line has an LCSC code read on its
+  product page. LCSC does not list R5 and R7, so the JLCPCB BOM uses labelled Yageo AT equivalents with the same
+  specification. J2 is rated UL 10 A / IEC 15 A (BUD-31).
 - **Routing archive:** FreeRouting results vary with KiCad's DSN pour order, so the accepted session is archived
   in `hardware/budget-2s/routing/` and `build_pcb.py --stage restore` reproduces the board.
 - **Open before an order:**
   - the U1 and Q2 land reviews;
   - the XT30 moulded marks and J2 wire entry;
-  - a fuse plus holder of at most 11.1 mΩ hot;
-  - LCSC codes for 21 lines if JLCPCB assembles the board;
+  - a fuse plus holder of at most 10.3 mΩ hot;
+  - for JLCPCB assembly: live LCSC stock, the JLCPCB part class, and through-hole assembly or hand-fitting;
   - live stock and quotes.
 - **Also open:** BUD-ISS-04 (total shutdown time and fault energy, including the output P-FET turn-off through
   its 2.2 kΩ pull-up), budget firmware, and all nine REQ-BUD requirements with physical qualification.
@@ -195,9 +198,10 @@ factor 1.0 and reverse-FET limit 0.7 W (DD-36; was 4.0 A, DD-13); A/B efficiency
 are the ordered list), DD-38 and `manufacturing/budget-2s/ORDERING.md`.
 1. **Before any budget order:** review the U1 RHL land and stencil, the Q2 PowerPAK land (FP-POWERPAK), the XT30
    moulded +/− marks against the B+/B− silkscreen, J2's wire-entry side and the flagged PH neck.
-2. **BOM (DD-39 sourced every line):** choose the 10 A mini-blade fuse (fuse plus holder at most 11.1 mΩ hot).
-   Confirm live stock of the 0.1 % resistors (RS/Farnell/DigiKey UK). If JLCPCB assembles the board, find LCSC
-   codes for the 21 lines without one, or consign them.
+2. **BOM (DD-39 sourced every line; DD-40 gave every line an LCSC code):** choose the 10 A mini-blade fuse
+   (fuse plus holder at most 10.3 mΩ hot). Confirm live stock of the 0.1 % resistors (RS/Farnell/DigiKey UK, or
+   LCSC). If JLCPCB assembles the board, check live LCSC stock and each line's JLCPCB part class, and decide
+   through-hole assembly or hand-fitting for J1, J2, J3, J5, F1 and J4.
 3. **BUD-ISS-04:** bound the total fault response and energy.
 4. **Firmware:** write the budget firmware profile and a budget bench schema.
 5. **Quotes:** obtain landed GBP quotes for 3 and 5 boards. Keep unknown prices UNKNOWN.
@@ -246,6 +250,38 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: LCSC codes for the remaining 21 BOM lines (DD-40)
+
+Owner: look up LCSC codes for the 21 lines without one, for JLCPCB assembly. Each code was read on its LCSC
+product page (BUD-29). No stock or price was recorded.
+
+**Codes**
+- **Exact parts, 19 lines:** ICs, transistors, Zener diodes, L1, J1, F1, J2, J3/J5, R6/R15/R17 and R16.
+- **Found by reading neighbouring codes:** U4 TLV803EA29DBZR (C1852114) and R16 RT0603BRD07133KL (C861111).
+  Web search did not show them.
+- **Rejected for U4:** C1852118 TLV803EA29**R**DBZR. Its pinout puts RESET on pin 1.
+- **LCSC equivalents for R5 and R7:** LCSC does not list ERA-3AEB2742V or TNPW06032K67BEEA. The JLCPCB BOM
+  uses Yageo AT0603BRD0727K4L (C855755) and AT0603BRD072K67L (C855783): 0603 thin film, ±0.1 %, ±25 ppm/°C.
+  These are labelled in the BOM; a hand-built board uses the UK parts.
+
+**Datasheet findings (LCSC copies)**
+- XT30 contact resistance is 1.20 mΩ (BUD-30), not 0.80 mΩ: `connector_contact_ohm_each` changed, and the fuse
+  and holder budget falls to 10.312 mΩ.
+- The XT30 hole pattern matches the KiCad footprint.
+- J2 MX126 is rated UL 300 V / 10 A and IEC 250 V / 15 A (BUD-31). Its J2 description was updated.
+
+**Fixes**
+- `qualify.py` counted bullets beyond the "Lines to select" section. The DD-39 report therefore said 21 lines to
+  select; there were 0. It is now fixed and tested.
+- `export.py` writes the equivalents into `BOM_JLCPCB.csv` and lists LCSC listing names in `ORDERING.md`.
+
+**Results (generated)**
+- ERC 0/0; `restore` DRC 0/0/0/0. Geometry matches 61bebf9, apart from J2's description field and three F.Cu
+  refills smaller than 0.01 mm².
+- Export: 0 lines without an LCSC code, 2 equivalents.
+- Qualification: 8 CONDITIONAL, 5 OPEN. Loop model 243/243.
+- 275 Python tests pass.
 
 ### 2026-10-29: budget BOM sourced, 40 open lines (DD-39)
 

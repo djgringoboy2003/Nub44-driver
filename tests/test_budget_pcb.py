@@ -116,9 +116,38 @@ def test_every_bom_part_has_an_mpn_and_exactly_one_sourcing_entry():
         assert c.get("evidence"), mpn
         assert c["lcsc"] == "UNKNOWN" or re.fullmatch(r"C\d+", c["lcsc"]), mpn
         assert c.get("jlc", "Basic") in ("Basic", "Extended"), mpn
-    # the 0.1 % / 25 ppm lines are never satisfied by Yageo RT...BRE (+-50 ppm/C) parts
+        eq = c.get("lcsc_equivalent")
+        if eq:  # only for a part LCSC does not list, and always with its own MPN, maker, code and evidence
+            assert c["lcsc"] == "UNKNOWN" and eq["mpn"] != mpn and eq.get("mfr") and eq.get("evidence"), mpn
+            assert re.fullmatch(r"C\d+", eq["lcsc"]), mpn
+    # the 0.1 % / 25 ppm lines are never satisfied by Yageo RT/AT...BRE (+-50 ppm/C) parts, nor by their equivalents
     precision = [p for p in bom.values() if "0.1%" in p.get("desc", "")]
-    assert precision and not [p["ref"] for p in precision if re.match(r"RT\d{4}BRE", str(p["mpn"]))]
+    chosen = [(p["ref"], m) for p in precision
+              for m in (str(p["mpn"]), entries[str(p["mpn"])].get("lcsc_equivalent", {}).get("mpn", ""))]
+    assert precision and not [c for c in chosen if re.match(r"(RT|AT)\d{4}BRE", c[1])]
+
+
+def test_jlcpcb_bom_names_and_codes_the_lcsc_equivalent_never_the_unlisted_part():
+    bom = ROOT / "manufacturing/budget-2s/assembly/BOM_JLCPCB.csv"
+    if not bom.exists():
+        pytest.skip("budget export not run")
+    import csv
+    sourcing = yaml.safe_load((ROOT / "engineering/design/budget-2s/sourcing.yaml").read_text(encoding="utf-8"))
+    rows = {r["Designator"]: r for r in csv.DictReader(bom.read_text(encoding="utf-8-sig").splitlines())}
+    checked = 0
+    for mpn, c in sourcing["parts"].items():
+        eq = c.get("lcsc_equivalent")
+        refs = {r for r, p in PARTS.items() if str(p.get("mpn")) == str(mpn) and p.get("in_bom", True)}
+        mine = [v for k, v in rows.items() if set(k.split(",")) <= refs]  # one MPN may span several BOM lines
+        assert mine and {r for v in mine for r in v["Designator"].split(",")} == refs, mpn
+        for row in mine:
+            if eq:
+                assert row["LCSC Part #"] == eq["lcsc"] and eq["mpn"] in row["Comment"], mpn
+                assert str(mpn) not in row["Comment"], mpn
+            else:
+                assert row["LCSC Part #"] == ("" if c["lcsc"] == "UNKNOWN" else c["lcsc"]), mpn
+        checked += bool(eq)
+    assert checked == sum(1 for c in sourcing["parts"].values() if c.get("lcsc_equivalent"))
 
 
 def test_drc_evidence_when_present_is_current():

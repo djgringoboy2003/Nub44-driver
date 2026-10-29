@@ -27,8 +27,9 @@ unrestricted size and a £60 target per working driver, comparing three and five
 [engineering/budget-2s-design.md](engineering/budget-2s-design.md) for its current circuit candidates,
 qualification results, unresolved issues and next steps. Numeric sources and preliminary calculations/models
 exist. DD-38 added a DRC-clean four-layer budget PCB (90 × 60 mm), a routed-copper check and a prototype
-bare-board package in `manufacturing/budget-2s/`. Its BOM still has lines to select at order, the U1/Q2 land
-and XT30/J2 reviews are open, and budget firmware does not exist yet. A/B PASS results and the existing
+bare-board package in `manufacturing/budget-2s/`. Every BOM line has a sourced MPN (DD-39) and an LCSC code or
+a labelled LCSC equivalent (DD-40). The U1/Q2 land and XT30/J2 reviews are open, and budget firmware does not
+exist yet. A/B PASS results and the existing
 dashboard apply only to the original single-cell circuit.
 
 ## Non-negotiable rules
@@ -94,7 +95,7 @@ dashboard apply only to the original single-cell circuit.
 | `automation/export/` | PCBWay export (`export_pcbway.py`, marks incomplete boards), JLCPCB files derived from it (`export_jlcpcb.py`), release levels (`release_check.py`), review packaging |
 | `automation/review/footprint_report.py` | Pad tables for the human footprint reviews (`reports/footprint-review.md`) |
 | `manufacturing/jlcpcb/<variant>/` | JLCPCB upload files (flat Gerber ZIP, JLC BOM/CPL), evaluation board only |
-| `hardware/budget-2s/`, `manufacturing/budget-2s/` | Budget KiCad project, `placement.yaml`, archived router session (`routing/`); prototype package from `automation/budget/export.py` (Gerber/drill ZIP, BOM with select-at-order lines, JLC BOM/CPL, PDFs, renders, `ORDERING.md`) |
+| `hardware/budget-2s/`, `manufacturing/budget-2s/` | Budget KiCad project, `placement.yaml`, archived router session (`routing/`); prototype package from `automation/budget/export.py` (Gerber/drill ZIP, BOM with MPN, LCSC and UK-distributor columns, JLC BOM/CPL, PDFs, renders, `ORDERING.md`) |
 | `automation/budget/build_pcb.py`, `layout_review.py`, `export.py` | Budget board stages (place/route/finish/drc/render/archive/restore), routed-copper resistance check against the `power_model` allocations, manufacturing export |
 | `documentation/ordering-guide.md`, `documentation/pre-order-review.md` | Fab files and options (PCBWay, JLCPCB, layer order); the brief for the independent pre-order review |
 | `automation/nubm44/evidence.py` | Evidence manifests (input/output SHA-256, tool versions) used by calculations, simulations, schematics |
@@ -218,6 +219,10 @@ and extracts its copper as the router's input.
   that has planes (zones_pre) off the plane: wire such branches with fixed `tracks` in `placement.yaml`.
 - KiCad 10.0.6: removing footprint silkscreen and letting the Python proxies be garbage-collected after
   `SetFPID` breaks the SWIG type table (the budget `place` crashed). `pcb_builder_budget.py` keeps them alive.
+- `qualify.py` prints Ω and dashes. When its output is piped or redirected on Windows, Python encodes it as
+  cp1252 and stops with a UnicodeEncodeError, after the results are written. Set `PYTHONIOENCODING=utf-8`.
+- LCSC's search page is rendered by script, so a page fetch returns no results. Find codes from product pages
+  (`lcsc.com/product-detail/<code>.html`); codes from one batch are often consecutive in part-number order.
 
 ## Commit conventions
 

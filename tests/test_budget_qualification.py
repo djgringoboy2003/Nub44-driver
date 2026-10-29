@@ -25,6 +25,16 @@ def params():
     return yaml.safe_load(qualify.PARAMETERS.read_text(encoding="utf-8"))
 
 
+def test_order_selection_count_reads_only_its_own_section():
+    text = "\n".join(["# Package", "## Lines to select at order time (no part number invented)", "",
+                      "- R1: 10k 0603 - 1%", "- R2: 1k 0603 - 1%", "", "## Lines without an LCSC code", "",
+                      "- U1: TPS54821RHLR", "", "## LCSC listing names and equivalents (DD-40)", "", "- J1: XT30PW-M", ""])
+    assert qualify.selections_in(text) == 2
+    assert qualify.selections_in(text.replace("- R1: 10k 0603 - 1%\n- R2: 1k 0603 - 1%",
+                                              "None: every line has a sourced MPN (DD-39).")) == 0
+    assert qualify.selections_in("# Package without the section\n- U1: X") == 0
+
+
 def test_variant_paths_cannot_inherit_1s_sources():
     a = sources_for("compact-22mm")
     b = sources_for("evaluation-board")

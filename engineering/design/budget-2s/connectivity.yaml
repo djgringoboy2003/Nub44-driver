@@ -133,7 +133,7 @@ parts:
      mpn: 0603WAF1000T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "100 Ohm 1% 0603 gate series resistor to N1/N2 (limits clamp current)", pins: {1: QOUT_G, 2: QOUT_DRV}}
   - {ref: J2, block: sense, lib: "Connector:Screw_Terminal_01x02", value: "Laser out",
      footprint: "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm", mpn: MX126-5.0-02P, mfr: MaiXu,
-     desc: "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify",
+     desc: "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Cixi MaiXu MX126: UL 300 V/10 A, IEC 250 V/15 A, 26-14 AWG (BUD-31)",
      pins: {1: LASER_P, 2: GND}}
   - {ref: C19, block: sense, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
      mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF 16 V X7R 0603 laser-side capacitor", pins: {1: LASER_P, 2: GND}}

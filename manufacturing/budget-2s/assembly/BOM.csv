@@ -15,12 +15,12 @@
 14,R13,1,47k,R_0603_1608Metric,UNI-ROYAL (Uniroyal Elec),0603WAF4702T5E,C25819,,47 kOhm 1% 0603 nFAULT pulldown
 15,R4,1,1k,R_0805_2012Metric,UNI-ROYAL (Uniroyal Elec),0805W8F1001T5E,C17513,,1 kOhm 1% 0805 VBUCK bleeder (>= 0.125 W; 71 mW at 8.4 V fault)
 16,J4,1,UPDI,PinHeader_1x03_P2.54mm_Vertical,BOOMELE (Boom Precision Elec),2.54-1*3P,C49257,,"UPDI programming header: 1 VCTRL, 2 UPDI, 3 GND"
-17,F1,1,10A mini blade,Fuseholder_Blade_Mini_Keystone_3568,Keystone,3568,,,Mini blade fuse holder; fuse 10 A (ATM) fitted separately. Holder + fuse + connector + copper must fit the 15 mOhm input allocation
-18,U8,1,ATtiny1616,SOIC-20W_7.5x12.8mm_P1.27mm,Microchip,ATTINY1616-SN,,,"MCU, SOIC-20 port map in budget-2s-design.md (PREORDER-08)"
-19,J3,1,Interlock,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,JST,B2B-PH-K-S,,,External interlock loop (closed = permit). Open loop clears the latch
-20,J5,1,Laser NTC,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,JST,B2B-PH-K-S,,,Optional laser-mount 10 kOhm NTC
-21,D1,1,10V,D_SOD-523,Nexperia,BZX585-C10,,,"10 V Zener SOD-523, Q1 gate-source clamp against plug transients (PREORDER-11 series)"
-22,D3,1,6.2V,D_SOD-523,Nexperia,BZX585-C6V2,,,"Q2 gate clamp, VZ 5.89-6.51 V (PREORDER-11, DD-34)"
+17,F1,1,10A mini blade,Fuseholder_Blade_Mini_Keystone_3568,Keystone,3568,C5249699,,Mini blade fuse holder; fuse 10 A (ATM) fitted separately. Holder + fuse + connector + copper must fit the 15 mOhm input allocation
+18,U8,1,ATtiny1616,SOIC-20W_7.5x12.8mm_P1.27mm,Microchip,ATTINY1616-SN,C614136,,"MCU, SOIC-20 port map in budget-2s-design.md (PREORDER-08)"
+19,J3,1,Interlock,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,JST,B2B-PH-K-S,C131337,,External interlock loop (closed = permit). Open loop clears the latch
+20,J5,1,Laser NTC,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,JST,B2B-PH-K-S,C131337,,Optional laser-mount 10 kOhm NTC
+21,D1,1,10V,D_SOD-523,Nexperia,BZX585-C10,C550626,,"10 V Zener SOD-523, Q1 gate-source clamp against plug transients (PREORDER-11 series)"
+22,D3,1,6.2V,D_SOD-523,Nexperia,BZX585-C6V2,C550667,,"Q2 gate clamp, VZ 5.89-6.51 V (PREORDER-11, DD-34)"
 23,C9,1,4.7n,C_0603_1608Metric,YAGEO,CC0603JRNPO9BN472,C576818,,4.7 nF C0G 0603 compensation HF pole
 24,"C4,C7,C16,C17,C18,C19,C20,C21,C23,C26,C29,C30,C31,C32",14,100n,C_0603_1608Metric,YAGEO,CC0603KRX7R9BB104,C14663,,100 nF 25 V X7R 0603 PVIN HF; 100 nF 16 V X7R 0603 bootstrap (BUD-01 p.15); 100 nF 16 V X7R 0603 output HF; 100 nF X7R 0603 U2 supply; 100 nF X7R 0603 U3 supply; 100 nF 16 V X7R 0603 laser-side capacitor; 100 nF X7R 0603 U5 supply; 100 nF X7R 0603 UV sense filter (ripple); 100 nF X7R 0603 U6 supply; 100 nF X7R 0603 MCU decoupling; 100 nF X7R 0603 VBUCK monitor ADC reservoir; 100 nF X7R 0603 pack monitor ADC reservoir; 100 nF X7R 0603 laser NTC filter; 100 nF X7R 0603 button debounce
 25,"C5,C24,C27",3,1u,C_0603_1608Metric,Samsung Electro-Mechanics,CL10A105KB8NNNC,C15849,,1 uF 25 V X5R 0603 VIN decoupling at U1 pin 6; 1 uF 25 V X5R 0603 LDO input; 1 uF X5R 0603 MCU bulk decoupling
@@ -28,29 +28,29 @@
 27,C8,1,1u,C_0603_1608Metric,Samsung Electro-Mechanics,CL10B105KA8NNNC,C29936,Farnell 3013415,1 uF X7R 0603 compensation (loop study)
 28,C6,1,22n,C_0603_1608Metric,Samsung Electro-Mechanics,CL10B223KB8NNNC,C21122,,22 nF X7R 0603 soft start
 29,"C2,C3,C10,C11,C12,C13,C14,C15",8,22u,C_1206_3216Metric,Samsung Electro-Mechanics,CL31A226KAHNNNE,C12891,,22 uF 25 V X5R 1206 PVIN; 22 uF >=16 V X5R 1206 output (6 fitted; 25 V part chosen for less DC-bias loss; effective C to verify); 22 uF 16 V X5R 1206 output
-30,"Q3,Q4,Q5,Q6,Q8",5,DMG1012T,SOT-523,Diodes Incorporated,DMG1012T-7,,,"N1: ARM_Q half of the output-disconnect AND pair (LEAD-04); N2: nFAULT half of the output-disconnect AND pair; N3: ARM_Q half of the EN AND pair; N4: nFAULT half of the EN AND pair; N5: firmware-permit inhibit, on by default"
-31,Q7,1,DMG1013T,SOT-523,Diodes Incorporated,DMG1013T-7,,,P1: sources the TPS54821 EN divider from VCTRL (BUD-23)
-32,Q1,1,DMP2022LSS,SOIC-8_3.9x4.9mm_P1.27mm,Diodes Incorporated,DMP2022LSS-13,,,"Reverse-polarity P-MOSFET -20 V, 16 mOhm max at -4.5 V, +/-12 V gate (BUD-15)"
+30,"Q3,Q4,Q5,Q6,Q8",5,DMG1012T,SOT-523,Diodes Incorporated,DMG1012T-7,C20512,,"N1: ARM_Q half of the output-disconnect AND pair (LEAD-04); N2: nFAULT half of the output-disconnect AND pair; N3: ARM_Q half of the EN AND pair; N4: nFAULT half of the EN AND pair; N5: firmware-permit inhibit, on by default"
+31,Q7,1,DMG1013T,SOT-523,Diodes Incorporated,DMG1013T-7,C96676,,P1: sources the TPS54821 EN divider from VCTRL (BUD-23)
+32,Q1,1,DMP2022LSS,SOIC-8_3.9x4.9mm_P1.27mm,Diodes Incorporated,DMP2022LSS-13,C154919,,"Reverse-polarity P-MOSFET -20 V, 16 mOhm max at -4.5 V, +/-12 V gate (BUD-15)"
 33,C1,1,100u,CP_Elec_6.3x7.7,Nippon Chemi-Con,EMVL160ARA101MF80G,C2928896,,"100 uF 16 V SMD aluminium/polymer bulk input, cable damping"
-34,"R6,R15,R17",3,10k,R_0603_1608Metric,Panasonic,ERA-3AEB103V,,RS 566-890; RS 741-9789,10.0 kOhm 0.1% 25 ppm/C 0603 feedback bottom; 10.0 kOhm 0.1% 25 ppm/C 0603 UV divider bottom; 10.0 kOhm 0.1% 25 ppm/C 0603 OV divider bottom
+34,"R6,R15,R17",3,10k,R_0603_1608Metric,Panasonic,ERA-3AEB103V,C190610,RS 566-890; RS 741-9789,10.0 kOhm 0.1% 25 ppm/C 0603 feedback bottom; 10.0 kOhm 0.1% 25 ppm/C 0603 UV divider bottom; 10.0 kOhm 0.1% 25 ppm/C 0603 OV divider bottom
 35,R14,1,130k,R_0603_1608Metric,Panasonic,ERA-3AEB134V,C473257,RS 179-9606,130 kOhm 0.1% 25 ppm/C 0603 UV divider top (DD-31)
-36,R5,1,27.4k,R_0603_1608Metric,Panasonic,ERA-3AEB2742V,,RS 708-8855,27.4 kOhm 0.1% 25 ppm/C 0603 feedback top: 4.5 A main build (DD-33); 15.0/19.1/23.2k for 3.0/3.5/4.0 A
-37,U2,1,INA186A2,SOT-363_SC-70-6,Texas Instruments,INA186A2IDCKR,,,"Current-sense amplifier, gain 50 (PREORDER-07)"
+36,R5,1,27.4k,R_0603_1608Metric,Panasonic,ERA-3AEB2742V,C855755 = YAGEO AT0603BRD0727K4L (equivalent),RS 708-8855,27.4 kOhm 0.1% 25 ppm/C 0603 feedback top: 4.5 A main build (DD-33); 15.0/19.1/23.2k for 3.0/3.5/4.0 A
+37,U2,1,INA186A2,SOT-363_SC-70-6,Texas Instruments,INA186A2IDCKR,C2058238,,"Current-sense amplifier, gain 50 (PREORDER-07)"
 38,U3,1,INA300A,MSOP-10_3x3mm_P0.5mm,Texas Instruments,INA300AIDGSR,C529558,,"Independent overcurrent comparator, latched, hard-enabled, fast DELAY/HYS floating (BUD-06)"
 39,D4,1,Status,LED_0805_2012Metric,Hubei KENTO Elec,KT-0805Y,C2296,,Status LED 0805
-40,U7,1,MCP1703A-3302,SOT-89-3,Microchip,MCP1703AT-3302E/MB,,,"3.3 V LDO from VBAT_P, SOT-89: 1 GND, 2 VIN, 3 VOUT (BUD-21)"
-41,J2,1,Laser out,TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm,MaiXu,MX126-5.0-02P,,,"Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify"
+40,U7,1,MCP1703A-3302,SOT-89-3,Microchip,MCP1703AT-3302E/MB,C148015,,"3.3 V LDO from VBAT_P, SOT-89: 1 GND, 2 VIN, 3 VOUT (BUD-21)"
+41,J2,1,Laser out,TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm,MaiXu,MX126-5.0-02P,C5188434,,"Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Cixi MaiXu MX126: UL 300 V/10 A, IEC 250 V/15 A, 26-14 AWG (BUD-31)"
 42,TH1,1,10k,R_0603_1608Metric,Murata,NCP18XH103F03RB,C13564,,"10 kOhm NTC 0603, board temperature near U1/Q2"
 43,R12,1,9.1k,R_0603_1608Metric,YAGEO,RC0603FR-079K1L,C114639,RS 199-5645,"9.1 kOhm 1% 0603 interlock pull-up, nFAULT side"
-44,R16,1,133k,R_0603_1608Metric,YAGEO,RT0603BRD07133KL,,DigiKey,133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)
-45,Q2,1,SiSS23DN,Vishay_PowerPAK_1212-8_Single,Vishay,SISS23DN-T1-GE3,,,"Output disconnect P-MOSFET, source at shunt (DD-31/34); 4.5/6.3 mOhm max at -4.5/-2.5 V, +/-8 V gate"
+44,R16,1,133k,R_0603_1608Metric,YAGEO,RT0603BRD07133KL,C861111,DigiKey,133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)
+45,Q2,1,SiSS23DN,Vishay_PowerPAK_1212-8_Single,Vishay,SISS23DN-T1-GE3,C222439,,"Output disconnect P-MOSFET, source at shunt (DD-31/34); 4.5/6.3 mOhm max at -4.5/-2.5 V, +/-8 V gate"
 46,D2,1,10V TVS,D_SMA,Littelfuse,SMAJ10CA,C315986,,"Bidirectional TVS, 10 V standoff, SMA (e.g. SMAJ10CA class); clamp below TPS54821 PVIN limit - verify"
 47,U6,1,SN74HCS74,SOIC-14_3.9x8.7mm_P1.27mm,Texas Instruments,SN74HCS74DR,C2862638,,"Arm latch: CLR = nFAULT, D/PRE high, CLK = MCU arm edge; second flip-flop unused and tied (BUD-19)"
-48,L1,1,4.7u,L_Bourns_SRP1245A,Bourns,SRP1265A-4R7M,,,"4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads"
+48,L1,1,4.7u,L_Bourns_SRP1245A,Bourns,SRP1265A-4R7M,C780205,,"4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads"
 49,SW1,1,Mode,SW_SPST_TL3342,E-Switch,TL3342F160QG/TR,C2918453,DigiKey,"User button (arm hold / mode), TL3342-class SMD"
-50,U5,1,TLV6700,SOT-23-6,Texas Instruments,TLV6700DDCR,,,"UV (A) and VBUCK OV (B) monitor, open drain onto nFAULT (BUD-18)"
-51,U4,1,TLV803EA29,SOT-23,Texas Instruments,TLV803EA29DBZR,,DigiKey UK 11308855,"VCTRL supervisor 2.93 V / 200 ms, open drain onto nFAULT (BUD-20)"
-52,R7,1,2.67k,R_0603_1608Metric,Vishay,TNPW06032K67BEEA,,Farnell/element14 3885982,2.67 kOhm 0.1% 25 ppm/C 0603 INA300 limit: 5.10-5.48 A trip (DD-33)
+50,U5,1,TLV6700,SOT-23-6,Texas Instruments,TLV6700DDCR,C2868382,,"UV (A) and VBUCK OV (B) monitor, open drain onto nFAULT (BUD-18)"
+51,U4,1,TLV803EA29,SOT-23,Texas Instruments,TLV803EA29DBZR,C1852114,DigiKey UK 11308855,"VCTRL supervisor 2.93 V / 200 ms, open drain onto nFAULT (BUD-20)"
+52,R7,1,2.67k,R_0603_1608Metric,Vishay,TNPW06032K67BEEA,C855783 = YAGEO AT0603BRD072K67L (equivalent),Farnell/element14 3885982,2.67 kOhm 0.1% 25 ppm/C 0603 INA300 limit: 5.10-5.48 A trip (DD-33)
 53,U1,1,TPS54821,TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm,Texas Instruments,TPS54821RHLR,C57461,,"8 A synchronous buck, external compensation (BUD-01). Project footprint from TI RHL drawing OPEN"
 54,RS1,1,10m,R_2512_6332Metric,Vishay Dale,WSL2512R0100FEA,C844901,,"10 mOhm 1% 1 W 2512, +/-75 ppm/C (BUD-24). Kelvin sense traces from the inner pad edges (layout rule)"
-55,J1,1,XT30 2S in,AMASS_XT30PW-M_1x02_P2.50mm_Horizontal,AMASS,XT30PW-M,,,"Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)"
+55,J1,1,XT30 2S in,AMASS_XT30PW-M_1x02_P2.50mm_Horizontal,AMASS,XT30PW-M,C431092,,"Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)"

@@ -20,5 +20,5 @@ Currents: input 3.114 A and laser 4.500 A at the nominal operating point of `aut
 | output | GND: J2 LD- to U1 power ground | 0.311 | 0.373 | 4.5 | 7.6 | In2.Cu (39.43, 8.22), 7.873/4.11 |
 
 - **Output loop:** 2.836 mΩ hot against the 3 mΩ `output_copper_ohm_allocation`: within the allocation.
-- **Input path:** copper 2.288 mΩ hot plus XT30 contacts 1.6 mΩ (BUD-26) leaves **11.112 mΩ** for the fuse and holder (hot) inside the 15 mΩ `input_path_ohm_allocation`. Fuse and holder resistance are UNKNOWN until a part is chosen; it must meet this figure.
+- **Input path:** copper 2.288 mΩ hot plus XT30 contacts 2.4 mΩ (BUD-30) leaves **10.312 mΩ** for the fuse and holder (hot) inside the 15 mΩ `input_path_ohm_allocation`. Fuse and holder resistance are UNKNOWN until a part is chosen; it must meet this figure.
 - **Necks flagged for review** (equivalent width below the IPC-2221 20 K screen): PH (U1 switch node to L1 (not in an allocation)).

@@ -36,27 +36,22 @@ Order codes and evidence: `engineering/design/budget-2s/sourcing.yaml`. Stock an
 and stay UNKNOWN until quoted. For a JLCPCB/LCSC-assembled board these lines must be matched by MPN in the
 assembler's BOM tool, consigned, or fitted by hand (UK distributor in brackets where one was found):
 
-- F1: 3568
-- U8: ATTINY1616-SN
-- J3: B2B-PH-K-S
-- J5: B2B-PH-K-S
-- D1: BZX585-C10
-- D3: BZX585-C6V2
-- Q3,Q4,Q5,Q6,Q8: DMG1012T-7
-- Q7: DMG1013T-7
-- Q1: DMP2022LSS-13
-- R6,R15,R17: ERA-3AEB103V (RS 566-890; RS 741-9789)
-- R5: ERA-3AEB2742V (RS 708-8855)
-- U2: INA186A2IDCKR
-- U7: MCP1703AT-3302E/MB
-- J2: MX126-5.0-02P
-- R16: RT0603BRD07133KL (DigiKey)
-- Q2: SISS23DN-T1-GE3
-- L1: SRP1265A-4R7M
-- U5: TLV6700DDCR
-- U4: TLV803EA29DBZR (DigiKey UK 11308855)
-- R7: TNPW06032K67BEEA (Farnell/element14 3885982)
-- J1: XT30PW-M
+- None.
+
+## LCSC listing names and equivalents (DD-40)
+
+The same part under LCSC's full ordering name, or, where LCSC does not list the part, the equivalent used in
+`BOM_JLCPCB.csv` (same value, package, tolerance and TCR; a hand-built board uses the MPN in `BOM.csv`):
+
+- J3: B2B-PH-K-S is listed by LCSC as B2B-PH-K-S(LF)(SN) (C131337)
+- J5: B2B-PH-K-S is listed by LCSC as B2B-PH-K-S(LF)(SN) (C131337)
+- D1: BZX585-C10 is listed by LCSC as BZX585-C10,115 (C550626)
+- D3: BZX585-C6V2 is listed by LCSC as BZX585-C6V2,115 (C550667)
+- R6,R15,R17: ERA-3AEB103V is listed by LCSC as ERA3AEB103V (C190610)
+- R5: ERA-3AEB2742V is not listed by LCSC; BOM_JLCPCB.csv uses the equivalent YAGEO AT0603BRD0727K4L (C855755)
+- J2: MX126-5.0-02P is listed by LCSC as MX126-5.0-02P-GN01-Cu-S-A (C5188434)
+- R7: TNPW06032K67BEEA is not listed by LCSC; BOM_JLCPCB.csv uses the equivalent YAGEO AT0603BRD072K67L (C855783)
+- J1: XT30PW-M is listed by LCSC as XT30PW-M30.G.Y (C431092)
 
 Precision lines (0.1 %, 25 ppm/C) set the laser current and protection thresholds: buy genuine parts from a
 UK distributor or LCSC and keep the exact values; do not substitute 1 % parts. Verify the XT30 moulded +/- marks

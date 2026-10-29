@@ -1966,7 +1966,7 @@
       "status": "OPEN"
     },
     {
-      "detail": "Schematic PASS: ERC 0 errors / 0 warnings, 108 parts, 0 netlist differences. Footprints not generated: none. PCB DRC 0 errors / 0 warnings / 0 unconnected / 0 parity (parity and all severities on). Routed copper: output loop 2.836 m\u03a9 hot vs 3 m\u03a9 allocation (within); fuse and holder budget 11.112 m\u03a9 hot. Necks for review: PH (U1 switch node to L1 (not in an allocation)). Open reviews: U1 RHL land and stencil (project footprint), shared FP-POWERPAK land (Q2), XT30 moulded +/- marks, J2 wire-entry side; thermal behaviour is bench-only.",
+      "detail": "Schematic PASS: ERC 0 errors / 0 warnings, 108 parts, 0 netlist differences. Footprints not generated: none. PCB DRC 0 errors / 0 warnings / 0 unconnected / 0 parity (parity and all severities on). Routed copper: output loop 2.836 m\u03a9 hot vs 3 m\u03a9 allocation (within); fuse and holder budget 10.312 m\u03a9 hot. Necks for review: PH (U1 switch node to L1 (not in an allocation)). Open reviews: U1 RHL land and stencil (project footprint), shared FP-POWERPAK land (Q2), XT30 moulded +/- marks, J2 wire-entry side; thermal behaviour is bench-only.",
       "id": "BUD-CAD-01",
       "status": "CONDITIONAL"
     },
@@ -1976,7 +1976,7 @@
       "status": "OPEN"
     },
     {
-      "detail": "Prototype Gerbers/drill/CPL checked against the DRC-clean board. BOM has 21 lines to select at order (MPN UNKNOWN, requirement listed). Assembly quote, DFM review and inspection plan OPEN.",
+      "detail": "Prototype Gerbers/drill/CPL checked against the DRC-clean board. BOM has 0 lines to select at order (MPN UNKNOWN, requirement listed). Assembly quote, DFM review and inspection plan OPEN.",
       "id": "BUD-MFG-01",
       "status": "CONDITIONAL"
     },

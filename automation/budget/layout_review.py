@@ -141,7 +141,7 @@ def markdown(paths_: list[dict], s: dict, currents: dict) -> str:
             f"{s['output_allocation_ohm'] * 1e3:g} mΩ `output_copper_ohm_allocation`: "
             + ("within the allocation." if s["output_ok"] else "**exceeds the allocation**."),
             f"- **Input path:** copper {s['input_copper_ohm_hot'] * 1e3:.3f} mΩ hot plus XT30 contacts "
-            f"{s['connector_contacts_ohm'] * 1e3:g} mΩ (BUD-26) leaves **{s['fuse_and_holder_budget_ohm_hot'] * 1e3:.3f} mΩ** "
+            f"{s['connector_contacts_ohm'] * 1e3:g} mΩ (BUD-30) leaves **{s['fuse_and_holder_budget_ohm_hot'] * 1e3:.3f} mΩ** "
             f"for the fuse and holder (hot) inside the {s['input_allocation_ohm'] * 1e3:g} mΩ `input_path_ohm_allocation`. "
             "Fuse and holder resistance are UNKNOWN until a part is chosen; it must meet this figure.",
             "- **Necks flagged for review** (equivalent width below the IPC-2221 20 K screen): "
