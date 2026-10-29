@@ -30,7 +30,7 @@ def parallel(a: float, b: float) -> float:
     return a * b / (a + b)
 
 
-def evaluate(p: dict, rail: tuple[float, float], vbuck_on_min: float) -> dict:
+def evaluate(p: dict, rail: tuple[float, float], gate: dict) -> dict:
     """Static default-off checks over the control-rail screen `rail` (min, max)."""
     f, b, d, c, t = p["interface"], p["buck"], p["disconnect"], p["control"], p["targets"]
     lo, hi = rail
@@ -89,8 +89,14 @@ def evaluate(p: dict, rail: tuple[float, float], vbuck_on_min: float) -> dict:
     out.append(check("Output P-FET |Vgs| when off", leak * d["gate_pullup_ohm"], fet["vth_v_min_abs"] - m, "max", "V",
                      "pull-up to VBUCK against the leakage allocation"))
     i_pu = t["input_v_max"] / d["gate_pullup_ohm"]
-    out.append(check("Output P-FET |Vgs| when on", vbuck_on_min - 2 * i_pu * f["nmos_r_ohm_max"], 2.5 + m, "min", "V",
-                     "minimum operating VBUCK; 2.5 V is the resistance condition used by the power model"))
+    out.append(check("Output P-FET |Vgs| when on", gate["output_fet_vgs_abs_min_v"] - 2 * i_pu * f["nmos_r_ohm_max"],
+                     2.5 + m, "min", "V", "gate-divider fraction of minimum VBUCK; 2.5 V resistance condition"))
+    out.append(check("Output P-FET |Vgs| at OVP maximum, clamp off", gate["output_fet_vgs_abs_normal_max_v"],
+                     gate["clamp_vz_v_min"] - m, "max", "V", "BZX585-C6V2 minimum VZ (PREORDER-11)"))
+    out.append(check("Output P-FET |Vgs| at a switch-short, clamped", gate["output_fet_vgs_abs_fault_v"],
+                     gate["output_fet_gate_rating_v"] - m, "max", "V", "clamp maximum VZ against the gate rating"))
+    out.append(check("Reverse P-FET |Vgs| at maximum pack voltage", gate["reverse_fet_vgs_abs_max_v"],
+                     gate["reverse_fet_gate_rating_v"] - m, "max", "V", "gate grounded; no clamp"))
     out.append(check("N1/N2 drain voltage at a buck switch-short", t["input_v_max"], f["nmos_vds_rating_v"], "max", "V",
                      "VBUCK can reach the pack voltage"))
 

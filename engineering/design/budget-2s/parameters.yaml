@@ -3,7 +3,7 @@
 # UNKNOWN is intentional. Do not promote an assumption to a guaranteed limit.
 schema: nubm44-budget-parameters.v1
 meta:
-  revision: B2-4p5a-setpoint  # DD-33: owner main setpoint 4.5 A; DD-31/32 power model and interface
+  revision: B3-sourcing  # DD-34 sourcing swaps; DD-33 4.5 A setpoint; DD-31/32 power model and interface
   date: '2026-10-29'
   status: ELECTRICAL_QUALIFICATION
   decision: DD-30
@@ -101,11 +101,13 @@ current_sense:  # PREORDER-07 / BUD-22. Resistor procurement qualification OPEN.
   offset_test_common_mode_v: 12
   psrr_v_per_v_max: 0.000010
   offset_test_supply_v: 1.8
-  shunt_mpn: WSK2512R0100FEA
-  shunt_source: BUD-22
+  # DD-34: WSK2512 four-terminal part not readily available; Vishay WSL2512 two-terminal (LCSC C844901),
+  # Kelvin sense traces taken from the pad edges. BUD-24 doc 30100 p.1-2: 1 W at 70 C, +/-75 ppm/C (7-500 mOhm).
+  shunt_mpn: WSL2512R0100FEA
+  shunt_source: BUD-24
   shunt_ohm: 0.010
   shunt_tolerance_fraction: 0.01
-  shunt_tcr_fraction_per_c: 0.000035
+  shunt_tcr_fraction_per_c: 0.000075
   shunt_power_w_at_70c: 1.0
   shunt_delta_c_from_25: 50  # ASSUMPTION: includes self heating; bench must bound.
   fb_top_ohm: 27400  # E96; 4.5 A main setpoint (DD-33). Was 23.2k for 4.0 A.
@@ -205,25 +207,27 @@ disconnect:
       vth_v_min_abs: 0.6  # p.2, VGS(th) -0.6...-1.1 V
       gate_rating_v_abs: 12
       qg_c_typ_at_4p5v: 0.0000000281
-    - mpn: DMP2005UFG-7
-      source: BUD-16
-      package: PowerDI3333-8
+    - mpn: SISS23DN-T1-GE3  # Same part as A/B Q1; UK stocked (UK-03/UK-32). PREORDER-02 p.1-2, TJ 25 C.
+      source: PREORDER-02
+      package: PowerPAK1212-8
       r_ohm_typ_at_4p5v_25c: 0.0035
-      r_ohm_max_at_4p5v_25c: 0.0040
-      r_ohm_typ_at_2p5v_25c: 0.0054
-      r_ohm_max_at_2p5v_25c: 0.0065
-      vth_v_min_abs: 0.3  # p.2, VGS(th) -0.3...-0.9 V
-      gate_rating_v_abs: 10
-      qg_c_typ_at_4p5v: 0.000000055
-  # DD-31 development selection from the generated operating-point comparison. Exposed-drain land,
-  # paste and X-ray inspection review remain OPEN; this is not an approved BOM line.
-  selected_output_mpn: DMP2005UFG-7
+      r_ohm_max_at_4p5v_25c: 0.0045
+      r_ohm_typ_at_2p5v_25c: 0.0051
+      r_ohm_max_at_2p5v_25c: 0.0063
+      vth_v_min_abs: 0.4  # VGS(th) -0.4...-0.9 V
+      gate_rating_v_abs: 8  # Needs the gate clamp below for the 8.4 V switch-short case.
+  # DD-34: DMP2005UFG-7 (DD-31) dropped, 40-week distributor lead time. SiSS23DN shares the A/B
+  # PowerPAK 1212-8 land, so the open FP-POWERPAK footprint review applies here too.
+  selected_output_mpn: SISS23DN-T1-GE3
   driver_candidate: AO3400A
   driver_source: BUD-17
   driver_r_guaranteed_gate_v_min: 2.5
-  gate_pullup_ohm: 2200  # Candidate only; total turn-off remains unbounded.
+  gate_pullup_ohm: 2200  # Source to gate. Candidate only; total turn-off remains unbounded.
+  gate_series_ohm: 100  # Gate to the N1/N2 pull-down; limits clamp current (~25 mA at 8.4 V). |Vgs| = 0.957 x source.
   r_hot_multiplier_sensitivity: 1.6  # ASSUMPTION; not a manufacturer maximum.
-  gate_clamp_mpn: UNKNOWN
+  gate_clamp_mpn: BZX585-C6V2  # PREORDER-11: VZ 5.89-6.51 V, 300 mW, SOD-523; zener source to gate.
+  gate_clamp_vz_v_min: 5.89
+  gate_clamp_vz_v_max: 6.51
   total_shutdown_s_guaranteed_max: UNKNOWN
 
 output_energy:

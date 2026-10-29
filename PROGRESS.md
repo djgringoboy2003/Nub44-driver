@@ -4,7 +4,8 @@
 
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
-efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A). The pre-order, quote, GBP/UK and Project 450
+efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
+sourcing directive and part swaps; A/B 4.5 A analysed, awaiting two owner decisions). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -72,6 +73,13 @@ was below the proposed 94%, and the owner chose option (a): a budget target of �
 measurement (the 93% value was proposed by Claude Code). The estimate margin is only about 0.4 points. The
 converter terms agree with TI's typical curve to within about half a point.
 
+DD-34 (2026-10-29, owner directive): the budget board is to use cheap, easy-to-source parts from UK
+distributors or fast China channels. Policy: semiconductors are genuine, from UK distributors or LCSC; only
+passives, connectors and fuses come from AliExpress. DMP2005UFG-7 (40-week lead) is replaced by SiSS23DN with a
+100 Ω gate resistor and a BZX585-C6V2 clamp. WSK2512 is replaced by WSL2512R0100FEA (BUD-24). The estimate is
+still 93.05% and all 37 interface checks pass. TPS54821 (no stock KiCad footprint, LCSC stock, 12-week DigiKey
+lead) and SRP1265A remain the hardest parts. Several UK stock checks are still pending (BUD-25 snapshots only).
+
 DD-33 (2026-10-29, owner): the budget main setpoint is now **4.5 A at 4.72 V** (owner expects about 7.3 W optical).
 Owner V–I points 3.0/3.5/4.0/4.5 A at 4.40/4.52/4.62/4.72 V are one-resistor builds (OWNER-VI-01). The A/B boards
 keep 4.0 A. Changes: divider top 27.4 kΩ (4.488 A nominal, 4.33–4.65 A envelope), transient ceiling 4.95 A, INA300
@@ -137,6 +145,17 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
    (`engineering/pcb-review-2026-10-26.md`).
 5. **Fab choice** (PCBWay preferred for assembly) and acceptance of the pre-order review results.
+6. **A/B boards to 4.5 A (owner instruction 2026-10-29; sources NOT yet changed).** Trial `power_stage.py` at
+   4.5 A (reverted): R_FB_TOP 6.65k → 8.66k gives 4.478 A (−0.48%), and R_ILIM 27.4k → 24.9k fixes the inductor
+   current margin. Efficiency at 4.0 V is 94.10% and the loop passes. Two checks need an owner decision:
+   (a) the TPS552882's fixed ISP/ISN backup limit is 4.8–5.2 A with the 10 mΩ shunt, against the ≥ 4.89 A that
+   the 5% no-interference margin needs. Either accept a backup limit only about 3% above the worst-case setpoint
+   (recommended: it becomes a close, slow average-current clamp; transients above about 4.8 A are trimmed), or
+   lower the shunt. The MCS1632 series stops at 10 mΩ, so that means a new footprint and an evaluation-board
+   re-route.
+   (b) Reverse FET Q1 dissipation is 0.68 W against the 0.6 W estimated limit (about 41 K rise at ~60 K/W).
+   Either accept it and measure (recommended), or find a lower-resistance PowerPAK 1212 P-FET (SiSH615ADN is
+   worse). After the decisions, regenerate the full A/B chain (AGENTS.md order) and update DD-13/REQ-OUT-01.
 
 **Open limitations.**
 1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
@@ -206,6 +225,15 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget sourcing directive and part swaps (DD-34); A/B 4.5 A analysis
+- Owner asked for: A/B boards at 4.5 A; the budget board built from cheap UK/AliExpress-available parts; KiCad
+  started. A/B trial at 4.5 A (sources reverted) found three failed checks: backup ISP/ISN margin, ILIM margin
+  (fixed by R_ILIM 24.9k) and reverse-FET dissipation. Two are put to the owner (decision 6).
+- Budget: searched availability (BUD-25). Replaced DMP2005UFG-7 with SiSS23DN plus a gate divider and zener clamp,
+  and WSK2512 with WSL2512 (BUD-24 downloaded and hashed). The power model now uses the gate divider; the
+  interface checks the clamp and gate ratings (37 checks).
+- Checks: see the commit message.
 
 ### 2026-10-29: budget-2s main setpoint 4.5 A and owner V–I points (DD-33)
 - The owner accepted the DD-31/32 targets and set the main target to 4.5 A at 4.72 V (about 7.3 W optical), with

@@ -229,7 +229,7 @@ def calculate(p: dict) -> dict:
     vb = voltage_bounds(p)
     rr = ripple(p)
     pw = power.evaluate(p, cc["max_a"], vb["uv"], vb["ov"])
-    itf = interface.evaluate(p, control_rail(p), pw["gate_drive"]["output_fet_vgs_abs_min_v"])
+    itf = interface.evaluate(p, control_rail(p), pw["gate_drive"])
     e = p["output_energy"]
     vcap = vb["ov"]["max_v"]
     return {"schema": "nubm44-budget-qualification.v1", "variant": BUDGET_VARIANT,
@@ -352,7 +352,7 @@ def markdown(r: dict, p: dict) -> str:
               f"| Dropout: lowest regulating input at {targets['laser_v_max']:g} V / {dr['current_a']:.4f} A | {dr['connector_v_at_vf_max_i_max']:.4f} V; margin {dr['margin_v']:.4f} V | ≥{dr['required_margin_v']:g} V below {targets['input_v_min']:g} V |",
               f"| UV sense node at {targets['input_v_min']:g} V input versus UV falling maximum | {uv['sense_min_v_at_input_min']:.4f} V vs {uv['falling_max_v']:.4f} V; margin {uv['margin_v']:.4f} V | ≥{uv['required_margin_v']:g} V; UV minimum ≥{uv['floor_v']:g} V |",
               f"| Highest normal VBUCK at {targets['normal_peak_a']:g} A versus OVP rising minimum | {ov['vbuck_normal_peak_v']:.4f} V vs {ov['rising_min_v']:.4f} V; margin {ov['margin_v']:.4f} V | ≥{ov['required_margin_v']:g} V |",
-              f"| Output P-FET \\|Vgs\\| (gate grounded) | ≥{gd['output_fet_vgs_abs_min_v']:.4f} V normal; {gd['output_fet_vgs_abs_fault_v']:g} V switch-short fault | rating ±{gd['output_fet_gate_rating_v']:g} V |",
+              f"| Output P-FET \\|Vgs\\| (gate divider, DD-34 clamp) | {gd['output_fet_vgs_abs_min_v']:.4f}–{gd['output_fet_vgs_abs_normal_max_v']:.4f} V normal; {gd['output_fet_vgs_abs_fault_v']:g} V clamped fault | clamp off below {gd['clamp_vz_v_min']:g} V; rating ±{gd['output_fet_gate_rating_v']:g} V |",
               f"| Reverse P-FET \\|Vgs\\| maximum | {gd['reverse_fet_vgs_abs_max_v']:g} V | rating ±{gd['reverse_fet_gate_rating_v']:g} V |",
               "", "Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's",
               "exposed-drain land, paste and X-ray inspection review remain OPEN.", ""]

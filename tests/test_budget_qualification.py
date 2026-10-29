@@ -215,7 +215,7 @@ def test_lower_resistance_output_fet_always_loses_less(params):
     pts = qualify.calculate(params)["power"]["operating_points"]
     loss = {(x["output_fet"], x["corner"], x["vin_v"], x["vf_v"]): x["p_in_w"] - x["p_out_w"] for x in pts}
     for (mpn, corner, vin, vf), w in loss.items():
-        if mpn == "DMP2005UFG-7":
+        if mpn == "SISS23DN-T1-GE3":
             assert w < loss[("DMP2022LSS-13", corner, vin, vf)]
 
 
@@ -231,12 +231,29 @@ def test_dropout_and_ovp_margins_respond_to_resistance(params):
 
 
 def test_fet_resistance_uses_weakest_specified_gate_drive(params):
-    fet = qualify.power.output_fet(params, "DMP2005UFG-7")
-    assert qualify.power.fet_r(fet, 4.5, "maximum") == 0.0040
-    assert qualify.power.fet_r(fet, 4.49, "maximum") == 0.0065  # no interpolation
-    assert qualify.power.fet_r(fet, 3.0, "typical") == 0.0054
+    fet = qualify.power.output_fet(params, "SISS23DN-T1-GE3")
+    assert qualify.power.fet_r(fet, 4.5, "maximum") == 0.0045
+    assert qualify.power.fet_r(fet, 4.49, "maximum") == 0.0063  # no interpolation
+    assert qualify.power.fet_r(fet, 3.0, "typical") == 0.0051
     with pytest.raises(ValueError):
         qualify.power.fet_r(fet, 2.4, "maximum")
+
+
+def test_output_fet_gate_divider_and_clamp(params):
+    gd = qualify.calculate(params)["power"]["gate_drive"]
+    fraction = qualify.power.gate_fraction(params)
+    assert fraction == pytest.approx(2200 / 2300)
+    # Normal |Vgs| stays below the clamp, a switch-short is clamped below the 8 V gate rating.
+    assert gd["output_fet_vgs_abs_normal_max_v"] < gd["clamp_vz_v_min"]
+    assert gd["output_fet_vgs_abs_fault_v"] == params["disconnect"]["gate_clamp_vz_v_max"] < 8
+    # A large series resistor starves the gate below the 4.5 V condition and costs efficiency;
+    # a clamp below the normal gate voltage is caught.
+    params["disconnect"]["gate_series_ohm"] = 470
+    assert qualify.calculate(params)["power"]["efficiency"]["estimate_at_nominal"] < 0.93
+    params["disconnect"]["gate_series_ohm"] = 100
+    params["disconnect"]["gate_clamp_vz_v_min"] = 5.0
+    r = qualify.calculate(params)
+    assert "Output P-FET |Vgs| at OVP maximum, clamp off" in r["interface"]["failed"]
 
 
 def test_disconnect_topology_and_selection_are_enforced(params):

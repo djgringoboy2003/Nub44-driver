@@ -520,3 +520,44 @@ The loop study still passes all 243 cases. The efficiency estimate at the main p
 meets 93% by only about 0.05 points, while the maximum-resistance corner is about 90%. A bench measurement
 below 93% at 4.5 A is plausible. If that happens, the owner chooses between accepting it, running a lower
 setpoint, or reducing losses (input path, switching frequency, converter).
+
+## DD-34 Budget sourcing directive and part swaps (owner + engineering, 2026-10-29)
+
+**Owner instruction.** Design the budget board around easy-to-source, cheap parts that are readily available in
+the UK or from AliExpress with fast shipping.
+
+**Policy (proposed by Claude Code; owner may adjust).**
+- Every BOM line needs a current offer from a UK-serving distributor (DigiKey UK, Mouser UK, Farnell/CPC, RS,
+  TME) or a fast China channel.
+- For semiconductors where precision or safety matters, the China channel is LCSC (a genuine distributor,
+  also JLCPCB's assembly stock), not AliExpress marketplace sellers. Counterfeit TI analog parts are common
+  there, and no AliExpress listing was found for the TI parts searched.
+- Passives, connectors and fuses may come from AliExpress.
+- Prefer parts with stock KiCad footprints.
+- Prices and stock stay UNKNOWN until a dated offer is fetched; search snapshots (BUD-25) only steer choices.
+
+**Swaps.**
+- DMP2005UFG-7 (DD-31) is dropped: DigiKey lists it as not normally stocked with a 40-week lead time. The output
+  disconnect becomes **SiSS23DN-T1-GE3**. That is the A/B board's Q1 part, UK stocked, with a stock KiCad
+  footprint, and its resistance matches (4.5/6.3 mΩ max at −4.5/−2.5 V). Its ±8 V gate needs protection
+  against the 8.4 V switch-short case:
+  - a 100 Ω series resistor to the N1/N2 pull-down;
+  - a BZX585-C6V2 zener from source to gate (VZ 5.89–6.51 V, already sourced for A/B).
+
+  |Vgs| is then about 0.957 × VBUCK, which keeps the −4.5 V resistance figure at the main point. A 470 Ω
+  resistor would cut the efficiency estimate below 93%, and a test now catches that.
+- WSK2512R0100FEA (four-terminal) is replaced by **WSL2512R0100FEA** (LCSC C844901; Vishay doc 30100, BUD-24):
+  1 W, ±1%, ±75 ppm/°C, on the stock 2512 land with Kelvin traces from the pad edges. Every setpoint option
+  stays within ±5%.
+
+**Results (generated).**
+- Efficiency estimate 93.05% at the main point (unchanged).
+- Dropout margin 0.14 V; OVP margin 0.18 V.
+- 37/37 interface checks, including the clamp-off and clamped-fault gate checks.
+
+**Still to verify:**
+- TPS54821RHLT/R: LCSC stock, 12-week DigiKey lead time, and no stock KiCad footprint for its 14-pin RHL
+  package, so it needs a project footprint and review. Nothing ubiquitous on AliExpress meets 93% efficiency
+  with near-100% duty: the common XL4016/LM2596-class modules are asynchronous.
+- SRP1265A: no stock KiCad footprint.
+- INA300, SN74HCS74 (TI showed it out of stock), DMG1012T/1013T and DMP2022LSS: UK stock unverified.

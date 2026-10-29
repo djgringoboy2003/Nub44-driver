@@ -31,12 +31,18 @@ def output_fet(p: dict, mpn: str) -> dict:
     return found[0]
 
 
+def gate_fraction(p: dict) -> float:
+    """|Vgs| / source voltage with the gate pulled down through the series resistor (DD-34)."""
+    d = p["disconnect"]
+    return d["gate_pullup_ohm"] / (d["gate_pullup_ohm"] + d["gate_series_ohm"])
+
+
 def output_resistance(p: dict, fet: dict, v_term: float, corner: str) -> float:
-    """Shunt + output P-FET + board copper. The FET gate is pulled to ground: |Vgs| = VBUCK > v_term."""
+    """Shunt + output P-FET + board copper. |Vgs| is the gate fraction of VBUCK (> v_term, conservative)."""
     worst = corner == "maximum"
     hot = p["disconnect"]["r_hot_multiplier_sensitivity"] if worst else 1.0
     r_shunt = p["current_sense"]["shunt_ohm"] * (1 + (shunt_error(p) if worst else 0.0))
-    return r_shunt + fet_r(fet, v_term, corner) * hot + p["power_model"]["output_copper_ohm_allocation"]
+    return r_shunt + fet_r(fet, gate_fraction(p) * v_term, corner) * hot + p["power_model"]["output_copper_ohm_allocation"]
 
 
 def buck_losses(p: dict, pvin: float, vout: float, il: float, corner: str) -> tuple[float, float, dict]:
@@ -161,7 +167,10 @@ def evaluate(p: dict, current_max_a: float, uv: dict, ov: dict) -> dict:
     vbuck_pk = v_term_pk + i_pk * output_resistance(p, fet, v_term_pk, "maximum")
     nominal = next(x for x in points if x["output_fet"] == fet["mpn"] and x["corner"] == "typical"
                    and x["vin_v"] == t["input_v_nominal"] and x["vf_v"] == t["laser_v_typ"])
-    vgs_min = min(x["v_terminal_v"] for x in points if x["output_fet"] == fet["mpn"])
+    vgs_min = gate_fraction(p) * min(x["v_terminal_v"] for x in points if x["output_fet"] == fet["mpn"])
+    # Highest normal |Vgs| (OVP maximum on the source) must stay below the clamp; a fault is clamped.
+    vgs_normal_max = gate_fraction(p) * ov["max_v"]
+    vgs_fault = min(t["input_v_max"], d["gate_clamp_vz_v_max"])
     vi_points = [operating_point(p, fet, t["input_v_nominal"], vf, i, corner)
                  for i, vf in t["laser_vi_points"] for corner in CORNERS]
     return {
@@ -178,10 +187,12 @@ def evaluate(p: dict, current_max_a: float, uv: dict, ov: dict) -> dict:
         "ov": {"vbuck_normal_peak_v": vbuck_pk, "rising_min_v": ov["min_v"], "margin_v": ov["min_v"] - vbuck_pk,
                "required_margin_v": m["ov_margin_v_allocation"],
                "ok": ov["min_v"] - vbuck_pk >= m["ov_margin_v_allocation"]},
-        "gate_drive": {"output_fet_vgs_abs_min_v": vgs_min,
-                       "output_fet_vgs_abs_fault_v": t["input_v_max"], "output_fet_gate_rating_v": fet["gate_rating_v_abs"],
+        "gate_drive": {"output_fet_vgs_abs_min_v": vgs_min, "output_fet_vgs_abs_normal_max_v": vgs_normal_max,
+                       "clamp_vz_v_min": d["gate_clamp_vz_v_min"],
+                       "output_fet_vgs_abs_fault_v": vgs_fault, "output_fet_gate_rating_v": fet["gate_rating_v_abs"],
                        "reverse_fet_vgs_abs_max_v": t["input_v_max"], "reverse_fet_gate_rating_v": d["reverse"]["gate_rating_v_abs"],
-                       "ok": t["input_v_max"] < fet["gate_rating_v_abs"] and t["input_v_max"] < d["reverse"]["gate_rating_v_abs"]},
+                       "ok": vgs_normal_max < d["gate_clamp_vz_v_min"] and vgs_fault < fet["gate_rating_v_abs"]
+                       and t["input_v_max"] < d["reverse"]["gate_rating_v_abs"]},
         "efficiency": {"estimate_at_nominal": nominal["efficiency_estimate"], "target": t["efficiency_fraction"],
                        "condition": f"{t['input_v_nominal']:g} V input, {t['laser_v_typ']:g} V diode, {t['current_a']:g} A, typical corner",
                        "meets_target": nominal["efficiency_estimate"] >= t["efficiency_fraction"]},
