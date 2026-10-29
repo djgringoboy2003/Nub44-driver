@@ -197,7 +197,7 @@ Still OPEN: measured diode incremental impedance; exact capacitor DC-bias/temper
 inner sampled-data dynamics and slope compensation at high duty; amplifier delay and higher poles;
 COMP range/clamps; SS tracking/current ramp; startup, flashing, disconnect sequencing, output-open,
 short and reconnected-load switching transients; component tolerances outside these assumed sweeps.
-In particular, this small-signal model contains no mechanism to prove a ≤4.4 A reconnect peak.
+In particular, this small-signal model contains no mechanism to prove a ≤{p['targets']['normal_peak_a']:g} A reconnect peak.
 
 Use the generated JSON for every corner, `.cir` for the inspectable ngspice circuit and `.txt` for its
 raw AC output. Hash evidence binds all results to the numeric sources and both model implementations.

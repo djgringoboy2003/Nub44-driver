@@ -4,7 +4,7 @@
 
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
-efficiency decision; and DD-32: static default-off interface). The pre-order, quote, GBP/UK and Project 450
+efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -72,6 +72,15 @@ was below the proposed 94%, and the owner chose option (a): a budget target of �
 measurement (the 93% value was proposed by Claude Code). The estimate margin is only about 0.4 points. The
 converter terms agree with TI's typical curve to within about half a point.
 
+DD-33 (2026-10-29, owner): the budget main setpoint is now **4.5 A at 4.72 V** (owner expects about 7.3 W optical).
+Owner V–I points 3.0/3.5/4.0/4.5 A at 4.40/4.52/4.62/4.72 V are one-resistor builds (OWNER-VI-01). The A/B boards
+keep 4.0 A. Changes: divider top 27.4 kΩ (4.488 A nominal, 4.33–4.65 A envelope), transient ceiling 4.95 A, INA300
+2.67 kΩ (5.10–5.48 A trip). Dropout about 5.86 V (0.14 V margin); UV/OVP margins 0.19/0.18 V; loop 243/243.
+Efficiency estimate at 7.4 V / 4.5 A / 4.72 V is **93.05%**, only about 0.05 points above the 93% target
+(maximum-resistance corner about 90%), so a bench result below 93% is plausible. **Diode risk:** 4.5 A exceeds
+the 4.2 A maximum operating current in LD-05 (single secondary source), and about 7 W exceeds its 6.0 W optical
+maximum. This is recorded as owner-accepted, like DD-13; the diode needs about 14 W of heatsinking.
+
 DD-32 (2026-10-29): the static default-off interface is designed (BUD-ISS-03). The fault line nFAULT (supervisor,
 UV/OV, INA300 alert, firmware-permit inhibit, external interlock loop) and the latch output each drive one
 DMG1012T of a series pair. N1/N2 hold the output P-FET and N3/N4 hold P1, which sources the EN divider from
@@ -114,8 +123,8 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
 - **New tooling:** sourcing verification, bench-test recording (`automation/bench/bench.py`), status dashboard
   (`reports/dashboard/index.html`), CI.
 
-**Owner decisions in force:** budget-2s efficiency target ≥ 93% at 7.4 V / typical diode / 4 A, bench-judged
-(DD-31, 2026-10-29); battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
+**Owner decisions in force:** budget-2s main setpoint 4.5 A at 4.72 V with 3.0/3.5/4.0 A builds (DD-33,
+2026-10-29); budget-2s efficiency target ≥ 93% at 7.4 V and the main setpoint, bench-judged (DD-31); battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
 (DD-13); efficiency target ≥ 94 % (DD-26); evaluation board first, compact parked (DD-27).
 
 **Decisions now required from the owner:**
@@ -197,6 +206,15 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget-2s main setpoint 4.5 A and owner V–I points (DD-33)
+- The owner accepted the DD-31/32 targets and set the main target to 4.5 A at 4.72 V (about 7.3 W optical), with
+  points at 3.0/3.5/4.0 A. Recorded as owner data OWNER-VI-01 and DD-33 (budget-2s only; A/B unchanged).
+- Parameters: `current_a` 4.5, `normal_peak_a` 4.95, `laser_v_typ` 4.72, `laser_vi_points`, backup window
+  5.0–5.6 A, divider top 27.4 kΩ, INA300 limit 2.67 kΩ. `qualify.py` now validates setpoint < transient ceiling
+  < trip window and the V–I data, reports one-resistor setpoint options (E96) and efficiency at every owner point.
+- Flagged the diode-rating risk (above LD-05's 4.2 A / 6.0 W) and the thin efficiency margin at 4.5 A (about 0.05 points).
+- Checks: see the commit message.
 
 ### 2026-10-29: budget-2s efficiency decision and default-off interface (DD-31 owner decision, DD-32)
 - The owner chose DD-31 option (a) without a figure. Set `targets.efficiency_fraction` to 0.93 (proposed by Claude

@@ -490,3 +490,33 @@ high leaves fault, interlock and firmware-inhibit shutdown intact; only arming l
 The smallest voltage margin is the supervisor release threshold against the conservative rail screen (about
 13 mV beyond its 30 mV allocation). Timing, fault energy, single and latent faults (a power-on self-test of the
 series pairs) and interlock cable faults remain BUD-SAFE-01 / BUD-ISS-04.
+
+## DD-33 Budget main setpoint 4.5 A and owner V–I points (owner, 2026-10-29)
+
+**Owner instruction.** The owner accepted the DD-31/32 targets and set the budget driver's main target to
+**4.5 A at 4.72 V**, which the owner expects to give about 7.3 W optical. The owner supplied these NUBM44
+operating points: 3.0 A at 4.40 V, 3.5 A at 4.52 V, 4.0 A at 4.62 V, 4.5 A at 4.72 V (OWNER-VI-01). This
+applies to budget-2s only. The A/B boards keep 4.0 A (DD-13) unless the owner extends the decision to them.
+
+**Diode-rating risk.** 4.5 A is above the 4.2 A maximum operating current given by LD-05, the only (secondary)
+source for that limit, and 50% above the 3.0 A typical current. About 7 W optical exceeds LD-05's 6.0 W
+absolute-maximum optical output. Community measurements are consistent with the owner's points: about 4.7 V
+and 6.8–7.5 W at 4.5 A (LD-13, LD-14, LD-27). As with DD-13, this is recorded as an owner-accepted
+diode-life risk. The diode must shed roughly 14 W of heat at 4.5 A, so its heatsink sizing matters more
+than at 4.0 A.
+
+**Implementation (engineering, Claude Code).**
+- Feedback divider top 23.2 kΩ → 27.4 kΩ (E96), giving 4.488 A nominal.
+- Normal transient ceiling 4.4 A → 4.95 A, keeping the 1.1× ratio of REQ-OUT-05.
+- INA300 limit resistor 2.52 kΩ → 2.67 kΩ (E96), giving about 5.29 A nominal inside a 5.0–5.6 A trip window.
+  The trip window must stay above the transient ceiling; the tools now refuse any other ordering.
+- Efficiency condition becomes 7.4 V / 4.5 A / 4.72 V. The 93% target (DD-31) is kept.
+- The other owner points are one-resistor builds (15.0 k, 19.1 k, 23.2 k). The backup trip stays sized for
+  4.5 A, so it guards lower builds less closely; retune the limit resistor too if one becomes the default.
+
+**Results (generated).** The setpoint envelope stays within ±5% for every owner point. Dropout at
+5.2 V / maximum setpoint is about 5.86 V (0.14 V margin). UV and OVP margins are about 0.19 and 0.18 V.
+The loop study still passes all 243 cases. The efficiency estimate at the main point is about 93.05%: it
+meets 93% by only about 0.05 points, while the maximum-resistance corner is about 90%. A bench measurement
+below 93% at 4.5 A is plausible. If that happens, the owner chooses between accepting it, running a lower
+setpoint, or reducing losses (input path, switching frequency, converter).

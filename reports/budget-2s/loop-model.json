@@ -3,16 +3,16 @@
     "agreement_pass": true,
     "agreement_tolerance": 1e-05,
     "command_returncode": 0,
-    "maximum_complex_relative_error": 2.064227115917706e-08,
+    "maximum_complex_relative_error": 1.4930503940682535e-08,
     "nominal_margins": {
-      "gain_margin_db": 22.47836832718978,
+      "gain_margin_db": 23.513038695164084,
       "phase_crossings_hz": [
-        37920.09517294648
+        37920.09517295955
       ],
-      "phase_margin_deg": 127.0752636349443,
+      "phase_margin_deg": 122.67400124481307,
       "reason": "",
       "unity_crossings_hz": [
-        946.7502415759043
+        757.366044610109
       ]
     },
     "sample_count": 631
@@ -24,4138 +24,4138 @@
     "cases": [
       {
         "cout": 5e-05,
-        "gain_margin_db": 24.54957628598915,
+        "gain_margin_db": 25.58424665591803,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           46303.24389362157
         ],
-        "phase_margin_deg": 109.10719875693626,
+        "phase_margin_deg": 106.90268342839785,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          342.05135140525704
+          298.95174347890185
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 23.274399276730257,
+        "gain_margin_db": 24.309069646659136,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           54255.256138025696
         ],
-        "phase_margin_deg": 109.55944294567969,
+        "phase_margin_deg": 107.29752935398888,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          342.09203927800974
+          298.9780714758919
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 23.229446696651824,
+        "gain_margin_db": 24.264117066580702,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           62388.26496384879
         ],
-        "phase_margin_deg": 109.76304208613031,
+        "phase_margin_deg": 107.47535953657571,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          342.10245325966184
+          298.9848092134239
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 21.45153708627429,
+        "gain_margin_db": 22.486207456203168,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           46303.24389362157
         ],
-        "phase_margin_deg": 117.81985571259223,
+        "phase_margin_deg": 114.49433852354373,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.5884999779349
+          454.87143324411267
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.17636007701539,
+        "gain_margin_db": 21.211030446944267,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           54255.256138025696
         ],
-        "phase_margin_deg": 118.52700398091572,
+        "phase_margin_deg": 115.09776666683324,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.769275038379
+          454.97666628519374
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.131407496936962,
+        "gain_margin_db": 21.16607786686584,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           62388.26496384879
         ],
-        "phase_margin_deg": 118.84463474670656,
+        "phase_margin_deg": 115.36908410636708,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.8156145272519
+          455.0036126752416
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.172670040137554,
+        "gain_margin_db": 20.20734041006643,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           46303.24389362157
         ],
-        "phase_margin_deg": 127.21976337060994,
+        "phase_margin_deg": 122.53893187583967,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          796.6949045844495
+          653.6394078863116
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.897493030878657,
+        "gain_margin_db": 18.932163400807536,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           54255.256138025696
         ],
-        "phase_margin_deg": 128.29248586763475,
+        "phase_margin_deg": 123.41290109324152,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          797.5037485068736
+          654.0209339463413
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.85254045080023,
+        "gain_margin_db": 18.887210820729106,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           62388.26496384879
         ],
-        "phase_margin_deg": 128.77230307498886,
+        "phase_margin_deg": 123.80474167897277,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          797.7114732560156
+          654.1187610556993
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 21.45230441488386,
+        "gain_margin_db": 22.486974784812734,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           46303.75864478796
         ],
-        "phase_margin_deg": 117.82443777818243,
+        "phase_margin_deg": 114.50032160226675,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.5382536122942
+          454.8314460082288
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.177127629500426,
+        "gain_margin_db": 21.2117979994293,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           54255.892520849695
         ],
-        "phase_margin_deg": 118.53151143937298,
+        "phase_margin_deg": 115.10369450231352,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.7189131269596
+          454.93665131427844
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.132179180013825,
+        "gain_margin_db": 21.166849549942704,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           62389.065074911414
         ],
-        "phase_margin_deg": 118.8491113299212,
+        "phase_margin_deg": 115.37498751682111,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.7652394378005
+          454.9635906006102
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 18.35426521516899,
+        "gain_margin_db": 19.38893558509787,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           46303.75864478796
         ],
-        "phase_margin_deg": 131.54298146296367,
+        "phase_margin_deg": 126.180693674565,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          958.8558106993373
+          762.3772523516876
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.079088429785564,
+        "gain_margin_db": 18.11375879971444,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           54255.892520849695
         ],
-        "phase_margin_deg": 132.84562075257602,
+        "phase_margin_deg": 127.20540595980307,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          960.5471607488298
+          763.0597127327827
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.03413998029896,
+        "gain_margin_db": 18.06881035022784,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           62389.065074911414
         ],
-        "phase_margin_deg": 133.42669703467388,
+        "phase_margin_deg": 127.66401306138513,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          960.9829545060663
+          763.2349040592233
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.075398169032255,
+        "gain_margin_db": 17.11006853896113,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           46303.75864478796
         ],
-        "phase_margin_deg": 145.54482832993716,
+        "phase_margin_deg": 139.37044591084722,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2568.6604149422424
+          1406.8926663166883
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.800221383648827,
+        "gain_margin_db": 15.834891753577704,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           54255.892520849695
         ],
-        "phase_margin_deg": 149.1373902193169,
+        "phase_margin_deg": 141.3333867099433,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2700.6964893319464
+          1415.5082450250552
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.755272934162226,
+        "gain_margin_db": 15.789943304091103,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           62389.065074911414
         ],
-        "phase_margin_deg": 150.82146414941255,
+        "phase_margin_deg": 142.2046011017136,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2742.534356574213
+          1417.773119296347
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.174204638523427,
+        "gain_margin_db": 20.208875008452303,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           46304.27334263592
         ],
-        "phase_margin_deg": 127.22273708980676,
+        "phase_margin_deg": 122.54475820567487,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          796.494895010343
+          653.4991228657138
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.899028078058162,
+        "gain_margin_db": 18.93369844798704,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           54256.52884043276
         ],
-        "phase_margin_deg": 128.29517531517575,
+        "phase_margin_deg": 123.41853068666923,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          797.3031295970322
+          653.8804033423779
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.854083759873035,
+        "gain_margin_db": 18.888754129801914,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           62389.86511070807
         ],
-        "phase_margin_deg": 128.77486797180066,
+        "phase_margin_deg": 123.81028472385884,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          797.5106977185394
+          653.9781674464305
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.076165438808566,
+        "gain_margin_db": 17.11083580873744,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           46304.27334263592
         ],
-        "phase_margin_deg": 145.54506375564563,
+        "phase_margin_deg": 139.36884374336725,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2567.2927756879862
+          1406.5559366012667
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.800988878343299,
+        "gain_margin_db": 15.835659248272178,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           54256.52884043276
         ],
-        "phase_margin_deg": 149.136099105319,
+        "phase_margin_deg": 141.33126416203444,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2699.014968647089
+          1415.1630335841228
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.756044560158173,
+        "gain_margin_db": 15.790714930087049,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           62389.86511070807
         ],
-        "phase_margin_deg": 150.81924221088468,
+        "phase_margin_deg": 142.2022486422351,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2740.7331017863266
+          1417.4250792718256
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 13.797298392671827,
+        "gain_margin_db": 14.831968762600706,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           46304.27334263592
         ],
-        "phase_margin_deg": 110.43963425051044,
+        "phase_margin_deg": 128.2762210805556,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          11420.654583867883
+          7686.769873167512
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 12.522121832206562,
+        "gain_margin_db": 13.556792202135439,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           54256.52884043276
         ],
-        "phase_margin_deg": 107.49578029276105,
+        "phase_margin_deg": 127.480652543915,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          15335.88281323062
+          10296.623842499677
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 12.477177514021434,
+        "gain_margin_db": 13.511847883950313,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           62389.86511070807
         ],
-        "phase_margin_deg": 108.3479157281561,
+        "phase_margin_deg": 128.54252329076593,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          17453.78797974387
+          11663.236427839829
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 25.445119111412023,
+        "gain_margin_db": 26.479789481340898,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35454.2712149616
         ],
-        "phase_margin_deg": 108.36488111662099,
+        "phase_margin_deg": 106.25460932692214,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          341.97517181231495
+          298.902437893312
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 25.299919582915123,
+        "gain_margin_db": 26.334589952844,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42979.82247993214
         ],
-        "phase_margin_deg": 108.81693552593377,
+        "phase_margin_deg": 106.64933278267519,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          342.01581441192656
+          298.92874422083133
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 26.02234521032927,
+        "gain_margin_db": 27.05701558025815,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           50399.47116981474
         ],
-        "phase_margin_deg": 109.02046650873862,
+        "phase_margin_deg": 106.82711896111523,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          342.0262168033312
+          298.9354764118609
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.347079911697158,
+        "gain_margin_db": 23.381750281626037,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35454.2712149616
         ],
-        "phase_margin_deg": 116.65899541842778,
+        "phase_margin_deg": 113.50376512720779,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.2508232878477
+          454.6745769999596
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.20188038320025,
+        "gain_margin_db": 23.236550753129126,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42979.82247993214
         ],
-        "phase_margin_deg": 117.36528365392482,
+        "phase_margin_deg": 114.10669927391497,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.4309108693592
+          454.7795824483094
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.92430601061441,
+        "gain_margin_db": 23.958976380543284,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           50399.47116981474
         ],
-        "phase_margin_deg": 117.68260462137708,
+        "phase_margin_deg": 114.3778395453854,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.477044211409
+          454.80647053442704
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.068212865560422,
+        "gain_margin_db": 21.102883235489298,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35454.2712149616
         ],
-        "phase_margin_deg": 125.45969381397836,
+        "phase_margin_deg": 121.10431772847444,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          795.1929795835476
+          652.9277644293898
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.923013337063527,
+        "gain_margin_db": 20.957683706992405,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42979.82247993214
         ],
-        "phase_margin_deg": 126.52848575495469,
+        "phase_margin_deg": 121.97646461873553,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          795.9925121021515
+          653.3070531881704
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.645438964477673,
+        "gain_margin_db": 21.68010933440655,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           50399.47116981474
         ],
-        "phase_margin_deg": 127.0069019683758,
+        "phase_margin_deg": 122.36765576822071,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          796.1978381256788
+          653.4043475213679
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.347840203268145,
+        "gain_margin_db": 23.382510573197024,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35454.620799251476
         ],
-        "phase_margin_deg": 116.66369245168046,
+        "phase_margin_deg": 113.50983932431657,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.2006724427155
+          454.63464163088594
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.202647354433996,
+        "gain_margin_db": 23.23731772436287,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42980.28988159633
         ],
-        "phase_margin_deg": 117.36991114940727,
+        "phase_margin_deg": 114.11271831765072,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.3807090804095
+          454.73961941214543
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.925085295915874,
+        "gain_margin_db": 23.959755665844753,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           50400.094709357305
         ],
-        "phase_margin_deg": 117.6872014134715,
+        "phase_margin_deg": 114.3838341960091,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.4268293675281
+          454.7665004119557
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.24980100355328,
+        "gain_margin_db": 20.28447137348216,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35454.620799251476
         ],
-        "phase_margin_deg": 129.4082559093803,
+        "phase_margin_deg": 124.49917045409398,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          955.736745034514
+          761.1094587199493
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.10460815471913,
+        "gain_margin_db": 20.139278524648006,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42980.28988159633
         ],
-        "phase_margin_deg": 130.70258254445378,
+        "phase_margin_deg": 125.52057250692621,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          957.3943874987007
+          761.7848805615805
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.827046096201013,
+        "gain_margin_db": 20.861716466129888,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           50400.094709357305
         ],
-        "phase_margin_deg": 131.2807038131191,
+        "phase_margin_deg": 125.97799975429189,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          957.8219771784134
+          761.9582598802505
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.970933957416545,
+        "gain_margin_db": 18.005604327345424,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35454.620799251476
         ],
-        "phase_margin_deg": 140.20229338010842,
+        "phase_margin_deg": 136.18602445898807,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2396.8301212286237
+          1391.612225290788
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.8257411085824,
+        "gain_margin_db": 17.860411478511278,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42980.28988159633
         ],
-        "phase_margin_deg": 143.39138882612949,
+        "phase_margin_deg": 138.10634269786405,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2480.1518805145583
+          1399.6458573344223
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.548179050064274,
+        "gain_margin_db": 18.582849419993153,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           50400.094709357305
         ],
-        "phase_margin_deg": 144.88478157934279,
+        "phase_margin_deg": 138.96209164661033,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2504.6006954003547
+          1401.752871430703
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.069733389194756,
+        "gain_margin_db": 21.10440375912363,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35454.970344835405
         ],
-        "phase_margin_deg": 125.4631452009987,
+        "phase_margin_deg": 121.11047775694988,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          794.9945202633107
+          652.788171449584
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.924547220299036,
+        "gain_margin_db": 20.95921759022791,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42980.75723402882
         ],
-        "phase_margin_deg": 126.53165617085442,
+        "phase_margin_deg": 121.98241940052021,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          795.7934544249907
+          653.1669819342263
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.646997475607034,
+        "gain_margin_db": 21.681667845535912,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           50400.71818714758
         ],
-        "phase_margin_deg": 127.00994911172616,
+        "phase_margin_deg": 122.3735242871166,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          795.9986266495913
+          653.2642136506611
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.971694189479894,
+        "gain_margin_db": 18.00636455940877,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35454.970344835405
         ],
-        "phase_margin_deg": 140.20414348489297,
+        "phase_margin_deg": 136.18523231975055,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2395.7883401695385
+          1391.2914210208512
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.826508020584164,
+        "gain_margin_db": 17.86117839051304,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42980.75723402882
         ],
-        "phase_margin_deg": 143.3922416201082,
+        "phase_margin_deg": 138.10507335271203,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2478.9634270407046
+          1399.3164108682085
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.548958275892165,
+        "gain_margin_db": 18.583628645821047,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           50400.71818714758
         ],
-        "phase_margin_deg": 144.88502166899238,
+        "phase_margin_deg": 138.96061128625294,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2503.3654107369643
+          1401.4219362923739
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.692827143343157,
+        "gain_margin_db": 15.727497513272034,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35454.970344835405
         ],
-        "phase_margin_deg": 109.28360246199733,
+        "phase_margin_deg": 125.50220495341837,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          8351.536122621274
+          5738.7881530830955
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 14.547640974447432,
+        "gain_margin_db": 15.58231134437631,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42980.75723402882
         ],
-        "phase_margin_deg": 111.94891294064418,
+        "phase_margin_deg": 128.45030338274074,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          9743.329922439649
+          6583.545311728787
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 15.270091229755431,
+        "gain_margin_db": 16.304761599684312,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           50400.71818714758
         ],
-        "phase_margin_deg": 114.96265565119596,
+        "phase_margin_deg": 130.8641604075235,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          10283.528504017897
+          6891.252596972346
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 27.440615803712628,
+        "gain_margin_db": 28.47528617364151,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31184.914187451795
         ],
-        "phase_margin_deg": 107.43389941599105,
+        "phase_margin_deg": 105.44242684876507,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          341.78860748831914
+          298.78160878257967
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 27.921264812766875,
+        "gain_margin_db": 28.955935182695757,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38703.06101537112
         ],
-        "phase_margin_deg": 107.88559477638661,
+        "phase_margin_deg": 105.83691856552848,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          341.8291393455471
+          298.8078620535486
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 29.001533501196644,
+        "gain_margin_db": 30.036203871125522,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45964.69268264493
         ],
-        "phase_margin_deg": 108.08898587968534,
+        "phase_margin_deg": 106.01461439834132,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          341.83951338612724
+          298.81458066426495
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 24.342576603997763,
+        "gain_margin_db": 25.377246973926642,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31184.914187451795
         ],
-        "phase_margin_deg": 115.19746750309893,
+        "phase_margin_deg": 112.25868256806628,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.4275497573774
+          454.19373352350135
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 24.823225613052013,
+        "gain_margin_db": 25.857895982980896,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38703.06101537112
         ],
-        "phase_margin_deg": 115.90214795072663,
+        "phase_margin_deg": 112.86067402711618,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.6062463767406
+          454.2980811969459
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 25.903494301481782,
+        "gain_margin_db": 26.938164671410657,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45964.69268264493
         ],
-        "phase_margin_deg": 116.21884490317873,
+        "phase_margin_deg": 113.13144885336966,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.652023168489
+          454.3248006948976
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.06370955786103,
+        "gain_margin_db": 23.09837992778991,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31184.914187451795
         ],
-        "phase_margin_deg": 123.23271191346343,
+        "phase_margin_deg": 119.29354342573687,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          791.5866794873664
+          651.2037456289954
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.544358566915278,
+        "gain_margin_db": 23.579028936844157,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38703.06101537112
         ],
-        "phase_margin_deg": 124.29420138763501,
+        "phase_margin_deg": 120.16225023836837,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          792.3650146145953
+          651.5771866607734
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 23.624627255345047,
+        "gain_margin_db": 24.659297625273922,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45964.69268264493
         ],
-        "phase_margin_deg": 124.76980934327442,
+        "phase_margin_deg": 120.55211488393009,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          792.5651737317881
+          651.6730398980594
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 24.34333794367754,
+        "gain_margin_db": 25.37800831360642,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31185.22004799805
         ],
-        "phase_margin_deg": 115.20231630699716,
+        "phase_margin_deg": 112.26487918365807,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.3776529515263
+          454.1539639884203
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 24.823994565466275,
+        "gain_margin_db": 25.858664935395158,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38703.48416195574
         ],
-        "phase_margin_deg": 115.90692625268655,
+        "phase_margin_deg": 112.86681584235255,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.5562774983341
+          454.2582843029616
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 25.90427782396477,
+        "gain_margin_db": 26.938948193893648,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45965.26968335222
         ],
-        "phase_margin_deg": 116.22359262276764,
+        "phase_margin_deg": 113.13756642258299,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.6020413493352
+          454.2849967935955
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 21.245298743962678,
+        "gain_margin_db": 22.279969113891557,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31185.22004799805
         ],
-        "phase_margin_deg": 126.70433523450366,
+        "phase_margin_deg": 122.37260859934656,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          948.3649985399088
+          758.0567892506937
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 21.725955365751414,
+        "gain_margin_db": 22.760625735680293,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38703.48416195574
         ],
-        "phase_margin_deg": 127.9834734225127,
+        "phase_margin_deg": 123.38784785194238,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          949.9468946175414
+          758.716256823141
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.806238624249904,
+        "gain_margin_db": 23.840908994178786,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45965.26968335222
         ],
-        "phase_margin_deg": 128.55574133808602,
+        "phase_margin_deg": 123.84290666279506,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          950.3549087778438
+          758.8858375788377
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 18.96643169782594,
+        "gain_margin_db": 20.001102067754818,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31185.22004799805
         ],
-        "phase_margin_deg": 134.4843664787848,
+        "phase_margin_deg": 132.21038325067317,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2151.081041709597
+          1358.3446482448812
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.44708831961468,
+        "gain_margin_db": 20.481758689543557,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38703.48416195574
         ],
-        "phase_margin_deg": 137.29455283075978,
+        "phase_margin_deg": 134.06073035061965,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2194.663958919505
+          1365.2483322206153
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.52737157811317,
+        "gain_margin_db": 21.56204194804205,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45965.26968335222
         ],
-        "phase_margin_deg": 138.59869556282817,
+        "phase_margin_deg": 134.8889567303024,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2206.7029959586384
+          1367.054084699864
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.06523217706685,
+        "gain_margin_db": 23.09990254699573,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31185.52587406182
         ],
-        "phase_margin_deg": 123.23679035428269,
+        "phase_margin_deg": 119.30013535724001,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          791.3917073505623
+          651.0654797541052
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 22.545896411776468,
+        "gain_margin_db": 23.580566781705347,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38703.907263338915
         ],
-        "phase_margin_deg": 124.29800507840889,
+        "phase_margin_deg": 120.16864142683623,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          792.169467836787
+          651.4384689152763
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 23.626194239849053,
+        "gain_margin_db": 24.660864609777928,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45965.846626282495
         ],
-        "phase_margin_deg": 124.77348608658455,
+        "phase_margin_deg": 120.55842024158639,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          792.3691870612
+          651.5342473583468
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 18.967192977351985,
+        "gain_margin_db": 20.001863347280864,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31185.52587406182
         ],
-        "phase_margin_deg": 134.486867642281,
+        "phase_margin_deg": 132.21053751884054,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2150.3760403199535
+          1358.0545410764296
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 19.447857212061606,
+        "gain_margin_db": 20.48252758199048,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38703.907263338915
         ],
-        "phase_margin_deg": 137.2963568679408,
+        "phase_margin_deg": 134.06047261774972,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2193.905892480236
+          1364.9521770305294
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 20.528155040134187,
+        "gain_margin_db": 21.562825410063063,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45965.846626282495
         ],
-        "phase_margin_deg": 138.60009355368086,
+        "phase_margin_deg": 134.88851565411431,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2205.9300942415293
+          1366.7559243934272
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 16.68832593121525,
+        "gain_margin_db": 17.72299630114413,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31185.52587406182
         ],
-        "phase_margin_deg": 111.76688707701058,
+        "phase_margin_deg": 124.48724121701083,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          5917.068937282273
+          4158.398322836614
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 17.16899016592487,
+        "gain_margin_db": 18.20366053585375,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38703.907263338915
         ],
-        "phase_margin_deg": 116.24941009706941,
+        "phase_margin_deg": 128.33779468148782,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          6385.462727514306
+          4415.9451658394455
         ]
       },
       {
         "cout": 5e-05,
-        "gain_margin_db": 18.24928799399745,
+        "gain_margin_db": 19.283958363926327,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45965.846626282495
         ],
-        "phase_margin_deg": 119.12548619027196,
+        "phase_margin_deg": 130.52177821865163,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          6534.574507610007
+          4493.923235899962
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.949444499848944,
+        "gain_margin_db": 25.984114869777827,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37629.910097883636
         ],
-        "phase_margin_deg": 108.61260401290522,
+        "phase_margin_deg": 106.47082518834911,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          342.00780620938355
+          298.92356209964987
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.529281992026597,
+        "gain_margin_db": 25.56395236195548,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45199.675577244874
         ],
-        "phase_margin_deg": 109.06473135233112,
+        "phase_margin_deg": 106.86559570334796,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          342.0484681996277
+          298.9498777097529
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.080666597711616,
+        "gain_margin_db": 26.1153369676405,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           52728.794550632025
         ],
-        "phase_margin_deg": 109.26828939167865,
+        "phase_margin_deg": 107.04339935023937,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          342.05887555517234
+          298.95661227674606
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.851405300134083,
+        "gain_margin_db": 22.88607567006296,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37629.910097883636
         ],
-        "phase_margin_deg": 117.04694570145978,
+        "phase_margin_deg": 113.83460089069729,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.3953720507351
+          454.75887527343616
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.431242792311735,
+        "gain_margin_db": 22.465913162240618,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45199.675577244874
         ],
-        "phase_margin_deg": 117.75356119705063,
+        "phase_margin_deg": 114.43772492224866,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.5757045209367
+          454.8639781454924
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.982627397996755,
+        "gain_margin_db": 23.01729776792563,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           52728.794550632025
         ],
-        "phase_margin_deg": 118.0710032114004,
+        "phase_margin_deg": 114.70893551931317,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.6219006364246
+          454.8908911892738
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.572538253997347,
+        "gain_margin_db": 20.607208623926226,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37629.910097883636
         ],
-        "phase_margin_deg": 126.04923693418425,
+        "phase_margin_deg": 121.58426183670291,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          795.8341551464747
+          653.2320639402772
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.152375746175,
+        "gain_margin_db": 20.18704611610388,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45199.675577244874
         ],
-        "phase_margin_deg": 127.1195399273608,
+        "phase_margin_deg": 122.4571133079645,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          796.63770972875
+          653.6124013784178
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.70376035186002,
+        "gain_margin_db": 20.738430721788898,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           52728.794550632025
         ],
-        "phase_margin_deg": 127.59851812133095,
+        "phase_margin_deg": 122.84856212843002,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          796.8443089349006
+          653.7099233880135
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.852166155225444,
+        "gain_margin_db": 22.88683652515432,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37630.28662069497
         ],
-        "phase_margin_deg": 117.0516038356939,
+        "phase_margin_deg": 113.84064428959776,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          531.3451803284898
+          454.71891769855927
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.432009186216387,
+        "gain_margin_db": 22.466679556145262,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45200.170269527305
         ],
-        "phase_margin_deg": 117.75814972940324,
+        "phase_margin_deg": 114.44371313309973,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          531.5254617763823
+          454.82399287444736
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.983404480413096,
+        "gain_margin_db": 23.01807485034197,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           52729.44664326782
         ],
-        "phase_margin_deg": 118.07556101692913,
+        "phase_margin_deg": 114.71489932436124,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          531.5716448168137
+          454.8508988244706
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 18.754126955510575,
+        "gain_margin_db": 19.788797325439454,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37630.28662069497
         ],
-        "phase_margin_deg": 130.12409599619957,
+        "phase_margin_deg": 125.0622509825123,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          957.0643798930619
+          761.651183370606
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 18.333969986501522,
+        "gain_margin_db": 19.3686403564304,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45200.170269527305
         ],
-        "phase_margin_deg": 131.421611792766,
+        "phase_margin_deg": 126.08490751760368,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          958.736665246431
+          762.3290123873477
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 18.88536528069823,
+        "gain_margin_db": 19.92003565062711,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           52729.44664326782
         ],
-        "phase_margin_deg": 132.00089229752558,
+        "phase_margin_deg": 126.5428070951272,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          959.1672584074188
+          762.5033335953035
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.47525990937384,
+        "gain_margin_db": 17.50993027930272,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37630.28662069497
         ],
-        "phase_margin_deg": 141.9089882762558,
+        "phase_margin_deg": 137.253048139781,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2461.6997772698846
+          1398.0210066262505
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.05510294036479,
+        "gain_margin_db": 17.089773310293666,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45200.170269527305
         ],
-        "phase_margin_deg": 145.2226326508049,
+        "phase_margin_deg": 139.189352446831,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2560.6540510354043
+          1406.293349889701
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.606498234561503,
+        "gain_margin_db": 17.641168604490378,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           52729.44664326782
         ],
-        "phase_margin_deg": 146.77693224846598,
+        "phase_margin_deg": 140.05108297488363,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2590.4016105854816
+          1408.4648724576673
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.574059904886404,
+        "gain_margin_db": 20.60873027481528,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37630.66310228609
         ],
-        "phase_margin_deg": 126.05253007130636,
+        "phase_margin_deg": 121.59030261358984,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          795.6352163404243
+          653.0920410191723
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.153908579813724,
+        "gain_margin_db": 20.188578949742602,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45200.664950786544
         ],
-        "phase_margin_deg": 127.12253985856135,
+        "phase_margin_deg": 122.46295784368898,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          796.4377432362984
+          653.4721337406496
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.705314457752117,
+        "gain_margin_db": 20.739984827680992,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           52730.09867180384
         ],
-        "phase_margin_deg": 127.60139393321845,
+        "phase_margin_deg": 122.85432028774993,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          796.6441867758979
+          653.5695929675035
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.47602070517153,
+        "gain_margin_db": 17.510691075100407,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37630.66310228609
         ],
-        "phase_margin_deg": 141.9104551791974,
+        "phase_margin_deg": 137.2519866294039,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2460.545909203766
+          1397.693748092215
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.05586938009886,
+        "gain_margin_db": 17.09053975002774,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45200.664950786544
         ],
-        "phase_margin_deg": 145.22297576053975,
+        "phase_margin_deg": 139.18779629549707,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2559.306089373056
+          1405.9570499549334
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 16.607275258037255,
+        "gain_margin_db": 17.64194562796613,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           52730.09867180384
         ],
-        "phase_margin_deg": 146.77658241501058,
+        "phase_margin_deg": 140.04931048117788,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2588.9878193865343
+          1408.12701354544
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 14.197153659034802,
+        "gain_margin_db": 15.23182402896368,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37630.66310228609
         ],
-        "phase_margin_deg": 108.80329572981964,
+        "phase_margin_deg": 125.86847567401455,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          9277.493500888775
+          6340.466522046523
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 13.777002333962123,
+        "gain_margin_db": 14.811672703891002,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45200.664950786544
         ],
-        "phase_margin_deg": 110.12389149009172,
+        "phase_margin_deg": 127.95897312602565,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          11223.094557694241
+          7565.1196783544865
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 14.328408211900518,
+        "gain_margin_db": 15.363078581829395,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           52730.09867180384
         ],
-        "phase_margin_deg": 112.84603411135296,
+        "phase_margin_deg": 130.22941006749525,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          12047.152606534784
+          8053.683340907432
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.06219661081226,
+        "gain_margin_db": 29.09686698074114,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           30389.341333336168
         ],
-        "phase_margin_deg": 107.12302124421251,
+        "phase_margin_deg": 105.17132059566352,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          341.7040319039969
+          298.72679593219254
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.673296610763895,
+        "gain_margin_db": 29.707966980692774,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37919.717576120616
         ],
-        "phase_margin_deg": 107.57456711965773,
+        "phase_margin_deg": 105.56571578005473,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          341.7445136198272
+          298.7530251566389
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 29.823125808784702,
+        "gain_margin_db": 30.857796178713585,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45160.93603408163
         ],
-        "phase_margin_deg": 107.77789820211888,
+        "phase_margin_deg": 105.74337282350797,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          341.7548748238668
+          298.7597376124282
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.964157411097396,
+        "gain_margin_db": 25.998827781026275,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           30389.341333336168
         ],
-        "phase_margin_deg": 114.70863647877162,
+        "phase_margin_deg": 111.84250406335244,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.0564690644102
+          453.9764213026794
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.575257411049034,
+        "gain_margin_db": 26.60992778097791,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37919.717576120616
         ],
-        "phase_margin_deg": 115.41263838808511,
+        "phase_margin_deg": 112.44410881510163,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.2343208863143
+          454.0805200964114
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 26.72508660906984,
+        "gain_margin_db": 27.759756978998716,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45160.93603408163
         ],
-        "phase_margin_deg": 115.72906550450561,
+        "phase_margin_deg": 112.71472872716338,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.2798809196521
+          454.1071758378912
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.68529036496066,
+        "gain_margin_db": 23.71996073488954,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           30389.341333336168
         ],
-        "phase_margin_deg": 122.48755500462163,
+        "phase_margin_deg": 118.68749739195826,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          789.9843189823367
+          650.4305725694638
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 23.2963903649123,
+        "gain_margin_db": 24.331060734841177,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37919.717576120616
         ],
-        "phase_margin_deg": 123.54608002807512,
+        "phase_margin_deg": 119.55479553253014,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          790.7537615577672
+          650.8015937720875
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.446219562933102,
+        "gain_margin_db": 25.480889932861984,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45160.93603408163
         ],
-        "phase_margin_deg": 124.02050917261994,
+        "phase_margin_deg": 119.94409517340851,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          790.9516116030373
+          650.8967229514067
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.9649192028847,
+        "gain_margin_db": 25.999589572813584,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           30389.64039056359
         ],
-        "phase_margin_deg": 114.71353913087209,
+        "phase_margin_deg": 111.8487413550326,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.0067168899519
+          453.93670863536016
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.576027070332106,
+        "gain_margin_db": 26.61069744026099,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37920.133852328625
         ],
-        "phase_margin_deg": 115.41747219694503,
+        "phase_margin_deg": 112.45029137723765,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.1845186992181
+          454.04078014405155
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 26.725871147918895,
+        "gain_margin_db": 27.760541517847773,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45161.505708220524
         ],
-        "phase_margin_deg": 115.73386889283434,
+        "phase_margin_deg": 112.72088707114524,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.2300659164436
+          454.0674288971379
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.86688000316984,
+        "gain_margin_db": 22.901550373098715,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           30389.64039056359
         ],
-        "phase_margin_deg": 125.80174750281465,
+        "phase_margin_deg": 121.66091273466883,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          945.1403927588533
+          756.6966856052577
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.477987870617245,
+        "gain_margin_db": 23.512658240546124,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37920.133852328625
         ],
-        "phase_margin_deg": 127.07483489453872,
+        "phase_margin_deg": 122.6736525584319,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          946.6912468504955
+          757.3499071026689
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 23.627831948204033,
+        "gain_margin_db": 24.66250231813291,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45161.505708220524
         ],
-        "phase_margin_deg": 127.64469238182488,
+        "phase_margin_deg": 123.12771129944221,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          947.0906094054618
+          757.5176420873692
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.588012957033104,
+        "gain_margin_db": 20.622683326961983,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           30389.64039056359
         ],
-        "phase_margin_deg": 132.78732378890228,
+        "phase_margin_deg": 130.9127877937351,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2076.775565897674
+          1344.8532799525622
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 20.19912082448051,
+        "gain_margin_db": 21.23379119440939,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37920.133852328625
         ],
-        "phase_margin_deg": 135.49548875720058,
+        "phase_margin_deg": 132.73786613090627,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2112.5155047184926
+          1351.347821972287
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.348964902067287,
+        "gain_margin_db": 22.383635271996166,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45161.505708220524
         ],
-        "phase_margin_deg": 136.74882651425168,
+        "phase_margin_deg": 133.5557989201229,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2122.269960097061
+          1353.043456218689
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.686813888232603,
+        "gain_margin_db": 23.721484258161478,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           30389.93941397817
         ],
-        "phase_margin_deg": 122.49184733320813,
+        "phase_margin_deg": 118.69423423754462,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          789.7909113075931
+          650.292796341213
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 23.29792962334273,
+        "gain_margin_db": 24.332599993271604,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           37920.55008399166
         ],
-        "phase_margin_deg": 123.55009322054428,
+        "phase_margin_deg": 119.5613401516303,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          790.5593978979051
+          650.663581810078
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.4477885799676,
+        "gain_margin_db": 25.482458949896476,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45162.07532524637
         ],
-        "phase_margin_deg": 124.02440220212412,
+        "phase_margin_deg": 119.95055504630346,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          790.7571019369215
+          650.7586505143413
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.58877468851774,
+        "gain_margin_db": 20.623445058446617,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           30389.93941397817
         ],
-        "phase_margin_deg": 132.7899297652442,
+        "phase_margin_deg": 130.91322439907123,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2076.1497110617
+          1344.5745353720702
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 20.199890423627867,
+        "gain_margin_db": 21.234560793556742,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           37920.55008399173
         ],
-        "phase_margin_deg": 135.4974387275813,
+        "phase_margin_deg": 132.73791212587105,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2111.8511816615983
+          1351.0635560930384
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.349749380252742,
+        "gain_margin_db": 22.38441975018162,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45162.07532524637
         ],
-        "phase_margin_deg": 136.75042494326559,
+        "phase_margin_deg": 133.5556709362041,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2121.5946384907315
+          1352.7573632818142
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 17.309907642381003,
+        "gain_margin_db": 18.34457801230988,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           30389.93941397817
         ],
-        "phase_margin_deg": 112.3075690425279,
+        "phase_margin_deg": 123.96518779461064,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          5374.006647002709
+          3811.161975908923
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 17.921023377491128,
+        "gain_margin_db": 18.955693747420007,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           37920.55008399166
         ],
-        "phase_margin_deg": 116.85925098225107,
+        "phase_margin_deg": 127.77721668339393,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          5718.25217084759
+          3997.0779812762116
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 19.070882334115996,
+        "gain_margin_db": 20.105552704044875,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45162.07532524637
         ],
-        "phase_margin_deg": 119.5794172971233,
+        "phase_margin_deg": 129.8358678207271,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          5823.805528250917
+          4051.622736163391
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 31.173936001049846,
+        "gain_margin_db": 32.20860637097872,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27814.110287712785
         ],
-        "phase_margin_deg": 105.25546346367398,
+        "phase_margin_deg": 103.54295721947058,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          340.96613346339797
+          298.24738039677743
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 32.23975572954622,
+        "gain_margin_db": 33.27442609947509,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35419.343441431265
         ],
-        "phase_margin_deg": 105.70580463088346,
+        "phase_margin_deg": 103.9365714334789,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          341.00615620239915
+          298.27338772568953
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 33.61980321793067,
+        "gain_margin_db": 34.65447358785954,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42615.82924610307
         ],
-        "phase_margin_deg": 105.90863755112844,
+        "phase_margin_deg": 104.11390575024248,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          341.0163998899927
+          298.280045732778
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.07589680133498,
+        "gain_margin_db": 29.110567171263856,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27814.110287712785
         ],
-        "phase_margin_deg": 111.77279476250168,
+        "phase_margin_deg": 109.34198578455599,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          526.865643257864
+          452.09417132567114
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 29.141716529831356,
+        "gain_margin_db": 30.17638689976023,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35419.343441431265
         ],
-        "phase_margin_deg": 112.47151252246401,
+        "phase_margin_deg": 109.94049255263218,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          527.0378099917526
+          452.1959904024343
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 30.521764018215805,
+        "gain_margin_db": 31.55643438814468,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42615.82924610307
         ],
-        "phase_margin_deg": 112.78576314453858,
+        "phase_margin_deg": 110.20983520267879,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          527.0819123956664
+          452.22207384532044
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.797029755198242,
+        "gain_margin_db": 26.831700125127124,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27814.110287712785
         ],
-        "phase_margin_deg": 118.04444856640555,
+        "phase_margin_deg": 115.05493024955794,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          776.7774471116657
+          643.8877773475765
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 26.862849483694617,
+        "gain_margin_db": 27.897519853623493,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35419.343441431265
         ],
-        "phase_margin_deg": 119.0806256092278,
+        "phase_margin_deg": 115.91126903215559,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          777.4757969895286
+          644.2383970425906
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.242896972079066,
+        "gain_margin_db": 29.27756734200794,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42615.82924610307
         ],
-        "phase_margin_deg": 119.5458783601364,
+        "phase_margin_deg": 116.2960660243406,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          777.6552833856796
+          644.3282872721105
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.07666138528869,
+        "gain_margin_db": 29.111331755217567,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27814.3905230821
         ],
-        "phase_margin_deg": 111.77802258577505,
+        "phase_margin_deg": 109.34848203647789,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          526.8168952064714
+          452.0550222503004
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 29.142488561507214,
+        "gain_margin_db": 30.177158931436093,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35419.74046380415
         ],
-        "phase_margin_deg": 112.47667300823394,
+        "phase_margin_deg": 109.94693231169414,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          526.9890141398929
+          452.1567784941596
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 30.522551817695227,
+        "gain_margin_db": 31.557222187624102,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42616.378267619526
         ],
-        "phase_margin_deg": 112.79089383918154,
+        "phase_margin_deg": 110.21625105176408,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          527.033104294997
+          452.18285514569624
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 24.97862218557383,
+        "gain_margin_db": 26.013292555502705,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27814.3905230821
         ],
-        "phase_margin_deg": 120.47649311895334,
+        "phase_margin_deg": 117.4106573338488,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          919.6177547586398
+          745.4088438235686
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 26.044449361792353,
+        "gain_margin_db": 27.07911973172123,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35419.74046380415
         ],
-        "phase_margin_deg": 121.70613121335779,
+        "phase_margin_deg": 118.40432750194653,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          920.938563340674
+          746.0077394392528
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 27.424512617980344,
+        "gain_margin_db": 28.45918298790922,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42616.378267619526
         ],
-        "phase_margin_deg": 122.25811153802573,
+        "phase_margin_deg": 118.85056052447219,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          921.2788006732619
+          746.1616597946165
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.69975513943709,
+        "gain_margin_db": 23.734425509365966,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27814.3905230821
         ],
-        "phase_margin_deg": 124.15992106462039,
+        "phase_margin_deg": 123.64054450259539,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1730.8406219653252
+          1253.8858754573853
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 23.76558231565562,
+        "gain_margin_db": 24.800252685584496,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35419.74046380415
         ],
-        "phase_margin_deg": 126.41486828530171,
+        "phase_margin_deg": 125.31493803468892,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1744.4315476592037
+          1258.1951464424649
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.145645571843612,
+        "gain_margin_db": 26.180315941772488,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42616.378267619526
         ],
-        "phase_margin_deg": 127.44724778078094,
+        "phase_margin_deg": 126.0690675358566,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1748.0117305052177
+          1259.3136210914201
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.798558862171785,
+        "gain_margin_db": 26.833229232100663,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27814.670726537483
         ],
-        "phase_margin_deg": 118.0500101012741,
+        "phase_margin_deg": 115.06257788383647,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          776.5958515296192
+          643.7549092648782
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 26.864393486368233,
+        "gain_margin_db": 27.899063856297115,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           35420.13744350178
         ],
-        "phase_margin_deg": 119.08593157061159,
+        "phase_margin_deg": 115.91873213137322,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          777.2933894668158
+          644.1053118159464
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 28.24447250974361,
+        "gain_margin_db": 29.27914287967249,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           42616.92723394706
         ],
-        "phase_margin_deg": 119.55107211759999,
+        "phase_margin_deg": 116.30344760379873,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          777.4727494328137
+          644.1951463453278
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.70051966245692,
+        "gain_margin_db": 23.735190032385802,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27814.670726537483
         ],
-        "phase_margin_deg": 124.1627633921268,
+        "phase_margin_deg": 123.64227520858013,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1730.4897293644153
+          1253.672147769811
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 23.76635428665337,
+        "gain_margin_db": 24.80102465658225,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           35420.13744350178
         ],
-        "phase_margin_deg": 126.41730469959481,
+        "phase_margin_deg": 125.31638682061318,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1744.0715220128207
+          1257.9784268150045
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 25.146433310028748,
+        "gain_margin_db": 26.181103679957623,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           42616.92723394706
         ],
-        "phase_margin_deg": 127.44948431761163,
+        "phase_margin_deg": 126.07038268607334,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1747.6492404664716
+          1259.0963231211836
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 20.421652616320184,
+        "gain_margin_db": 21.456322986249063,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27814.670726537483
         ],
-        "phase_margin_deg": 112.38414529230005,
+        "phase_margin_deg": 119.43203455554232,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          3484.738007987962
+          2616.135806560986
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 21.487487240516632,
+        "gain_margin_db": 22.522157610445515,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           35420.13744350178
         ],
-        "phase_margin_deg": 116.28756583524702,
+        "phase_margin_deg": 122.57163073112784,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          3566.995581504685
+          2659.7341551059794
         ]
       },
       {
         "cout": 0.0001,
-        "gain_margin_db": 22.867566263892012,
+        "gain_margin_db": 23.90223663382089,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           42616.92723394706
         ],
-        "phase_margin_deg": 118.23942885156474,
+        "phase_margin_deg": 124.07870385117708,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          3589.6567817433906
+          2671.5001368774692
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.46606991174476,
+        "gain_margin_db": 28.500740281673636,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31149.35454946551
         ],
-        "phase_margin_deg": 107.42146861634254,
+        "phase_margin_deg": 105.43158560828994,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          341.7854384345134
+          298.7795553585992
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.95246112642486,
+        "gain_margin_db": 28.98713149635374,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38667.94876725771
         ],
-        "phase_margin_deg": 107.87315828194977,
+        "phase_margin_deg": 105.82607364818558,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          341.82596841224535
+          298.8058077284784
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.035822373599327,
+        "gain_margin_db": 30.070492743528202,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45928.602554535566
         ],
-        "phase_margin_deg": 108.07654711241099,
+        "phase_margin_deg": 106.003768012411,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          341.83634197166197
+          298.8125261085526
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.368030712029896,
+        "gain_margin_db": 25.40270108195877,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31149.35454946551
         ],
-        "phase_margin_deg": 115.17792531444958,
+        "phase_margin_deg": 112.24204415051298,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.4136104159213
+          454.1855850251731
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.854421926709993,
+        "gain_margin_db": 25.889092296638875,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38667.94876725771
         ],
-        "phase_margin_deg": 115.88258032834023,
+        "phase_margin_deg": 112.84402086841227,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.5922835396422
+          454.28992335993104
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 25.937783173884466,
+        "gain_margin_db": 26.97245354381334,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45928.602554535566
         ],
-        "phase_margin_deg": 116.19926717053363,
+        "phase_margin_deg": 113.11478982469417,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.6380543086893
+          454.316640465554
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 22.08916366589316,
+        "gain_margin_db": 23.123834035822036,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31149.35454946551
         ],
-        "phase_margin_deg": 123.20291591517557,
+        "phase_margin_deg": 119.26931708182285,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          791.5262890005548
+          651.174693777047
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 22.57555488057326,
+        "gain_margin_db": 23.610225250502136,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38667.94876725771
         ],
-        "phase_margin_deg": 124.26429252534228,
+        "phase_margin_deg": 120.13796861382234,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          792.3043280002084
+          651.5480037708686
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 23.658916127747727,
+        "gain_margin_db": 24.693586497676606,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45928.602554535566
         ],
-        "phase_margin_deg": 124.73985320214075,
+        "phase_margin_deg": 120.5278119622576,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          792.5042858955813
+          651.6438355516358
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.36879219461594,
+        "gain_margin_db": 25.403462564544814,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31149.6601274052
         ],
-        "phase_margin_deg": 115.18277719479387,
+        "phase_margin_deg": 112.24824238279653,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          530.3637348644969
+          454.1458176232923
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.855191005386047,
+        "gain_margin_db": 25.889861375314922,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38668.371598107915
         ],
-        "phase_margin_deg": 115.88736068709484,
+        "phase_margin_deg": 112.85016430303845,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          530.5423185996348
+          454.2501286019188
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 25.938566822036456,
+        "gain_margin_db": 26.97323719196533,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45929.17918560605
         ],
-        "phase_margin_deg": 116.20401694887846,
+        "phase_margin_deg": 113.12090901435329,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          530.588076429861
+          454.27683870093375
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 21.270752994901077,
+        "gain_margin_db": 22.305423364829952,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31149.6601274052
         ],
-        "phase_margin_deg": 126.66821114858978,
+        "phase_margin_deg": 122.34415393306503,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          948.2428338688804
+          758.0055858013142
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 21.75715180567118,
+        "gain_margin_db": 22.791822175600057,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38668.371598107915
         ],
-        "phase_margin_deg": 127.94711731743304,
+        "phase_margin_deg": 123.3592955729659,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          949.8237133584425
+          758.6647332064838
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 22.840527622321588,
+        "gain_margin_db": 23.875197992250467,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45929.17918560605
         ],
-        "phase_margin_deg": 128.5192906147574,
+        "phase_margin_deg": 123.81431643564882,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          950.2311665655976
+          758.8342536198073
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 18.991885948764338,
+        "gain_margin_db": 20.026556318693217,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31149.6601274052
         ],
-        "phase_margin_deg": 134.41467543174423,
+        "phase_margin_deg": 132.1581181508364,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2148.013127734588
+          1357.8234048085524
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 19.478284759534443,
+        "gain_margin_db": 20.51295512946332,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38668.371598107915
         ],
-        "phase_margin_deg": 137.22059044998338,
+        "phase_margin_deg": 134.0074650872947,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2191.242043172538
+          1364.7109311632219
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 20.561660576184856,
+        "gain_margin_db": 21.596330946113735,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45929.17918560605
         ],
-        "phase_margin_deg": 138.52261346408054,
+        "phase_margin_deg": 134.83528996401316,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2203.1762019705275
+          1366.5116482481683
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 22.09068657089189,
+        "gain_margin_db": 23.125356940820772,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           31149.96567089622
         ],
-        "phase_margin_deg": 123.20700263561994,
+        "phase_margin_deg": 119.27591477570851,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          791.3313612393812
+          651.0364463166935
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 22.577092977940275,
+        "gain_margin_db": 23.61176334786915,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           38668.79438379252
         ],
-        "phase_margin_deg": 124.26810455364934,
+        "phase_margin_deg": 120.14436737006675,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          792.1088258452838
+          651.4093525363008
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 23.66048336357183,
+        "gain_margin_db": 24.695153733500714,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           45929.755758938816
         ],
-        "phase_margin_deg": 124.74354096855036,
+        "phase_margin_deg": 120.53412313784678,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          792.3084689581041
+          651.5050616217729
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 18.99264737117703,
+        "gain_margin_db": 20.027317741105907,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           31149.96567089622
         ],
-        "phase_margin_deg": 134.41719809225307,
+        "phase_margin_deg": 132.1582850196593,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2147.3110302906593
+          1357.533626288617
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 19.479053778225406,
+        "gain_margin_db": 20.513724148154285,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           38668.79438379252
         ],
-        "phase_margin_deg": 137.22239158572046,
+        "phase_margin_deg": 134.00722052316345,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2190.4884982534286
+          1364.4151199709165
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 20.56244416385697,
+        "gain_margin_db": 21.59711453378585,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           45929.755758938816
         ],
-        "phase_margin_deg": 138.52401141226306,
+        "phase_margin_deg": 134.83486229913706,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2202.408022971958
+          1366.213837521797
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 16.71378032504029,
+        "gain_margin_db": 17.74845069496917,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           31149.96567089622
         ],
-        "phase_margin_deg": 111.79216826115886,
+        "phase_margin_deg": 124.4684323337267,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          5893.336845942941
+          4143.1745847265975
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 17.20018673208867,
+        "gain_margin_db": 18.23485710201755,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           38668.79438379252
         ],
-        "phase_margin_deg": 116.2802109248762,
+        "phase_margin_deg": 128.31893590835665,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          6355.77399491427
+          4397.227199546912
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 18.283577117720235,
+        "gain_margin_db": 19.318247487649113,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           45929.755758938816
         ],
-        "phase_margin_deg": 119.1502246232833,
+        "phase_margin_deg": 130.49784625960345,
         "rd": 0.08,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          6502.738497527552
+          4474.038176033798
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 32.6442685541237,
+        "gain_margin_db": 33.678938924052574,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27054.412456275095
         ],
-        "phase_margin_deg": 104.13601086894859,
+        "phase_margin_deg": 102.56648936416873,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          340.33901072442353
+          297.8385460262474
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 33.85413604642843,
+        "gain_margin_db": 34.888806416357305,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           34693.22608914665
         ],
-        "phase_margin_deg": 104.58538608687287,
+        "phase_margin_deg": 102.95947757038063,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          340.37864474556386
+          297.8643760937808
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 35.30334554399238,
+        "gain_margin_db": 36.338015913921254,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           41883.06981954854
         ],
-        "phase_margin_deg": 104.78781043823597,
+        "phase_margin_deg": 103.13654614708805,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          340.3887889043651
+          297.87098637462634
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.546229354408826,
+        "gain_margin_db": 30.5808997243377,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27054.412456275095
         ],
-        "phase_margin_deg": 110.02113897287627,
+        "phase_margin_deg": 107.84625786728158,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          524.2191913586539
+          450.5147749271083
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 30.75609684671356,
+        "gain_margin_db": 31.79076721664244,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           34693.22608914665
         ],
-        "phase_margin_deg": 110.71573386160513,
+        "phase_margin_deg": 108.44231596253128,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          524.3867242369314
+          450.6146990651294
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 32.205306344277524,
+        "gain_margin_db": 33.2399767142064,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           41883.06981954854
         ],
-        "phase_margin_deg": 111.02824579243776,
+        "phase_margin_deg": 108.7106239273257,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          524.4296385398809
+          450.6402851563371
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.267362308272094,
+        "gain_margin_db": 28.30203267820097,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27054.412456275095
         ],
-        "phase_margin_deg": 115.44332142880187,
+        "phase_margin_deg": 112.90182689882458,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          766.5055722050901
+          638.5944157626127
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 28.477229800576833,
+        "gain_margin_db": 29.511900170505708,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           34693.22608914665
         ],
-        "phase_margin_deg": 116.4633402498385,
+        "phase_margin_deg": 113.74986120831082,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          767.1536725225365
+          638.929073027353
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.926439298140778,
+        "gain_margin_db": 30.961109668069657,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           41883.06981954854
         ],
-        "phase_margin_deg": 116.92177511371361,
+        "phase_margin_deg": 114.13116078718174,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          767.3200182673851
+          639.0149350487183
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.546994944138824,
+        "gain_margin_db": 30.5816653140677,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27054.688126423895
         ],
-        "phase_margin_deg": 110.02656787080294,
+        "phase_margin_deg": 107.85291399411003,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          524.171274236528
+          450.4760658027484
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 30.756869622540908,
+        "gain_margin_db": 31.791539992469783,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           34693.61839111262
         ],
-        "phase_margin_deg": 110.721096669284,
+        "phase_margin_deg": 108.4489188871775,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          524.3387611508462
+          450.57596420210143
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 32.206095203319975,
+        "gain_margin_db": 33.24076557324886,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           41883.6135634492
         ],
-        "phase_margin_deg": 111.03357934043852,
+        "phase_margin_deg": 108.71720327932961,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          524.3816636759441
+          450.6015437011899
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 26.44895574442396,
+        "gain_margin_db": 27.483626114352838,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27054.688126423895
         ],
-        "phase_margin_deg": 117.420924859202,
+        "phase_margin_deg": 114.91385145988838,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          900.8792521534367
+          736.5367046938308
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.65883042282604,
+        "gain_margin_db": 28.693500792754918,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           34693.61839111262
         ],
-        "phase_margin_deg": 118.62118288112102,
+        "phase_margin_deg": 115.89357081500685,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          902.0551750757205
+          737.0967338551915
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.10805600360511,
+        "gain_margin_db": 30.142726373533986,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           41883.6135634492
         ],
-        "phase_margin_deg": 119.16070976243876,
+        "phase_margin_deg": 116.33391996248992,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          902.3575067957544
+          737.2405999426043
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.170088698287227,
+        "gain_margin_db": 25.204759068216102,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27054.688126423895
         ],
-        "phase_margin_deg": 119.90799586695174,
+        "phase_margin_deg": 119.75342888536161,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1585.4679092593929
+          1199.1120225468255
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 25.379963376689307,
+        "gain_margin_db": 26.414633746618183,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           34693.61839111262
         ],
-        "phase_margin_deg": 121.97594371222169,
+        "phase_margin_deg": 121.34589201435983,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1594.2359907831922
+          1202.4777998286024
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 26.829188957468375,
+        "gain_margin_db": 27.863859327397254,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           41883.6135634492
         ],
-        "phase_margin_deg": 122.91944292894244,
+        "phase_margin_deg": 122.06421678346761,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1596.5264996955189
+          1203.3486268630468
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.268893426587457,
+        "gain_margin_db": 28.303563796516336,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           27054.963765118682
         ],
-        "phase_margin_deg": 115.44960475999697,
+        "phase_margin_deg": 112.91002121653756,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          766.3323719252202
+          638.4654787689626
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 28.47877529139144,
+        "gain_margin_db": 29.513445661320315,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           34694.01065086954
         ],
-        "phase_margin_deg": 116.46938286286935,
+        "phase_margin_deg": 113.75787720067402,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          766.9800328374852
+          638.7999336241112
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.928016954740627,
+        "gain_margin_db": 30.962687324669503,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           41884.157252677775
         ],
-        "phase_margin_deg": 116.92771132509195,
+        "phase_margin_deg": 114.13909664963016,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          767.1462657127413
+          638.8856730808458
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.170854226872596,
+        "gain_margin_db": 25.20552459680147,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           27054.963765118682
         ],
-        "phase_margin_deg": 119.91093540859482,
+        "phase_margin_deg": 119.75568342299503,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1585.196638924308
+          1198.929030321235
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 25.380736091676575,
+        "gain_margin_db": 26.415406461605453,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           34694.01065086954
         ],
-        "phase_margin_deg": 121.97855755908522,
+        "phase_margin_deg": 121.34790173721186,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1593.9598729233537
+          1202.292998145826
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 26.829977755025766,
+        "gain_margin_db": 27.86464812495464,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           41884.157252677775
         ],
-        "phase_margin_deg": 122.92189613364754,
+        "phase_margin_deg": 122.0661133580293,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1596.2491373601554
+          1203.1634237729575
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 21.891987180735857,
+        "gain_margin_db": 22.926657550664736,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           27054.963765118682
         ],
-        "phase_margin_deg": 110.961643039956,
+        "phase_margin_deg": 116.35339152981362,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          2910.527032888595
+          2249.5397357228744
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 23.10186904553984,
+        "gain_margin_db": 24.136539415468718,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           34694.01065086954
         ],
-        "phase_margin_deg": 114.41634431377214,
+        "phase_margin_deg": 119.14670066045265,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          2954.618991472221
+          2273.4136767079854
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 24.55111070888903,
+        "gain_margin_db": 25.585781078817906,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           41884.157252677775
         ],
-        "phase_margin_deg": 116.08145616456613,
+        "phase_margin_deg": 120.45777049637046,
         "rd": 0.2,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          2966.476361495093
+          2279.744267524867
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 36.59723881193503,
+        "gain_margin_db": 37.631909181863904,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           25722.409620554678
         ],
-        "phase_margin_deg": 100.07688476000564,
+        "phase_margin_deg": 99.01524111861711,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          336.959021593258
+          295.6122720008099
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 38.07107328105172,
+        "gain_margin_db": 39.1057436509806,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           33434.53333723259
         ],
-        "phase_margin_deg": 100.5213190734001,
+        "phase_margin_deg": 99.40498005012968,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          336.99666176143296
+          295.63712494250336
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 39.642598415665574,
+        "gain_margin_db": 40.67726878559446,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           40620.35947656121
         ],
-        "phase_margin_deg": 100.72160939091658,
+        "phase_margin_deg": 99.58064461935498,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          337.00629543565157
+          295.6434851013371
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 33.49919961222016,
+        "gain_margin_db": 34.533869982149035,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           25722.409620554678
         ],
-        "phase_margin_deg": 103.80155465707033,
+        "phase_margin_deg": 102.48122999565774,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          510.85731230968963
+          442.29282080833633
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 34.973034081336856,
+        "gain_margin_db": 36.00770445126573,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           33434.53333723259
         ],
-        "phase_margin_deg": 104.47650014814062,
+        "phase_margin_deg": 103.06522021246803,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          511.0033238930398
+          442.383489049414
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 36.544559215950706,
+        "gain_margin_db": 37.57922958587959,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           40620.35947656121
         ],
-        "phase_margin_deg": 104.78053378811742,
+        "phase_margin_deg": 103.32832051361638,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          511.0407208351427
+          442.40670368485826
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 31.220332566083428,
+        "gain_margin_db": 32.2550029360123,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           25722.409620554678
         ],
-        "phase_margin_deg": 106.66555450779695,
+        "phase_margin_deg": 105.4138189940345,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          721.5189783225649
+          613.4068727030317
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 32.694167035200124,
+        "gain_margin_db": 33.728837405129,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           33434.53333723259
         ],
-        "phase_margin_deg": 107.61959598852218,
+        "phase_margin_deg": 106.22479090914747,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          721.9871812422733
+          613.6767836299905
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 34.265692169813974,
+        "gain_margin_db": 35.300362539742856,
         "gm_ea_factor": 0.7,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           40620.35947656121
         ],
-        "phase_margin_deg": 108.04943981008071,
+        "phase_margin_deg": 106.5900810834258,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          722.1072703047533
+          613.7459564951264
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 33.49996758013896,
+        "gain_margin_db": 34.53463795006784,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           25722.67845848342
         ],
-        "phase_margin_deg": 103.80770819757785,
+        "phase_margin_deg": 102.4884862365648,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          510.81333327534304
+          442.2563769845073
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 34.973808529978776,
+        "gain_margin_db": 36.00847889990766,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           33434.91823039089
         ],
-        "phase_margin_deg": 104.48259340852096,
+        "phase_margin_deg": 103.07242660353337,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          510.95930716989903
+          442.34702285712694
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 36.54534990276536,
+        "gain_margin_db": 37.580020272694235,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           40620.89511147612
         ],
-        "phase_margin_deg": 104.78660030212806,
+        "phase_margin_deg": 103.33550478257666,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          510.99669445601387
+          442.37023176405125
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 30.4019283804241,
+        "gain_margin_db": 31.436598750352974,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           25722.67845848342
         ],
-        "phase_margin_deg": 107.48930427027598,
+        "phase_margin_deg": 106.42356396320612,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          826.8257443271214
+          696.8604363229259
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 31.875769330263903,
+        "gain_margin_db": 32.91043970019278,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           33434.91823039083
         ],
-        "phase_margin_deg": 108.58196395924209,
+        "phase_margin_deg": 107.34502440267954,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          827.5690113584872
+          697.2763587449435
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 33.4473107030505,
+        "gain_margin_db": 34.48198107297937,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           40620.89511147612
         ],
-        "phase_margin_deg": 109.07456614466112,
+        "phase_margin_deg": 107.76015004746904,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          827.7599078431025
+          697.3830737479593
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 28.123061334287364,
+        "gain_margin_db": 29.15773170421624,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           25722.67845848342
         ],
-        "phase_margin_deg": 107.8201807507883,
+        "phase_margin_deg": 108.14488340938294,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1251.9927247288535
+          1031.2916329802913
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.596902284127168,
+        "gain_margin_db": 30.631572654056043,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           33434.91823039083
         ],
-        "phase_margin_deg": 109.45837338766846,
+        "phase_margin_deg": 109.50313846961026,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1254.8667679711673
+          1032.8446895673815
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 31.168443656913784,
+        "gain_margin_db": 32.20311402684266,
         "gm_ea_factor": 1.0,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           40620.895111476195
         ],
-        "phase_margin_deg": 110.20160675116972,
+        "phase_margin_deg": 110.11693246568038,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1255.60873509058
+          1033.2443708780727
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 31.221868440335115,
+        "gain_margin_db": 32.256538810264,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           25722.94726566265
         ],
-        "phase_margin_deg": 106.6740424615449,
+        "phase_margin_deg": 105.42384499558068,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          721.3777029512438
+          613.2941427310118
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 32.69571587132532,
+        "gain_margin_db": 33.7303862412542,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           33435.3030821043
         ],
-        "phase_margin_deg": 107.62788996690036,
+        "phase_margin_deg": 106.23466209471387,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          721.8456307962585
+          613.563904763497
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 34.26727348163324,
+        "gain_margin_db": 35.301943851562115,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 0.7,
         "phase_crossings_hz": [
           40621.43069253178
         ],
-        "phase_margin_deg": 108.05764765709581,
+        "phase_margin_deg": 106.59988357117594,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          721.9656492586514
+          613.6330394522254
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 28.123829240620253,
+        "gain_margin_db": 29.15849961054913,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           25722.94726566265
         ],
-        "phase_margin_deg": 107.82351148487915,
+        "phase_margin_deg": 108.14825830784797,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1251.8490993919631
+          1031.1771716201326
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 29.59767667161046,
+        "gain_margin_db": 30.632347041539337,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           33435.3030821043
         ],
-        "phase_margin_deg": 109.46151816132779,
+        "phase_margin_deg": 109.5063634192196,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1254.7221269738254
+          1032.729638447412
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 31.169234281918374,
+        "gain_margin_db": 32.203904651847246,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.0,
         "phase_crossings_hz": [
           40621.43069253178
         ],
-        "phase_margin_deg": 110.20466437202958,
+        "phase_margin_deg": 110.12008769146603,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1255.4638372978584
+          1033.1291862762826
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 25.844962194483518,
+        "gain_margin_db": 26.879632564412393,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           25722.94726566265
         ],
-        "phase_margin_deg": 103.62541578583138,
+        "phase_margin_deg": 106.09410928275587,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 20000,
         "unity_crossings_hz": [
-          1914.197344981058
+          1584.6573174085474
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 27.318809625473722,
+        "gain_margin_db": 28.353479995402598,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           33435.3030821043
         ],
-        "phase_margin_deg": 106.06538938612215,
+        "phase_margin_deg": 108.14106638086544,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 37000,
         "unity_crossings_hz": [
-          1923.8138701981322
+          1590.4043313323798
         ]
       },
       {
         "cout": 0.00022,
-        "gain_margin_db": 28.890367235781657,
+        "gain_margin_db": 29.925037605710532,
         "gm_ea_factor": 1.3,
         "gm_mod_factor": 1.3,
         "phase_crossings_hz": [
           40621.43069253178
         ],
-        "phase_margin_deg": 107.18966922985932,
+        "phase_margin_deg": 109.07679613800947,
         "rd": 0.35,
         "reason": "",
         "screen_pass": true,
         "sensor_hz": 60000,
         "unity_crossings_hz": [
-          1926.3204553213575
+          1591.8946515136663
         ]
       }
     ],
-    "minimum_gain_margin_db": 12.477177514021434,
-    "minimum_phase_margin_deg": 100.07688476000564,
+    "minimum_gain_margin_db": 13.511847883950313,
+    "minimum_phase_margin_deg": 99.01524111861711,
     "qualification": "MODEL SENSITIVITY ONLY: assumed C, diode Rd and inner pole; typical gm/bandwidth, no switching/fault proof",
     "screen_pass_count": 243
   }

@@ -9,15 +9,27 @@ Conditional calculations are not complete circuit verification. Existing A/B res
 
 | Screen | Result | Qualification |
 |---|---|---|
-| Current setpoint | 3.9840 A nominal; 3.8414–4.1321 A envelope | CONDITIONAL: exact divider MPNs and hot shunt temperature are not verified |
-| Independent trip | 4.9900 A nominal; 4.8098–5.1746 A envelope | 500 µV NAF included; CONDITIONAL: resistor MPN, response, shared-shunt and sense-fault study OPEN |
+| Current setpoint | 4.4880 A nominal; 4.3279–4.6542 A envelope | CONDITIONAL: exact divider MPNs and hot shunt temperature are not verified |
+| Independent trip | 5.2900 A nominal; 5.1036–5.4810 A envelope | 500 µV NAF included; CONDITIONAL: resistor MPN, response, shared-shunt and sense-fault study OPEN |
 | UVLO falling | 5.5230 V nominal; 5.3984–5.6202 V | Hardware backstop below the loaded 6 V operating floor; margins below |
 | Physical VBUCK OVP | 5.7600 V nominal; 5.6832–5.8372 V | Upstream of disconnect; laser survival/response UNKNOWN |
-| Buck ripple, 25 °C L tolerance / 400 kHz minimum | ≤1.3963 A p-p; 4.6981 A peak at 4 A average | ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN |
+| Buck ripple, 25 °C L tolerance / 400 kHz minimum | ≤1.3963 A p-p; 5.1981 A peak at 4.5 A average | ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN |
 | Control rail additive screen | 3.0769–3.5231 V | LDO load budget, exact line anchor and brownout sequencing OPEN |
 
 Current accuracy assumes the specified 0.1% / 25 ppm/°C resistors and the stated shunt-temperature
 envelope. They are procurement/thermal requirements, not verified purchased parts or temperatures.
+
+### Setpoint options (owner V-I points, DD-33)
+
+Each owner current is a build that changes only the feedback-divider top resistor (E96). The backup trip
+stays sized for the main setpoint, so it protects lower builds less closely.
+
+| Target | Owner diode V | Divider top (exact → used) | Nominal | Tolerance envelope | Within ±5% |
+|---:|---:|---|---:|---:|---|
+| 3 A | 4.4 V | 15000.0 → 15000 Ω | 3.0000 A | 2.8914–3.1127 A | yes (conditional) |
+| 3.5 A | 4.52 V | 19166.7 → 19100 Ω | 3.4920 A | 3.3664–3.6224 A | yes (conditional) |
+| 4 A | 4.62 V | 23333.3 → 23200 Ω | 3.9840 A | 3.8414–4.1321 A | yes (conditional) |
+| 4.5 A (main) | 4.72 V | 27500.0 → 27400 Ω | 4.4880 A | 4.3279–4.6542 A | yes (conditional) |
 
 ## Operating points, dropout and efficiency estimate
 
@@ -26,65 +38,80 @@ TPS54821 → shunt → one output P-FET → board terminals (DD-31). The **typic
 at 25 °C; the **maximum** corner uses full-temperature TPS54821 maxima, FET 25 °C maxima × 1.6 (assumption), hot inductor DCR, minimum L and worst ripple frequency.
 Switching, dead-time, gate-drive and core terms are labelled `estimates`; copper, fuse and connector values are
 `power_model` allocations the BOM/layout must meet. Efficiency is board-terminal power over connector power.
-The model's largest energy-balance error is 1.9e-14 W.
+The model's largest energy-balance error is 7.9e-14 W.
+
+Compliance grid at the 4.5 A setpoint (diode voltage across the required range):
 
 | Output FET | Corner | Input V | Diode V | Duty | Input A | Loss (W) | Efficiency estimate |
 |---|---|---:|---:|---:|---:|---:|---:|
-| DMP2022LSS-13 | typical | 6 | 3.8 | 0.6918 | 2.8105 | 1.5032 | 91.09% |
-| DMP2022LSS-13 | typical | 6 | 4.5 | 0.8085 | 3.2790 | 1.5139 | 92.31% |
-| DMP2022LSS-13 | typical | 6 | 5.2 | 0.9300 | 3.7664 | 1.6384 | 92.75% |
-| DMP2022LSS-13 | typical | 7.4 | 3.8 | 0.5576 | 2.2690 | 1.4305 | 91.48% |
-| DMP2022LSS-13 | typical | 7.4 | 4.5 | 0.6512 | 2.6446 | 1.4104 | 92.79% |
-| DMP2022LSS-13 | typical | 7.4 | 5.2 | 0.7484 | 3.0349 | 1.4982 | 93.33% |
-| DMP2022LSS-13 | typical | 8.4 | 3.8 | 0.4899 | 1.9958 | 1.4051 | 91.62% |
-| DMP2022LSS-13 | typical | 8.4 | 4.5 | 0.5720 | 2.3252 | 1.3718 | 92.98% |
-| DMP2022LSS-13 | typical | 8.4 | 5.2 | 0.6571 | 2.6672 | 1.4441 | 93.55% |
-| DMP2022LSS-13 | maximum | 6 | 3.8 | 0.7281 | 2.9597 | 2.3983 | 86.49% |
-| DMP2022LSS-13 | maximum | 6 | 4.5 | 0.8458 | 3.4318 | 2.4310 | 88.19% |
-| DMP2022LSS-13 | maximum | 6 | 5.2 | 0.9712 | 3.9352 | 2.6512 | 88.77% |
-| DMP2022LSS-13 | maximum | 7.4 | 3.8 | 0.5838 | 2.3776 | 2.2342 | 87.30% |
-| DMP2022LSS-13 | maximum | 7.4 | 4.5 | 0.6774 | 2.7529 | 2.2116 | 89.14% |
-| DMP2022LSS-13 | maximum | 7.4 | 5.2 | 0.7768 | 3.1519 | 2.3639 | 89.86% |
-| DMP2022LSS-13 | maximum | 8.4 | 3.8 | 0.5117 | 2.0868 | 2.1688 | 87.63% |
-| DMP2022LSS-13 | maximum | 8.4 | 4.5 | 0.5934 | 2.4146 | 2.1230 | 89.53% |
-| DMP2022LSS-13 | maximum | 8.4 | 5.2 | 0.6802 | 2.7628 | 2.2474 | 90.32% |
-| DMP2005UFG-7 (selected) | typical | 6 | 3.8 | 0.6838 | 2.7785 | 1.3107 | 92.14% |
-| DMP2005UFG-7 (selected) | typical | 6 | 4.5 | 0.8033 | 3.2581 | 1.3889 | 92.90% |
-| DMP2005UFG-7 (selected) | typical | 6 | 5.2 | 0.9247 | 3.7455 | 1.5128 | 93.27% |
-| DMP2005UFG-7 (selected) | typical | 7.4 | 3.8 | 0.5512 | 2.2432 | 1.2400 | 92.53% |
-| DMP2005UFG-7 (selected) | typical | 7.4 | 4.5 | 0.6470 | 2.6280 | 1.2868 | 93.38% |
-| DMP2005UFG-7 (selected) | typical | 7.4 | 5.2 | 0.7442 | 3.0181 | 1.3743 | 93.85% |
-| DMP2005UFG-7 (selected) | typical | 8.4 | 3.8 | 0.4843 | 1.9733 | 1.2154 | 92.67% |
-| DMP2005UFG-7 (selected) | typical | 8.4 | 4.5 | 0.5683 | 2.3106 | 1.2489 | 93.57% |
-| DMP2005UFG-7 (selected) | typical | 8.4 | 5.2 | 0.6535 | 2.6525 | 1.3208 | 94.07% |
-| DMP2005UFG-7 (selected) | maximum | 6 | 3.8 | 0.7106 | 2.8892 | 1.9753 | 88.61% |
-| DMP2005UFG-7 (selected) | maximum | 6 | 4.5 | 0.8321 | 3.3768 | 2.1011 | 89.63% |
-| DMP2005UFG-7 (selected) | maximum | 6 | 5.2 | 0.9574 | 3.8798 | 2.3186 | 90.04% |
-| DMP2005UFG-7 (selected) | maximum | 7.4 | 3.8 | 0.5698 | 2.3215 | 1.8188 | 89.41% |
-| DMP2005UFG-7 (selected) | maximum | 7.4 | 4.5 | 0.6665 | 2.7093 | 1.8885 | 90.58% |
-| DMP2005UFG-7 (selected) | maximum | 7.4 | 5.2 | 0.7659 | 3.1080 | 2.0393 | 91.13% |
-| DMP2005UFG-7 (selected) | maximum | 8.4 | 3.8 | 0.4995 | 2.0377 | 1.7567 | 89.74% |
-| DMP2005UFG-7 (selected) | maximum | 8.4 | 4.5 | 0.5840 | 2.3765 | 1.8028 | 90.97% |
-| DMP2005UFG-7 (selected) | maximum | 8.4 | 5.2 | 0.6707 | 2.7245 | 1.9260 | 91.58% |
+| DMP2022LSS-13 | typical | 6 | 3.8 | 0.6994 | 3.1927 | 1.8537 | 90.32% |
+| DMP2022LSS-13 | typical | 6 | 4.72 | 0.8545 | 3.8926 | 1.9132 | 91.81% |
+| DMP2022LSS-13 | typical | 6 | 5.2 | 0.9382 | 4.2708 | 2.0226 | 92.11% |
+| DMP2022LSS-13 | typical | 7.4 | 3.8 | 0.5632 | 2.5751 | 1.7533 | 90.80% |
+| DMP2022LSS-13 | typical | 7.4 | 4.72 | 0.6874 | 3.1354 | 1.7592 | 92.42% |
+| DMP2022LSS-13 | typical | 7.4 | 5.2 | 0.7543 | 3.4376 | 1.8355 | 92.78% |
+| DMP2022LSS-13 | typical | 8.4 | 3.8 | 0.4947 | 2.2641 | 1.7161 | 90.98% |
+| DMP2022LSS-13 | typical | 8.4 | 4.72 | 0.6034 | 2.7549 | 1.6991 | 92.66% |
+| DMP2022LSS-13 | typical | 8.4 | 5.2 | 0.6620 | 3.0195 | 1.7613 | 93.06% |
+| DMP2022LSS-13 | maximum | 6 | 3.8 | 0.7408 | 3.3835 | 2.9983 | 85.23% |
+| DMP2022LSS-13 | maximum | 6 | 4.72 | 0.8985 | 4.0947 | 3.1256 | 87.28% |
+| DMP2022LSS-13 | maximum | 6 | 5.2 | 0.9855 | 4.4875 | 3.3223 | 87.66% |
+| DMP2022LSS-13 | maximum | 7.4 | 3.8 | 0.5930 | 2.7133 | 2.7756 | 86.18% |
+| DMP2022LSS-13 | maximum | 7.4 | 4.72 | 0.7179 | 3.2766 | 2.8046 | 88.43% |
+| DMP2022LSS-13 | maximum | 7.4 | 5.2 | 0.7866 | 3.5867 | 2.9391 | 88.93% |
+| DMP2022LSS-13 | maximum | 8.4 | 3.8 | 0.5195 | 2.3795 | 2.6850 | 86.57% |
+| DMP2022LSS-13 | maximum | 8.4 | 4.72 | 0.6283 | 2.8709 | 2.6731 | 88.92% |
+| DMP2022LSS-13 | maximum | 8.4 | 5.2 | 0.6882 | 3.1410 | 2.7820 | 89.46% |
+| DMP2005UFG-7 (selected) | typical | 6 | 3.8 | 0.6903 | 3.1519 | 1.6091 | 91.49% |
+| DMP2005UFG-7 (selected) | typical | 6 | 4.72 | 0.8486 | 3.8661 | 1.7539 | 92.44% |
+| DMP2005UFG-7 (selected) | typical | 6 | 5.2 | 0.9323 | 4.2442 | 1.8627 | 92.69% |
+| DMP2005UFG-7 (selected) | typical | 7.4 | 3.8 | 0.5560 | 2.5424 | 1.5116 | 91.97% |
+| DMP2005UFG-7 (selected) | typical | 7.4 | 4.72 | 0.6827 | 3.1141 | 1.6022 | 93.05% |
+| DMP2005UFG-7 (selected) | typical | 7.4 | 5.2 | 0.7496 | 3.4163 | 1.6780 | 93.36% |
+| DMP2005UFG-7 (selected) | typical | 8.4 | 3.8 | 0.4883 | 2.2355 | 1.4756 | 92.14% |
+| DMP2005UFG-7 (selected) | typical | 8.4 | 4.72 | 0.5993 | 2.7364 | 1.5430 | 93.29% |
+| DMP2005UFG-7 (selected) | typical | 8.4 | 5.2 | 0.6579 | 3.0009 | 1.6049 | 93.63% |
+| DMP2005UFG-7 (selected) | maximum | 6 | 3.8 | 0.7209 | 3.2935 | 2.4584 | 87.56% |
+| DMP2005UFG-7 (selected) | maximum | 6 | 4.72 | 0.8828 | 4.0243 | 2.7030 | 88.81% |
+| DMP2005UFG-7 (selected) | maximum | 6 | 5.2 | 0.9698 | 4.4166 | 2.8970 | 89.07% |
+| DMP2005UFG-7 (selected) | maximum | 7.4 | 3.8 | 0.5772 | 2.6418 | 2.2470 | 88.51% |
+| DMP2005UFG-7 (selected) | maximum | 7.4 | 4.72 | 0.7056 | 3.2210 | 2.3926 | 89.96% |
+| DMP2005UFG-7 (selected) | maximum | 7.4 | 5.2 | 0.7742 | 3.5308 | 2.5254 | 90.33% |
+| DMP2005UFG-7 (selected) | maximum | 8.4 | 3.8 | 0.5056 | 2.3171 | 2.1611 | 88.90% |
+| DMP2005UFG-7 (selected) | maximum | 8.4 | 4.72 | 0.6176 | 2.8224 | 2.2653 | 90.44% |
+| DMP2005UFG-7 (selected) | maximum | 8.4 | 5.2 | 0.6774 | 3.0923 | 2.3731 | 90.86% |
 
-Loss breakdown at the efficiency condition (7.4 V input, 4.5 V diode, 4 A, typical corner, DMP2005UFG-7):
+Owner V-I points at 7.4 V input, DMP2005UFG-7 (OWNER-VI-01):
+
+| Current | Diode V | Corner | Output (W) | Loss (W) | Efficiency estimate |
+|---:|---:|---|---:|---:|---:|
+| 3 A | 4.4 | typical | 13.290 | 0.8308 | 94.12% |
+| 3 A | 4.4 | maximum | 13.290 | 1.1839 | 91.82% |
+| 3.5 A | 4.52 | typical | 15.942 | 1.0392 | 93.88% |
+| 3.5 A | 4.52 | maximum | 15.942 | 1.4999 | 91.40% |
+| 4 A | 4.62 | typical | 18.640 | 1.3012 | 93.47% |
+| 4 A | 4.62 | maximum | 18.640 | 1.9133 | 90.69% |
+| 4.5 A | 4.72 | typical | 21.442 | 1.6022 | 93.05% |
+| 4.5 A | 4.72 | maximum | 21.442 | 2.3926 | 89.96% |
+
+Loss breakdown at the efficiency condition (7.4 V input, 4.72 V diode, 4.5 A, typical corner, DMP2005UFG-7):
 
 | Term | W |
 |---|---:|
-| buck_conduction | 0.4412 |
-| shunt | 0.1600 |
-| buck_switching_estimate | 0.1303 |
-| inductor_dcr | 0.1127 |
-| input_path_allocation | 0.1036 |
-| reverse_fet | 0.0760 |
-| control_and_uv_divider | 0.0737 |
-| output_fet | 0.0560 |
+| buck_conduction | 0.5673 |
+| shunt | 0.2025 |
+| input_path_allocation | 0.1455 |
+| buck_switching_estimate | 0.1439 |
+| inductor_dcr | 0.1425 |
+| reverse_fet | 0.1067 |
+| control_and_uv_divider | 0.0736 |
+| output_fet | 0.0709 |
+| output_copper_allocation | 0.0607 |
 | inductor_core_estimate | 0.0500 |
-| output_copper_allocation | 0.0480 |
-| vbuck_aux_loads | 0.0310 |
+| vbuck_aux_loads | 0.0342 |
 | buck_quiescent | 0.0044 |
 
-Estimate 93.38% versus the 93% target: meets the target as an estimate only. Bench efficiency is the evidence of record.
+Estimate 93.05% versus the 93% target: meets the target as an estimate only. Bench efficiency is the evidence of record.
 
 Converter terms alone, 8 V to 3.3 V, 4 A, typical corner, this inductor: 94.99% versus an approximate read of 95.5% from BUD-01's typical curve (-0.51 points).
 This is a plausibility check of the estimate terms, not a guarantee. It does not include the shunt, protection
@@ -92,10 +119,10 @@ FETs, input path or control load.
 
 | Margin check (selected FET, maximum corner) | Result | Required |
 |---|---:|---:|
-| Dropout: lowest regulating input at 5.2 V / 4.1321 A | 5.7820 V; margin 0.2180 V | ≥0.1 V below 6 V |
-| UV sense node at 6 V input versus UV falling maximum | 5.8368 V vs 5.6202 V; margin 0.2166 V | ≥0.1 V; UV minimum ≥5 V |
-| Highest normal VBUCK at 4.4 A versus OVP rising minimum | 5.4699 V vs 5.6832 V; margin 0.2133 V | ≥0.1 V |
-| Output P-FET \|Vgs\| (gate grounded) | ≥3.8400 V normal; 8.4 V switch-short fault | rating ±10 V |
+| Dropout: lowest regulating input at 5.2 V / 4.6542 A | 5.8553 V; margin 0.1447 V | ≥0.1 V below 6 V |
+| UV sense node at 6 V input versus UV falling maximum | 5.8139 V vs 5.6202 V; margin 0.1937 V | ≥0.1 V; UV minimum ≥5 V |
+| Highest normal VBUCK at 4.95 A versus OVP rising minimum | 5.5036 V vs 5.6832 V; margin 0.1796 V | ≥0.1 V |
+| Output P-FET \|Vgs\| (gate grounded) | ≥3.8450 V normal; 8.4 V switch-short fault | rating ±10 V |
 | Reverse P-FET \|Vgs\| maximum | 8.4 V | rating ±12 V |
 
 Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's
@@ -128,7 +155,7 @@ drives its permit pin low. Worst cases use the control-rail screen 3.0769–3.52
 | N1/N3 gate when cleared | 0.1099 V | ≤0.4 V | 0.2901 V | VOL <= 0.1 V plus gate leakage |
 | Series pair leakage, datasheet | 1e-07 A | ≤1e-05 A | 9.9e-06 A | LEAD-04 IDSS, 25 C |
 | Output P-FET |Vgs| when off | 0.022 V | ≤0.2 V | 0.178 V | pull-up to VBUCK against the leakage allocation |
-| Output P-FET |Vgs| when on | 3.835 V | ≥2.6 V | 1.235 V | minimum operating VBUCK; 2.5 V is the resistance condition used by the power model |
+| Output P-FET |Vgs| when on | 3.84 V | ≥2.6 V | 1.24 V | minimum operating VBUCK; 2.5 V is the resistance condition used by the power model |
 | N1/N2 drain voltage at a buck switch-short | 8.4 V | ≤20 V | 11.6 V | VBUCK can reach the pack voltage |
 | P1 |Vgs| when off | 0.12 V | ≤0.4 V | 0.28 V | BUD-23 VGS(th) against leakage allocation |
 | P1 |Vgs| when on | 3.076 V | ≥2.6 V | 0.4765 V | RDS specified at -2.5 V |
@@ -162,10 +189,10 @@ Voltage and energy arithmetic do not establish laser safety. See the budget faul
 | ID | Status | Outstanding work |
 |---|---|---|
 | BUD-CALC-01 | CONDITIONAL | Setpoint tolerance screen; exact resistor MPNs and hot shunt envelope need qualification. |
-| BUD-PWR-01 | CONDITIONAL | Maximum-resistance model regulates 4.1321 A at 5.2 V down to 5.7820 V input (0.2180 V margin, 0.1 V required). Conditional on the input/output resistance allocations, boot-regulator level and low-side resistance below 12 V; thermal/bench dropout OPEN. |
-| BUD-EFF-01 | CONDITIONAL | Estimate 93.38% at 7.4 V input, 4.5 V diode, 4 A, typical corner versus 93% target. Estimate only; bench efficiency decides. |
-| BUD-UV-01 | CONDITIONAL | UV falling 5.3984–5.6202 V versus loaded sense minimum 5.8368 V at 6 V input (0.2166 V margin, 0.1 V required; floor 5 V). Pack rating, firmware cutoff OPEN. |
-| BUD-OV-01 | CONDITIONAL | OVP rising minimum 5.6832 V versus highest normal VBUCK 5.4699 V at 4.4 A (0.2133 V margin). Open-load response and laser survival OPEN. |
+| BUD-PWR-01 | CONDITIONAL | Maximum-resistance model regulates 4.6542 A at 5.2 V down to 5.8553 V input (0.1447 V margin, 0.1 V required). Conditional on the input/output resistance allocations, boot-regulator level and low-side resistance below 12 V; thermal/bench dropout OPEN. |
+| BUD-EFF-01 | CONDITIONAL | Estimate 93.05% at 7.4 V input, 4.72 V diode, 4.5 A, typical corner versus 93% target. Estimate only; bench efficiency decides. |
+| BUD-UV-01 | CONDITIONAL | UV falling 5.3984–5.6202 V versus loaded sense minimum 5.8139 V at 6 V input (0.1937 V margin, 0.1 V required; floor 5 V). Pack rating, firmware cutoff OPEN. |
+| BUD-OV-01 | CONDITIONAL | OVP rising minimum 5.6832 V versus highest normal VBUCK 5.5036 V at 4.95 A (0.1796 V margin). Open-load response and laser survival OPEN. |
 | BUD-IF-01 | CONDITIONAL | 34/34 static default-off checks pass; smallest voltage margin 0.0135 V (Supervisor release threshold maximum). Conditional on: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts. |
 | BUD-SAFE-01 | OPEN | Total fault response time and energy, output-FET turn-off, single and latent faults (power-on self-test), interlock cable faults and bench fault injection. |
 | BUD-LOOP-01 | OPEN | Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open. |

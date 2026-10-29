@@ -3,18 +3,23 @@
 # UNKNOWN is intentional. Do not promote an assumption to a guaranteed limit.
 schema: nubm44-budget-parameters.v1
 meta:
-  revision: B1-power-model  # DD-31: single output P-FET, UV backstop retarget, operating-point model
+  revision: B2-4p5a-setpoint  # DD-33: owner main setpoint 4.5 A; DD-31/32 power model and interface
   date: '2026-10-29'
   status: ELECTRICAL_QUALIFICATION
   decision: DD-30
   variant: budget-2s
 
 targets:  # Owner brief / REQ-BUD-01...09; proposed voltage/efficiency details.
-  current_a: 4.0
+  # Owner decision 2026-10-29 (DD-33): main setpoint 4.5 A (was 4.0 A); about 7.3 W optical per the owner.
+  # Exceeds the 4.2 A maximum operating current in LD-05 (single secondary source); diode-life risk recorded.
+  current_a: 4.5
   accuracy_fraction: 0.05
-  normal_peak_a: 4.4
-  laser_v_min: 3.8
-  laser_v_typ: 4.5  # Analysis test point, not measured NUBM44 forward voltage.
+  normal_peak_a: 4.95  # 1.1 x setpoint, the same ratio as REQ-OUT-05 (4.4 A at 4.0 A).
+  # Owner-supplied NUBM44 operating points [A, V] (OWNER-VI-01). The last is the main setpoint; the others
+  # are one-resistor build options. Not measurements by this project.
+  laser_vi_points: [[3.0, 4.40], [3.5, 4.52], [4.0, 4.62], [4.5, 4.72]]
+  laser_v_min: 3.8  # Compliance range the driver must regulate across (diode spread and temperature).
+  laser_v_typ: 4.72  # OWNER-VI-01 at the 4.5 A main setpoint; efficiency condition.
   laser_v_max: 5.2
   board_c_min: 0
   board_c_max: 50
@@ -22,11 +27,12 @@ targets:  # Owner brief / REQ-BUD-01...09; proposed voltage/efficiency details.
   input_v_nominal: 7.4
   input_v_max: 8.4
   pack_cutoff_floor_v: 5.0  # ASSUMPTION: 2 x 2.5 V/cell rated discharge cutoff; exact pack OPEN (REQ-BUD-05).
-  # Owner decision 2026-10-29 (DD-31 option a): lower budget target, judged by bench measurement at
-  # 7.4 V / typical diode / 4 A. Was 0.94. All corners stay reported.
+  # Owner decision 2026-10-29 (DD-31 option a, confirmed with DD-33): judged by bench measurement at
+  # 7.4 V / main setpoint / its OWNER-VI-01 voltage. Was 0.94. All corners and V-I points stay reported.
   efficiency_fraction: 0.93
-  backup_trip_a_min: 4.8  # Proposed qualification window, not normal peak limit.
-  backup_trip_a_max: 5.2
+  # Proposed backup-trip window (DD-33): above the normal transient peak, below about 1.25 x setpoint.
+  backup_trip_a_min: 5.0
+  backup_trip_a_max: 5.6
   board_thermal_trip_c: 85
   laser_thermal_trip_c: 60
   arming_hold_s: 2.0
@@ -102,7 +108,7 @@ current_sense:  # PREORDER-07 / BUD-22. Resistor procurement qualification OPEN.
   shunt_tcr_fraction_per_c: 0.000035
   shunt_power_w_at_70c: 1.0
   shunt_delta_c_from_25: 50  # ASSUMPTION: includes self heating; bench must bound.
-  fb_top_ohm: 23200
+  fb_top_ohm: 27400  # E96; 4.5 A main setpoint (DD-33). Was 23.2k for 4.0 A.
   fb_bottom_ohm: 10000
   fb_resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT, not verified MPN.
   fb_resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
@@ -113,7 +119,7 @@ current_sense:  # PREORDER-07 / BUD-22. Resistor procurement qualification OPEN.
 backup:  # BUD-06 pp.5,12,15,17-19. Fast mode MUST include 500 uV NAF.
   mpn: INA300AIDGSR
   source: BUD-06
-  limit_resistor_ohm: 2520
+  limit_resistor_ohm: 2670  # E96; DD-33 backup trip for the 4.5 A setpoint. Was 2.52k.
   resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT; exact MPN OPEN.
   resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
   limit_source_a: 0.000020

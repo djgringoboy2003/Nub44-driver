@@ -46,13 +46,45 @@ def test_variant_paths_cannot_inherit_1s_sources():
 
 def test_candidate_current_envelope_is_conditional(params):
     r = qualify.calculate(params)
-    assert r["current"]["nominal_a"] == pytest.approx(3.984)
-    assert 3.8 <= r["current"]["min_a"] < r["current"]["max_a"] <= 4.2
+    assert params["targets"]["current_a"] == 4.5  # owner main setpoint, DD-33
+    assert r["current"]["nominal_a"] == pytest.approx(4.488)
+    assert 4.5 * 0.95 <= r["current"]["min_a"] < r["current"]["max_a"] <= 4.5 * 1.05
     assert r["current"]["conditional_accuracy_ok"]
     assert not r["manufacturing_ready"]
     assert r["readiness"][0]["status"] == "CONDITIONAL"
     assert "current_sense.fb_resistor_mpns" in r["unknown_inputs"]
     assert not any(x["status"] == "PASS" for x in r["readiness"])
+
+
+def test_owner_vi_points_give_one_resistor_setpoint_options(params):
+    r = qualify.calculate(params)
+    rows = r["setpoint_options"]
+    assert [x["target_a"] for x in rows] == [3.0, 3.5, 4.0, 4.5]
+    assert all(x["conditional_accuracy_ok"] for x in rows)
+    main = next(x for x in rows if x["main"])
+    assert main["fb_top_ohm"] == params["current_sense"]["fb_top_ohm"] == 27400
+    assert [x["fb_top_ohm"] for x in rows if not x["main"]] == [15000, 19100, 23200]
+    assert qualify.nearest_e96(19166.7) == 19100 and qualify.nearest_e96(27500) == 27400
+    # The earlier 4.0 A main build is reproduced as an option.
+    assert rows[2]["nominal_a"] == pytest.approx(3.984)
+    # Efficiency estimates fall as current rises, and the main point is the efficiency condition.
+    typical = [x for x in r["power"]["owner_vi_points"] if x["corner"] == "typical"]
+    assert [x["i_laser_a"] for x in typical] == [3.0, 3.5, 4.0, 4.5]
+    assert all(a["efficiency_estimate"] > b["efficiency_estimate"] for a, b in zip(typical, typical[1:]))
+    assert typical[-1]["efficiency_estimate"] == pytest.approx(r["power"]["efficiency"]["estimate_at_nominal"])
+
+
+@pytest.mark.parametrize("change", [
+    lambda t: t.update(laser_v_typ=4.6),  # main setpoint no longer an owner point
+    lambda t: t.update(laser_vi_points=[[4.5, 4.72], [4.0, 4.62]]),  # current not rising
+    lambda t: t.update(laser_vi_points=[[3.0, 3.5], [4.5, 4.72]]),  # outside compliance range
+    lambda t: t.update(backup_trip_a_min=4.9),  # trip window below the normal transient peak
+    lambda t: t.update(normal_peak_a=4.4),  # transient ceiling below the setpoint
+])
+def test_setpoint_and_trip_ordering_is_enforced(params, change):
+    change(params["targets"])
+    with pytest.raises(ValueError):
+        qualify.calculate(params)
 
 
 def test_wrong_divider_or_shunt_does_not_pass_current_screen(params):
@@ -81,8 +113,8 @@ def test_all_error_terms_widen_envelope(params):
 
 def test_backup_fast_mode_includes_naf_and_cannot_be_disabled_by_mcu(params):
     r = qualify.calculate(params)["backup"]
-    assert r["nominal_a"] == pytest.approx(4.99)
-    assert 4.8 <= r["min_a"] < r["max_a"] <= 5.2
+    assert r["nominal_a"] == pytest.approx(5.29)
+    assert params["targets"]["normal_peak_a"] < 5.0 <= r["min_a"] < r["max_a"] <= 5.6
     assert r["total_shutdown_s_max"] == "UNKNOWN"
     for key, bad in [("noise_adjustment_v", 0), ("enable", "MCU_ENABLE"),
                       ("latch", "LOW"), ("delay", "GND")]:

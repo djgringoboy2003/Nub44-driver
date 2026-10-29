@@ -162,8 +162,11 @@ def evaluate(p: dict, current_max_a: float, uv: dict, ov: dict) -> dict:
     nominal = next(x for x in points if x["output_fet"] == fet["mpn"] and x["corner"] == "typical"
                    and x["vin_v"] == t["input_v_nominal"] and x["vf_v"] == t["laser_v_typ"])
     vgs_min = min(x["v_terminal_v"] for x in points if x["output_fet"] == fet["mpn"])
+    vi_points = [operating_point(p, fet, t["input_v_nominal"], vf, i, corner)
+                 for i, vf in t["laser_vi_points"] for corner in CORNERS]
     return {
         "operating_points": points,
+        "owner_vi_points": vi_points,
         "selected_output_mpn": fet["mpn"],
         "dropout": {"connector_v_at_vf_max_i_max": v_drop, "current_a": current_max_a,
                     "margin_v": t["input_v_min"] - v_drop, "required_margin_v": m["dropout_margin_v_allocation"],

@@ -7,6 +7,7 @@ Exit 0: all prerequisites met; 1: open/failed prerequisites; 2: invalid inputs.
 from __future__ import annotations
 
 import argparse
+import copy
 import itertools
 import json
 import math
@@ -96,6 +97,17 @@ def validate_parameters(p: dict) -> None:
         raise ValueError("INA300 fast-mode calculation requires the BUD-06 500 uV NAF")
     if p["voltage_monitor"]["ov_sense_net"] != "VBUCK":
         raise ValueError("open-load study requires OVP sensing upstream of the disconnect")
+    t = p["targets"]
+    vi = t["laser_vi_points"]
+    if (not isinstance(vi, list) or not vi or any(not isinstance(x, list) or len(x) != 2 for x in vi)
+            or any(a[0] >= b[0] for a, b in zip(vi, vi[1:]))):
+        raise ValueError("targets.laser_vi_points must be [current, voltage] pairs with rising current")
+    if any(not t["laser_v_min"] <= v <= t["laser_v_max"] for _, v in vi):
+        raise ValueError("an owner V-I point lies outside the laser compliance range")
+    if [t["current_a"], t["laser_v_typ"]] not in vi:
+        raise ValueError("the main setpoint and laser_v_typ must be one of the owner V-I points")
+    if not t["current_a"] < t["normal_peak_a"] < t["backup_trip_a_min"] < t["backup_trip_a_max"]:
+        raise ValueError("require setpoint < normal transient peak < backup-trip window")
     if p["disconnect"]["topology"] != "single_pmos_source_at_vbuck":
         raise ValueError("power model assumes one output P-FET with its source at VBUCK (DD-31)")
     power.output_fet(p, p["disconnect"]["selected_output_mpn"])
@@ -136,6 +148,28 @@ def current_bounds(p: dict) -> dict:
             "conditional_accuracy_ok": min(values) >= t["current_a"] * (1 - t["accuracy_fraction"])
             and max(values) <= t["current_a"] * (1 + t["accuracy_fraction"]),
             "qualification": "CONDITIONAL: exact divider MPNs and hot shunt temperature are not verified"}
+
+
+def nearest_e96(value: float) -> float:
+    decade = 10 ** math.floor(math.log10(value))
+    return min((round(round(10 ** (i / 96), 2) * decade, 6) for i in range(97)), key=lambda v: abs(v - value))
+
+
+def setpoint_options(p: dict) -> list[dict]:
+    """Each owner V-I current as a one-resistor build: E96 divider top and its tolerance envelope."""
+    t, s, b = p["targets"], p["current_sense"], p["buck"]
+    rows = []
+    for current, vf in t["laser_vi_points"]:
+        exact = s["fb_bottom_ohm"] * (current * s["gain"] * s["shunt_ohm"] / b["reference_v"] - 1)
+        main = current == t["current_a"]
+        option = copy.deepcopy(p)
+        option["targets"]["current_a"] = current
+        option["current_sense"]["fb_top_ohm"] = s["fb_top_ohm"] if main else nearest_e96(exact)
+        bounds = current_bounds(option)
+        rows.append({"target_a": current, "laser_v": vf, "main": main, "fb_top_exact_ohm": exact,
+                     "fb_top_ohm": option["current_sense"]["fb_top_ohm"], **{k: bounds[k] for k in (
+                         "nominal_a", "min_a", "max_a", "conditional_accuracy_ok")}})
+    return rows
 
 
 def backup_bounds(p: dict, current: dict) -> dict:
@@ -183,8 +217,8 @@ def ripple(p: dict) -> dict:
     # Vin/2 is the global maximum of Vo*(Vin-Vo)/Vin, irrespective of series losses.
     di = t["input_v_max"] / (4 * lmin * b["frequency_hz_min"])
     return {"l_h_tolerance_min_25c": lmin, "ripple_a_pp_global_bound": di,
-            "peak_a_at_4a": t["current_a"] + di / 2,
-            "rms_a_at_4a": math.sqrt(t["current_a"] ** 2 + di ** 2 / 12),
+            "peak_a_at_setpoint": t["current_a"] + di / 2,
+            "rms_a_at_setpoint": math.sqrt(t["current_a"] ** 2 + di ** 2 / 12),
             "catalogue_isat_above_switch_limit": l["isat_a_20pct_l_drop"] >= b["high_side_current_limit_a_max"],
             "qualification": "ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN"}
 
@@ -201,7 +235,7 @@ def calculate(p: dict) -> dict:
     return {"schema": "nubm44-budget-qualification.v1", "variant": BUDGET_VARIANT,
             "stage": "ELECTRICAL_QUALIFICATION", "manufacturing_ready": False,
             "scope": "candidate calculations only; no budget schematic, PCB, firmware or bench validation",
-            "control_rail_screen_v": list(control_rail(p)), "current": cc,
+            "control_rail_screen_v": list(control_rail(p)), "current": cc, "setpoint_options": setpoint_options(p),
             "backup": backup_bounds(p, cc), "voltage_monitor": vb, "ripple": rr, "power": pw, "interface": itf,
             "energy": {"upstream_j_at_ov_max": 0.5 * e["bulk_cap_f_max_analysis"] * vcap ** 2,
                        "upstream_j_at_switch_short_8p4v": 0.5 * e["bulk_cap_f_max_analysis"] * p["targets"]["input_v_max"] ** 2,
@@ -270,11 +304,19 @@ def markdown(r: dict, p: dict) -> str:
              f"| Independent trip | {oc['nominal_a']:.4f} A nominal; {oc['min_a']:.4f}–{oc['max_a']:.4f} A envelope | {p['backup']['noise_adjustment_v']*1e6:g} µV NAF included; {oc['qualification']} |",
              f"| UVLO falling | {vm['uv']['nominal_v']:.4f} V nominal; {vm['uv']['min_v']:.4f}–{vm['uv']['max_v']:.4f} V | Hardware backstop below the loaded {targets['input_v_min']:g} V operating floor; margins below |",
              f"| Physical VBUCK OVP | {vm['ov']['nominal_v']:.4f} V nominal; {vm['ov']['min_v']:.4f}–{vm['ov']['max_v']:.4f} V | Upstream of disconnect; laser survival/response UNKNOWN |",
-             f"| Buck ripple, 25 °C L tolerance / {p['buck']['frequency_hz_min']/1000:g} kHz minimum | ≤{rr['ripple_a_pp_global_bound']:.4f} A p-p; {rr['peak_a_at_4a']:.4f} A peak at {targets['current_a']:g} A average | {rr['qualification']} |",
+             f"| Buck ripple, 25 °C L tolerance / {p['buck']['frequency_hz_min']/1000:g} kHz minimum | ≤{rr['ripple_a_pp_global_bound']:.4f} A p-p; {rr['peak_a_at_setpoint']:.4f} A peak at {targets['current_a']:g} A average | {rr['qualification']} |",
              f"| Control rail additive screen | {r['control_rail_screen_v'][0]:.4f}–{r['control_rail_screen_v'][1]:.4f} V | LDO load budget, exact line anchor and brownout sequencing OPEN |", "",
              f"Current accuracy assumes the specified {p['current_sense']['fb_resistor_tolerance_fraction']*100:g}% / {p['current_sense']['fb_resistor_tcr_fraction_per_c']*1e6:g} ppm/°C resistors and the stated shunt-temperature",
              "envelope. They are procurement/thermal requirements, not verified purchased parts or temperatures.", "",
-             "## Operating points, dropout and efficiency estimate", "",
+             "### Setpoint options (owner V-I points, DD-33)", "",
+             "Each owner current is a build that changes only the feedback-divider top resistor (E96). The backup trip",
+             "stays sized for the main setpoint, so it protects lower builds less closely.", "",
+             "| Target | Owner diode V | Divider top (exact → used) | Nominal | Tolerance envelope | Within ±"
+             f"{100 * targets['accuracy_fraction']:g}% |", "|---:|---:|---|---:|---:|---|"]
+    lines += [f"| {x['target_a']:g} A{' (main)' if x['main'] else ''} | {x['laser_v']:g} V | {x['fb_top_exact_ohm']:.1f} → "
+              f"{x['fb_top_ohm']:.0f} Ω | {x['nominal_a']:.4f} A | {x['min_a']:.4f}–{x['max_a']:.4f} A | "
+              f"{'yes (conditional)' if x['conditional_accuracy_ok'] else '**no**'} |" for x in r["setpoint_options"]]
+    lines += ["", "## Operating points, dropout and efficiency estimate", "",
              "Averaged steady-state model in `automation/budget/power.py`: connector → input allocation → reverse FET →",
              "TPS54821 → shunt → one output P-FET → board terminals (DD-31). The **typical** corner uses typical resistances",
              "at 25 °C; the **maximum** corner uses full-temperature TPS54821 maxima, FET 25 °C maxima × "
@@ -282,11 +324,16 @@ def markdown(r: dict, p: dict) -> str:
              "Switching, dead-time, gate-drive and core terms are labelled `estimates`; copper, fuse and connector values are",
              "`power_model` allocations the BOM/layout must meet. Efficiency is board-terminal power over connector power.",
              f"The model's largest energy-balance error is {pw['max_energy_balance_error_w']:.1e} W.", "",
+             f"Compliance grid at the {targets['current_a']:g} A setpoint (diode voltage across the required range):", "",
              "| Output FET | Corner | Input V | Diode V | Duty | Input A | Loss (W) | Efficiency estimate |",
              "|---|---|---:|---:|---:|---:|---:|---:|"]
     lines += [f"| {x['output_fet']}{' (selected)' if x['output_fet'] == pw['selected_output_mpn'] else ''} | {x['corner']} | "
               f"{x['vin_v']:g} | {x['vf_v']:g} | {x['duty']:.4f} | {x['i_in_a']:.4f} | {x['p_in_w'] - x['p_out_w']:.4f} | "
               f"{100 * x['efficiency_estimate']:.2f}% |" for x in pw["operating_points"]]
+    lines += ["", f"Owner V-I points at {targets['input_v_nominal']:g} V input, {pw['selected_output_mpn']} (OWNER-VI-01):", "",
+              "| Current | Diode V | Corner | Output (W) | Loss (W) | Efficiency estimate |", "|---:|---:|---|---:|---:|---:|"]
+    lines += [f"| {x['i_laser_a']:g} A | {x['vf_v']:g} | {x['corner']} | {x['p_out_w']:.3f} | {x['p_in_w'] - x['p_out_w']:.4f} | "
+              f"{100 * x['efficiency_estimate']:.2f}% |" for x in pw["owner_vi_points"]]
     nominal = next(x for x in pw["operating_points"] if x["output_fet"] == pw["selected_output_mpn"]
                    and x["corner"] == "typical" and x["vin_v"] == targets["input_v_nominal"] and x["vf_v"] == targets["laser_v_typ"])
     dr, uv, ov, gd, eff = (pw[k] for k in ("dropout", "uv", "ov", "gate_drive", "efficiency"))

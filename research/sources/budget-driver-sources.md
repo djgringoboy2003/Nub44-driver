@@ -70,6 +70,7 @@ installation does not alter the electrical toolchain. Downloads were not execute
 | ID | Manufacturer / document | Primary URL | Reviewed scope / local basename |
 |---|---|---|---|
 | BUD-23 | Diodes DMG1013T, DS31784 Rev.7-2, June 2024 | https://www.diodes.com/assets/Datasheets/ds31784.pdf | p.3 (TA = 25 °C): `DMG1013T-7` P-channel −20 V, VGSS ±6 V, VGS(th) −0.5…−1.0 V, RDS max 0.7/0.9/1.3 Ω at −4.5/−2.5/−1.8 V, IDSS ≤ 100 nA at −20 V, IGSS ≤ ±2 µA at ±4.5 V. P1 EN source. Existing local copy `cmp_Diodes_DMG1013T.pdf` (earlier CMP-27 comparison). |
+| OWNER-VI-01 | Project owner, conversation instruction, 2026-10-29 | — | NUBM44 operating points supplied by the owner: 3.0 A at 4.40 V, 3.5 A at 4.52 V, 4.0 A at 4.62 V, 4.5 A at 4.72 V; main target 4.5 A, about 7.3 W optical expected (DD-33). Owner data, not a measurement by this project and not a manufacturer limit. Consistent with community data in `research/nubm44-research.md` (about 4.7 V at 4.5 A, LD-13/LD-14). Used for the setpoint options and efficiency condition only; the 3.8–5.2 V compliance range still applies. |
 
 Further limits used from existing records (no new download):
 - LEAD-04 DMG1012T (DS31783 Rev.8-2), p.2 at 25 °C: VGS(th) 0.5–1.0 V, RDS max 0.4/0.5/0.7 Ω at 4.5/2.5/1.8 V,
