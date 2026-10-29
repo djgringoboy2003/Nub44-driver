@@ -90,8 +90,9 @@ check("Nominal setpoint error", abs(i_set_nominal - I_SET) / I_SET * 100, 0.5, "
 
 # ISP/ISN backup limit (independent of CSA and firmware)
 backup = [v / cm["shunt"]["r_ohm"] for v in cv["isp_isn_limit_v"]]
-check("Backup current limit minimum above setpoint (no interference)", backup[0], I_SET * (1 + tol_worst / 100) * 1.05,
-      "min", "A", "ISP/ISN 48 mV min / shunt; must not clip normal regulation")
+check("Backup current limit minimum above setpoint (no interference)", backup[0],
+      I_SET * (1 + tol_worst / 100) * P["current"]["backup_margin_factor"], "min", "A",
+      "ISP/ISN 48 mV min / shunt; must not clip normal regulation (margin factor: owner decision DD-36)")
 
 # ------------------------------------------------------------------ operating points
 r_rev = {"hot_4v": cm["q_reverse"]["rds_max_4v5"] * 1.25}
@@ -162,8 +163,8 @@ check("Boost off-time vs minimum off-time", (1 - max_boost_duty) * t * 1e9, cv["
 # dissipation of key parts
 pt_hot = max(points, key=lambda p: p["i_in"])
 p_rev = pt_hot["losses"]["input_path_I2R"]
-check("Reverse-polarity FET dissipation (worst point)", p_rev, 0.6, "max", "W",
-      "PowerPAK 1212-8 on 4-layer pour; 0.6 W keeps rise < 40 K at ~60 K/W (estimate)")
+check("Reverse-polarity FET dissipation (worst point)", p_rev, cm["q_reverse"]["p_max_w"], "max", "W",
+      "PowerPAK 1212-8 on 4-layer pour at ~60 K/W (estimate); limit is an owner decision (DD-36), bench thermal T-test decides")
 p_shunt = I_SET ** 2 * cm["shunt"]["r_ohm"]
 check("Shunt dissipation vs 50 % of rating", p_shunt, 0.5 * cm["shunt"]["p_rated_w"], "max", "W")
 p_ic = max(p["losses"].get("q3_conduction", 0) + p["losses"].get("q4_conduction", 0)

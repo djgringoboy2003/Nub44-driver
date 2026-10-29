@@ -5,7 +5,7 @@
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
 efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
-sourcing directive and part swaps; A/B 4.5 A analysed, awaiting two owner decisions). The pre-order, quote, GBP/UK and Project 450
+sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -108,11 +108,19 @@ exact netlist match (104 parts, 56 nets); the 2 warnings are the not-yet-generat
 four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
 still cover A/B only; their PASS results cannot qualify this circuit.
 
-**Validation (existing A/B only):** full-toolchain rerun after the budget-planning documentation update
-(2026-10-28, base `f136565`, KiCad, ngspice and avr-gcc present): exit 0,
-57 entries, 54 PASS and 3 known, unchanged failures listed in
-`engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27) and VAL-SIM-12 (pending an
-owner decision, AUD-SIM-04). Any new or changed failure makes it exit 1.
+**A/B at 4.5 A (DD-36, owner 2026-10-29).** R8 8.66 kΩ, R3 24.9 kΩ and firmware `APP_I_SET_MA` 4500. The owner
+accepted two deviations: the backup margin factor 1.0 (ISP/ISN 4.8–5.2 A against a worst-case setpoint of 4.66 A),
+and the reverse-FET limit 0.7 W (0.68 W computed). Results:
+- Calculations 21/21; simulations 12/12, so VAL-SIM-12 / AUD-SIM-04 is resolved.
+- Evaluation DRC 0/0/0/0 after restoring the archived router session; compact board unchanged (parked).
+- Exports regenerated.
+- **Routed-copper efficiency estimate 93.56%, below the 94% target**: an owner decision (below).
+
+**Validation (existing A/B only):** full-toolchain rerun after DD-36 (2026-10-29, KiCad, ngspice and avr-gcc
+present): exit 0, 57 entries, 55 PASS and 2 known, unchanged failures listed in
+`engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27). VAL-SIM-12 was resolved and
+removed from the baseline. Any new or changed failure makes it exit 1. The evaluation board has 2 blockers to
+PROTOTYPE_CANDIDATE (FP-POWERPAK, FP-RS1).
 
 **Tests (2026-10-28, budget-planning milestone, existing project):** 207 Python tests pass in 31.64 s (the independent review saw 188 pass /
 19 skip without KiCad). Earlier firmware-evidence and footprint-report reruns matched the committed ones except
@@ -134,30 +142,20 @@ WARN. GitHub CI passed on the parent commit; see run 40500901442 below.
   (`reports/dashboard/index.html`), CI.
 
 **Owner decisions in force:** budget-2s main setpoint 4.5 A at 4.72 V with 3.0/3.5/4.0 A builds (DD-33,
-2026-10-29); budget-2s efficiency target ≥ 93% at 7.4 V and the main setpoint, bench-judged (DD-31); battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); 4.0 A kept
-(DD-13); efficiency target ≥ 94 % (DD-26); evaluation board first, compact parked (DD-27).
+2026-10-29); budget-2s efficiency target ≥ 93% at 7.4 V and the main setpoint, bench-judged (DD-31); battery polarity centre spring = B+, ring = B−, marked on both boards (DD-12); A/B 4.5 A with backup margin
+factor 1.0 and reverse-FET limit 0.7 W (DD-36; was 4.0 A, DD-13); efficiency target ≥ 94 % (DD-26); evaluation board first, compact parked (DD-27).
 
 **Decisions now required from the owner:**
-1. **AUD-SIM-04 / VAL-SIM-12:** the averaged model shows 9.5 dB gain margin (< 10 dB) when four tolerances stack.
-   Either accept and measure the loop on the prototype, or change R4 (Rc) 1.2 → 1.0 kΩ (exploratory simulation:
-   11.1 dB worst case). A hardware change; not applied.
+1. **A/B efficiency at 4.5 A (REQ-PWR-02, DD-36):** the loss model gives 94.10% at 4.0 V input, but with the
+   evaluation board's routed copper the estimate is 93.56%, below the 94% target. Either accept a lower A/B target
+   (for example ≥ 93%, bench-judged, as for the budget board), or keep 94% and decide after the bench measurement
+   (T1.7). (The former item, AUD-SIM-04 / VAL-SIM-12, was resolved by the 4.5 A divider.)
 2. **AUD-SRC-04:** R16 (indicator resistor) is overloaded if the external LED pad is shorted; consider a larger
    package or value.
 3. **AUD-PCB-04:** optional gate clamp for Q6 (VGSS ±6 V) in a later revision.
 4. **Compact board direction** after bench data: HDI, 6-layer or re-architecture, plus removing the unused PG net
    (`engineering/pcb-review-2026-10-26.md`).
 5. **Fab choice** (PCBWay preferred for assembly) and acceptance of the pre-order review results.
-6. **A/B boards to 4.5 A (owner instruction 2026-10-29; sources NOT yet changed).** Trial `power_stage.py` at
-   4.5 A (reverted): R_FB_TOP 6.65k → 8.66k gives 4.478 A (−0.48%), and R_ILIM 27.4k → 24.9k fixes the inductor
-   current margin. Efficiency at 4.0 V is 94.10% and the loop passes. Two checks need an owner decision:
-   (a) the TPS552882's fixed ISP/ISN backup limit is 4.8–5.2 A with the 10 mΩ shunt, against the ≥ 4.89 A that
-   the 5% no-interference margin needs. Either accept a backup limit only about 3% above the worst-case setpoint
-   (recommended: it becomes a close, slow average-current clamp; transients above about 4.8 A are trimmed), or
-   lower the shunt. The MCS1632 series stops at 10 mΩ, so that means a new footprint and an evaluation-board
-   re-route.
-   (b) Reverse FET Q1 dissipation is 0.68 W against the 0.6 W estimated limit (about 41 K rise at ~60 K/W).
-   Either accept it and measure (recommended), or find a lower-resistance PowerPAK 1212 P-FET (SiSH615ADN is
-   worse). After the decisions, regenerate the full A/B chain (AGENTS.md order) and update DD-13/REQ-OUT-01.
 
 **Open limitations.**
 1. HDI via-in-pad for the RPM0026A centre pads (DD-16) remains the remedy for the package-limited SW2, PGND and AGND
@@ -229,6 +227,17 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: A/B boards moved to 4.5 A (DD-36)
+- The owner accepted both 4.5 A deviations (backup margin factor 1.0; reverse-FET limit 0.7 W), now visible as
+  parameters. R8 8.66k, R3 24.9k, firmware 4500 mA; simulation criteria read the setpoint from parameters; bench
+  criteria moved to 4.275–4.725 A, ≤ 4.95 A peak and a 4.5 A thermal test.
+- The PCB finish stage now syncs schematic values/fields onto placed footprints. The archived router sessions were
+  restored for both boards: finish + DRC gave evaluation 0/0/0/0, compact unchanged. `source_revisions` appended.
+- Chain rerun in AGENTS.md order: calculations 21/21, simulations 12/12 (SIM-12 now passes, VAL-SIM-12 removed from
+  the baseline), firmware PASS, ERC 0/0, layout reviews, PCBWay/JLCPCB exports, footprint report, sourcing, full
+  validator exit 0 (2 known items).
+- Finding: routed-copper efficiency estimate 93.56% < 94% (owner decision 1). Risk R-01 raised for 4.5 A.
 
 ### 2026-10-29: budget KiCad schematic started (DD-35)
 - Added budget connectivity (104 parts), the separate `budget2s` library (TPS54821, INA300, TLV6700, TLV803E,

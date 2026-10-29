@@ -8,33 +8,33 @@ measurements. Gate G (physical validation) remains open until bench data exists.
 
 | Check | Value | Limit | Status | Note |
 |---|---|---|---|---|
-| Current setpoint worst-case tolerance | 3.5799 % | ≤ 5 % | **PASS** | linear sum of VREF, shunt, CSA gain/offset, divider, shunt TCR over 50 K |
-| Nominal setpoint error | 0.1 % | ≤ 0.5 % | **PASS** |  |
-| Backup current limit minimum above setpoint (no interference) | 4.8 A | ≥ 4.35035 A | **PASS** | ISP/ISN 48 mV min / shunt; must not clip normal regulation |
-| Average inductor current vs ILIM minimum (20 % margin) | 8.8715 A | ≤ 10.2131 A | **PASS** | worst operating avg 7.39 A; ILIM min 10.21 A |
-| Peak inductor current vs Isat (30 % drop rating) | 8.4579 A | ≤ 14 A | **PASS** |  |
-| Inductor RMS current vs Irms (20 C rise) | 7.4185 A | ≤ 12.8 A | **PASS** | RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point |
-| Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | 94.5883 % | ≥ 94 % | **PASS** | board-input to laser; estimate from loss model; brief asked > 95 % |
-| Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | 91.2684 % | ≥ 86 % | **PASS** |  |
-| Boost off-time vs minimum off-time | 909.339 ns | ≥ 145 ns | **PASS** |  |
-| Reverse-polarity FET dissipation (worst point) | 0.5085 W | ≤ 0.6 W | **PASS** | PowerPAK 1212-8 on 4-layer pour; 0.6 W keeps rise < 40 K at ~60 K/W (estimate) |
-| Shunt dissipation vs 50 % of rating | 0.16 W | ≤ 0.5 W | **PASS** |  |
-| TPS552882 junction estimate at 50 C board (60 K/W assumed) | 97.1115 C | ≤ 125 C | **PASS** | RthJA 47.5 K/W on JEDEC board; 60 K/W assumed for the 22 mm board; verify by test |
+| Current setpoint worst-case tolerance | 3.5789 % | ≤ 5 % | **PASS** | linear sum of VREF, shunt, CSA gain/offset, divider, shunt TCR over 50 K |
+| Nominal setpoint error | 0.48 % | ≤ 0.5 % | **PASS** |  |
+| Backup current limit minimum above setpoint (no interference) | 4.8 A | ≥ 4.66105 A | **PASS** | ISP/ISN 48 mV min / shunt; must not clip normal regulation (margin factor: owner decision DD-36) |
+| Average inductor current vs ILIM minimum (20 % margin) | 10.2907 A | ≤ 11.2386 A | **PASS** | worst operating avg 8.58 A; ILIM min 11.24 A |
+| Peak inductor current vs Isat (30 % drop rating) | 9.6739 A | ≤ 14 A | **PASS** |  |
+| Inductor RMS current vs Irms (20 C rise) | 8.599 A | ≤ 12.8 A | **PASS** | RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point |
+| Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | 94.1015 % | ≥ 94 % | **PASS** | board-input to laser; estimate from loss model; brief asked > 95 % |
+| Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | 90.2736 % | ≥ 86 % | **PASS** |  |
+| Boost off-time vs minimum off-time | 881.927 ns | ≥ 145 ns | **PASS** |  |
+| Reverse-polarity FET dissipation (worst point) | 0.6842 W | ≤ 0.7 W | **PASS** | PowerPAK 1212-8 on 4-layer pour at ~60 K/W (estimate); limit is an owner decision (DD-36), bench thermal T-test decides |
+| Shunt dissipation vs 50 % of rating | 0.2025 W | ≤ 0.5 W | **PASS** |  |
+| TPS552882 junction estimate at 50 C board (60 K/W assumed) | 110.891 C | ≤ 125 C | **PASS** | RthJA 47.5 K/W on JEDEC board; 60 K/W assumed for the 22 mm board; verify by test |
 | Hardware UVLO falling threshold >= 2.80 V cell floor | 2.8292 V | ≥ 2.8 V | **PASS** |  |
 | Hardware UVLO falling threshold below firmware cut-off | 2.8292 V | ≤ 2.85 V | **PASS** | firmware must act first; hardware is the backstop |
-| OV backstop trip (min) above normal maximum output | 6.39 V | ≥ 5.273 V | **PASS** |  |
-| Laser current ripple (p-p) as % of setpoint | 8.8537 % | ≤ 10 % | **PASS** | capacitive ripple / diode dynamic resistance; ESR adds a little |
-| Output capacitor RMS current per capacitor | 0.921 A | ≤ 3 A | **PASS** | 0805 22 uF X5R typically rated 2-4 A at 10 K rise |
-| Current-loop phase margin (all corners) | 111.729 deg | ≥ 50 deg | **PASS** |  |
-| Current-loop gain margin (all corners) | 12.0924 dB | ≥ 10 dB | **PASS** |  |
-| Crossover below RHP zero / 5 | 4858.15 Hz | ≤ 11119 Hz | **PASS** |  |
-| Crossover below CSA bandwidth / 3 | 4858.15 Hz | ≤ 12333.3 Hz | **PASS** |  |
+| OV backstop trip (min) above normal maximum output | 6.39 V | ≥ 5.364 V | **PASS** |  |
+| Laser current ripple (p-p) as % of setpoint | 9.1683 % | ≤ 10 % | **PASS** | capacitive ripple / diode dynamic resistance; ESR adds a little |
+| Output capacitor RMS current per capacitor | 1.0706 A | ≤ 3 A | **PASS** | 0805 22 uF X5R typically rated 2-4 A at 10 K rise |
+| Current-loop phase margin (all corners) | 108.376 deg | ≥ 50 deg | **PASS** |  |
+| Current-loop gain margin (all corners) | 12.5126 dB | ≥ 10 dB | **PASS** |  |
+| Crossover below RHP zero / 5 | 2994.67 Hz | ≤ 9473.94 Hz | **PASS** |  |
+| Crossover below CSA bandwidth / 3 | 2994.67 Hz | ≤ 12333.3 Hz | **PASS** |  |
 
 ## Laser current setpoint
 
-- CSA gain × shunt = 0.500 V/A; FB divider ratio k = 0.6006
-- Nominal setpoint: **3.9960 A**
-- Tolerance contributions (%): vref 1.00, shunt 1.00, csa_gain 1.00, csa_offset 0.12, fb_divider 0.08, shunt_tcr_50K 0.38
+- CSA gain × shunt = 0.500 V/A; FB divider ratio k = 0.5359
+- Nominal setpoint: **4.4784 A**
+- Tolerance contributions (%): vref 1.00, shunt 1.00, csa_gain 1.00, csa_offset 0.11, fb_divider 0.09, shunt_tcr_50K 0.38
 - Worst-case sum **±3.58 %**, RSS ±1.78 %
 - Independent ISP/ISN backup limit: 4.80 / 5.00 / 5.20 A (min/typ/max)
 
@@ -43,69 +43,70 @@ measurements. Gate G (physical validation) remains open until bench data exists.
 | 3.0 | 2500.0 | 2487.9 | 2.9971 |
 | 3.5 | 4583.3 | 4531.6 | 3.4876 |
 | 4.0 | 6666.7 | 6651.5 | 3.9964 |
+| 4.5 | 8750.0 | 8659.6 | 4.4783 |
 
 ## Operating points
 
 | Diode corner | Vin (V) | Vf (V) | Vout node (V) | Region | Iin (A) | IL avg (A) | IL peak (A) | Efficiency |
 |---|---|---|---|---|---|---|---|---|
-| min_hot | 2.83 | 4.108 | 4.156 | boost | 6.37 | 6.37 | 7.24 | 91.1 % |
-| min_hot | 3.0 | 4.108 | 4.156 | boost | 5.96 | 5.96 | 6.77 | 91.9 % |
-| min_hot | 3.3 | 4.108 | 4.156 | boost | 5.35 | 5.35 | 6.04 | 93.1 % |
-| min_hot | 3.7 | 4.108 | 4.156 | boost | 4.72 | 4.72 | 5.19 | 94.1 % |
-| min_hot | 4.0 | 4.108 | 4.156 | transition | 4.32 | 4.16 | 4.82 | 95.0 % |
-| min_hot | 4.2 | 4.108 | 4.156 | transition | 4.11 | 4.05 | 4.30 | 95.2 % |
-| typ_25C | 2.83 | 4.430 | 4.478 | boost | 6.90 | 6.90 | 7.88 | 90.7 % |
-| typ_25C | 3.0 | 4.430 | 4.478 | boost | 6.45 | 6.45 | 7.39 | 91.6 % |
-| typ_25C | 3.3 | 4.430 | 4.478 | boost | 5.79 | 5.79 | 6.63 | 92.8 % |
-| typ_25C | 3.7 | 4.430 | 4.478 | boost | 5.10 | 5.10 | 5.76 | 94.0 % |
-| typ_25C | 4.0 | 4.430 | 4.478 | boost | 4.68 | 4.68 | 5.17 | 94.6 % |
-| typ_25C | 4.2 | 4.430 | 4.478 | boost | 4.44 | 4.44 | 4.79 | 94.9 % |
-| max_cold | 2.83 | 4.725 | 4.773 | boost | 7.39 | 7.39 | 8.46 | 90.3 % |
-| max_cold | 3.0 | 4.725 | 4.773 | boost | 6.90 | 6.90 | 7.94 | 91.3 % |
-| max_cold | 3.3 | 4.725 | 4.773 | boost | 6.19 | 6.19 | 7.15 | 92.6 % |
-| max_cold | 3.7 | 4.725 | 4.773 | boost | 5.45 | 5.45 | 6.26 | 93.8 % |
-| max_cold | 4.0 | 4.725 | 4.773 | boost | 5.00 | 5.00 | 5.67 | 94.5 % |
-| max_cold | 4.2 | 4.725 | 4.773 | boost | 4.75 | 4.75 | 5.29 | 94.8 % |
+| min_hot | 2.83 | 4.191 | 4.245 | boost | 7.39 | 7.39 | 8.30 | 90.1 % |
+| min_hot | 3.0 | 4.191 | 4.245 | boost | 6.90 | 6.90 | 7.76 | 91.1 % |
+| min_hot | 3.3 | 4.191 | 4.245 | boost | 6.19 | 6.19 | 6.93 | 92.4 % |
+| min_hot | 3.7 | 4.191 | 4.245 | boost | 5.45 | 5.45 | 5.98 | 93.6 % |
+| min_hot | 4.0 | 4.191 | 4.245 | boost | 5.00 | 5.00 | 5.34 | 94.3 % |
+| min_hot | 4.2 | 4.191 | 4.245 | transition | 4.73 | 4.62 | 5.08 | 94.9 % |
+| typ_25C | 2.83 | 4.515 | 4.569 | boost | 8.01 | 8.01 | 9.02 | 89.7 % |
+| typ_25C | 3.0 | 4.515 | 4.569 | boost | 7.47 | 7.47 | 8.45 | 90.7 % |
+| typ_25C | 3.3 | 4.515 | 4.569 | boost | 6.69 | 6.69 | 7.58 | 92.1 % |
+| typ_25C | 3.7 | 4.515 | 4.569 | boost | 5.88 | 5.88 | 6.60 | 93.4 % |
+| typ_25C | 4.0 | 4.515 | 4.569 | boost | 5.40 | 5.40 | 5.95 | 94.1 % |
+| typ_25C | 4.2 | 4.515 | 4.569 | boost | 5.12 | 5.12 | 5.54 | 94.5 % |
+| max_cold | 2.83 | 4.810 | 4.864 | boost | 8.58 | 8.58 | 9.67 | 89.2 % |
+| max_cold | 3.0 | 4.810 | 4.864 | boost | 7.99 | 7.99 | 9.07 | 90.3 % |
+| max_cold | 3.3 | 4.810 | 4.864 | boost | 7.15 | 7.15 | 8.16 | 91.8 % |
+| max_cold | 3.7 | 4.810 | 4.864 | boost | 6.28 | 6.28 | 7.15 | 93.2 % |
+| max_cold | 4.0 | 4.810 | 4.864 | boost | 5.76 | 5.76 | 6.49 | 93.9 % |
+| max_cold | 4.2 | 4.810 | 4.864 | boost | 5.46 | 5.46 | 6.08 | 94.4 % |
 
 ### Loss breakdown: diode typ_25C, Vin 4.0 V
 
 | Loss | W |
 |---|---|
-| q3_conduction | 0.200 |
-| input_path_I2R | 0.174 |
-| current_shunt | 0.160 |
-| inductor_dcr | 0.127 |
-| deadtime | 0.078 |
+| q3_conduction | 0.259 |
+| input_path_I2R | 0.231 |
+| current_shunt | 0.203 |
+| inductor_dcr | 0.168 |
+| deadtime | 0.090 |
+| boost_switching | 0.068 |
 | inductor_core | 0.060 |
-| boost_switching | 0.059 |
+| q4_conduction | 0.048 |
+| q1_on | 0.045 |
 | gate | 0.045 |
-| q1_on | 0.034 |
-| output_path_I2R | 0.032 |
-| q4_conduction | 0.032 |
+| output_path_I2R | 0.041 |
 | quiescent_and_aux | 0.009 |
-| output_cap_esr | 0.004 |
+| output_cap_esr | 0.006 |
 | input_cap_esr | 0.000 |
-| **total** | **1.014** |
+| **total** | **1.274** |
 
 ### Loss breakdown: diode typ_25C, Vin 3.0 V
 
 | Loss | W |
 |---|---|
-| input_path_I2R | 0.379 |
-| q3_conduction | 0.276 |
-| inductor_dcr | 0.241 |
-| current_shunt | 0.160 |
-| q4_conduction | 0.158 |
-| deadtime | 0.107 |
-| boost_switching | 0.078 |
-| q1_on | 0.065 |
+| input_path_I2R | 0.508 |
+| q3_conduction | 0.360 |
+| inductor_dcr | 0.323 |
+| q4_conduction | 0.222 |
+| current_shunt | 0.203 |
+| deadtime | 0.124 |
+| boost_switching | 0.091 |
+| q1_on | 0.087 |
 | inductor_core | 0.060 |
 | gate | 0.045 |
-| output_path_I2R | 0.032 |
-| output_cap_esr | 0.015 |
+| output_path_I2R | 0.041 |
+| output_cap_esr | 0.020 |
 | quiescent_and_aux | 0.008 |
 | input_cap_esr | 0.001 |
-| **total** | **1.624** |
+| **total** | **2.091** |
 
 ## Hardware undervoltage lockout (EN/UVLO divider)
 
@@ -113,31 +114,31 @@ measurements. Gate G (physical validation) remains open until bench data exists.
 
 ## Ripple
 
-- Effective output capacitance 48.4 µF; output ripple 63.7 mV p-p at the worst boost point
-- Laser current ripple ≈ 354 mA p-p; output capacitor RMS (total) 3.68 A
+- Effective output capacitance 48.4 µF; output ripple 74.3 mV p-p at the worst boost point
+- Laser current ripple ≈ 413 mA p-p; output capacitor RMS (total) 4.28 A
 
 ## Current loop
 
 | Diode | Vin | rd scale | Zac (Ω) | fc (Hz) | PM (°) | GM (dB) | f_RHPZ (Hz) |
 |---|---|---|---|---|---|---|---|
-| min_hot | 2.83 | 0.7 | 0.1375 | 2190 | 121.4 | 12.1 | 65195 |
-| min_hot | 2.83 | 1.0 | 0.187 | 2029 | 118.8 | 13.7 | 65195 |
-| min_hot | 2.83 | 1.5 | 0.2695 | 1816 | 115.2 | 15.8 | 65195 |
-| min_hot | 3.7 | 0.7 | 0.1375 | 4858 | 130.9 | 12.4 | 118843 |
-| min_hot | 3.7 | 1.0 | 0.187 | 4035 | 127.8 | 13.9 | 118843 |
-| min_hot | 3.7 | 1.5 | 0.2695 | 3238 | 123.3 | 16.0 | 118843 |
-| typ_25C | 2.83 | 0.7 | 0.141 | 1926 | 118.8 | 12.4 | 59860 |
-| typ_25C | 2.83 | 1.0 | 0.192 | 1802 | 116.5 | 14.0 | 59860 |
-| typ_25C | 2.83 | 1.5 | 0.277 | 1633 | 113.1 | 16.1 | 59860 |
-| typ_25C | 3.7 | 0.7 | 0.141 | 3735 | 129.4 | 12.8 | 109708 |
-| typ_25C | 3.7 | 1.0 | 0.192 | 3272 | 126.0 | 14.3 | 109708 |
-| typ_25C | 3.7 | 1.5 | 0.277 | 2757 | 121.3 | 16.5 | 109708 |
-| max_cold | 2.83 | 0.7 | 0.141 | 1746 | 116.9 | 12.5 | 55595 |
-| max_cold | 2.83 | 1.0 | 0.192 | 1647 | 114.8 | 14.1 | 55595 |
-| max_cold | 2.83 | 1.5 | 0.277 | 1507 | 111.7 | 16.3 | 55595 |
-| max_cold | 3.7 | 0.7 | 0.141 | 3149 | 127.5 | 13.0 | 102409 |
-| max_cold | 3.7 | 1.0 | 0.192 | 2841 | 124.2 | 14.6 | 102409 |
-| max_cold | 3.7 | 1.5 | 0.277 | 2467 | 119.8 | 16.7 | 102409 |
+| min_hot | 2.83 | 0.7 | 0.1375 | 1693 | 116.6 | 12.5 | 55641 |
+| min_hot | 2.83 | 1.0 | 0.187 | 1583 | 114.4 | 14.1 | 55641 |
+| min_hot | 2.83 | 1.5 | 0.2695 | 1431 | 111.3 | 16.2 | 55641 |
+| min_hot | 3.7 | 0.7 | 0.1375 | 2995 | 127.2 | 13.0 | 102494 |
+| min_hot | 3.7 | 1.0 | 0.187 | 2677 | 123.9 | 14.5 | 102494 |
+| min_hot | 3.7 | 1.5 | 0.2695 | 2299 | 119.5 | 16.7 | 102494 |
+| typ_25C | 2.83 | 0.7 | 0.141 | 1521 | 114.4 | 12.8 | 51033 |
+| typ_25C | 2.83 | 1.0 | 0.192 | 1431 | 112.4 | 14.4 | 51033 |
+| typ_25C | 2.83 | 1.5 | 0.277 | 1305 | 109.6 | 16.6 | 51033 |
+| typ_25C | 3.7 | 0.7 | 0.141 | 2548 | 124.5 | 13.4 | 94613 |
+| typ_25C | 3.7 | 1.0 | 0.192 | 2324 | 121.4 | 15.0 | 94613 |
+| typ_25C | 3.7 | 1.5 | 0.277 | 2041 | 117.3 | 17.1 | 94613 |
+| max_cold | 2.83 | 0.7 | 0.141 | 1399 | 112.8 | 12.9 | 47370 |
+| max_cold | 2.83 | 1.0 | 0.192 | 1324 | 110.9 | 14.5 | 47370 |
+| max_cold | 2.83 | 1.5 | 0.277 | 1216 | 108.4 | 16.7 | 47370 |
+| max_cold | 3.7 | 0.7 | 0.141 | 2270 | 122.4 | 13.6 | 88353 |
+| max_cold | 3.7 | 1.0 | 0.192 | 2099 | 119.6 | 15.2 | 88353 |
+| max_cold | 3.7 | 1.5 | 0.277 | 1874 | 115.9 | 17.3 | 88353 |
 
 Model: averaged CCM boost-mode plant with the TPS552882 equivalent current-sense resistance (0.055 Ω),
 INA186A2 bandwidth pole, gm error amplifier with Rc-Cc-Cp. Buck mode has no RHP zero and is less restrictive.
@@ -153,8 +154,8 @@ INA186A2 bandwidth pole, gm error amplifier with Rc-Cc-Cp. Buck mode has no RHP 
 
 ## Run time (typical diode, 90 % of rated energy usable)
 
-- 18650 3000 mAh: ~30.9 min continuous
-- 21700 4000 mAh: ~41.2 min continuous
+- 18650 3000 mAh: ~26.8 min continuous
+- 21700 4000 mAh: ~35.7 min continuous
 
 ![efficiency](plots/efficiency_vs_vin.png)
 

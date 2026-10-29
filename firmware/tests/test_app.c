@@ -31,7 +31,7 @@ static void sim_init(sim_t *s, app_start_t start, app_mode_t mode)
 {
     app_init(&s->a, start, mode);
     s->in = nominal();
-    s->i_on = 4000; s->i_off = 0; s->vout_on = 4500; s->vout_off = 0;
+    s->i_on = 4500; s->i_off = 0; s->vout_on = 4500; s->vout_off = 0;
     s->en = false;
     s->o.laser_enable = s->o.indicator = s->o.cc_sense = false;
 }
@@ -223,10 +223,10 @@ static void test_regulation(void)
     sim_t s;
     emitting(&s);
     sim_run(&s, APP_SETTLE_MS);
-    s.i_on = 4500;                                /* +12.5 %: inside the 15 % window */
+    s.i_on = 5062;                                /* +12.5 %: inside the 15 % window */
     sim_run(&s, 500);
     CHECK(s.a.state == ST_EMIT, "within window keeps running");
-    s.i_on = 3000;                                /* -25 % */
+    s.i_on = 3375;                                /* -25 % */
     sim_run(&s, APP_I_FAULT_MS + 1);
     CHECK(s.a.fault == FAULT_REGULATION, "regulation fault after 50 ms");
 }
@@ -271,7 +271,7 @@ static void test_output_while_off(void)
     sim_init(&s, APP_START_NEXT_MODE, MODE_CONTINUOUS);
     sim_run(&s, T_TO_EMIT);
     for (unsigned i = 0; i < 20 * APP_FLASH_PERIOD_MS; i++) {
-        s.in.i_laser_ma = s.en ? 4000 : (s.a.t_disabled_ms < 5u ? 1500 : 0);
+        s.in.i_laser_ma = s.en ? 4500 : (s.a.t_disabled_ms < 5u ? 1500 : 0);
         s.in.vout_mv = s.en ? 4500 : 0;
         s.o = app_tick(&s.a, &s.in);
         s.en = s.o.laser_enable;

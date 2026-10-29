@@ -23,13 +23,6 @@ accepted:
     reason: "Dangling vias of the 20 open nets on the parked compact draft"
     decision: "DD-27 (owner, 2026-10-25)"
 
-pending_disposition:
-  - id: VAL-SIM-12
-    status: FAIL
-    detail_contains: '"cases_passing": 10, "cases": 11'
-    reason: >-
-      Averaged-model gain margin 9.5 dB (< 10 dB) when low output-capacitance retention, +20 % inductance,
-      +20 % error-amplifier gm and -30 % CSA bandwidth coincide; every single tolerance passes and PM stays
-      above 109 deg. Options: accept and verify on the bench (T2.11 loop measurement), or change R4 (Rc)
-      1.2 kOhm -> 1.0 kOhm (exploratory simulation: 11.1 dB worst case). Both need an owner decision.
-    finding: AUD-SIM-04
+pending_disposition: []
+# VAL-SIM-12 / AUD-SIM-04 resolved 2026-10-29 (DD-36): with the 4.5 A divider (R8 8.66k) the loop gain is lower
+# and SIM-12 passes 11/11. Lower-current builds (6.65k/4.53k/2.49k) raise loop gain again: re-run SIM-12 first.

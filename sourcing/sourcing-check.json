@@ -1,5 +1,5 @@
 {
- "date": "2026-10-28",
+ "date": "2026-10-29",
  "status": "PASS",
  "counts": {
   "FAIL": 0,
@@ -89,7 +89,7 @@
    "severity": "WARN",
    "ref": "compact-22mm:R3",
    "check": "description",
-   "detail": "description says 0402 but RC0201FR-0727K4L is 0201 (AUD-MFG-03)"
+   "detail": "description says 0402 but RC0201FR-0724K9L is 0201 (AUD-MFG-03)"
   },
   {
    "severity": "WARN",
@@ -269,7 +269,7 @@
    "severity": "INFO",
    "ref": "compact-22mm:R3",
    "check": "supplier data",
-   "detail": "RC0201FR-0727K4L: stock or price UNKNOWN; confirm at order time"
+   "detail": "RC0201FR-0724K9L: stock or price UNKNOWN; confirm at order time"
   },
   {
    "severity": "INFO",
@@ -329,7 +329,7 @@
    "severity": "INFO",
    "ref": "compact-22mm:R8",
    "check": "supplier data",
-   "detail": "RT0402BRD076K65L: stock or price UNKNOWN; confirm at order time"
+   "detail": "RT0402BRD078K66L: stock or price UNKNOWN; confirm at order time"
   },
   {
    "severity": "INFO",
@@ -479,7 +479,7 @@
    "severity": "INFO",
    "ref": "evaluation-board:R3",
    "check": "supplier data",
-   "detail": "RC0402FR-0727K4L: stock or price UNKNOWN; confirm at order time"
+   "detail": "RC0402FR-0724K9L: stock or price UNKNOWN; confirm at order time"
   },
   {
    "severity": "INFO",
@@ -539,7 +539,7 @@
    "severity": "INFO",
    "ref": "evaluation-board:R8",
    "check": "supplier data",
-   "detail": "RT0402BRD076K65L: stock or price UNKNOWN; confirm at order time"
+   "detail": "RT0402BRD078K66L: stock or price UNKNOWN; confirm at order time"
   },
   {
    "severity": "INFO",

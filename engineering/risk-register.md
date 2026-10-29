@@ -7,7 +7,7 @@ calculation alone.
 
 | ID | Risk | L | I | Score | Mitigation in place | Evidence that closes it | Owner / status |
 |---|---|---|---|---|---|---|---|
-| R-01 | 4.0 A exceeds the NUBM44 typical 3.0 A; shortened diode life or catastrophic optical damage | 2 | 3 | 6 | Owner decision DD-13; 3.0/3.5 A builds by R8 only; T4.2 first light at 3.0 A | Owner acceptance recorded (2026-10-25) | Owner: accepted |
+| R-01 | 4.5 A (DD-36; was 4.0 A) exceeds the NUBM44 typical 3.0 A and LD-05's 4.2 A maximum operating current; about 7 W exceeds its 6.0 W optical maximum; shortened diode life or catastrophic optical damage | 3 | 3 | 9 | Owner decisions DD-13/DD-36; 3.0/3.5/4.0 A builds by R8 only; T4.2 first light at 3.0 A; heatsink for about 14 W | Owner acceptance recorded (2026-10-25, 2026-10-29) | Owner: accepted |
 | R-02 | Efficiency below the ≥ 94 % target (estimate 94.1 % with evaluation copper) | 2 | 2 | 4 | Loss model and routed-copper estimate; DD-26 | T1.7 bench efficiency | Open until Gate G |
 | R-03 | TPS552882 CC pin not active-low (datasheet silent; sibling TPS552892 states active-low) | 1 | 2 | 2 | Firmware reads CC only while enabled; hardware ISP/ISN limit does not depend on it | T1.10 | Open until Gate G |
 | R-04 | Hold-up time (C16 10 µF) and AC2 detection do not give the intended < 0.5 s mode-change window | 2 | 1 | 2 | Firmware gap debounce and classification (holdup.c); long gaps reset to continuous | T1.8, T1.9 | Open until Gate G |

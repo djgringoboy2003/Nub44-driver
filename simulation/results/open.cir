@@ -47,7 +47,7 @@ VCH clamp_hi 0 2.5
 DCLO 0 comp DCL
 .model DCL D(Is=1e-12 N=0.05)
 * current command and inner PI current loop -> control variable u
-BIC icmd 0 V = min(max(V(comp)/0.055, -2), 12.043795620437956)
+BIC icmd 0 V = min(max(V(comp)/0.055, -2), 13.25301204819277)
 BERR err 0 V = V(icmd) - I(VIL1)
 BUI 0 uint I = (V(en_int) > 0.5) ? 0.006*V(err) : -1e-3*V(uint)
 CUI uint 0 1u
@@ -85,7 +85,7 @@ BCSA csa_i 0 V = min(max(50*(V(vout)-V(ldp)), 0), V(vin)-0.02)
 RCSA csa_i csf 4301.5
 CCSA csf 0 1n
 ECSB csout 0 csf 0 1
-R8 csout fb 6650
+R8 csout fb 8660
 R9 fb 0 10000
 
 .tran 1u 0.016 0 2u uic

@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-25T17:26:48",
+    "date": "2026-10-29T02:53:28",
     "ignored_checks": [
         {
             "description": "Tuning profile track geometries",
@@ -94,12 +94,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/VMCU] on F.Cu, length 0.9110 mm",
+                    "description": "Track [/VMCU] on F.Cu, length 0.4978 mm",
                     "pos": {
-                        "x": 101.543,
+                        "x": 100.632,
                         "y": 93.879
                     },
-                    "uuid": "d28cae3f-bf20-4d60-b8d9-a9bfa759440e"
+                    "uuid": "b561d0ce-655a-4289-be67-2b4815dd9444"
                 },
                 {
                     "description": "Pad 1 [/VMCU] of TP7 on B.Cu",
@@ -130,7 +130,7 @@
                         "x": 95.3693,
                         "y": 90.9117
                     },
-                    "uuid": "a2936ed9-6eb2-44a5-9f98-c40a16e46383"
+                    "uuid": "573b1b1a-b3b2-4734-9649-b7221e62281b"
                 }
             ],
             "severity": "error",
@@ -163,12 +163,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pad 2 [/VBAT] of D2 on F.Cu",
+                    "description": "Track [/VBAT] on F.Cu, length 0.4717 mm",
                     "pos": {
                         "x": 95.047,
-                        "y": 100.827
+                        "y": 101.2987
                     },
-                    "uuid": "3583bae4-1004-4834-8598-2cd235438cbb"
+                    "uuid": "df15d977-1dbe-4673-86e2-ee98d14ed306"
                 },
                 {
                     "description": "Pad 1 [/VBAT] of C2 on F.Cu",
@@ -186,12 +186,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/VBAT] on F.Cu, length 0.4717 mm",
+                    "description": "Track [/VBAT] on F.Cu, length 0.9564 mm",
                     "pos": {
-                        "x": 95.047,
-                        "y": 101.2987
+                        "x": 95.7233,
+                        "y": 101.975
                     },
-                    "uuid": "5587ae37-fc9f-486b-850d-ff2a93dcdf52"
+                    "uuid": "24f0130c-453d-4b66-941d-ad1e38e11f93"
                 },
                 {
                     "description": "Pad 1 [/VBAT] of R10 on F.Cu",
@@ -222,7 +222,7 @@
                         "x": 91.1,
                         "y": 98.15
                     },
-                    "uuid": "236516ef-6e84-447b-a4a9-b6dd991c25df"
+                    "uuid": "93442fef-167b-435d-a248-a9e740bcc4c7"
                 }
             ],
             "severity": "error",
@@ -286,12 +286,12 @@
                     "uuid": "83231aba-bd50-4467-aa94-ce7c61a0074b"
                 },
                 {
-                    "description": "Track [/ISN_K] on F.Cu, length 0.0141 mm",
+                    "description": "Pad 3 [/ISN_K] of RS1 on F.Cu",
                     "pos": {
                         "x": 104.98,
                         "y": 104.4
                     },
-                    "uuid": "992bd18e-4622-457d-86d2-4f0b6f13f068"
+                    "uuid": "3b2098f4-8be1-4bf6-aff8-802902000555"
                 }
             ],
             "severity": "error",
@@ -314,7 +314,7 @@
                         "x": 97.8,
                         "y": 103.4
                     },
-                    "uuid": "8b3de450-6e21-4559-8d02-831d0b3f43b0"
+                    "uuid": "f02d634c-ed18-4e3c-b913-e5609bfb12d5"
                 }
             ],
             "severity": "error",
@@ -444,7 +444,7 @@
                         "x": 103.131,
                         "y": 101.1067
                     },
-                    "uuid": "377ae5f8-d02a-4e03-b2d7-ac9ba23949c8"
+                    "uuid": "4510b860-3d0a-4071-82c6-b3868ce22e6d"
                 },
                 {
                     "description": "Pad 7 [/CS_OUT] of U3 on B.Cu",
@@ -492,7 +492,7 @@
                         "x": 106.25,
                         "y": 105.5
                     },
-                    "uuid": "bbe5ccb8-042f-4024-9b89-db36666d6f62"
+                    "uuid": "ec8d6d0e-9de0-4431-baac-c2ddcbfab1ff"
                 }
             ],
             "severity": "warning",
@@ -507,7 +507,7 @@
                         "x": 106.25,
                         "y": 104.5
                     },
-                    "uuid": "b4e8be6f-da09-411c-91c2-82efea685815"
+                    "uuid": "e4fd0568-4dad-4cf8-ab4d-7ff668092d3f"
                 }
             ],
             "severity": "warning",
@@ -522,7 +522,7 @@
                         "x": 96.8,
                         "y": 104.4
                     },
-                    "uuid": "3073934a-e5fd-45cf-9ddc-69dee584193a"
+                    "uuid": "3922de5e-4ccb-4498-9c64-7adee652d749"
                 }
             ],
             "severity": "warning",

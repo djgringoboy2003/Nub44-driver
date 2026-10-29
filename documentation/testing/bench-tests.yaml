@@ -52,18 +52,18 @@ tests:
     title: Soft start and overshoot
     gate_g: [evaluation-board, compact-22mm]
     quantities:
-      - {name: i_peak_a, unit: A, max: 4.4, prediction: {source: simulation, id: SIM-01, metric: peak_a}}
+      - {name: i_peak_a, unit: A, max: 4.95, prediction: {source: simulation, id: SIM-01, metric: peak_a}}
       - {name: ramp_ms, unit: ms, record: true}
   - id: T1.4
     title: Regulation accuracy over supply and dummy-load Vf
     gate_g: [evaluation-board, compact-22mm]
     quantities:
-      - {name: i_out_a, unit: A, range: [3.8, 4.2], prediction: {source: calculation, path: [setpoint, i_set_nominal_a]}}
+      - {name: i_out_a, unit: A, range: [4.275, 4.725], prediction: {source: calculation, path: [setpoint, i_set_nominal_a]}}
   - id: T1.5
     title: Regulation with Vf below Vbat (buck mode)
     gate_g: [evaluation-board, compact-22mm]
     quantities:
-      - {name: i_out_a, unit: A, range: [3.8, 4.2]}
+      - {name: i_out_a, unit: A, range: [4.275, 4.725]}
   - id: T1.6
     title: Laser-current ripple
     gate_g: [evaluation-board, compact-22mm]
@@ -138,7 +138,7 @@ tests:
       - {name: uvlo_off_v, unit: V, range: [2.745, 2.915], prediction: {source: calculation, path: [uvlo, v_off]}}
       - {name: uvlo_on_v, unit: V, range: [2.988, 3.172], prediction: {source: calculation, path: [uvlo, v_on]}}
   - id: T2.7
-    title: Thermal at 4 A continuous
+    title: Thermal at 4.5 A continuous
     gate_g: [evaluation-board, compact-22mm]
     quantities:
       - {name: t_u1_case_c, unit: C, record: true}

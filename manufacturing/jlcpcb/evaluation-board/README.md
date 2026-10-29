@@ -1,6 +1,6 @@
 # JLCPCB upload files: evaluation-board (DRAFT, review before ordering)
 
-Derived on 2026-10-27 by `automation/export/export_jlcpcb.py` from `manufacturing/pcbway/evaluation-board`, whose
+Derived on 2026-10-29 by `automation/export/export_jlcpcb.py` from `manufacturing/pcbway/evaluation-board`, whose
 export check passed. The Gerber and drill bytes are identical to the PCBWay package. No tool places an order.
 
 | Upload | File |

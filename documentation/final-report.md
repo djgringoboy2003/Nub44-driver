@@ -51,7 +51,7 @@ Other checks, all passing:
 
 - **Battery polarity:** centre spring = B+, ring = B−, marked on both boards' silkscreen (DD-12). T3.3 checks
   the host.
-- **Laser current:** 4.0 A kept; the diode-life risk is accepted (DD-13).
+- **Laser current:** 4.5 A since 2026-10-29 (DD-36; 4.0 A under DD-13 before); the diode-life risk is accepted.
 - **Efficiency:** ≥ 94 % accepted as a deviation from the brief's > 95 % (DD-26).
 - **Evaluation board first:** the compact board stays a draft until bench data exists (DD-27).
 

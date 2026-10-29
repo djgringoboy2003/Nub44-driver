@@ -1,8 +1,8 @@
 (export
 	(version "E")
 	(design
-		(source "C:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
-		(date "2026-10-25T17:26:22")
+		(source "E:\\NUBM44 driver\\hardware\\compact-22mm\\nubm44_driver.kicad_sch")
+		(date "2026-10-29T02:52:19")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -2387,12 +2387,12 @@
 		)
 		(comp
 			(ref "R3")
-			(value "27.4k")
+			(value "24.9k")
 			(footprint "Resistor_SMD:R_0201_0603Metric")
-			(description "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)")
+			(description "24.9 kOhm 1% 0402 ILIM (13.25 A typ avg, DD-36)")
 			(fields
 				(field
-					(name "MPN") "RC0201FR-0727K4L")
+					(name "MPN") "RC0201FR-0724K9L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
@@ -2403,7 +2403,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)")
+					(name "Description") "24.9 kOhm 1% 0402 ILIM (13.25 A typ avg, DD-36)")
 			)
 			(libsource
 				(lib "Device")
@@ -2412,7 +2412,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RC0201FR-0727K4L")
+				(value "RC0201FR-0724K9L")
 			)
 			(property
 				(name "Manufacturer")
@@ -2747,12 +2747,12 @@
 		)
 		(comp
 			(ref "R8")
-			(value "6.65k")
+			(value "8.66k")
 			(footprint "Resistor_SMD:R_0402_1005Metric")
-			(description "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)")
+			(description "8.66 kOhm 0.1% 0402 FB top; sets 4.5 A (DD-36; 4.0 A: 6.65k, 3.5 A: 4.53k, 3.0 A: 2.49k)")
 			(fields
 				(field
-					(name "MPN") "RT0402BRD076K65L")
+					(name "MPN") "RT0402BRD078K66L")
 				(field
 					(name "Manufacturer") "Yageo")
 				(field
@@ -2763,7 +2763,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)")
+					(name "Description") "8.66 kOhm 0.1% 0402 FB top; sets 4.5 A (DD-36; 4.0 A: 6.65k, 3.5 A: 4.53k, 3.0 A: 2.49k)")
 			)
 			(libsource
 				(lib "Device")
@@ -2772,7 +2772,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "RT0402BRD076K65L")
+				(value "RT0402BRD078K66L")
 			)
 			(property
 				(name "Manufacturer")

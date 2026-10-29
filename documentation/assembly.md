@@ -14,7 +14,8 @@ No manufacturing order is automated; the owner places any order manually.
   passives and centre-pad bridges need assembly review (DD-16/DD-17), and the spring and host contact are
   owner-specific.
 - **Setpoint:** the circuit setpoint is the source value in engineering/design/parameters.yaml. The owner
-  kept 4.0 A and accepts the diode-life risk (REQ-OUT-01/DD-13). An alternate setpoint needs the documented
+  set 4.5 A (R8 8.66 kΩ, R3 24.9 kΩ) and accepts the diode-life risk (REQ-OUT-01/DD-36; was 4.0 A, DD-13).
+  An alternate setpoint (3.0/3.5/4.0 A: R8 2.49/4.53/6.65 kΩ) needs the documented
   divider change and regenerated calculation and schematic evidence.
 
 ## Before fabrication or assembly

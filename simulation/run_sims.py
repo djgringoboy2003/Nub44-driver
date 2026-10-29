@@ -42,6 +42,8 @@ from nubm44 import paths  # noqa: E402
 
 OUT = ROOT / "simulation" / "results"
 P = yaml.safe_load((ROOT / "engineering/design/parameters.yaml").read_text(encoding="utf-8"))
+I_SET = P["current"]["i_set_a"]      # REQ-OUT-01 setpoint (DD-36: 4.5 A)
+I_PEAK = 1.1 * I_SET                 # REQ-OUT-05: normal transients within +10 %
 cv, cm, comp = P["converter"], P["components"], P["compensation"]
 K_DIV = cm["fb_divider"]["r_bot_ohm"] / (cm["fb_divider"]["r_top_ohm"] + cm["fb_divider"]["r_bot_ohm"])
 ILIM = 330000 / cv["r_ilim_ohm"]
@@ -214,8 +216,8 @@ def startup_nominal():
     over = 100 * (il.max() - i_ss) / i_ss
     return {"id": "SIM-01", "name": "Power-on, nominal battery 3.7 V, typical diode",
             "metrics": {"steady_current_a": i_ss, "overshoot_pct": over, "peak_a": float(il.max())},
-            "limit": "overshoot <= 10 % (REQ-OUT-05), steady current within 5 % of 4.0 A",
-            "pass": over <= 10 and abs(i_ss - 4.0) / 4.0 <= 0.05, "data": d, "il": il}
+            "limit": f"overshoot <= 10 % (REQ-OUT-05), steady current within 5 % of {I_SET:g} A",
+            "pass": over <= 10 and abs(i_ss - I_SET) / I_SET <= 0.05, "data": d, "il": il}
 
 
 @test
@@ -227,7 +229,7 @@ def startup_low_battery():
     return {"id": "SIM-02", "name": "Power-on at 3.15 V (just above the 3.08 V hardware UVLO), maximum-Vf diode",
             "metrics": {"steady_current_a": i_ss, "overshoot_pct": over, "peak_inductor_a": float(d["iL"].max())},
             "limit": "overshoot <= 10 %, current within 5 %, peak inductor current < ILIM min 10.2 A",
-            "pass": over <= 10 and abs(i_ss - 4.0) / 4.0 <= 0.05 and d["iL"].max() < 10.2, "data": d, "il": il}
+            "pass": over <= 10 and abs(i_ss - I_SET) / I_SET <= 0.05 and d["iL"].max() < 10.2, "data": d, "il": il}
 
 
 @test
@@ -243,7 +245,7 @@ def regulation_corners():
             d = run(n, deck)
             i_ss = settle_value(d["t"], laser_current_true(d, lz), 0.0065)
             res[f"{vb}V_{lz}"] = round(i_ss, 4)
-            ok &= abs(i_ss - 4.0) / 4.0 <= 0.02
+            ok &= abs(i_ss - I_SET) / I_SET <= 0.02
     return {"id": "SIM-03", "name": "Current regulation across battery 3.0-4.2 V and diode Vf corners (incl. Vf below Vbat)",
             "metrics": res, "limit": "model-level regulation within 2 % at every corner (tolerances excluded)",
             "pass": ok}
@@ -257,7 +259,7 @@ def battery_sag():
     d = run("battery_step", deck)
     il = laser_current_true(d)
     m = d["t"] > 0.009
-    dev = 100 * float(np.max(np.abs(il[m] - 4.0))) / 4.0
+    dev = 100 * float(np.max(np.abs(il[m] - I_SET))) / I_SET
     return {"id": "SIM-04", "name": "Input voltage reduction (4.0 -> 3.2 V over 1 ms, 40 mOhm source)",
             "metrics": {"max_current_deviation_pct": dev}, "limit": "deviation <= 5 %", "pass": dev <= 5, "data": d, "il": il}
 
@@ -270,7 +272,7 @@ def load_step():
     d = run("load_step", netlist("load_step", 3.7, tstop=0.014, laser_r_override=load))
     i = (d["csout"] / (cm["csa"]["gain"] * cm["shunt"]["r_ohm"]))
     m = d["t"] > 0.009
-    dev = 100 * float(np.max(np.abs(i[m] - 4.0))) / 4.0
+    dev = 100 * float(np.max(np.abs(i[m] - I_SET))) / I_SET
     return {"id": "SIM-05", "name": "Load variation: diode Vf drops 0.15 V over 2 ms (faster than diode thermal time constants)",
             "metrics": {"max_current_deviation_pct": dev}, "limit": "deviation <= 5 %", "pass": dev <= 5, "data": d, "il": i}
 
@@ -286,8 +288,8 @@ def flash_mode():
     t_off = float(d["t"][off][np.argmax(il[off] < 0.05)] - 0.03001) if (il[off] < 0.05).any() else float("nan")
     return {"id": "SIM-06", "name": "Flash transitions at full battery 4.2 V with lowest-Vf diode (Vf < Vbat region)",
             "metrics": {"peak_current_a": peak, "turn_off_to_50mA_s": t_off},
-            "limit": "peak <= 4.4 A on every turn-on; current < 50 mA within 2 ms of disable",
-            "pass": peak <= 4.4 and t_off < 0.002, "data": d, "il": il}
+            "limit": f"peak <= {I_PEAK:.2f} A on every turn-on; current < 50 mA within 2 ms of disable",
+            "pass": peak <= I_PEAK and t_off < 0.002, "data": d, "il": il}
 
 
 @test

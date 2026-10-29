@@ -37,7 +37,7 @@ browser). Agents start with [AGENTS.md](AGENTS.md); people with the
 | Item | Value |
 |---|---|
 | Input | 1 × Li-ion, 2.83–4.2 V at the board (18650/21700, ≥ 15 A CDR recommended) |
-| Output | Constant current, 4.0 A (owner decision DD-13; 3.0 / 3.5 A by one resistor), compliance about 0.8–22 V |
+| Output | Constant current, 4.5 A (owner decision DD-36; 3.0 / 3.5 / 4.0 A by one resistor), compliance about 0.8–22 V |
 | Converter | TI TPS552882 4-switch buck-boost, 595 kHz, 1.0 µH |
 | Current regulation | 10 mΩ high-side shunt, INA186A2, ±3.6 % worst case (calculated) |
 | Protection | Reverse polarity (P-FET), hardware UVLO, 4.8–5.2 A hardware current ceiling, hiccup short protection, open-load trip, interlock, default-off enable, thermal monitoring |

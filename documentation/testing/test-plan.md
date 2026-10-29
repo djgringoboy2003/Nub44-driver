@@ -49,8 +49,8 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 |---|---|---|---|---|
 | T1.1 | First power-up, 3.7 V, 1 A limit, laser output open | Measure supply current; program firmware | Idle current < 2 mA; no output voltage on VOUT | REQ-SAFE-03 |
 | T1.2 | Default-off / emission delay | Dummy load connected, interlock closed; scope laser current from power-up | Current < 10 mA for ≥ 2.0 s, then a ramp | REQ-SAFE-03, firmware |
-| T1.3 | Soft start and overshoot | Scope laser current at turn-on: 3.15 V, 3.7 V, 4.2 V | Peak ≤ 4.4 A (≤ 10 % overshoot); ramp ≈ 4 ms | REQ-OUT-05 (SIM-01/02) |
-| T1.4 | Regulation accuracy | Steady current at 3.0/3.3/3.7/4.0/4.2 V × dummy loads with low/high Vf | 4.0 A ± 5 % (design ± 3.6 %) | REQ-OUT-02/03 (SIM-03) |
+| T1.3 | Soft start and overshoot | Scope laser current at turn-on: 3.15 V, 3.7 V, 4.2 V | Peak ≤ 4.95 A (≤ 10 % overshoot of 4.5 A, DD-36); ramp ≈ 4 ms | REQ-OUT-05 (SIM-01/02) |
+| T1.4 | Regulation accuracy | Steady current at 3.0/3.3/3.7/4.0/4.2 V × dummy loads with low/high Vf | 4.5 A ± 5 %, i.e. 4.275–4.725 A (design ± 3.6 %, DD-36) | REQ-OUT-02/03 (SIM-03) |
 | T1.5 | Vf below Vbat (buck mode) | Dummy load with Vf ≈ 3.8 V at 4 A, supply 4.2 V | Current still regulated | REQ-OUT-02 |
 | T1.6 | Ripple | Laser-current ripple at 3.0 V and 4.2 V | ≤ 10 % p-p (prediction 8.9 % at 2.83 V) | power-stage calc |
 | T1.7 | Efficiency | 4-wire V and I at the board input and output: 3.0, 3.7, 4.0 V | Record; target ≥ 94 % at 4.0 V (owner deviation from > 95 %, DD-26) (predicted 94.6 % by the loss model, about 94.1 % with the evaluation-board copper) and ≥ 86 % at 3.0 V (predicted 91.3 %) | REQ-PWR-02/03 |
@@ -91,7 +91,7 @@ Gate G closes only when these tests have been run on assembled prototypes and th
 |---|---|---|---|
 | T4.1 | Diode check | Confirm the NUBM44 case is isolated from both pins (DMM) | Open circuit case–pin |
 | T4.2 | First light at reduced current | Build with R8 (R_FB_TOP) = 2.49 kΩ for 3.0 A first | Stable output; case temperature logged |
-| T4.3 | Full current | 4.0 A (owner decision, DD-13; R8 = 6.65 kΩ) with the diode in a copper module | Case < 65 °C at the intended duty cycle; optical power recorded |
+| T4.3 | Full current | 4.5 A (owner decision, DD-36; R8 = 8.66 kΩ) with the diode in a copper module | Case < 65 °C at the intended duty cycle; optical power recorded |
 
 ## 4. Recording
 

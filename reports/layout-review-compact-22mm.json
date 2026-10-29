@@ -2,9 +2,9 @@
  "variant": "compact-22mm",
  "inputs": {
   "board": "hardware/compact-22mm/nubm44_driver.kicad_pcb",
-  "board_sha256": "5a490259d28300ed58a4bdc64fcdcef5467a80632929468183d222dfdf87b443",
-  "parameters_sha256": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220",
-  "calculations_sha256": "0250f5ad9cf0588ad379f9964789aed29a77c943a5152b41d73642da6d97fba6"
+  "board_sha256": "1729aa309fa05cc29bff613089875db203bdfc66ac9c826309d9d25fcdb01f35",
+  "parameters_sha256": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb",
+  "calculations_sha256": "0f71f20d5792bd99c961a4917a97fb74db651311ea7c8f067571d237c11ab7fd"
  },
  "assumptions": {
   "copper": "1.0 oz (34.8 um) on every layer (DD-14 target; finished thickness UNKNOWN)",
@@ -22,29 +22,29 @@
    "corner": "max_cold",
    "v_in": 2.83,
    "region": "boost",
-   "i_in": 7.392941569132434,
-   "i_l_rms": 7.418463164285104,
-   "i_out": 4.0,
-   "i_pgnd": 3.392941569132434,
-   "p_laser": 18.9,
-   "p_in": 20.92202464064479,
-   "efficiency": 0.9033542558440236,
-   "model_input_path_w": 0.5085100977839555,
-   "model_output_path_w": 0.032
+   "i_in": 8.575567447475713,
+   "i_l_rms": 8.598981836383853,
+   "i_out": 4.5,
+   "i_pgnd": 4.075567447475713,
+   "p_laser": 21.645,
+   "p_in": 24.26885587635627,
+   "efficiency": 0.8918838246959743,
+   "model_input_path_w": 0.6842121280190384,
+   "model_output_path_w": 0.0405
   },
   "nominal": {
    "corner": "typ_25C",
    "v_in": 4.0,
    "region": "boost",
-   "i_in": 4.683453097180914,
-   "i_l_rms": 4.691849572377144,
-   "i_out": 4.0,
-   "i_pgnd": 0.6834530971809141,
-   "p_laser": 17.72,
-   "p_in": 18.733812388723656,
-   "efficiency": 0.9458832848494898,
-   "model_input_path_w": 0.1740521057085148,
-   "model_output_path_w": 0.032
+   "i_in": 5.397762061906194,
+   "i_l_rms": 5.407198885224557,
+   "i_out": 4.5,
+   "i_pgnd": 0.8977620619061941,
+   "p_laser": 20.3175,
+   "p_in": 21.591048247624776,
+   "efficiency": 0.9410149876458694,
+   "model_input_path_w": 0.23119285298715475,
+   "model_output_path_w": 0.0405
   }
  },
  "paths": [
@@ -67,26 +67,26 @@
    ],
    "neck_layer": "B.Cu",
    "worst": {
-    "current_a": 7.393,
-    "loss_mw": 39.37,
-    "neck_k_a_per_mm": 3.83,
-    "k_max_a_per_mm": 5.11,
+    "current_a": 8.576,
+    "loss_mw": 52.98,
+    "neck_k_a_per_mm": 4.44,
+    "k_max_a_per_mm": 5.93,
     "equivalent_width_mm": 1.932,
-    "screen_width_mm": 3.133,
-    "screen_k_a_per_mm": 2.36,
-    "neck_vs_screen": 1.62,
+    "screen_width_mm": 3.845,
+    "screen_k_a_per_mm": 2.23,
+    "neck_vs_screen": 1.99,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    },
    "nominal": {
-    "current_a": 4.683,
-    "loss_mw": 15.8,
-    "neck_k_a_per_mm": 2.42,
-    "k_max_a_per_mm": 3.24,
+    "current_a": 5.398,
+    "loss_mw": 20.99,
+    "neck_k_a_per_mm": 2.79,
+    "k_max_a_per_mm": 3.73,
     "equivalent_width_mm": 1.932,
-    "screen_width_mm": 1.669,
-    "screen_k_a_per_mm": 2.81,
-    "neck_vs_screen": 0.86,
+    "screen_width_mm": 2.03,
+    "screen_k_a_per_mm": 2.66,
+    "neck_vs_screen": 1.05,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    }
@@ -112,28 +112,28 @@
    ],
    "neck_layer": "B.Cu",
    "worst": {
-    "current_a": 7.393,
-    "loss_mw": 32.24,
-    "neck_k_a_per_mm": 1.33,
-    "k_max_a_per_mm": 1.63,
-    "equivalent_width_mm": 5.571,
-    "screen_width_mm": 3.133,
-    "screen_k_a_per_mm": 2.36,
-    "neck_vs_screen": 0.56,
-    "max_via_current_a": 1.412,
-    "vias_over_screen": 2
+    "current_a": 8.576,
+    "loss_mw": 43.37,
+    "neck_k_a_per_mm": 1.54,
+    "k_max_a_per_mm": 1.89,
+    "equivalent_width_mm": 5.57,
+    "screen_width_mm": 3.845,
+    "screen_k_a_per_mm": 2.23,
+    "neck_vs_screen": 0.69,
+    "max_via_current_a": 1.638,
+    "vias_over_screen": 4
    },
    "nominal": {
-    "current_a": 4.683,
-    "loss_mw": 12.94,
-    "neck_k_a_per_mm": 0.84,
-    "k_max_a_per_mm": 1.03,
-    "equivalent_width_mm": 5.571,
-    "screen_width_mm": 1.669,
-    "screen_k_a_per_mm": 2.81,
-    "neck_vs_screen": 0.3,
-    "max_via_current_a": 0.895,
-    "vias_over_screen": 0
+    "current_a": 5.398,
+    "loss_mw": 17.18,
+    "neck_k_a_per_mm": 0.97,
+    "k_max_a_per_mm": 1.19,
+    "equivalent_width_mm": 5.57,
+    "screen_width_mm": 2.03,
+    "screen_k_a_per_mm": 2.66,
+    "neck_vs_screen": 0.36,
+    "max_via_current_a": 1.031,
+    "vias_over_screen": 2
    }
   },
   {
@@ -157,27 +157,27 @@
    ],
    "neck_layer": "F.Cu",
    "worst": {
-    "current_a": 7.418,
-    "loss_mw": 19.96,
-    "neck_k_a_per_mm": 3.58,
-    "k_max_a_per_mm": 3.94,
+    "current_a": 8.599,
+    "loss_mw": 26.82,
+    "neck_k_a_per_mm": 4.15,
+    "k_max_a_per_mm": 4.57,
     "equivalent_width_mm": 2.071,
-    "screen_width_mm": 3.148,
-    "screen_k_a_per_mm": 2.36,
-    "neck_vs_screen": 1.52,
-    "max_via_current_a": 0.036,
+    "screen_width_mm": 3.859,
+    "screen_k_a_per_mm": 2.23,
+    "neck_vs_screen": 1.86,
+    "max_via_current_a": 0.041,
     "vias_over_screen": 0
    },
    "nominal": {
-    "current_a": 4.692,
-    "loss_mw": 7.98,
-    "neck_k_a_per_mm": 2.27,
-    "k_max_a_per_mm": 2.49,
+    "current_a": 5.407,
+    "loss_mw": 10.61,
+    "neck_k_a_per_mm": 2.61,
+    "k_max_a_per_mm": 2.87,
     "equivalent_width_mm": 2.071,
-    "screen_width_mm": 1.673,
-    "screen_k_a_per_mm": 2.8,
-    "neck_vs_screen": 0.81,
-    "max_via_current_a": 0.023,
+    "screen_width_mm": 2.035,
+    "screen_k_a_per_mm": 2.66,
+    "neck_vs_screen": 0.98,
+    "max_via_current_a": 0.026,
     "vias_over_screen": 0
    }
   },
@@ -201,26 +201,26 @@
    ],
    "neck_layer": "F.Cu",
    "worst": {
-    "current_a": 7.418,
-    "loss_mw": 80.87,
-    "neck_k_a_per_mm": 11.43,
-    "k_max_a_per_mm": 13.39,
+    "current_a": 8.599,
+    "loss_mw": 108.65,
+    "neck_k_a_per_mm": 13.25,
+    "k_max_a_per_mm": 15.52,
     "equivalent_width_mm": 0.649,
-    "screen_width_mm": 3.148,
-    "screen_k_a_per_mm": 2.36,
-    "neck_vs_screen": 4.85,
+    "screen_width_mm": 3.859,
+    "screen_k_a_per_mm": 2.23,
+    "neck_vs_screen": 5.95,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    },
    "nominal": {
-    "current_a": 4.692,
-    "loss_mw": 32.35,
-    "neck_k_a_per_mm": 7.23,
-    "k_max_a_per_mm": 8.47,
+    "current_a": 5.407,
+    "loss_mw": 42.96,
+    "neck_k_a_per_mm": 8.33,
+    "k_max_a_per_mm": 9.76,
     "equivalent_width_mm": 0.649,
-    "screen_width_mm": 1.673,
-    "screen_k_a_per_mm": 2.8,
-    "neck_vs_screen": 2.58,
+    "screen_width_mm": 2.035,
+    "screen_k_a_per_mm": 2.66,
+    "neck_vs_screen": 3.14,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    }
@@ -237,35 +237,35 @@
      "RS1.1"
     ]
    },
-   "r_mohm_25c": 1.459,
-   "r_mohm_75c": 1.746,
+   "r_mohm_25c": 1.452,
+   "r_mohm_75c": 1.738,
    "neck_location_mm": [
-    1.45,
-    5.35
+    1.4,
+    5.2
    ],
    "neck_layer": "F.Cu",
    "worst": {
-    "current_a": 4.0,
-    "loss_mw": 27.93,
-    "neck_k_a_per_mm": 4.94,
-    "k_max_a_per_mm": 9.17,
-    "equivalent_width_mm": 0.81,
-    "screen_width_mm": 1.343,
-    "screen_k_a_per_mm": 2.98,
-    "neck_vs_screen": 1.66,
-    "max_via_current_a": 0.473,
+    "current_a": 4.5,
+    "loss_mw": 35.19,
+    "neck_k_a_per_mm": 5.47,
+    "k_max_a_per_mm": 9.69,
+    "equivalent_width_mm": 0.822,
+    "screen_width_mm": 1.58,
+    "screen_k_a_per_mm": 2.85,
+    "neck_vs_screen": 1.92,
+    "max_via_current_a": 0.531,
     "vias_over_screen": 0
    },
    "nominal": {
-    "current_a": 4.0,
-    "loss_mw": 27.93,
-    "neck_k_a_per_mm": 4.94,
-    "k_max_a_per_mm": 9.17,
-    "equivalent_width_mm": 0.81,
-    "screen_width_mm": 1.343,
-    "screen_k_a_per_mm": 2.98,
-    "neck_vs_screen": 1.66,
-    "max_via_current_a": 0.473,
+    "current_a": 4.5,
+    "loss_mw": 35.19,
+    "neck_k_a_per_mm": 5.47,
+    "k_max_a_per_mm": 9.69,
+    "equivalent_width_mm": 0.822,
+    "screen_width_mm": 1.58,
+    "screen_k_a_per_mm": 2.85,
+    "neck_vs_screen": 1.92,
+    "max_via_current_a": 0.531,
     "vias_over_screen": 0
    }
   },
@@ -288,26 +288,26 @@
    ],
    "neck_layer": "F.Cu",
    "worst": {
-    "current_a": 4.0,
-    "loss_mw": 8.99,
-    "neck_k_a_per_mm": 2.89,
-    "k_max_a_per_mm": 3.7,
+    "current_a": 4.5,
+    "loss_mw": 11.38,
+    "neck_k_a_per_mm": 3.25,
+    "k_max_a_per_mm": 4.16,
     "equivalent_width_mm": 1.384,
-    "screen_width_mm": 1.343,
-    "screen_k_a_per_mm": 2.98,
-    "neck_vs_screen": 0.97,
+    "screen_width_mm": 1.58,
+    "screen_k_a_per_mm": 2.85,
+    "neck_vs_screen": 1.14,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    },
    "nominal": {
-    "current_a": 4.0,
-    "loss_mw": 8.99,
-    "neck_k_a_per_mm": 2.89,
-    "k_max_a_per_mm": 3.7,
+    "current_a": 4.5,
+    "loss_mw": 11.38,
+    "neck_k_a_per_mm": 3.25,
+    "k_max_a_per_mm": 4.16,
     "equivalent_width_mm": 1.384,
-    "screen_width_mm": 1.343,
-    "screen_k_a_per_mm": 2.98,
-    "neck_vs_screen": 0.97,
+    "screen_width_mm": 1.58,
+    "screen_k_a_per_mm": 2.85,
+    "neck_vs_screen": 1.14,
     "max_via_current_a": 0.0,
     "vias_over_screen": 0
    }
@@ -318,79 +318,79 @@
   "net": "GND",
   "r_mohm_25c": {
    "laser_return": 0.087,
-   "converter_pgnd": 2.722
+   "converter_pgnd": 2.723
   },
   "isolated_quiet_pads": [],
   "worst": {
-   "i_laser_return_a": 4.0,
-   "i_pgnd_a": 3.393,
-   "loss_mw": 37.78,
-   "laser_return_drop_mv": 0.347,
-   "pgnd_drop_mv": 9.237,
+   "i_laser_return_a": 4.5,
+   "i_pgnd_a": 4.076,
+   "loss_mw": 54.2,
+   "laser_return_drop_mv": 0.391,
+   "pgnd_drop_mv": 11.098,
    "quiet_offsets_uv_vs_U1.10": {
     "U1.10": 0.0,
-    "U1.7": -8873.4,
-    "U1.15": -9013.0,
-    "C7.2": -8995.1,
-    "R9.2": -9014.4,
-    "R2.2": -8432.4,
-    "R3.2": -8987.9,
-    "C8.2": -8930.9,
-    "C9.2": -9014.4,
-    "U2.1": -9016.5,
-    "U2.2": -9016.7,
-    "C15.2": -9040.8,
-    "R6.2": -8989.3,
-    "R11.2": -9241.1,
-    "R13.2": -9248.3,
-    "U3.3": -9126.6
+    "U1.7": -10661.1,
+    "U1.15": -10831.5,
+    "C7.2": -10819.8,
+    "R9.2": -10832.9,
+    "R2.2": -10130.3,
+    "R3.2": -10800.4,
+    "C8.2": -10730.5,
+    "C9.2": -10832.9,
+    "U2.1": -10845.8,
+    "U2.2": -10845.5,
+    "C15.2": -10871.6,
+    "R6.2": -10799.4,
+    "R11.2": -11100.6,
+    "R13.2": -11109.2,
+    "U3.3": -10965.2
    },
-   "neck_k_a_per_mm": 2.11,
+   "neck_k_a_per_mm": 2.53,
    "setpoint_error": {
-    "delta_i_ma": 30.022,
-    "delta_pct": 0.7506
+    "delta_i_ma": 40.454,
+    "delta_pct": 0.899
    }
   },
   "nominal": {
-   "i_laser_return_a": 4.0,
-   "i_pgnd_a": 0.683,
-   "loss_mw": 3.15,
-   "laser_return_drop_mv": 0.347,
-   "pgnd_drop_mv": 1.861,
+   "i_laser_return_a": 4.5,
+   "i_pgnd_a": 0.898,
+   "loss_mw": 4.67,
+   "laser_return_drop_mv": 0.391,
+   "pgnd_drop_mv": 2.445,
    "quiet_offsets_uv_vs_U1.10": {
     "U1.10": 0.0,
-    "U1.7": -1783.1,
-    "U1.15": -1782.5,
-    "C7.2": -1680.0,
-    "R9.2": -1786.2,
-    "R2.2": -1699.5,
-    "R3.2": -1787.9,
-    "C8.2": -1791.2,
-    "C9.2": -1786.2,
-    "U2.1": -1680.5,
-    "U2.2": -1686.4,
-    "C15.2": -1720.5,
-    "R6.2": -1816.9,
-    "R11.2": -1882.5,
-    "R13.2": -1884.6,
-    "U3.3": -1836.0
+    "U1.7": -2343.7,
+    "U1.15": -2349.7,
+    "C7.2": -2238.5,
+    "R9.2": -2353.8,
+    "R2.2": -2232.5,
+    "R3.2": -2354.4,
+    "C8.2": -2355.2,
+    "C9.2": -2353.8,
+    "U2.1": -2240.0,
+    "U2.2": -2246.4,
+    "C15.2": -2284.2,
+    "R6.2": -2385.7,
+    "R11.2": -2468.4,
+    "R13.2": -2471.0,
+    "U3.3": -2412.7
    },
-   "neck_k_a_per_mm": 0.49,
+   "neck_k_a_per_mm": 0.56,
    "setpoint_error": {
-    "delta_i_ma": 5.737,
-    "delta_pct": 0.1434
+    "delta_i_ma": 8.557,
+    "delta_pct": 0.1902
    }
   }
  },
  "copper_vs_model": {
-  "cad_input_copper_w": 0.0319,
-  "model_input_copper_w": 0.0329,
-  "cad_output_copper_w": 0.0369,
-  "model_output_copper_w": 0.032,
-  "cad_switch_node_copper_w": 0.0403,
-  "delta_w": 0.0442,
-  "model_efficiency_pct": 94.588,
-  "efficiency_with_cad_copper_pct": 94.365
+  "cad_input_copper_w": 0.0428,
+  "model_input_copper_w": 0.0437,
+  "cad_output_copper_w": 0.0466,
+  "model_output_copper_w": 0.0405,
+  "cad_switch_node_copper_w": 0.0536,
+  "delta_w": 0.0588,
+  "model_efficiency_pct": 94.101,
+  "efficiency_with_cad_copper_pct": 93.846
  },
  "hot_loops": {
   "buck_input": [
@@ -495,7 +495,7 @@
     "In2.Cu"
    ],
    "min_width_mm": 0.2,
-   "loop_area_mm2": 15.0,
+   "loop_area_mm2": 14.89,
    "max_return_distance_mm": 2.03,
    "return_path_top_mm": 7.3,
    "return_path_any_layer_mm": 7.3
@@ -716,54 +716,59 @@
   }
  },
  "switch_node_area_mm2": {
-  "SW1": {
-   "F.Cu": 14.285,
-   "B.Cu": 8.374
-  },
   "SW2": {
    "F.Cu": 9.356
+  },
+  "SW1": {
+   "F.Cu": 14.115,
+   "B.Cu": 8.458
   }
  },
  "findings": [
   {
    "level": "REVIEW",
    "id": "NECK-BAT_SPRING",
-   "text": "BAT_SPRING: 3.83 A/mm over the hottest 0.25 mm2 at 7.393 A (equivalent width 1.932 mm) exceeds the IPC-2221 20 K long-trace screen of 2.36 A/mm (3.133 mm) by x1.62 at [-1.9, -4.1] on B.Cu."
+   "text": "BAT_SPRING: 4.44 A/mm over the hottest 0.25 mm2 at 8.576 A (equivalent width 1.932 mm) exceeds the IPC-2221 20 K long-trace screen of 2.23 A/mm (3.845 mm) by x1.99 at [-1.9, -4.1] on B.Cu."
   },
   {
    "level": "REVIEW",
    "id": "VIA-VBAT",
-   "text": "VBAT: 2 via barrel segment(s) carry more than 1.0 A (max 1.412 A)."
+   "text": "VBAT: 4 via barrel segment(s) carry more than 1.0 A (max 1.638 A)."
   },
   {
    "level": "REVIEW",
    "id": "NECK-SW1",
-   "text": "SW1: 3.58 A/mm over the hottest 0.25 mm2 at 7.418 A (equivalent width 2.071 mm) exceeds the IPC-2221 20 K long-trace screen of 2.36 A/mm (3.148 mm) by x1.52 at [-1.15, -4.9] on F.Cu."
+   "text": "SW1: 4.15 A/mm over the hottest 0.25 mm2 at 8.599 A (equivalent width 2.071 mm) exceeds the IPC-2221 20 K long-trace screen of 2.23 A/mm (3.859 mm) by x1.86 at [-1.15, -4.9] on F.Cu."
   },
   {
    "level": "REVIEW",
    "id": "NECK-SW2",
-   "text": "SW2: 11.43 A/mm over the hottest 0.25 mm2 at 7.418 A (equivalent width 0.649 mm) exceeds the IPC-2221 20 K long-trace screen of 2.36 A/mm (3.148 mm) by x4.85 at [0.7, 0.7] on F.Cu."
+   "text": "SW2: 13.25 A/mm over the hottest 0.25 mm2 at 8.599 A (equivalent width 0.649 mm) exceeds the IPC-2221 20 K long-trace screen of 2.23 A/mm (3.859 mm) by x5.95 at [0.7, 0.7] on F.Cu."
   },
   {
    "level": "REVIEW",
    "id": "NECK-VOUT",
-   "text": "VOUT: 4.94 A/mm over the hottest 0.25 mm2 at 4.0 A (equivalent width 0.81 mm) exceeds the IPC-2221 20 K long-trace screen of 2.98 A/mm (1.343 mm) by x1.66 at [1.45, 5.35] on F.Cu."
+   "text": "VOUT: 5.47 A/mm over the hottest 0.25 mm2 at 4.5 A (equivalent width 0.822 mm) exceeds the IPC-2221 20 K long-trace screen of 2.85 A/mm (1.58 mm) by x1.92 at [1.4, 5.2] on F.Cu."
+  },
+  {
+   "level": "REVIEW",
+   "id": "NECK-LD_P",
+   "text": "LD_P: 3.25 A/mm over the hottest 0.25 mm2 at 4.5 A (equivalent width 1.384 mm) exceeds the IPC-2221 20 K long-trace screen of 2.85 A/mm (1.58 mm) by x1.14 at [5.95, 2.55] on F.Cu."
   },
   {
    "level": "REVIEW",
    "id": "COPPER-LOSS",
-   "text": "Routed copper at 75 C dissipates 44 mW more than the loss model allows at the 4.0 V nominal point (switch-node copper is not in the model); estimated efficiency 94.588 % -> 94.365 %."
+   "text": "Routed copper at 75 C dissipates 59 mW more than the loss model allows at the 4.0 V nominal point (switch-node copper is not in the model); estimated efficiency 94.101 % -> 93.846 %."
   },
   {
    "level": "REVIEW",
    "id": "GND-OFFSET",
-   "text": "DC ground offsets shift the regulated current by 30.022 mA (0.7506 %)."
+   "text": "DC ground offsets shift the regulated current by 40.454 mA (0.899 %)."
   },
   {
    "level": "REVIEW",
    "id": "DRIVE-DR1H",
-   "text": "DR1H (buck high-side gate) changes layer through 2 via(s); route 15.5 mm for a 8.39 mm pad spacing, loop-area estimate 15.0 mm2 against SW1."
+   "text": "DR1H (buck high-side gate) changes layer through 2 via(s); route 15.5 mm for a 8.39 mm pad spacing, loop-area estimate 14.89 mm2 against SW1."
   },
   {
    "level": "REVIEW",

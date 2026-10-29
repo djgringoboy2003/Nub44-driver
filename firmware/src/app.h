@@ -24,7 +24,7 @@
 #define APP_VBAT_WARN_MV        3100u   /* loaded: warning indication */
 #define APP_VBAT_CUTOFF_MV      2900u   /* loaded: latch off */
 #define APP_VBAT_CUTOFF_MS      200u
-#define APP_I_SET_MA            4000u
+#define APP_I_SET_MA            4500u   /* DD-36: 4.5 A setpoint (was 4.0 A) */
 #define APP_I_TOL_PCT           15u     /* regulation fault window (hardware accuracy is +-3.6 %) */
 #define APP_I_FAULT_MS          50u
 #define APP_OPEN_VOUT_MV        5000u   /* open load: VOUT high while current is low */

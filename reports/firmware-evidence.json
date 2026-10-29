@@ -1,11 +1,11 @@
 {
  "schema": "nubm44-firmware-evidence.v1",
- "generated_utc": "2026-10-28T22:05:32.069981+00:00",
+ "generated_utc": "2026-10-29T02:51:44.597325+00:00",
  "evidence_class": "SOFTWARE (host tests and a compiler build; not hardware verification)",
  "sources": {
   "firmware/build.py": "3f405b6c0b4c0414222b47abb4b2ddac1566085290770df2bf77f7ac05a6798e",
   "firmware/src/app.c": "837368f5a5377530bd0c0e8554fc30f680ef61161f4322e771b3cf667924ae66",
-  "firmware/src/app.h": "3135e7b7ec87bf6b7bade379c5bc9c25f2c649b9fccbc6594082e8f76f0f6c18",
+  "firmware/src/app.h": "fd7af68772ad2d8ae56e6566397a40fa6d910252c19eb8246457991fc99e1da8",
   "firmware/src/conv.c": "ccf3f64cf226d9b88890e660dc0f6edfc91c659d6574b02deb7bd5a447da5bee",
   "firmware/src/conv.h": "101576c309ea4a2d7f0e626a5917f6be6d924eea2225bfdb6eefd5b85a364a2e",
   "firmware/src/fuses.h": "6cadd80c5b49e443d6c2d5b37f29640affcea6881a230bf0f37dd1ed468a2762",
@@ -22,9 +22,9 @@
   "firmware/tests/mock/avr/interrupt.h": "a1e919e2d24351c0229b868db1355d795fe531aac25235daa5746d359f58d54f",
   "firmware/tests/mock/avr/io.h": "9a6d13b90083937549c81d1f2d49a3015872511e50b1af369075527a0dff3ebb",
   "firmware/tests/mock/avr/sleep.h": "8b814f26c090d505abd81d7892f3bed4fca8ba622bc139e96ed96fb36a6c1bd4",
-  "firmware/tests/test_app.c": "4e30904a3eea05a573375fdac5f48e9bd5894021cd20f21e2193c29f4e03f272",
+  "firmware/tests/test_app.c": "a5c188a301cb1b26d3e0848c7616fc26cce563873949d9bbdb92b02e5c95db98",
   "firmware/tests/test_conv.c": "39f43766fb18885dfd10913a641311fda882e68686afa28e68fccbfbe3b580bb",
-  "firmware/tests/test_fw.c": "be4a5ef5a6bd1916a78e83a282b5dbb4b7bafe95c48608fa00d805281b518067",
+  "firmware/tests/test_fw.c": "008d4a3683b5e1df1914b5ab140649e959552d7702b6e006891e70dcfb015f22",
   "firmware/tests/test_hal.c": "0dd7569a9df13b4350f8218de7ce1745b90a79ff12f58c2069593ecc77e669a8",
   "firmware/tests/test_holdup.c": "be7436e7b057efe729b5531a492fbcdd136b20ee29823c8f561926217ad050d5"
  },
@@ -101,7 +101,7 @@
    "src/main.c"
   ],
   "hex": "firmware/build/nubm44_fw.hex",
-  "hex_sha256": "96c12d52565ade9e6efb035e76945634efb204e1830657893e37eb1f7b2114c6",
+  "hex_sha256": "5b9e2d6c9fe95792447639dfd80e00e64839f9eac2581a30f7444875dd1c916a",
   "sizes": {
    "data": 0,
    "text": 4090,

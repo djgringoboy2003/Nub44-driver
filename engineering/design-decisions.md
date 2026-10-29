@@ -135,6 +135,8 @@ Recommendation to the owner: consider 3.5 A for diode life.
 **Owner decision (2026-10-25):** keep 4.0 A. The owner accepts the diode-life risk. The 3.5 A and 3.0 A
 builds stay available through R_FB_TOP alone.
 
+**Superseded 2026-10-29 by DD-36:** the owner set 4.5 A for the A/B boards too.
+
 ## DD-14 PCB stack-up
 4 layers, 1.6 mm, 1 oz on all layers, ENIG finish (PCBWay standard 4-layer: 7628 prepreg 0.1855 mm, 1.03 mm core).
 - **Why not 2 layers:** about 50 parts (VQFN-HR-26 and VQFN-20 included) on a 22 mm disc need inner planes for
@@ -614,3 +616,47 @@ the connectivity exactly: 104 parts, 56 nets. `qualify.py` reports this in BUD-C
 - Sourced MPNs for generic passives, TVS, fuse and LED.
 - Whether any other pin injects into an unpowered VCTRL (TLV6700/INA inputs).
 - Placement, PCB, DRC, layout review and the firmware pin profile.
+
+## DD-36 A/B boards at 4.5 A (owner, 2026-10-29)
+
+**Owner instruction.** Change the original boards to 4.5 A as well, matching DD-33. Two calculation margins failed
+at 4.5 A. The owner accepted both recommended dispositions ("Accept a and b"):
+
+- **(a) Backup current limit.** The TPS552882's ISP/ISN limit is fixed at 48–52 mV, which is 4.8–5.2 A with the
+  10 mΩ MCS1632 shunt (the series has no lower value in that land). The no-interference check now uses
+  `current.backup_margin_factor: 1.0` (was 1.05): the backup only has to clear the worst-case setpoint
+  (4.66 A). It becomes a close, slow average-current clamp that trims transients above about 4.8 A.
+- **(b) Reverse-FET dissipation.** Q1 (SiSS23DN) dissipates 0.68 W at the worst point. The limit becomes
+  `components.q_reverse.p_max_w: 0.7` (was a 0.6 W estimate, about 40 K rise at ~60 K/W). The bench thermal
+  test decides.
+
+**Engineering changes (Claude Code).**
+- R8 6.65k → **8.66k** (RT0402BRD078K66L, 4.478 A nominal, −0.48%).
+- R3 27.4k → **24.9k** (RC0201FR-0724K9L / RC0402FR-0724K9L), giving ILIM 13.25 A typical, which fixes the
+  inductor-current margin.
+- Firmware `APP_I_SET_MA` 4000 → 4500 (±15% regulation window) and its host tests.
+- Simulation criteria now read the setpoint from parameters (REQ-OUT-05 peak = 1.1 × setpoint) instead of
+  literal 4.0/4.4 A.
+- Bench criteria are now 4.275–4.725 A regulation, ≤ 4.95 A peak and a 4.5 A thermal test.
+- The PCB `finish` stage now syncs schematic values and fields onto placed footprints. The archived router
+  sessions were restored and re-finished, and `source_revisions` entries were appended. A KiCad-Python comparison
+  of the evaluation board with the previous commit found all 490 tracks/vias and 186 pads identical; only the R3/R8
+  values changed. Pours were re-filled (largest fill-area change 0.05%, on SW2), so the copper Gerbers differ in
+  item order and fill detail only.
+
+**Results (generated).**
+- Calculations 21/21 PASS.
+- Simulations 12/12 PASS. SIM-12 now passes 11/11 (minimum PM 106°), so AUD-SIM-04 / VAL-SIM-12 is resolved:
+  the lower loop gain fixed it.
+- Firmware host tests, target build and mutation check PASS.
+- ERC 0/0 and exact netlists. Evaluation DRC 0/0/0/0; compact DRC is the unchanged parked state.
+- PCBWay/JLCPCB packages regenerated.
+- Full validator exit 0, with only the 2 accepted compact items left; evaluation readiness is back to its 2
+  footprint-review blockers.
+
+**Finding for the owner.** The evaluation board's routed-copper efficiency estimate at 4.0 V input is **93.56%**,
+below the 94% target (DD-26/REQ-PWR-02). The loss model alone gives 94.10%. The owner chooses: accept a lower A/B
+target (as for the budget board) or wait for the bench measurement (T1.7).
+
+**Diode risk.** Same as DD-33: 4.5 A exceeds LD-05's 4.2 A maximum operating current; risk R-01 is raised.
+Lower-current builds (R8 2.49/4.53/6.65 kΩ) raise the loop gain, so rerun SIM-12 before fitting one.

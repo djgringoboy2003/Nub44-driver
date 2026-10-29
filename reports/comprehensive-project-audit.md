@@ -91,7 +91,7 @@ Status values: OPEN, FIXED (implemented and tested), MITIGATED (partly addressed
 | AUD-SIM-01 | medium | Risk | Averaged model only; inner current loop and ISP/ISN loop strength are assumptions | DOCUMENTED |
 | AUD-SIM-02 | low | Defect | SIM-08 has a dead placeholder and an unsourced 25 A limit | FIXED |
 | AUD-SIM-03 | medium | Enhancement | No parameter/tolerance sensitivity sweep in simulation | FIXED |
-| AUD-SIM-04 | medium | Risk | Averaged-model gain margin 9.5 dB (< 10 dB) at combined worst-case tolerances | DOCUMENTED |
+| AUD-SIM-04 | medium | Risk | Averaged-model gain margin 9.5 dB (< 10 dB) at combined worst-case tolerances | RESOLVED (DD-36; recheck for lower-current builds) |
 | AUD-CAL-01 | low | Defect | "Inductor RMS current" check uses the average current | FIXED |
 | AUD-CAL-02 | medium | Risk | Efficiency margin is thin (94.1 % estimate with evaluation copper vs ≥ 94 %) | DOCUMENTED |
 | AUD-PCB-01 | medium | Risk | Evaluation-board layout items accepted with bench checks (DR1H via, ISP/ISN, C5, VCC, SW2, AGND/PGND) | DOCUMENTED |
@@ -395,6 +395,9 @@ side effects; dependencies; tests; status; validation outcome.
   not swept. **Status:** FIXED. SIM-12 sweeps output-capacitance retention, inductance, gm, CSA bandwidth and the assumed inner-loop gain (11 cases). Result: AUD-SIM-04.
 
 #### AUD-SIM-04 Gain margin below 10 dB at combined tolerances (medium, risk; found by SIM-12)
+- **Status (2026-10-29):** RESOLVED by DD-36. The 4.5 A divider (R8 8.66 kΩ) lowers the loop gain; SIM-12 now passes
+  11/11 cases (minimum PM 106.3°) and VAL-SIM-12 was removed from the known-limitations baseline. A 3.0/3.5/4.0 A
+  build raises the loop gain again; rerun SIM-12 before fitting one.
 - **Evidence:** SIM-12 (frequency-response analysis of the averaged deck at 3.0 V, max-Vf diode) gives GM 9.5 dB and
   PM 119 deg when output-capacitance retention 0.35, inductance +20 %, error-amplifier gm +20 % and CSA bandwidth -30 %
   coincide. Every single tolerance passes (GM 11.1-14.6 dB, PM >= 109 deg); nominal corners give GM 11.9-12.6 dB.

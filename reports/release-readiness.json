@@ -1,5 +1,5 @@
 {
- "date": "2026-10-28",
+ "date": "2026-10-29",
  "variants": {
   "compact-22mm": {
    "variant": "compact-22mm",
@@ -17,7 +17,6 @@
     ],
     "MANUFACTURING_RELEASE": [
      "Gate G bench evidence incomplete for compact-22mm: 23 required tests not PASS (e.g. T0.1, T0.2, T0.3, T0.4, T1.1)",
-     "finding awaiting owner disposition: VAL-SIM-12",
      "human review PCBWAY-DFM not recorded as DONE",
      "no signed approval file manufacturing/approvals/compact-22mm.yaml"
     ]
@@ -37,7 +36,6 @@
     ],
     "MANUFACTURING_RELEASE": [
      "Gate G bench evidence incomplete for evaluation-board: 29 required tests not PASS (e.g. T0.1, T0.2, T0.3, T0.4, T1.1)",
-     "finding awaiting owner disposition: VAL-SIM-12",
      "human review PCBWAY-DFM not recorded as DONE",
      "no signed approval file manufacturing/approvals/evaluation-board.yaml"
     ]

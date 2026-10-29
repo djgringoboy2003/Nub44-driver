@@ -16,8 +16,9 @@ laser:
   wiring_resistance_ohm: 0.010      # 2 x ~60 mm of 20 AWG plus joints (estimate)
 
 current:
-  i_set_a: 4.0                      # REQ-OUT-01 (brief). Exceeds NUBM44 typical 3.0 A; owner keeps it (DD-13).
-  alternates_a: [3.0, 3.5]          # BOM options via R_FB_TOP only
+  i_set_a: 4.5                      # REQ-OUT-01, owner 2026-10-29 (DD-36; was 4.0 A, DD-13). Exceeds NUBM44 3.0 A typical.
+  alternates_a: [3.0, 3.5, 4.0]     # BOM options via R_FB_TOP only
+  backup_margin_factor: 1.0         # DD-36 owner deviation: ISP/ISN backup only needs to clear the worst-case setpoint (was 1.05)
   accuracy_target_pct: 5.0          # REQ-OUT-03
   efficiency_target_pct: 94.0       # REQ-PWR-02 at 4.0 V, 4 A: owner deviation from the brief's > 95 % (DD-26)
 
@@ -36,7 +37,7 @@ converter:                          # TI TPS552882 (PWR-10, SLVSFC5)
   vref_tol_pct: 1.0
   f_sw_hz: 595000                   # R_FSW = 33.2 k, Eq. 3: f(MHz) = 1000/(0.05*R + 20)
   r_fsw_ohm: 33200
-  r_ilim_ohm: 27400                 # Eq. 5: I = 330000/R -> 12.04 A typ
+  r_ilim_ohm: 24900                 # Eq. 5: I = 330000/R -> 13.25 A typ (DD-36; was 27.4k for 4.0 A)
   ilim_tol: [0.848, 1.152]          # from 14/16.5/19 A at 20 k
   en_uvlo_v: 1.23
   en_uvlo_hys_a: 5.0e-6
@@ -56,11 +57,12 @@ converter:                          # TI TPS552882 (PWR-10, SLVSFC5)
 components:
   inductor: {part: XGL5030-102MEC, l_h: 1.0e-6, dcr_typ_ohm: 0.0048, dcr_max_ohm: 0.0058,
              isat_10pct_a: 5.9, isat_20pct_a: 10.2, isat_30pct_a: 14.0, irms_20c_a: 12.8}
-  q_reverse: {part: SiSS23DN, rds_max_4v5: 0.0045, rds_max_2v5: 0.0063, vgs_max: 8.0}
+  q_reverse: {part: SiSS23DN, rds_max_4v5: 0.0045, rds_max_2v5: 0.0063, vgs_max: 8.0,
+              p_max_w: 0.7}         # DD-36 owner deviation: accept ~0.68 W at 4.5 A, verify on the bench (was 0.6 W estimate)
   q_buck: {part: SiSS80DN, rds_max_4v5: 0.00115, rds_max_2v5: 0.0030, qg_c: 36.0e-9}
   shunt: {part: MCS1632R010FER, r_ohm: 0.010, tol_pct: 1.0, p_rated_w: 1.0}
   csa: {part: INA186A2IDCKR, gain: 50, gain_err_pct: 1.0, vos_v: 50.0e-6, bw_hz: 37000}
-  fb_divider: {r_top_ohm: 6650, r_bot_ohm: 10000, tol_pct: 0.1}
+  fb_divider: {r_top_ohm: 8660, r_bot_ohm: 10000, tol_pct: 0.1}   # 4.5 A (DD-36); 6.65k gave 4.0 A
   c_out: {count: 4, c_nom_f: 22.0e-6, bias_retention: 0.55, esr_each_ohm: 0.006}
   c_in: {count: 3, c_nom_f: 22.0e-6, bias_retention: 0.50, esr_each_ohm: 0.006}
   bleeder_ohm: 4700

@@ -1,5 +1,5 @@
 {
- "date": "2026-10-28",
+ "date": "2026-10-29",
  "gates": {
   "A": "PASS",
   "B": "PASS",
@@ -36,7 +36,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-evidence.json",
-   "detail": "21 checks; python 3.11.9, numpy 2.4.6"
+   "detail": "21 checks; python 3.11.5, numpy 2.4.6"
   },
   {
    "id": "VAL-CALC-01",
@@ -44,7 +44,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "3.5799 % (limit max 5.0)"
+   "detail": "3.5789 % (limit max 5.0)"
   },
   {
    "id": "VAL-CALC-02",
@@ -52,7 +52,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "0.1 % (limit max 0.5)"
+   "detail": "0.48 % (limit max 0.5)"
   },
   {
    "id": "VAL-CALC-03",
@@ -60,7 +60,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "4.8 A (limit min 4.350354954954955)"
+   "detail": "4.8 A (limit min 4.661051848874599)"
   },
   {
    "id": "VAL-CALC-04",
@@ -68,7 +68,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "8.8715 A (limit max 10.213138686131387)"
+   "detail": "10.2907 A (limit max 11.238554216867469)"
   },
   {
    "id": "VAL-CALC-05",
@@ -76,7 +76,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "8.4579 A (limit max 14.0)"
+   "detail": "9.6739 A (limit max 14.0)"
   },
   {
    "id": "VAL-CALC-06",
@@ -84,7 +84,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "7.4185 A (limit max 12.8)"
+   "detail": "8.599 A (limit max 12.8)"
   },
   {
    "id": "VAL-CALC-07",
@@ -92,7 +92,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "94.5883 % (limit min 94.0)"
+   "detail": "94.1015 % (limit min 94.0)"
   },
   {
    "id": "VAL-CALC-08",
@@ -100,7 +100,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "91.2684 % (limit min 86.0)"
+   "detail": "90.2736 % (limit min 86.0)"
   },
   {
    "id": "VAL-CALC-09",
@@ -108,7 +108,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "909.3389 ns (limit min 145.0)"
+   "detail": "881.9271 ns (limit min 145.0)"
   },
   {
    "id": "VAL-CALC-10",
@@ -116,7 +116,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "0.5085 W (limit max 0.6)"
+   "detail": "0.6842 W (limit max 0.7)"
   },
   {
    "id": "VAL-CALC-11",
@@ -124,7 +124,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "0.16 W (limit max 0.5)"
+   "detail": "0.2025 W (limit max 0.5)"
   },
   {
    "id": "VAL-CALC-12",
@@ -132,7 +132,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "97.1115 C (limit max 125)"
+   "detail": "110.8909 C (limit max 125)"
   },
   {
    "id": "VAL-CALC-13",
@@ -156,7 +156,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "6.39 V (limit min 5.273)"
+   "detail": "6.39 V (limit min 5.364)"
   },
   {
    "id": "VAL-CALC-16",
@@ -164,7 +164,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "8.8537 % (limit max 10.0)"
+   "detail": "9.1683 % (limit max 10.0)"
   },
   {
    "id": "VAL-CALC-17",
@@ -172,7 +172,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "0.921 A (limit max 3.0)"
+   "detail": "1.0706 A (limit max 3.0)"
   },
   {
    "id": "VAL-CALC-18",
@@ -180,7 +180,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "111.7289 deg (limit min 50.0)"
+   "detail": "108.3762 deg (limit min 50.0)"
   },
   {
    "id": "VAL-CALC-19",
@@ -188,7 +188,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "12.0924 dB (limit min 10.0)"
+   "detail": "12.5126 dB (limit min 10.0)"
   },
   {
    "id": "VAL-CALC-20",
@@ -196,7 +196,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "4858.1463 Hz (limit max 11119.032651578316)"
+   "detail": "2994.6662 Hz (limit max 9473.936582077467)"
   },
   {
    "id": "VAL-CALC-21",
@@ -204,7 +204,7 @@
    "method": "CALC",
    "status": "PASS",
    "evidence": "engineering/calculations/power-stage-results.md",
-   "detail": "4858.1463 Hz (limit max 12333.333333333334)"
+   "detail": "2994.6662 Hz (limit max 12333.333333333334)"
   },
   {
    "id": "VAL-SIM-EVID",
@@ -220,7 +220,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"steady_current_a\": 3.9966775448338865, \"overshoot_pct\": 0.00025570983975481843, \"peak_a\": 3.996687764731632}"
+   "detail": "{\"steady_current_a\": 4.479240753542249, \"overshoot_pct\": 0.00023138087570736106, \"peak_a\": 4.4792511176487295}"
   },
   {
    "id": "VAL-SIM-02",
@@ -228,7 +228,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"steady_current_a\": 3.9966157734288297, \"overshoot_pct\": 0.00023969124509472158, \"peak_inductor_a\": 6.35274849}"
+   "detail": "{\"steady_current_a\": 4.479136358584267, \"overshoot_pct\": 0.00021393842717597734, \"peak_inductor_a\": 7.32905692}"
   },
   {
    "id": "VAL-SIM-03",
@@ -236,7 +236,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"3.0V_min\": 3.9968, \"3.0V_typ\": 3.9968, \"3.0V_max\": 3.9968, \"3.7V_min\": 3.9964, \"3.7V_typ\": 3.9964, \"3.7V_max\": 3.9969, \"4.2V_min\": 3.9966, \"4.2V_typ\": 3.9965,"
+   "detail": "{\"3.0V_min\": 4.4793, \"3.0V_typ\": 4.4793, \"3.0V_max\": 4.4793, \"3.7V_min\": 4.4789, \"3.7V_typ\": 4.4789, \"3.7V_max\": 4.4795, \"4.2V_min\": 4.4791, \"4.2V_typ\": 4.4791,"
   },
   {
    "id": "VAL-SIM-04",
@@ -244,7 +244,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"max_current_deviation_pct\": 2.6285632341476295}"
+   "detail": "{\"max_current_deviation_pct\": 3.5151738561281696}"
   },
   {
    "id": "VAL-SIM-05",
@@ -252,7 +252,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"max_current_deviation_pct\": 0.08351300000000172}"
+   "detail": "{\"max_current_deviation_pct\": 0.46176399999999046}"
   },
   {
    "id": "VAL-SIM-06",
@@ -260,7 +260,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"peak_current_a\": 3.9967737576273845, \"turn_off_to_50mA_s\": 0.000491301700000002}"
+   "detail": "{\"peak_current_a\": 4.478993818185457, \"turn_off_to_50mA_s\": 0.000491540700000001}"
   },
   {
    "id": "VAL-SIM-07",
@@ -268,7 +268,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"time_to_50mA_s\": 6.461617000000017e-05}"
+   "detail": "{\"time_to_50mA_s\": 6.491141000000006e-05}"
   },
   {
    "id": "VAL-SIM-08",
@@ -276,7 +276,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"peak_inductor_current_a\": 12.5687542, \"settled_output_current_a\": 3.996672699321357}"
+   "detail": "{\"peak_inductor_current_a\": 13.4267273, \"settled_output_current_a\": 4.479239271217565}"
   },
   {
    "id": "VAL-SIM-09",
@@ -284,7 +284,7 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"peak_vout_v\": 6.71037081}"
+   "detail": "{\"peak_vout_v\": 6.74087582}"
   },
   {
    "id": "VAL-SIM-10",
@@ -300,15 +300,15 @@
    "method": "SIM",
    "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"3.7V_typ_f_cross_hz\": 2855.29, \"3.7V_typ_phase_margin_deg\": 120.97, \"3.7V_typ_gain_margin_db\": 12.42, \"3.0V_max_f_cross_hz\": 1695.73, \"3.0V_max_phase_margin_d"
+   "detail": "{\"3.7V_typ_f_cross_hz\": 2107.93, \"3.7V_typ_phase_margin_deg\": 117.38, \"3.7V_typ_gain_margin_db\": 13.19, \"3.0V_max_f_cross_hz\": 1339.08, \"3.0V_max_phase_margin_d"
   },
   {
    "id": "VAL-SIM-12",
    "item": "Loop sensitivity at 3.0 V, max-Vf diode: output capacitance (DC bias), inductance, error-amplifier gm, CSA bandwidth and the assumed inner-loop gain",
    "method": "SIM",
-   "status": "FAIL",
+   "status": "PASS",
    "evidence": "simulation/results/results.md",
-   "detail": "{\"min_phase_margin_deg\": 109.47, \"cases_passing\": 10, \"cases\": 11}"
+   "detail": "{\"min_phase_margin_deg\": 106.34, \"cases_passing\": 11, \"cases\": 11}"
   },
   {
    "id": "VAL-SRC",
@@ -364,7 +364,7 @@
    "method": "CAD",
    "status": "PASS",
    "evidence": "reports/layout-review-compact-22mm.json",
-   "detail": "13 REVIEW / 7 INFO screening results; dispositions in engineering/layout-review.md"
+   "detail": "14 REVIEW / 7 INFO screening results; dispositions in engineering/layout-review.md"
   },
   {
    "id": "VAL-EXPORT-compact-22mm",
@@ -480,7 +480,6 @@
   }
  ],
  "known_unchanged": [
-  "VAL-SIM-12",
   "VAL-ROUTE-compact-22mm",
   "VAL-DRC-compact-22mm"
  ],

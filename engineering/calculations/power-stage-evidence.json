@@ -23,7 +23,7 @@
   "Crossover below CSA bandwidth / 3"
  ],
  "evidence_class": "PREDICTION (engineering calculation from datasheet parameters; not a measurement)",
- "generated_utc": "2026-10-26T17:38:39+00:00",
+ "generated_utc": "2026-10-29T02:51:34+00:00",
  "generator": "engineering/calculations/power_stage.py",
  "inputs": {
   "automation/nubm44/calc/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -31,21 +31,21 @@
   "automation/nubm44/calc/buckboost.py": "5dcc5b628a898e4bf86e414a23020bb3a4739c09a1123d60fd6a65a8a20b6ac7",
   "automation/nubm44/calc/copper.py": "3cf0049153b88cbd2e1a265d028fefca26f10244b0569da144560e448721426b",
   "automation/nubm44/calc/loop.py": "966f4f9ccde36638500bfff6c6baa027a1fd8a36332f8c83d9c1d84e3ffa8d39",
-  "engineering/calculations/power_stage.py": "aeeb80d6451d86695044a3a232fd1db9ce17a38f1f64e3510de6d67f0b659272",
-  "engineering/design/parameters.yaml": "bb175c0064a15924cac145f698e4eb038e311f605e7a6b35b41db33f92826220"
+  "engineering/calculations/power_stage.py": "1508af4f5da2b8cf50d6ae88ed9dfad3542f902d49ddb4138ee7b6b789c0c328",
+  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb"
  },
  "kind": "calculation",
  "outputs": {
-  "engineering/calculations/plots/current_loop_bode.png": "91988e8ce9253e31c6959ef36b7f92c8e66971f2522ab75a5f8c69cdd8730448",
-  "engineering/calculations/plots/efficiency_vs_vin.png": "88e97e9b97047214c1e99007b1c05c67e11366211922b9c8d218560d6ec6fa4e",
-  "engineering/calculations/power-stage-results.json": "0250f5ad9cf0588ad379f9964789aed29a77c943a5152b41d73642da6d97fba6",
-  "engineering/calculations/power-stage-results.md": "e80cc20d6a25b2f0d4f4829a52d117a297a8d4fe6b09ede7fb6b1b22f75d06ee"
+  "engineering/calculations/plots/current_loop_bode.png": "8016bd469a032d3ca7ee7bc0549db37b2e19fb942ad51cb0fbefbe7655a860e7",
+  "engineering/calculations/plots/efficiency_vs_vin.png": "f9ac51717c070d3fede22d162164e9eed654a998ef8cbcfb42cfde0d22645bd1",
+  "engineering/calculations/power-stage-results.json": "0f71f20d5792bd99c961a4917a97fb74db651311ea7c8f067571d237c11ab7fd",
+  "engineering/calculations/power-stage-results.md": "6a7c73c001cf897abd0c52df649fe29dfd2d63cdd4e5910a0dd33d5e9d509e29"
  },
  "schema": "nubm44-evidence-manifest.v1",
  "tools": {
   "PyYAML": "6.0.3",
   "matplotlib": "3.11.2",
   "numpy": "2.4.6",
-  "python": "3.11.9"
+  "python": "3.11.5"
  }
 }

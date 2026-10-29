@@ -121,6 +121,30 @@
         "unconnected": 0,
         "schematic_parity": 0
       }
+    },
+    {
+      "date": "2026-10-29",
+      "commit_basis": "f1c9d2f",
+      "change": "Owner decision DD-36: A/B setpoint 4.5 A (R8 6.65k -> 8.66k, R3 27.4k -> 24.9k), parameters and power_stage limits; finish now syncs schematic values/fields onto placed footprints. Restored archived DSN/SES, finish + DRC re-run. DSN/SES and copper unchanged.",
+      "source_files_sha256": {
+        "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb",
+        "engineering/design/connectivity.yaml": "25f43c8f1200e7615f8d9b56ab5d6aca9fc40beb7a4923441b2a714059e5680e",
+        "hardware/evaluation-board/placement.yaml": "fd9b354e2179df620c4020c44e0f028358ae51c386b2d1a6a0be495c6fd53d1a",
+        "hardware/evaluation-board/nubm44_driver.kicad_pcb": "9fe967c625a012c7c538b619748db00da29dbbfff52689771d0d039f642ed40b",
+        "hardware/evaluation-board/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
+        "hardware/evaluation-board/nubm44_driver.kicad_sch": "92f1d2e2aaad8f15c06dcbea39c94cf6b7be50730b42333401296244fe721d6b",
+        "hardware/evaluation-board/nubm44_driver.net": "be86fa860f01dfadc74f6eb9f4d3239facbe5a9e1e57a8159094d7056cd8a3a0",
+        "automation/placement/build_pcb.py": "842f43498f9c545b09e3e69cff81e50ec5e0aa63688d3cde372c12208e9abfba",
+        "automation/placement/pcb_builder.py": "d0434f23046fe6accb115ea8aa5d119ea426fa286434b8748bc30841bb855850"
+      },
+      "validation": {
+        "report": "reports/drc-evaluation-board.json",
+        "report_sha256": "8ec9220ebe066f4da645076e4bc832e99a3587890e6cfebc00b5ec6d1366f51d",
+        "errors": 0,
+        "warnings": 0,
+        "unconnected": 0,
+        "schematic_parity": 0
+      }
     }
   ]
 }

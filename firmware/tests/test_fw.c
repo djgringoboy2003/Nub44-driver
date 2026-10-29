@@ -12,7 +12,7 @@ static void boot(uint8_t cause)
 {
     mock_reset();
     mock.reset_cause = cause;
-    mock.cs_on = 585;                             /* 4.0 A at VDD 3.5 V */
+    mock.cs_on = 658;                             /* 4.5 A at VDD 3.5 V (2.25 V) */
     mock.vout_on = 512;                           /* 4.5 V */
     fw_init();
 }

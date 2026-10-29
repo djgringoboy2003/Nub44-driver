@@ -68,12 +68,12 @@ def test_catalogue_ids_exist_in_the_test_plan(bench):
 
 def test_valid_record_passes_and_contradiction_is_invalid(bench, tmp_path):
     cat = bench.load_catalogue()
-    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.01, "unit": "A"}])
+    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.51, "unit": "A"}])
     assert bench.evaluate(p, cat)["status"] == "PASS"
-    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.4, "unit": "A"}], name="b.json")
+    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.9, "unit": "A"}], name="b.json")
     r = bench.evaluate(p, cat)
     assert r["status"] == "INVALID" and "contradicts" in r["problems"][0]
-    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.4, "unit": "A"}],
+    p = record(bench, tmp_path / "results", "T1.4", [{"quantity": "i_out_a", "value": 4.9, "unit": "A"}],
                status="FAIL", name="c.json")
     assert bench.evaluate(p, cat)["status"] == "FAIL"
 
@@ -136,7 +136,7 @@ def test_gate_g_needs_every_required_test_to_pass(bench, tmp_path):
 def test_import_requires_affirmation_and_preserves_raw_data(bench, tmp_path):
     cat = bench.load_catalogue()
     csv_file = tmp_path / "t14.csv"
-    csv_file.write_text("quantity,value,unit,vin_v\ni_out_a,4.01,A,3.7\ni_out_a,3.99,A,4.2\n", encoding="utf-8")
+    csv_file.write_text("quantity,value,unit,vin_v\ni_out_a,4.51,A,3.7\ni_out_a,4.49,A,4.2\n", encoding="utf-8")
     args = SimpleNamespace(test="T1.4", serial="EVB-001", variant="evaluation-board", hardware_revision="A",
                            firmware_revision="abc", firmware_hex_sha256="0" * 64, operator="tester", date="2026-11-21",
                            csv=str(csv_file), instrument=["DMM:model:sn"], attach=None, condition=["ambient_c=23"],

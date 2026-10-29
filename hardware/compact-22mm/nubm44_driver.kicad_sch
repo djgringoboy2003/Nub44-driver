@@ -13238,7 +13238,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6.65k"
+		(property "Value" "8.66k"
 			(at 60.96 387.35 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13273,7 +13273,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)"
+		(property "Description" "8.66 kOhm 0.1% 0402 FB top; sets 4.5 A (DD-36; 4.0 A: 6.65k, 3.5 A: 4.53k, 3.0 A: 2.49k)"
 			(at 58.42 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -13285,7 +13285,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "RT0402BRD076K65L"
+		(property "MPN" "RT0402BRD078K66L"
 			(at 58.42 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -18721,7 +18721,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "27.4k"
+		(property "Value" "24.9k"
 			(at 182.88 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18756,7 +18756,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)"
+		(property "Description" "24.9 kOhm 1% 0402 ILIM (13.25 A typ avg, DD-36)"
 			(at 180.34 220.98 0)
 			(hide yes)
 			(show_name no)
@@ -18768,7 +18768,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "RC0201FR-0727K4L"
+		(property "MPN" "RC0201FR-0724K9L"
 			(at 180.34 220.98 0)
 			(hide yes)
 			(show_name no)

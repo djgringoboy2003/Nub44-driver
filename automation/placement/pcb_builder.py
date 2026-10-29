@@ -755,8 +755,31 @@ def mode_place(job):
     print(f"placed {len(placements)} footprints; via fields {via_report}; DSN export {'ok' if ok else 'FAILED'}")
 
 
+def sync_fields(board, job):
+    """Copy schematic values and fields onto the placed footprints; placement and copper stay unchanged."""
+    items = {it["ref"]: it for it in job["footprints"]}
+    changed = []
+    for fp in board.GetFootprints():
+        it = items.get(fp.GetReference())
+        if it is None:
+            continue
+        if fp.GetValue() != it["value"]:
+            changed.append(f"{fp.GetReference()} value {fp.GetValue()} -> {it['value']}")
+            fp.SetValue(it["value"])
+        for k, v in it.get("fields", {}).items():
+            field = fp.GetField(k)
+            if field is None or field.GetText() != v:
+                changed.append(f"{fp.GetReference()} {k} -> {v}")
+                fp.SetField(k, v)
+                fp.GetField(k).SetVisible(False)
+    return changed
+
+
 def mode_finish(job):
     board = pcbnew.LoadBoard(job["board"])
+    synced = sync_fields(board, job)
+    if synced:
+        print("schematic field sync: " + "; ".join(synced))
     if job.get("ses"):
         ok = pcbnew.ImportSpecctraSES(board, job["ses"])
         print(f"SES import {'ok' if ok else 'FAILED'}")

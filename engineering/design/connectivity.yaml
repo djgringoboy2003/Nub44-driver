@@ -76,8 +76,8 @@ parts:
      mpn: CL10A106KP8NNNC, mfr: Samsung, desc: "10 uF 10 V X5R 0603 VCC (> 4.7 uF required)", pins: {1: VCC5, 2: GND}}
   - {ref: R2, block: converter, lib: Device:R, value: 33.2k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
      mpn: RC0201FR-0733K2L, mpn_eval: RC0402FR-0733K2L, mfr: Yageo, desc: "33.2 kOhm 1% 0402 FSW (595 kHz)", pins: {1: FSW, 2: GND}}
-  - {ref: R3, block: converter, lib: Device:R, value: 27.4k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
-     mpn: RC0201FR-0727K4L, mpn_eval: RC0402FR-0727K4L, mfr: Yageo, desc: "27.4 kOhm 1% 0402 ILIM (12.0 A typ avg)", pins: {1: ILIM, 2: GND}}
+  - {ref: R3, block: converter, lib: Device:R, value: 24.9k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
+     mpn: RC0201FR-0724K9L, mpn_eval: RC0402FR-0724K9L, mfr: Yageo, desc: "24.9 kOhm 1% 0402 ILIM (13.25 A typ avg, DD-36)", pins: {1: ILIM, 2: GND}}
   - {ref: R4, block: converter, lib: Device:R, value: 1.2k, footprint: Resistor_SMD:R_0201_0603Metric, footprint_eval: Resistor_SMD:R_0402_1005Metric,
      mpn: RC0201FR-071K2L, mpn_eval: RC0402FR-071K2L, mfr: Yageo, desc: "1.2 kOhm 1% 0402 compensation Rc", pins: {1: COMP, 2: COMP_RC}}
   - {ref: C8, block: converter, lib: Device:C, value: 56n, footprint: Capacitor_SMD:C_0402_1005Metric,
@@ -116,8 +116,8 @@ parts:
      datasheet: https://www.ti.com/lit/ds/symlink/ina186.pdf, pins: {1: GND, 2: GND, 3: VBAT, 4: ISP_K, 5: ISN_K, 6: CS_OUT}}
   - {ref: C15, block: sense, lib: Device:C, value: 100n, footprint: Capacitor_SMD:C_0201_0603Metric, footprint_eval: Capacitor_SMD:C_0402_1005Metric,
      mpn: GRM033R61A104KE15D, mpn_eval: CL05B104KO5NNNC, mfr: Murata, mfr_eval: Samsung, desc: "100 nF 16 V X7R 0402 U2 supply", pins: {1: VBAT, 2: GND}}
-  - {ref: R8, block: sense, lib: Device:R, value: 6.65k, footprint: Resistor_SMD:R_0402_1005Metric,
-     mpn: RT0402BRD076K65L, mfr: Yageo, desc: "6.65 kOhm 0.1% 0402 FB top; sets 4.0 A (3.5 A: 4.53k, 3.0 A: 2.49k)",
+  - {ref: R8, block: sense, lib: Device:R, value: 8.66k, footprint: Resistor_SMD:R_0402_1005Metric,
+     mpn: RT0402BRD078K66L, mfr: Yageo, desc: "8.66 kOhm 0.1% 0402 FB top; sets 4.5 A (DD-36; 4.0 A: 6.65k, 3.5 A: 4.53k, 3.0 A: 2.49k)",
      pins: {1: CS_OUT, 2: FB}}
   - {ref: R9, block: sense, lib: Device:R, value: 10.0k, footprint: Resistor_SMD:R_0402_1005Metric,
      mpn: RT0402BRD0710KL, mfr: Yageo, desc: "10.0 kOhm 0.1% 0402 FB bottom", pins: {1: FB, 2: GND}}
