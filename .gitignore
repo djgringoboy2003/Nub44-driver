@@ -33,3 +33,6 @@ dist/
 # Failed/staged export drafts and transient native KiCad saves
 manufacturing/pcbway/.*-staging-*/
 hardware/*/*.tmp
+
+# Local tool-setup log written by scripts/setup.ps1 (machine-specific)
+reports/setup.log
