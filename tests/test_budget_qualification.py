@@ -52,7 +52,9 @@ def test_candidate_current_envelope_is_conditional(params):
     assert r["current"]["conditional_accuracy_ok"]
     assert not r["manufacturing_ready"]
     assert r["readiness"][0]["status"] == "CONDITIONAL"
-    assert "current_sense.fb_resistor_mpns" in r["unknown_inputs"]
+    # DD-39 named the 0.1 % / 25 ppm divider parts; the envelope stays conditional on the hot-shunt assumption
+    assert params["current_sense"]["fb_resistor_mpns"] == ["ERA-3AEB2742V", "ERA-3AEB103V"]
+    assert "current_sense.fb_resistor_mpns" not in r["unknown_inputs"]
     assert not any(x["status"] == "PASS" for x in r["readiness"])
 
 

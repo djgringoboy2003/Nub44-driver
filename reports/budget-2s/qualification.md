@@ -12,7 +12,7 @@ Conditional calculations are not complete circuit verification. Existing A/B res
 | Current setpoint | 4.4880 A nominal; 4.3194–4.6637 A envelope | CONDITIONAL: exact divider MPNs and hot shunt temperature are not verified |
 | Independent trip | 5.2900 A nominal; 5.0935–5.4921 A envelope | 500 µV NAF included; CONDITIONAL: resistor MPN, response, shared-shunt and sense-fault study OPEN |
 | UVLO falling | 5.5230 V nominal; 5.3984–5.6202 V | Hardware backstop below the loaded 6 V operating floor; margins below |
-| Physical VBUCK OVP | 5.7600 V nominal; 5.6832–5.8372 V | Upstream of disconnect; laser survival/response UNKNOWN |
+| Physical VBUCK OVP | 5.7200 V nominal; 5.6437–5.7967 V | Upstream of disconnect; laser survival/response UNKNOWN |
 | Buck ripple, 25 °C L tolerance / 400 kHz minimum | ≤1.3963 A p-p; 5.1981 A peak at 4.5 A average | ROOM-TEMPERATURE screening; hot/bias L, core loss and saturation response UNKNOWN |
 | Control rail additive screen | 3.0769–3.5231 V | LDO load budget, exact line anchor and brownout sequencing OPEN |
 
@@ -38,7 +38,7 @@ TPS54821 → shunt → one output P-FET → board terminals (DD-31). The **typic
 at 25 °C; the **maximum** corner uses full-temperature TPS54821 maxima, FET 25 °C maxima × 1.6 (assumption), hot inductor DCR, minimum L and worst ripple frequency.
 Switching, dead-time, gate-drive and core terms are labelled `estimates`; copper, fuse and connector values are
 `power_model` allocations the BOM/layout must meet. Efficiency is board-terminal power over connector power.
-The model's largest energy-balance error is 7.9e-14 W.
+The model's largest energy-balance error is 7.6e-14 W.
 
 Compliance grid at the 4.5 A setpoint (diode voltage across the required range):
 
@@ -121,8 +121,8 @@ FETs, input path or control load.
 |---|---:|---:|
 | Dropout: lowest regulating input at 5.2 V / 4.6637 A | 5.8604 V; margin 0.1396 V | ≥0.1 V below 6 V |
 | UV sense node at 6 V input versus UV falling maximum | 5.8133 V vs 5.6202 V; margin 0.1931 V | ≥0.1 V; UV minimum ≥5 V |
-| Highest normal VBUCK at 4.95 A versus OVP rising minimum | 5.5077 V vs 5.6832 V; margin 0.1755 V | ≥0.1 V |
-| Output P-FET \|Vgs\| (gate divider, DD-34 clamp) | 3.6778–5.5834 V normal; 6.51 V clamped fault | clamp off below 5.89 V; rating ±8 V |
+| Highest normal VBUCK at 4.95 A versus OVP rising minimum | 5.5077 V vs 5.6437 V; margin 0.1360 V | ≥0.1 V |
+| Output P-FET \|Vgs\| (gate divider, DD-34 clamp) | 3.6778–5.5447 V normal; 6.51 V clamped fault | clamp off below 5.89 V; rating ±8 V |
 | Reverse P-FET \|Vgs\| maximum | 8.4 V | rating ±12 V |
 
 Gate ratings exclude plug and switching transients; a gate clamp is still OPEN. The output FET's
@@ -156,7 +156,7 @@ drives its permit pin low. Worst cases use the control-rail screen 3.0769–3.52
 | Series pair leakage, datasheet | 1e-07 A | ≤1e-05 A | 9.9e-06 A | LEAD-04 IDSS, 25 C |
 | Output P-FET |Vgs| when off | 0.022 V | ≤0.3 V | 0.278 V | pull-up to VBUCK against the leakage allocation |
 | Output P-FET |Vgs| when on | 3.672 V | ≥2.6 V | 1.072 V | gate-divider fraction of minimum VBUCK; 2.5 V resistance condition |
-| Output P-FET |Vgs| at OVP maximum, clamp off | 5.583 V | ≤5.79 V | 0.2066 V | BZX585-C6V2 minimum VZ (PREORDER-11) |
+| Output P-FET |Vgs| at OVP maximum, clamp off | 5.545 V | ≤5.79 V | 0.2453 V | BZX585-C6V2 minimum VZ (PREORDER-11) |
 | Output P-FET |Vgs| at a switch-short, clamped | 6.51 V | ≤7.9 V | 1.39 V | clamp maximum VZ against the gate rating |
 | Reverse P-FET |Vgs| at maximum pack voltage | 8.4 V | ≤11.9 V | 3.5 V | gate grounded; no clamp |
 | N1/N2 drain voltage at a buck switch-short | 8.4 V | ≤20 V | 11.6 V | VBUCK can reach the pack voltage |
@@ -179,10 +179,10 @@ Assumptions: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-
 
 ## Stored energy and discharge
 
-At the assumed 220 µF maximum: 3.7481 mJ at calculated OVP maximum,
+At the assumed 220 µF maximum: 3.6962 mJ at calculated OVP maximum,
 or 7.7616 mJ at a 8.4 V switch-short fault. The proposed 100 nF
-laser-side capacitor alone stores 1.7037 µJ at OVP maximum.
-A 1 kΩ +1% bleeder takes 0.5460 s to reach 0.5 V;
+laser-side capacitor alone stores 1.6801 µJ at OVP maximum.
+A 1 kΩ +1% bleeder takes 0.5445 s to reach 0.5 V;
 its -1% fault dissipation at 8.4 V is 0.0713 W.
 Cable, diode and gate capacitance, inductive energy, FET delay/SOA and reconnect peak are UNKNOWN.
 Voltage and energy arithmetic do not establish laser safety. See the budget fault matrix.
@@ -195,13 +195,13 @@ Voltage and energy arithmetic do not establish laser safety. See the budget faul
 | BUD-PWR-01 | CONDITIONAL | Maximum-resistance model regulates 4.6637 A at 5.2 V down to 5.8604 V input (0.1396 V margin, 0.1 V required). Conditional on the input/output resistance allocations, boot-regulator level and low-side resistance below 12 V; thermal/bench dropout OPEN. |
 | BUD-EFF-01 | CONDITIONAL | Estimate 93.05% at 7.4 V input, 4.72 V diode, 4.5 A, typical corner versus 93% target. Estimate only; bench efficiency decides. |
 | BUD-UV-01 | CONDITIONAL | UV falling 5.3984–5.6202 V versus loaded sense minimum 5.8133 V at 6 V input (0.1931 V margin, 0.1 V required; floor 5 V). Pack rating, firmware cutoff OPEN. |
-| BUD-OV-01 | CONDITIONAL | OVP rising minimum 5.6832 V versus highest normal VBUCK 5.5077 V at 4.95 A (0.1755 V margin). Open-load response and laser survival OPEN. |
+| BUD-OV-01 | CONDITIONAL | OVP rising minimum 5.6437 V versus highest normal VBUCK 5.5077 V at 4.95 A (0.1360 V margin). Open-load response and laser survival OPEN. |
 | BUD-IF-01 | CONDITIONAL | 37/37 static default-off checks pass; smallest voltage margin 0.0135 V (Supervisor release threshold maximum). Conditional on: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts. |
 | BUD-SAFE-01 | OPEN | Total fault response time and energy, output-FET turn-off, single and latent faults (power-on self-test), interlock cable faults and bench fault injection. |
 | BUD-LOOP-01 | OPEN | Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open. |
 | BUD-CAD-01 | CONDITIONAL | Schematic PASS: ERC 0 errors / 0 warnings, 108 parts, 0 netlist differences. Footprints not generated: none. PCB DRC 0 errors / 0 warnings / 0 unconnected / 0 parity (parity and all severities on). Routed copper: output loop 2.836 mΩ hot vs 3 mΩ allocation (within); fuse and holder budget 11.112 mΩ hot. Necks for review: PH (U1 switch node to L1 (not in an allocation)). Open reviews: U1 RHL land and stencil (project footprint), shared FP-POWERPAK land (Q2), XT30 moulded +/- marks, J2 wire-entry side; thermal behaviour is bench-only. |
 | BUD-FW-01 | OPEN | Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified. |
-| BUD-MFG-01 | CONDITIONAL | Prototype Gerbers/drill/CPL checked against the DRC-clean board. BOM has 40 lines to select at order (MPN UNKNOWN, requirement listed). Assembly quote, DFM review and inspection plan OPEN. |
+| BUD-MFG-01 | CONDITIONAL | Prototype Gerbers/drill/CPL checked against the DRC-clean board. BOM has 21 lines to select at order (MPN UNKNOWN, requirement listed). Assembly quote, DFM review and inspection plan OPEN. |
 | BUD-COST-01 | OPEN | Complete 3/5-unit delivered GBP quotes UNKNOWN; GBP 180/300 are ceilings. |
 | BUD-G-01 | OPEN | No measured budget-board records. Gate G requires real dummy-load/thermal/fault data. |
 
@@ -211,15 +211,12 @@ Voltage and energy arithmetic do not establish laser safety. See the budget faul
 - `buck.minimum_boot_refresh_duty`
 - `inductor.minimum_l_h_hot_biased`
 - `inductor.core_loss_w`
-- `current_sense.fb_resistor_mpns`
 - `backup.propagation_s_guaranteed_max`
-- `backup.resistor_mpn`
 - `voltage_monitor.guaranteed_delay_s_max`
 - `control.complete_enable_buffer`
 - `disconnect.total_shutdown_s_guaranteed_max`
 - `output_energy.bulk_cap_effective_verified`
 - `output_energy.laser_reconnect_peak_verified`
-- `output_energy.bulk_cap_mpn`
 - `loop.verified_model`
 - `procurement.quoted_component_total_gbp`
 - `procurement.quoted_fab_assembly_landed_gbp`

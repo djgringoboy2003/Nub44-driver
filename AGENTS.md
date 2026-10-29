@@ -47,7 +47,8 @@ dashboard apply only to the original single-cell circuit.
    - Connectivity and parts: `engineering/design/connectivity.yaml`.
    - PCB placement: `hardware/<variant>/placement.yaml`.
 
-   For the separate budget circuit, numeric values are in `engineering/design/budget-2s/parameters.yaml`.
+   For the separate budget circuit, numeric values are in `engineering/design/budget-2s/parameters.yaml` and
+   distributor order codes (with evidence IDs; never prices or stock) in `engineering/design/budget-2s/sourcing.yaml`.
    Its connectivity is `engineering/design/budget-2s/connectivity.yaml` and its placement (positions, pours,
    fixed tracks/vias, router keep-outs) is `hardware/budget-2s/placement.yaml`. Its symbols/footprints live in
    the separate `hardware/budget-2s/lib` (`budget2s`), built by `automation/budget/build_library.py`. Build the

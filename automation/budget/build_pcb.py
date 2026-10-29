@@ -18,7 +18,6 @@ import argparse
 import hashlib
 import importlib.util
 import json
-import re
 import shutil
 import subprocess
 import sys
@@ -208,11 +207,17 @@ def stage_drc() -> dict:
 
 def routing_sources() -> dict:
     """Files whose change invalidates an archived router session (geometry, nets, lands, rules)."""
-    files = [VDIR / "placement.yaml", SOURCES.connectivity, NETLIST, Path(__file__),
+    files = [VDIR / "placement.yaml", Path(__file__),
              *sorted((kicad_lib.BUDGET_LIB_DIR / f"{kicad_lib.BUDGET_LIB}.pretty").glob("*.kicad_mod"))]
-    # the netlist's export timestamp changes on every schematic build without changing a net
-    content = lambda f: re.sub(rb'\(date "[^"]*"\)', b"", f.read_bytes()) if f == NETLIST else f.read_bytes()
-    return {f.relative_to(ROOT).as_posix(): hashlib.sha256(content(f)).hexdigest() for f in files}
+    out = {f.relative_to(ROOT).as_posix(): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
+    # From the connectivity only what routing depends on: refs, footprints and pin nets. Values, MPNs and
+    # descriptions do not move copper (build_schematic.py proves the netlist equals the connectivity).
+    parts = yaml.safe_load(SOURCES.connectivity.read_text(encoding="utf-8"))["parts"]
+    geometry = sorted((p["ref"], p["footprint"], sorted((str(k), str(v)) for k, v in (p.get("pins") or {}).items()))
+                      for p in parts)
+    out[SOURCES.connectivity.relative_to(ROOT).as_posix() + "#refs-footprints-pins"] = \
+        hashlib.sha256(json.dumps(geometry).encode("utf-8")).hexdigest()
+    return out
 
 
 def stage_archive() -> None:

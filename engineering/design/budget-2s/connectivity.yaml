@@ -36,21 +36,21 @@ parts:
      desc: "Reverse-polarity P-MOSFET -20 V, 16 mOhm max at -4.5 V, +/-12 V gate (BUD-15)",
      pins: {1: VBAT_P, 2: VBAT_P, 3: VBAT_P, 4: QREV_G, 5: VBAT_F, 6: VBAT_F, 7: VBAT_F, 8: VBAT_F}}
   - {ref: R1, block: power_in, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603; Q1 gate to GND", pins: {1: QREV_G, 2: GND}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603; Q1 gate to GND", pins: {1: QREV_G, 2: GND}}
   - {ref: D1, block: power_in, lib: "Device:D_Zener", value: 10V, footprint: "Diode_SMD:D_SOD-523",
      mpn: BZX585-C10, mfr: Nexperia, desc: "10 V Zener SOD-523, Q1 gate-source clamp against plug transients (PREORDER-11 series)",
      pins: {1: VBAT_P, 2: QREV_G}}
   - {ref: D2, block: power_in, lib: "Device:D_TVS", value: "10V TVS", footprint: "Diode_SMD:D_SMA",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "Bidirectional TVS, 10 V standoff, SMA (e.g. SMAJ10CA class); clamp below TPS54821 PVIN limit - verify",
+     mpn: SMAJ10CA, mfr: Littelfuse, desc: "Bidirectional TVS, 10 V standoff, SMA (e.g. SMAJ10CA class); clamp below TPS54821 PVIN limit - verify",
      pins: {1: VBAT_P, 2: GND}}
   - {ref: C1, block: power_in, lib: "Device:C_Polarized", value: 100u, footprint: "Capacitor_SMD:CP_Elec_6.3x7.7",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 uF 16 V SMD aluminium/polymer bulk input, cable damping", pins: {1: VBAT_P, 2: GND}}
+     mpn: EMVL160ARA101MF80G, mfr: "Nippon Chemi-Con", desc: "100 uF 16 V SMD aluminium/polymer bulk input, cable damping", pins: {1: VBAT_P, 2: GND}}
   - {ref: C2, block: power_in, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 25 V X5R 1206 PVIN", pins: {1: VBAT_P, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 25 V X5R 1206 PVIN", pins: {1: VBAT_P, 2: GND}}
   - {ref: C3, block: power_in, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 25 V X5R 1206 PVIN", pins: {1: VBAT_P, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 25 V X5R 1206 PVIN", pins: {1: VBAT_P, 2: GND}}
   - {ref: C4, block: power_in, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF 25 V X7R 0603 PVIN HF", pins: {1: VBAT_P, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF 25 V X7R 0603 PVIN HF", pins: {1: VBAT_P, 2: GND}}
   - {ref: TP1, block: power_in, lib: "Connector:TestPoint", value: VBAT_P, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VBAT_P}}
 
@@ -62,39 +62,39 @@ parts:
      pins: {1: RT, 2: GND, 3: GND, 4: VBAT_P, 5: VBAT_P, 6: VBAT_P, 7: VSENSE, 8: COMP, 9: SS, 10: EN,
             11: PH, 12: PH, 13: BOOT, 14: PWRGD, 15: GND}}
   - {ref: C5, block: converter, lib: "Device:C", value: 1u, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 uF 25 V X5R 0603 VIN decoupling at U1 pin 6", pins: {1: VBAT_P, 2: GND}}
+     mpn: CL10A105KB8NNNC, mfr: "Samsung Electro-Mechanics", desc: "1 uF 25 V X5R 0603 VIN decoupling at U1 pin 6", pins: {1: VBAT_P, 2: GND}}
   - {ref: R2, block: converter, lib: "Device:R", value: 100k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 kOhm 1% 0603 RT: 400-480-560 kHz (BUD-01 p.6)", pins: {1: RT, 2: GND}}
+     mpn: 0603WAF1003T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "100 kOhm 1% 0603 RT: 400-480-560 kHz (BUD-01 p.6)", pins: {1: RT, 2: GND}}
   - {ref: C6, block: converter, lib: "Device:C", value: 22n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 nF X7R 0603 soft start", pins: {1: SS, 2: GND}}
+     mpn: CL10B223KB8NNNC, mfr: "Samsung Electro-Mechanics", desc: "22 nF X7R 0603 soft start", pins: {1: SS, 2: GND}}
   - {ref: C7, block: converter, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF 16 V X7R 0603 bootstrap (BUD-01 p.15)", pins: {1: BOOT, 2: PH}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF 16 V X7R 0603 bootstrap (BUD-01 p.15)", pins: {1: BOOT, 2: PH}}
   - {ref: R3, block: converter, lib: "Device:R", value: 180, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "180 Ohm 1% 0603 compensation (loop study)", pins: {1: COMP, 2: COMP_RC}}
+     mpn: 0603WAF1800T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "180 Ohm 1% 0603 compensation (loop study)", pins: {1: COMP, 2: COMP_RC}}
   - {ref: C8, block: converter, lib: "Device:C", value: 1u, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 uF X7R 0603 compensation (loop study)", pins: {1: COMP_RC, 2: GND}}
+     mpn: CL10B105KA8NNNC, mfr: "Samsung Electro-Mechanics", desc: "1 uF X7R 0603 compensation (loop study)", pins: {1: COMP_RC, 2: GND}}
   - {ref: C9, block: converter, lib: "Device:C", value: 4.7n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "4.7 nF C0G 0603 compensation HF pole", pins: {1: COMP, 2: GND}}
+     mpn: CC0603JRNPO9BN472, mfr: YAGEO, desc: "4.7 nF C0G 0603 compensation HF pole", pins: {1: COMP, 2: GND}}
   - {ref: L1, block: converter, lib: "Device:L", value: 4.7u,
      footprint: "Inductor_SMD:L_Bourns_SRP1245A", mpn: SRP1265A-4R7M, mfr: Bourns,
      desc: "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads",
      pins: {1: PH, 2: VBUCK}}
   - {ref: C10, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output (6 fitted; effective C under bias to verify)", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF >=16 V X5R 1206 output (6 fitted; 25 V part chosen for less DC-bias loss; effective C to verify)", pins: {1: VBUCK, 2: GND}}
   - {ref: C11, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
   - {ref: C12, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
   - {ref: C13, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
   - {ref: C14, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
   - {ref: C15, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
+     mpn: CL31A226KAHNNNE, mfr: "Samsung Electro-Mechanics", desc: "22 uF 16 V X5R 1206 output", pins: {1: VBUCK, 2: GND}}
   - {ref: C16, block: converter, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF 16 V X7R 0603 output HF", pins: {1: VBUCK, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF 16 V X7R 0603 output HF", pins: {1: VBUCK, 2: GND}}
   - {ref: R4, block: converter, lib: "Device:R", value: 1k, footprint: "Resistor_SMD:R_0805_2012Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 kOhm 1% 0805 VBUCK bleeder (>= 0.125 W; 71 mW at 8.4 V fault)", pins: {1: VBUCK, 2: GND}}
+     mpn: 0805W8F1001T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 kOhm 1% 0805 VBUCK bleeder (>= 0.125 W; 71 mW at 8.4 V fault)", pins: {1: VBUCK, 2: GND}}
   - {ref: TP2, block: converter, lib: "Connector:TestPoint", value: VBUCK, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VBUCK}}
 
@@ -107,51 +107,51 @@ parts:
      mpn: INA186A2IDCKR, mfr: Texas Instruments, desc: "Current-sense amplifier, gain 50 (PREORDER-07)",
      pins: {1: GND, 2: GND, 3: VCTRL, 4: VBUCK, 5: VSH, 6: CS_OUT}}
   - {ref: C17, block: sense, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 U2 supply", pins: {1: VCTRL, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 U2 supply", pins: {1: VCTRL, 2: GND}}
   - {ref: R5, block: sense, lib: "Device:R", value: 27.4k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "27.4 kOhm 0.1% 25 ppm/C 0603 feedback top: 4.5 A main build (DD-33); 15.0/19.1/23.2k for 3.0/3.5/4.0 A",
+     mpn: ERA-3AEB2742V, mfr: Panasonic, desc: "27.4 kOhm 0.1% 25 ppm/C 0603 feedback top: 4.5 A main build (DD-33); 15.0/19.1/23.2k for 3.0/3.5/4.0 A",
      pins: {1: CS_OUT, 2: VSENSE}}
   - {ref: R6, block: sense, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 feedback bottom", pins: {1: VSENSE, 2: GND}}
+     mpn: ERA-3AEB103V, mfr: Panasonic, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 feedback bottom", pins: {1: VSENSE, 2: GND}}
   - {ref: U3, block: sense, lib: "budget2s:INA300", value: INA300A, footprint: "Package_SO:MSOP-10_3x3mm_P0.5mm",
      mpn: INA300AIDGSR, mfr: Texas Instruments,
      desc: "Independent overcurrent comparator, latched, hard-enabled, fast DELAY/HYS floating (BUD-06)",
      pins: {1: VBUCK, 2: VSH, 3: OC_LIM, 4: VCTRL, 5: nFAULT, 6: VCTRL, 7: NC, 8: GND, 9: VCTRL, 10: NC}}
   - {ref: C18, block: sense, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 U3 supply", pins: {1: VCTRL, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 U3 supply", pins: {1: VCTRL, 2: GND}}
   - {ref: R7, block: sense, lib: "Device:R", value: 2.67k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "2.67 kOhm 0.1% 25 ppm/C 0603 INA300 limit: 5.10-5.48 A trip (DD-33)", pins: {1: OC_LIM, 2: GND}}
+     mpn: TNPW06032K67BEEA, mfr: Vishay, alt: ERA-3AEB2671V, desc: "2.67 kOhm 0.1% 25 ppm/C 0603 INA300 limit: 5.10-5.48 A trip (DD-33)", pins: {1: OC_LIM, 2: GND}}
   - {ref: Q2, block: sense, lib: "budget2s:Q_PMOS_PowerPAK1212", value: SiSS23DN,
      footprint: "Package_SO:Vishay_PowerPAK_1212-8_Single", mpn: SISS23DN-T1-GE3, mfr: Vishay,
      desc: "Output disconnect P-MOSFET, source at shunt (DD-31/34); 4.5/6.3 mOhm max at -4.5/-2.5 V, +/-8 V gate",
      pins: {1: VSH, 2: VSH, 3: VSH, 4: QOUT_G, 5: LASER_P}}
   - {ref: R8, block: sense, lib: "Device:R", value: 2.2k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "2.2 kOhm 1% 0603 Q2 source-gate pull-up (default off)", pins: {1: VSH, 2: QOUT_G}}
+     mpn: 0603WAF2201T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "2.2 kOhm 1% 0603 Q2 source-gate pull-up (default off)", pins: {1: VSH, 2: QOUT_G}}
   - {ref: D3, block: sense, lib: "Device:D_Zener", value: 6.2V, footprint: "Diode_SMD:D_SOD-523",
      mpn: BZX585-C6V2, mfr: Nexperia, desc: "Q2 gate clamp, VZ 5.89-6.51 V (PREORDER-11, DD-34)", pins: {1: VSH, 2: QOUT_G}}
   - {ref: R9, block: sense, lib: "Device:R", value: 100, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 Ohm 1% 0603 gate series resistor to N1/N2 (limits clamp current)", pins: {1: QOUT_G, 2: QOUT_DRV}}
+     mpn: 0603WAF1000T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "100 Ohm 1% 0603 gate series resistor to N1/N2 (limits clamp current)", pins: {1: QOUT_G, 2: QOUT_DRV}}
   - {ref: J2, block: sense, lib: "Connector:Screw_Terminal_01x02", value: "Laser out",
      footprint: "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm", mpn: MX126-5.0-02P, mfr: MaiXu,
      desc: "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify",
      pins: {1: LASER_P, 2: GND}}
   - {ref: C19, block: sense, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF 16 V X7R 0603 laser-side capacitor", pins: {1: LASER_P, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF 16 V X7R 0603 laser-side capacitor", pins: {1: LASER_P, 2: GND}}
   - {ref: R10, block: sense, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 laser-side bleed", pins: {1: LASER_P, 2: GND}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 laser-side bleed", pins: {1: LASER_P, 2: GND}}
   - {ref: TP3, block: sense, lib: "Connector:TestPoint", value: LASER_P, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: LASER_P}}
 
   # ------------------------------------------------------------------ enable (DD-32)
   - {ref: R11, block: enable, lib: "Device:R", value: 1.0k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1.0 kOhm 1% 0603 interlock pull-up, VCTRL side", pins: {1: VCTRL, 2: IL_A}}
+     mpn: 0603WAF1001T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1.0 kOhm 1% 0603 interlock pull-up, VCTRL side", pins: {1: VCTRL, 2: IL_A}}
   - {ref: J3, block: enable, lib: "Connector_Generic:Conn_01x02", value: Interlock,
      footprint: "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical", mpn: B2B-PH-K-S, mfr: JST,
      desc: "External interlock loop (closed = permit). Open loop clears the latch", pins: {1: IL_A, 2: IL_B}}
   - {ref: R12, block: enable, lib: "Device:R", value: 9.1k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "9.1 kOhm 1% 0603 interlock pull-up, nFAULT side", pins: {1: IL_B, 2: nFAULT}}
+     mpn: RC0603FR-079K1L, mfr: YAGEO, desc: "9.1 kOhm 1% 0603 interlock pull-up, nFAULT side", pins: {1: IL_B, 2: nFAULT}}
   - {ref: R13, block: enable, lib: "Device:R", value: 47k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "47 kOhm 1% 0603 nFAULT pulldown", pins: {1: nFAULT, 2: GND}}
+     mpn: 0603WAF4702T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "47 kOhm 1% 0603 nFAULT pulldown", pins: {1: nFAULT, 2: GND}}
   - {ref: U4, block: enable, lib: "budget2s:TLV803E", value: TLV803EA29, footprint: "Package_TO_SOT_SMD:SOT-23",
      mpn: TLV803EA29DBZR, mfr: Texas Instruments, desc: "VCTRL supervisor 2.93 V / 200 ms, open drain onto nFAULT (BUD-20)",
      pins: {1: GND, 2: nFAULT, 3: VCTRL}}
@@ -159,26 +159,26 @@ parts:
      mpn: TLV6700DDCR, mfr: Texas Instruments, desc: "UV (A) and VBUCK OV (B) monitor, open drain onto nFAULT (BUD-18)",
      pins: {1: nFAULT, 2: GND, 3: UV_SENSE, 4: OV_SENSE, 5: VCTRL, 6: nFAULT}}
   - {ref: C20, block: enable, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 U5 supply", pins: {1: VCTRL, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 U5 supply", pins: {1: VCTRL, 2: GND}}
   - {ref: R14, block: enable, lib: "Device:R", value: 130k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "130 kOhm 0.1% 25 ppm/C 0603 UV divider top (DD-31)", pins: {1: VBAT_P, 2: UV_SENSE}}
+     mpn: ERA-3AEB134V, mfr: Panasonic, desc: "130 kOhm 0.1% 25 ppm/C 0603 UV divider top (DD-31)", pins: {1: VBAT_P, 2: UV_SENSE}}
   - {ref: R15, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 UV divider bottom", pins: {1: UV_SENSE, 2: GND}}
+     mpn: ERA-3AEB103V, mfr: Panasonic, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 UV divider bottom", pins: {1: UV_SENSE, 2: GND}}
   - {ref: C21, block: enable, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 UV sense filter (ripple)", pins: {1: UV_SENSE, 2: GND}}
-  - {ref: R16, block: enable, lib: "Device:R", value: 134k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "134 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top", pins: {1: VBUCK, 2: OV_SENSE}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 UV sense filter (ripple)", pins: {1: UV_SENSE, 2: GND}}
+  - {ref: R16, block: enable, lib: "Device:R", value: 133k, footprint: "Resistor_SMD:R_0603_1608Metric",
+     mpn: RT0603BRD07133KL, mfr: YAGEO, desc: "133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)", pins: {1: VBUCK, 2: OV_SENSE}}
   - {ref: R17, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 OV divider bottom", pins: {1: OV_SENSE, 2: GND}}
+     mpn: ERA-3AEB103V, mfr: Panasonic, desc: "10.0 kOhm 0.1% 25 ppm/C 0603 OV divider bottom", pins: {1: OV_SENSE, 2: GND}}
   - {ref: C22, block: enable, lib: "Device:C", value: 1n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 nF C0G 0603 OV sense filter (response time is BUD-ISS-04)", pins: {1: OV_SENSE, 2: GND}}
+     mpn: 0603CG102J500NT, mfr: "FH (Guangdong Fenghua)", desc: "1 nF C0G 0603 OV sense filter (response time is BUD-ISS-04)", pins: {1: OV_SENSE, 2: GND}}
   - {ref: U6, block: enable, lib: "budget2s:SN74HCS74", value: SN74HCS74, footprint: "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
      mpn: SN74HCS74DR, mfr: Texas Instruments,
      desc: "Arm latch: CLR = nFAULT, D/PRE high, CLK = MCU arm edge; second flip-flop unused and tied (BUD-19)",
      pins: {1: nFAULT, 2: VCTRL, 3: ARM_CLK, 4: VCTRL, 5: ARM_Q, 6: NC, 7: GND, 8: NC, 9: NC,
             10: VCTRL, 11: GND, 12: GND, 13: VCTRL, 14: VCTRL}}
   - {ref: C23, block: enable, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 U6 supply", pins: {1: VCTRL, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 U6 supply", pins: {1: VCTRL, 2: GND}}
   - {ref: Q3, block: enable, lib: "budget2s:Q_NMOS_SOT523", value: DMG1012T, footprint: "Package_TO_SOT_SMD:SOT-523",
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N1: ARM_Q half of the output-disconnect AND pair (LEAD-04)",
      pins: {1: N1_G, 2: N12, 3: QOUT_DRV}}
@@ -186,32 +186,32 @@ parts:
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N2: nFAULT half of the output-disconnect AND pair",
      pins: {1: nFAULT, 2: GND, 3: N12}}
   - {ref: R18, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 ARM_Q to N1 gate", pins: {1: ARM_Q, 2: N1_G}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 ARM_Q to N1 gate", pins: {1: ARM_Q, 2: N1_G}}
   - {ref: R19, block: enable, lib: "Device:R", value: 1M, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 MOhm 1% 0603 N1 gate pulldown", pins: {1: N1_G, 2: GND}}
+     mpn: 0603WAF1004T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 MOhm 1% 0603 N1 gate pulldown", pins: {1: N1_G, 2: GND}}
   - {ref: Q5, block: enable, lib: "budget2s:Q_NMOS_SOT523", value: DMG1012T, footprint: "Package_TO_SOT_SMD:SOT-523",
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N3: ARM_Q half of the EN AND pair", pins: {1: N3_G, 2: N34, 3: P1_G}}
   - {ref: Q6, block: enable, lib: "budget2s:Q_NMOS_SOT523", value: DMG1012T, footprint: "Package_TO_SOT_SMD:SOT-523",
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N4: nFAULT half of the EN AND pair", pins: {1: nFAULT, 2: GND, 3: N34}}
   - {ref: R20, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 ARM_Q to N3 gate", pins: {1: ARM_Q, 2: N3_G}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 ARM_Q to N3 gate", pins: {1: ARM_Q, 2: N3_G}}
   - {ref: R21, block: enable, lib: "Device:R", value: 1M, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 MOhm 1% 0603 N3 gate pulldown", pins: {1: N3_G, 2: GND}}
+     mpn: 0603WAF1004T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 MOhm 1% 0603 N3 gate pulldown", pins: {1: N3_G, 2: GND}}
   - {ref: Q7, block: enable, lib: "budget2s:Q_PMOS_SOT523", value: DMG1013T, footprint: "Package_TO_SOT_SMD:SOT-523",
      mpn: DMG1013T-7, mfr: Diodes Incorporated, desc: "P1: sources the TPS54821 EN divider from VCTRL (BUD-23)",
      pins: {1: P1_G, 2: VCTRL, 3: P1_D}}
   - {ref: R22, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 P1 gate pull-up", pins: {1: VCTRL, 2: P1_G}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 P1 gate pull-up", pins: {1: VCTRL, 2: P1_G}}
   - {ref: R23, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 EN series", pins: {1: P1_D, 2: EN}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 EN series", pins: {1: P1_D, 2: EN}}
   - {ref: R24, block: enable, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 EN pulldown (default off)", pins: {1: EN, 2: GND}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 EN pulldown (default off)", pins: {1: EN, 2: GND}}
   - {ref: Q8, block: enable, lib: "budget2s:Q_NMOS_SOT523", value: DMG1012T, footprint: "Package_TO_SOT_SMD:SOT-523",
      mpn: DMG1012T-7, mfr: Diodes Incorporated, desc: "N5: firmware-permit inhibit, on by default", pins: {1: N5_G, 2: GND, 3: nFAULT}}
   - {ref: R25, block: enable, lib: "Device:R", value: 100k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 kOhm 1% 0603 N5 gate pull-up (inhibit while MCU reset)", pins: {1: VCTRL, 2: N5_G}}
+     mpn: 0603WAF1003T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "100 kOhm 1% 0603 N5 gate pull-up (inhibit while MCU reset)", pins: {1: VCTRL, 2: N5_G}}
   - {ref: R26, block: enable, lib: "Device:R", value: 15k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "15 kOhm 1% 0603 VCTRL bleed (back-power bound)", pins: {1: VCTRL, 2: GND}}
+     mpn: 0603WAF1502T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "15 kOhm 1% 0603 VCTRL bleed (back-power bound)", pins: {1: VCTRL, 2: GND}}
   - {ref: TP4, block: enable, lib: "Connector:TestPoint", value: nFAULT, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: nFAULT}}
 
@@ -220,9 +220,9 @@ parts:
      footprint: "Package_TO_SOT_SMD:SOT-89-3", mpn: MCP1703AT-3302E/MB, mfr: Microchip,
      desc: "3.3 V LDO from VBAT_P, SOT-89: 1 GND, 2 VIN, 3 VOUT (BUD-21)", pins: {1: GND, 2: VBAT_P, 3: VCTRL}}
   - {ref: C24, block: control, lib: "Device:C", value: 1u, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 uF 25 V X5R 0603 LDO input", pins: {1: VBAT_P, 2: GND}}
+     mpn: CL10A105KB8NNNC, mfr: "Samsung Electro-Mechanics", desc: "1 uF 25 V X5R 0603 LDO input", pins: {1: VBAT_P, 2: GND}}
   - {ref: C25, block: control, lib: "Device:C", value: 4.7u, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "4.7 uF 10 V X5R 0603 LDO output (effective 1-22 uF)", pins: {1: VCTRL, 2: GND}}
+     mpn: CL10A475KO8NNNC, mfr: "Samsung Electro-Mechanics", desc: "4.7 uF 10 V X5R 0603 LDO output (effective 1-22 uF)", pins: {1: VCTRL, 2: GND}}
   - {ref: U8, block: control, lib: "MCU_Microchip_ATtiny:ATtiny1616-S", value: ATtiny1616,
      footprint: "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm", mpn: ATTINY1616-SN, mfr: Microchip,
      desc: "MCU, SOIC-20 port map in budget-2s-design.md (PREORDER-08)",
@@ -230,53 +230,53 @@ parts:
             9: LED_DRV, 10: nFAULT, 11: PWRGD, 12: ARM_CLK, 13: NC, 14: NC, 15: NC, 16: UPDI,
             17: N5_G, 18: IL_B, 19: BTN, 20: GND}}
   - {ref: C26, block: control, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 MCU decoupling", pins: {1: VCTRL, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 MCU decoupling", pins: {1: VCTRL, 2: GND}}
   - {ref: C27, block: control, lib: "Device:C", value: 1u, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 uF X5R 0603 MCU bulk decoupling", pins: {1: VCTRL, 2: GND}}
+     mpn: CL10A105KB8NNNC, mfr: "Samsung Electro-Mechanics", desc: "1 uF X5R 0603 MCU bulk decoupling", pins: {1: VCTRL, 2: GND}}
   - {ref: J4, block: control, lib: "Connector_Generic:Conn_01x03", value: UPDI,
-     footprint: "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical", mpn: UNKNOWN, mfr: UNKNOWN,
+     footprint: "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical", mpn: "2.54-1*3P", mfr: "BOOMELE (Boom Precision Elec)",
      desc: "UPDI programming header: 1 VCTRL, 2 UPDI, 3 GND", pins: {1: VCTRL, 2: UPDI_HDR, 3: GND}}
   - {ref: R27, block: control, lib: "Device:R", value: 470, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "470 Ohm 1% 0603 UPDI series", pins: {1: UPDI_HDR, 2: UPDI}}
+     mpn: 0603WAF4700T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "470 Ohm 1% 0603 UPDI series", pins: {1: UPDI_HDR, 2: UPDI}}
   - {ref: R28, block: control, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 PWRGD pull-up", pins: {1: VCTRL, 2: PWRGD}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 PWRGD pull-up", pins: {1: VCTRL, 2: PWRGD}}
   - {ref: R29, block: control, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 current-monitor ADC filter", pins: {1: CS_OUT, 2: CS_ADC}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 current-monitor ADC filter", pins: {1: CS_OUT, 2: CS_ADC}}
   - {ref: C28, block: control, lib: "Device:C", value: 10n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 nF X7R 0603 current-monitor ADC filter", pins: {1: CS_ADC, 2: GND}}
+     mpn: 0603B103K500NT, mfr: "FH (Guangdong Fenghua)", desc: "10 nF X7R 0603 current-monitor ADC filter", pins: {1: CS_ADC, 2: GND}}
   - {ref: R30, block: control, lib: "Device:R", value: 1M, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 MOhm 1% 0603 VBUCK monitor top (limits back-power injection, DD-32)", pins: {1: VBUCK, 2: OUT_ADC}}
+     mpn: 0603WAF1004T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 MOhm 1% 0603 VBUCK monitor top (limits back-power injection, DD-32)", pins: {1: VBUCK, 2: OUT_ADC}}
   - {ref: R31, block: control, lib: "Device:R", value: 270k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "270 kOhm 1% 0603 VBUCK monitor bottom", pins: {1: OUT_ADC, 2: GND}}
+     mpn: 0603WAF2703T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "270 kOhm 1% 0603 VBUCK monitor bottom", pins: {1: OUT_ADC, 2: GND}}
   - {ref: C29, block: control, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 VBUCK monitor ADC reservoir", pins: {1: OUT_ADC, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 VBUCK monitor ADC reservoir", pins: {1: OUT_ADC, 2: GND}}
   - {ref: R32, block: control, lib: "Device:R", value: 1M, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 MOhm 1% 0603 pack monitor top (limits back-power injection, DD-32)", pins: {1: VBAT_P, 2: BAT_ADC}}
+     mpn: 0603WAF1004T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 MOhm 1% 0603 pack monitor top (limits back-power injection, DD-32)", pins: {1: VBAT_P, 2: BAT_ADC}}
   - {ref: R33, block: control, lib: "Device:R", value: 270k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "270 kOhm 1% 0603 pack monitor bottom", pins: {1: BAT_ADC, 2: GND}}
+     mpn: 0603WAF2703T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "270 kOhm 1% 0603 pack monitor bottom", pins: {1: BAT_ADC, 2: GND}}
   - {ref: C30, block: control, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 pack monitor ADC reservoir", pins: {1: BAT_ADC, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 pack monitor ADC reservoir", pins: {1: BAT_ADC, 2: GND}}
   - {ref: R34, block: control, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 board NTC divider", pins: {1: NTC_EXC, 2: NTC_BRD}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 board NTC divider", pins: {1: NTC_EXC, 2: NTC_BRD}}
   - {ref: TH1, block: control, lib: "Device:Thermistor_NTC", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm NTC 0603, board temperature near U1/Q2", pins: {1: NTC_BRD, 2: GND}}
+     mpn: NCP18XH103F03RB, mfr: Murata, desc: "10 kOhm NTC 0603, board temperature near U1/Q2", pins: {1: NTC_BRD, 2: GND}}
   - {ref: R35, block: control, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 laser NTC divider", pins: {1: NTC_EXC, 2: NTC_LSR}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 laser NTC divider", pins: {1: NTC_EXC, 2: NTC_LSR}}
   - {ref: J5, block: control, lib: "Connector_Generic:Conn_01x02", value: "Laser NTC",
      footprint: "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical", mpn: B2B-PH-K-S, mfr: JST,
      desc: "Optional laser-mount 10 kOhm NTC", pins: {1: NTC_LSR, 2: GND}}
   - {ref: C31, block: control, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 laser NTC filter", pins: {1: NTC_LSR, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 laser NTC filter", pins: {1: NTC_LSR, 2: GND}}
   - {ref: R36, block: control, lib: "Device:R", value: 1k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "1 kOhm 1% 0603 indicator LED series", pins: {1: LED_DRV, 2: LED_A}}
+     mpn: 0603WAF1001T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "1 kOhm 1% 0603 indicator LED series", pins: {1: LED_DRV, 2: LED_A}}
   - {ref: D4, block: control, lib: "Device:LED", value: Status, footprint: "LED_SMD:LED_0805_2012Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "Status LED 0805", pins: {1: GND, 2: LED_A}}
+     mpn: KT-0805Y, mfr: "Hubei KENTO Elec", desc: "Status LED 0805", pins: {1: GND, 2: LED_A}}
   - {ref: SW1, block: control, lib: "Switch:SW_Push", value: Mode, footprint: "Button_Switch_SMD:SW_SPST_TL3342",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "User button (arm hold / mode), TL3342-class SMD", pins: {1: BTN, 2: GND}}
+     mpn: TL3342F160QG/TR, mfr: E-Switch, desc: "User button (arm hold / mode), TL3342-class SMD", pins: {1: BTN, 2: GND}}
   - {ref: R37, block: control, lib: "Device:R", value: 10k, footprint: "Resistor_SMD:R_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "10 kOhm 1% 0603 button pull-up", pins: {1: VCTRL, 2: BTN}}
+     mpn: 0603WAF1002T5E, mfr: "UNI-ROYAL (Uniroyal Elec)", desc: "10 kOhm 1% 0603 button pull-up", pins: {1: VCTRL, 2: BTN}}
   - {ref: C32, block: control, lib: "Device:C", value: 100n, footprint: "Capacitor_SMD:C_0603_1608Metric",
-     mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 button debounce", pins: {1: BTN, 2: GND}}
+     mpn: CC0603KRX7R9BB104, mfr: YAGEO, desc: "100 nF X7R 0603 button debounce", pins: {1: BTN, 2: GND}}
   - {ref: TP5, block: control, lib: "Connector:TestPoint", value: VCTRL, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VCTRL}}
   - {ref: H1, block: control, lib: "Mechanical:MountingHole", value: M3, in_bom: false,

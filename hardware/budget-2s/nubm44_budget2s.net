@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "E:\\NUBM44 driver\\hardware\\budget-2s\\nubm44_budget2s.kicad_sch")
-		(date "2026-10-29T11:33:32")
+		(date "2026-10-29T19:27:59")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -61,9 +61,9 @@
 			(description "100 uF 16 V SMD aluminium/polymer bulk input, cable damping")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "EMVL160ARA101MF80G")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Nippon Chemi-Con")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -81,11 +81,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "EMVL160ARA101MF80G")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Nippon Chemi-Con")
 			)
 			(property
 				(name "Block")
@@ -133,9 +133,9 @@
 			(description "22 uF 25 V X5R 1206 PVIN")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -153,11 +153,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -205,9 +205,9 @@
 			(description "22 uF 25 V X5R 1206 PVIN")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -225,11 +225,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -277,9 +277,9 @@
 			(description "100 nF 25 V X7R 0603 PVIN HF")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -297,11 +297,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -349,9 +349,9 @@
 			(description "1 uF 25 V X5R 0603 VIN decoupling at U1 pin 6")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10A105KB8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -369,11 +369,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10A105KB8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -421,9 +421,9 @@
 			(description "22 nF X7R 0603 soft start")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10B223KB8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -441,11 +441,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10B223KB8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -493,9 +493,9 @@
 			(description "100 nF 16 V X7R 0603 bootstrap (BUD-01 p.15)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "converter")
 				(field
@@ -513,11 +513,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -565,9 +565,9 @@
 			(description "1 uF X7R 0603 compensation (loop study)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10B105KA8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -585,11 +585,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10B105KA8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -637,9 +637,9 @@
 			(description "4.7 nF C0G 0603 compensation HF pole")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603JRNPO9BN472")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "converter")
 				(field
@@ -657,11 +657,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603JRNPO9BN472")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -706,12 +706,12 @@
 			(ref "C10")
 			(value "22u")
 			(footprint "Capacitor_SMD:C_1206_3216Metric")
-			(description "22 uF 16 V X5R 1206 output (6 fitted; effective C under bias to verify)")
+			(description "22 uF >=16 V X5R 1206 output (6 fitted; 25 V part chosen for less DC-bias loss; effective C to verify)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -720,7 +720,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "22 uF 16 V X5R 1206 output (6 fitted; effective C under bias to verify)")
+					(name "Description") "22 uF >=16 V X5R 1206 output (6 fitted; 25 V part chosen for less DC-bias loss; effective C to verify)")
 			)
 			(libsource
 				(lib "Device")
@@ -729,11 +729,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -781,9 +781,9 @@
 			(description "22 uF 16 V X5R 1206 output")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -801,11 +801,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -853,9 +853,9 @@
 			(description "22 uF 16 V X5R 1206 output")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -873,11 +873,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -925,9 +925,9 @@
 			(description "22 uF 16 V X5R 1206 output")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -945,11 +945,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -997,9 +997,9 @@
 			(description "22 uF 16 V X5R 1206 output")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -1017,11 +1017,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -1069,9 +1069,9 @@
 			(description "22 uF 16 V X5R 1206 output")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL31A226KAHNNNE")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "converter")
 				(field
@@ -1089,11 +1089,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL31A226KAHNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -1141,9 +1141,9 @@
 			(description "100 nF 16 V X7R 0603 output HF")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "converter")
 				(field
@@ -1161,11 +1161,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1213,9 +1213,9 @@
 			(description "100 nF X7R 0603 U2 supply")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "sense")
 				(field
@@ -1233,11 +1233,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1285,9 +1285,9 @@
 			(description "100 nF X7R 0603 U3 supply")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "sense")
 				(field
@@ -1305,11 +1305,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1357,9 +1357,9 @@
 			(description "100 nF 16 V X7R 0603 laser-side capacitor")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "sense")
 				(field
@@ -1377,11 +1377,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1429,9 +1429,9 @@
 			(description "100 nF X7R 0603 U5 supply")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "enable")
 				(field
@@ -1449,11 +1449,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1501,9 +1501,9 @@
 			(description "100 nF X7R 0603 UV sense filter (ripple)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "enable")
 				(field
@@ -1521,11 +1521,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1573,9 +1573,9 @@
 			(description "1 nF C0G 0603 OV sense filter (response time is BUD-ISS-04)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603CG102J500NT")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "FH (Guangdong Fenghua)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -1593,11 +1593,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603CG102J500NT")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "FH (Guangdong Fenghua)")
 			)
 			(property
 				(name "Block")
@@ -1645,9 +1645,9 @@
 			(description "100 nF X7R 0603 U6 supply")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "enable")
 				(field
@@ -1665,11 +1665,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1717,9 +1717,9 @@
 			(description "1 uF 25 V X5R 0603 LDO input")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10A105KB8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "control")
 				(field
@@ -1737,11 +1737,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10A105KB8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -1789,9 +1789,9 @@
 			(description "4.7 uF 10 V X5R 0603 LDO output (effective 1-22 uF)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10A475KO8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "control")
 				(field
@@ -1809,11 +1809,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10A475KO8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -1861,9 +1861,9 @@
 			(description "100 nF X7R 0603 MCU decoupling")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "control")
 				(field
@@ -1881,11 +1881,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -1933,9 +1933,9 @@
 			(description "1 uF X5R 0603 MCU bulk decoupling")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CL10A105KB8NNNC")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Samsung Electro-Mechanics")
 				(field
 					(name "Block") "control")
 				(field
@@ -1953,11 +1953,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CL10A105KB8NNNC")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Samsung Electro-Mechanics")
 			)
 			(property
 				(name "Block")
@@ -2005,9 +2005,9 @@
 			(description "10 nF X7R 0603 current-monitor ADC filter")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603B103K500NT")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "FH (Guangdong Fenghua)")
 				(field
 					(name "Block") "control")
 				(field
@@ -2025,11 +2025,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603B103K500NT")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "FH (Guangdong Fenghua)")
 			)
 			(property
 				(name "Block")
@@ -2077,9 +2077,9 @@
 			(description "100 nF X7R 0603 VBUCK monitor ADC reservoir")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "control")
 				(field
@@ -2097,11 +2097,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -2149,9 +2149,9 @@
 			(description "100 nF X7R 0603 pack monitor ADC reservoir")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "control")
 				(field
@@ -2169,11 +2169,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -2221,9 +2221,9 @@
 			(description "100 nF X7R 0603 laser NTC filter")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "control")
 				(field
@@ -2241,11 +2241,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -2293,9 +2293,9 @@
 			(description "100 nF X7R 0603 button debounce")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "control")
 				(field
@@ -2313,11 +2313,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -2437,9 +2437,9 @@
 			(description "Bidirectional TVS, 10 V standoff, SMA (e.g. SMAJ10CA class); clamp below TPS54821 PVIN limit - verify")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "SMAJ10CA")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Littelfuse")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -2457,11 +2457,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "SMAJ10CA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Littelfuse")
 			)
 			(property
 				(name "Block")
@@ -2581,9 +2581,9 @@
 			(description "Status LED 0805")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "KT-0805Y")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Hubei KENTO Elec")
 				(field
 					(name "Block") "control")
 				(field
@@ -2601,11 +2601,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "KT-0805Y")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Hubei KENTO Elec")
 			)
 			(property
 				(name "Block")
@@ -3213,9 +3213,9 @@
 			(description "UPDI programming header: 1 VCTRL, 2 UPDI, 3 GND")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "2.54-1*3P")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "BOOMELE (Boom Precision Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -3233,11 +3233,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "2.54-1*3P")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "BOOMELE (Boom Precision Elec)")
 			)
 			(property
 				(name "Block")
@@ -4021,9 +4021,9 @@
 			(description "10 kOhm 1% 0603; Q1 gate to GND")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "power_in")
 				(field
@@ -4041,11 +4041,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4093,9 +4093,9 @@
 			(description "100 kOhm 1% 0603 RT: 400-480-560 kHz (BUD-01 p.6)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1003T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "converter")
 				(field
@@ -4113,11 +4113,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1003T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4165,9 +4165,9 @@
 			(description "180 Ohm 1% 0603 compensation (loop study)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1800T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "converter")
 				(field
@@ -4185,11 +4185,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1800T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4237,9 +4237,9 @@
 			(description "1 kOhm 1% 0805 VBUCK bleeder (>= 0.125 W; 71 mW at 8.4 V fault)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0805W8F1001T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "converter")
 				(field
@@ -4257,11 +4257,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0805W8F1001T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4309,9 +4309,9 @@
 			(description "27.4 kOhm 0.1% 25 ppm/C 0603 feedback top: 4.5 A main build (DD-33); 15.0/19.1/23.2k for 3.0/3.5/4.0 A")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "ERA-3AEB2742V")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Panasonic")
 				(field
 					(name "Block") "sense")
 				(field
@@ -4329,11 +4329,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "ERA-3AEB2742V")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Panasonic")
 			)
 			(property
 				(name "Block")
@@ -4381,9 +4381,9 @@
 			(description "10.0 kOhm 0.1% 25 ppm/C 0603 feedback bottom")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "ERA-3AEB103V")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Panasonic")
 				(field
 					(name "Block") "sense")
 				(field
@@ -4401,11 +4401,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "ERA-3AEB103V")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Panasonic")
 			)
 			(property
 				(name "Block")
@@ -4453,11 +4453,13 @@
 			(description "2.67 kOhm 0.1% 25 ppm/C 0603 INA300 limit: 5.10-5.48 A trip (DD-33)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "TNPW06032K67BEEA")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Vishay")
 				(field
 					(name "Block") "sense")
+				(field
+					(name "Alternate") "ERA-3AEB2671V")
 				(field
 					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
 				(field
@@ -4473,15 +4475,19 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "TNPW06032K67BEEA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Vishay")
 			)
 			(property
 				(name "Block")
 				(value "sense")
+			)
+			(property
+				(name "Alternate")
+				(value "ERA-3AEB2671V")
 			)
 			(property
 				(name "Sheetname")
@@ -4525,9 +4531,9 @@
 			(description "2.2 kOhm 1% 0603 Q2 source-gate pull-up (default off)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF2201T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "sense")
 				(field
@@ -4545,11 +4551,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF2201T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4597,9 +4603,9 @@
 			(description "100 Ohm 1% 0603 gate series resistor to N1/N2 (limits clamp current)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1000T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "sense")
 				(field
@@ -4617,11 +4623,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1000T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4669,9 +4675,9 @@
 			(description "10 kOhm 1% 0603 laser-side bleed")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "sense")
 				(field
@@ -4689,11 +4695,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4741,9 +4747,9 @@
 			(description "1.0 kOhm 1% 0603 interlock pull-up, VCTRL side")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1001T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -4761,11 +4767,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1001T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4813,9 +4819,9 @@
 			(description "9.1 kOhm 1% 0603 interlock pull-up, nFAULT side")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "RC0603FR-079K1L")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "enable")
 				(field
@@ -4833,11 +4839,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "RC0603FR-079K1L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -4885,9 +4891,9 @@
 			(description "47 kOhm 1% 0603 nFAULT pulldown")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF4702T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -4905,11 +4911,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF4702T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -4957,9 +4963,9 @@
 			(description "130 kOhm 0.1% 25 ppm/C 0603 UV divider top (DD-31)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "ERA-3AEB134V")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Panasonic")
 				(field
 					(name "Block") "enable")
 				(field
@@ -4977,11 +4983,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "ERA-3AEB134V")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Panasonic")
 			)
 			(property
 				(name "Block")
@@ -5029,9 +5035,9 @@
 			(description "10.0 kOhm 0.1% 25 ppm/C 0603 UV divider bottom")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "ERA-3AEB103V")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Panasonic")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5049,11 +5055,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "ERA-3AEB103V")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Panasonic")
 			)
 			(property
 				(name "Block")
@@ -5096,14 +5102,14 @@
 		)
 		(comp
 			(ref "R16")
-			(value "134k")
+			(value "133k")
 			(footprint "Resistor_SMD:R_0603_1608Metric")
-			(description "134 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top")
+			(description "133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "RT0603BRD07133KL")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5112,7 +5118,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "134 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top")
+					(name "Description") "133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)")
 			)
 			(libsource
 				(lib "Device")
@@ -5121,11 +5127,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "RT0603BRD07133KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "YAGEO")
 			)
 			(property
 				(name "Block")
@@ -5173,9 +5179,9 @@
 			(description "10.0 kOhm 0.1% 25 ppm/C 0603 OV divider bottom")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "ERA-3AEB103V")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Panasonic")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5193,11 +5199,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "ERA-3AEB103V")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Panasonic")
 			)
 			(property
 				(name "Block")
@@ -5245,9 +5251,9 @@
 			(description "10 kOhm 1% 0603 ARM_Q to N1 gate")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5265,11 +5271,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5317,9 +5323,9 @@
 			(description "1 MOhm 1% 0603 N1 gate pulldown")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1004T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5337,11 +5343,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1004T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5389,9 +5395,9 @@
 			(description "10 kOhm 1% 0603 ARM_Q to N3 gate")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5409,11 +5415,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5461,9 +5467,9 @@
 			(description "1 MOhm 1% 0603 N3 gate pulldown")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1004T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5481,11 +5487,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1004T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5533,9 +5539,9 @@
 			(description "10 kOhm 1% 0603 P1 gate pull-up")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5553,11 +5559,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5605,9 +5611,9 @@
 			(description "10 kOhm 1% 0603 EN series")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5625,11 +5631,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5677,9 +5683,9 @@
 			(description "10 kOhm 1% 0603 EN pulldown (default off)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5697,11 +5703,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5749,9 +5755,9 @@
 			(description "100 kOhm 1% 0603 N5 gate pull-up (inhibit while MCU reset)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1003T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5769,11 +5775,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1003T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5821,9 +5827,9 @@
 			(description "15 kOhm 1% 0603 VCTRL bleed (back-power bound)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1502T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "enable")
 				(field
@@ -5841,11 +5847,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1502T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5893,9 +5899,9 @@
 			(description "470 Ohm 1% 0603 UPDI series")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF4700T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -5913,11 +5919,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF4700T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -5965,9 +5971,9 @@
 			(description "10 kOhm 1% 0603 PWRGD pull-up")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -5985,11 +5991,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6037,9 +6043,9 @@
 			(description "10 kOhm 1% 0603 current-monitor ADC filter")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6057,11 +6063,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6109,9 +6115,9 @@
 			(description "1 MOhm 1% 0603 VBUCK monitor top (limits back-power injection, DD-32)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1004T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6129,11 +6135,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1004T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6181,9 +6187,9 @@
 			(description "270 kOhm 1% 0603 VBUCK monitor bottom")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF2703T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6201,11 +6207,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF2703T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6253,9 +6259,9 @@
 			(description "1 MOhm 1% 0603 pack monitor top (limits back-power injection, DD-32)")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1004T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6273,11 +6279,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1004T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6325,9 +6331,9 @@
 			(description "270 kOhm 1% 0603 pack monitor bottom")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF2703T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6345,11 +6351,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF2703T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6397,9 +6403,9 @@
 			(description "10 kOhm 1% 0603 board NTC divider")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6417,11 +6423,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6469,9 +6475,9 @@
 			(description "10 kOhm 1% 0603 laser NTC divider")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6489,11 +6495,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6541,9 +6547,9 @@
 			(description "1 kOhm 1% 0603 indicator LED series")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1001T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6561,11 +6567,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1001T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6613,9 +6619,9 @@
 			(description "10 kOhm 1% 0603 button pull-up")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "0603WAF1002T5E")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "UNI-ROYAL (Uniroyal Elec)")
 				(field
 					(name "Block") "control")
 				(field
@@ -6633,11 +6639,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "0603WAF1002T5E")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "UNI-ROYAL (Uniroyal Elec)")
 			)
 			(property
 				(name "Block")
@@ -6757,9 +6763,9 @@
 			(description "User button (arm hold / mode), TL3342-class SMD")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "TL3342F160QG/TR")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "E-Switch")
 				(field
 					(name "Block") "control")
 				(field
@@ -6777,11 +6783,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "TL3342F160QG/TR")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "E-Switch")
 			)
 			(property
 				(name "Block")
@@ -6825,9 +6831,9 @@
 			(description "10 kOhm NTC 0603, board temperature near U1/Q2")
 			(fields
 				(field
-					(name "MPN") "UNKNOWN")
+					(name "MPN") "NCP18XH103F03RB")
 				(field
-					(name "Manufacturer") "UNKNOWN")
+					(name "Manufacturer") "Murata")
 				(field
 					(name "Block") "control")
 				(field
@@ -6845,11 +6851,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "UNKNOWN")
+				(value "NCP18XH103F03RB")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNKNOWN")
+				(value "Murata")
 			)
 			(property
 				(name "Block")

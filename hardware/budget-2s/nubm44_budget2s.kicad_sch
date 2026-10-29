@@ -12487,7 +12487,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1502T5E"
 			(at 347.98 236.22 0)
 			(hide yes)
 			(show_name no)
@@ -12499,7 +12499,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 347.98 236.22 0)
 			(hide yes)
 			(show_name no)
@@ -12607,7 +12607,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 317.5 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -12619,7 +12619,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 317.5 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -13017,7 +13017,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF4700T5E"
 			(at 439.42 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -13029,7 +13029,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 439.42 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -13217,7 +13217,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF2201T5E"
 			(at 27.94 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -13229,7 +13229,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 27.94 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -13337,7 +13337,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 500.38 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -13349,7 +13349,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 500.38 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -13457,7 +13457,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 469.9 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -13469,7 +13469,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 469.9 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -13655,7 +13655,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 27.94 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -13667,7 +13667,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 27.94 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -14117,7 +14117,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1003T5E"
 			(at 58.42 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -14129,7 +14129,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 58.42 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -14436,7 +14436,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 500.38 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -14448,7 +14448,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 500.38 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -14556,7 +14556,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 347.98 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -14568,7 +14568,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 347.98 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -14756,7 +14756,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF4702T5E"
 			(at 378.46 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -14768,7 +14768,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 378.46 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -15149,7 +15149,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10B105KA8NNNC"
 			(at 180.34 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -15161,7 +15161,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 180.34 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -15269,7 +15269,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1001T5E"
 			(at 317.5 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -15281,7 +15281,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 317.5 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -15709,7 +15709,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 149.86 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -15721,7 +15721,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 149.86 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -15827,7 +15827,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10B223KB8NNNC"
 			(at 88.9 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -15839,7 +15839,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 88.9 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -16075,7 +16075,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 347.98 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -16087,7 +16087,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 347.98 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -16193,7 +16193,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603B103K500NT"
 			(at 530.86 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -16205,7 +16205,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "FH (Guangdong Fenghua)"
 			(at 530.86 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -16551,7 +16551,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 58.42 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -16563,7 +16563,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 58.42 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -17226,7 +17226,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 469.9 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -17238,7 +17238,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 469.9 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -17344,7 +17344,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10A475KO8NNNC"
 			(at 347.98 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -17356,7 +17356,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 347.98 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -17624,7 +17624,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF2703T5E"
 			(at 347.98 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -17636,7 +17636,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 347.98 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -17730,7 +17730,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "22 uF 16 V X5R 1206 output (6 fitted; effective C under bias to verify)"
+		(property "Description" "22 uF >=16 V X5R 1206 output (6 fitted; 25 V part chosen for less DC-bias loss; effective C to verify)"
 			(at 27.94 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -17742,7 +17742,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 27.94 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -17754,7 +17754,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 27.94 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -18022,7 +18022,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "TNPW06032K67BEEA"
 			(at 180.34 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -18034,7 +18034,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Vishay"
 			(at 180.34 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -18047,6 +18047,18 @@
 			)
 		)
 		(property "Block" "sense"
+			(at 180.34 373.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Alternate" "ERA-3AEB2671V"
 			(at 180.34 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -18140,7 +18152,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 378.46 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -18152,7 +18164,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 378.46 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -18631,7 +18643,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "EMVL160ARA101MF80G"
 			(at 149.86 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -18643,7 +18655,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Nippon Chemi-Con"
 			(at 149.86 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -18911,7 +18923,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF2703T5E"
 			(at 439.42 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -18923,7 +18935,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 439.42 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -19031,7 +19043,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1004T5E"
 			(at 378.46 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -19043,7 +19055,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 378.46 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -19423,7 +19435,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1800T5E"
 			(at 149.86 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -19435,7 +19447,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 149.86 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -19861,7 +19873,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 317.5 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -19873,7 +19885,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 317.5 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -20059,7 +20071,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 439.42 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -20071,7 +20083,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 439.42 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -20177,7 +20189,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "SMAJ10CA"
 			(at 119.38 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -20189,7 +20201,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Littelfuse"
 			(at 119.38 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -20449,7 +20461,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 180.34 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -20461,7 +20473,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 180.34 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -20647,7 +20659,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 88.9 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -20659,7 +20671,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 88.9 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -20765,7 +20777,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 119.38 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -20777,7 +20789,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 119.38 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -20885,7 +20897,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "ERA-3AEB2742V"
 			(at 88.9 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -20897,7 +20909,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Panasonic"
 			(at 88.9 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -21396,7 +21408,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 58.42 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -21408,7 +21420,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 58.42 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -21594,7 +21606,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 27.94 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -21606,7 +21618,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 27.94 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -21714,7 +21726,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0805W8F1001T5E"
 			(at 241.3 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -21726,7 +21738,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 241.3 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -22394,7 +22406,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "KT-0805Y"
 			(at 408.94 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -22406,7 +22418,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Hubei KENTO Elec"
 			(at 408.94 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -22775,7 +22787,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 378.46 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -22787,7 +22799,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 378.46 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -23099,7 +23111,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "134k"
+		(property "Value" "133k"
 			(at 350.52 191.77 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23134,7 +23146,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "134 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top"
+		(property "Description" "133 kOhm 0.1% 25 ppm/C 0603 VBUCK OV divider top (DD-39: 134k is not an E96/E192 value)"
 			(at 347.98 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -23146,7 +23158,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "RT0603BRD07133KL"
 			(at 347.98 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -23158,7 +23170,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 347.98 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -23464,7 +23476,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 58.42 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -23476,7 +23488,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 58.42 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -23822,7 +23834,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 408.94 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -23834,7 +23846,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 408.94 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -23940,7 +23952,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 317.5 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -23952,7 +23964,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 317.5 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -24060,7 +24072,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 439.42 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -24072,7 +24084,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 439.42 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -24340,7 +24352,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1004T5E"
 			(at 317.5 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -24352,7 +24364,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 317.5 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -24587,7 +24599,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 149.86 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -24599,7 +24611,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 149.86 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -24705,7 +24717,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 119.38 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -24717,7 +24729,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 119.38 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -24825,7 +24837,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1004T5E"
 			(at 317.5 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -24837,7 +24849,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 317.5 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -25025,7 +25037,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "RC0603FR-079K1L"
 			(at 347.98 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -25037,7 +25049,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 347.98 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -25345,7 +25357,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 469.9 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -25357,7 +25369,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 469.9 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -25465,7 +25477,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "ERA-3AEB103V"
 			(at 119.38 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -25477,7 +25489,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Panasonic"
 			(at 119.38 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -25663,7 +25675,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 408.94 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -25675,7 +25687,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 408.94 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -25783,7 +25795,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "ERA-3AEB103V"
 			(at 378.46 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -25795,7 +25807,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Panasonic"
 			(at 378.46 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -25903,7 +25915,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1001T5E"
 			(at 378.46 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -25915,7 +25927,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 378.46 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -26606,7 +26618,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 119.38 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -26618,7 +26630,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 119.38 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -26724,7 +26736,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603CG102J500NT"
 			(at 408.94 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -26736,7 +26748,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "FH (Guangdong Fenghua)"
 			(at 408.94 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -26842,7 +26854,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "TL3342F160QG/TR"
 			(at 439.42 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -26854,7 +26866,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "E-Switch"
 			(at 439.42 431.8 0)
 			(hide yes)
 			(show_name no)
@@ -27040,7 +27052,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603JRNPO9BN472"
 			(at 210.82 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -27052,7 +27064,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 210.82 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -27158,7 +27170,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 58.42 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -27170,7 +27182,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 58.42 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -27278,7 +27290,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 469.9 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -27290,7 +27302,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 469.9 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -27516,7 +27528,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "NCP18XH103F03RB"
 			(at 530.86 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -27528,7 +27540,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Murata"
 			(at 530.86 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -27636,7 +27648,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1000T5E"
 			(at 88.9 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -27648,7 +27660,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 88.9 396.24 0)
 			(hide yes)
 			(show_name no)
@@ -27754,7 +27766,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 210.82 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -27766,7 +27778,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 210.82 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -27872,7 +27884,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 149.86 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -27884,7 +27896,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 149.86 373.38 0)
 			(hide yes)
 			(show_name no)
@@ -27990,7 +28002,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "2.54-1*3P"
 			(at 485.14 309.88 0)
 			(hide yes)
 			(show_name no)
@@ -28002,7 +28014,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "BOOMELE (Boom Precision Elec)"
 			(at 485.14 309.88 0)
 			(hide yes)
 			(show_name no)
@@ -28113,7 +28125,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1004T5E"
 			(at 408.94 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -28125,7 +28137,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 408.94 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -28233,7 +28245,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1003T5E"
 			(at 317.5 236.22 0)
 			(hide yes)
 			(show_name no)
@@ -28245,7 +28257,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 317.5 236.22 0)
 			(hide yes)
 			(show_name no)
@@ -28433,7 +28445,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "ERA-3AEB134V"
 			(at 439.42 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -28445,7 +28457,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Panasonic"
 			(at 439.42 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -28551,7 +28563,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CL31A226KAHNNNE"
 			(at 180.34 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -28563,7 +28575,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 180.34 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -28751,7 +28763,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "ERA-3AEB103V"
 			(at 469.9 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -28763,7 +28775,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "Panasonic"
 			(at 469.9 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -29271,7 +29283,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 408.94 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -29283,7 +29295,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 408.94 213.36 0)
 			(hide yes)
 			(show_name no)
@@ -29631,7 +29643,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "0603WAF1002T5E"
 			(at 500.38 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -29643,7 +29655,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "UNI-ROYAL (Uniroyal Elec)"
 			(at 500.38 386.08 0)
 			(hide yes)
 			(show_name no)
@@ -30465,7 +30477,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UNKNOWN"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 469.9 408.94 0)
 			(hide yes)
 			(show_name no)
@@ -30477,7 +30489,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNKNOWN"
+		(property "Manufacturer" "YAGEO"
 			(at 469.9 408.94 0)
 			(hide yes)
 			(show_name no)

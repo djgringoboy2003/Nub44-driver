@@ -1,12 +1,12 @@
 {
- "report_sha256": "d9487ea62eb634a90a042235d39f023fd26d3663be5d930eba7cd5fd32f9fc35",
+ "report_sha256": "7b4f31491e2beea2a6a5d6c5f079e7140db084076591ed39c804ade3c7e91a42",
  "inputs": {
-  "hardware/budget-2s/nubm44_budget2s.kicad_pcb": "41da0d7cebd427d776bd9b9eb81dab09c134f089859e74a58e1bb9975de042c9",
-  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "89cd646081645a7660c04e422509c58b84607deb801be8c539fceb02e27e071a",
+  "hardware/budget-2s/nubm44_budget2s.kicad_pcb": "4405bf6786a9557ade4e86c2f30b99d4ca1f4b670eb1a7e51e5a090c264777b1",
+  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "87921c1d0242d7ad5411032083c1bbfd0ba79200997ab2a7c5f57cce61fd0f05",
   "hardware/budget-2s/nubm44_budget2s.kicad_pro": "e506b3231bc33d66a0e6e3bd7e8b9b772ba1078866b9a3bbd35a629a802b384b",
   "hardware/budget-2s/placement.yaml": "8eea8717cf8bfaf117401488f64bcfaa65fd8350f7bccb8145e57e84be9d7267",
-  "engineering/design/budget-2s/connectivity.yaml": "66f754ed8ca9442a696df531fe3374587987a6b98faee44a7cbe2e7adc4d23ac",
-  "engineering/design/budget-2s/parameters.yaml": "aa3f4675ebe769ba3279e481fd3c9893eb81a296c9894ce6c256c77acf4991b9"
+  "engineering/design/budget-2s/connectivity.yaml": "a4bf6ab5d6930207f0fb835560bf69544c952a3bddd257d9970f50d008699cd4",
+  "engineering/design/budget-2s/parameters.yaml": "2bf8511f92ad3bfd66ddaac4ecc8a5deaea0ede3121fbd047c8baf936a46232f"
  },
  "schematic_parity": true,
  "severity_all": true

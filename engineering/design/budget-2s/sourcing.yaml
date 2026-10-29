@@ -1,0 +1,63 @@
+# Budget-2s distributor order codes (DD-39). One entry per BOM MPN in engineering/design/budget-2s/connectivity.yaml
+# (tests/test_budget_pcb.py checks the two agree). Evidence IDs are in research/sources/budget-driver-sources.md.
+# Codes, part numbers and specifications were read on the date below; stock and prices are not recorded here and
+# stay UNKNOWN for costing. lcsc: the LCSC/JLCPCB code; jlc: the JLCPCB library class where the page stated it;
+# uk: UK-orderable distributor listings seen for the exact MPN. UNKNOWN means not looked up or not found.
+schema: nubm44-budget-sourcing.v1
+checked: 2026-10-29
+parts:
+  # Semiconductors and modules chosen in DD-31...DD-35
+  TPS54821RHLR: {lcsc: C57461, evidence: BUD-25}
+  INA300AIDGSR: {lcsc: C529558, evidence: BUD-25}
+  SN74HCS74DR: {lcsc: C2862638, evidence: BUD-25}
+  WSL2512R0100FEA: {lcsc: C844901, evidence: BUD-25}
+  TLV803EA29DBZR: {lcsc: UNKNOWN, uk: [DigiKey UK 11308855], evidence: BUD-25}
+  INA186A2IDCKR: {lcsc: UNKNOWN, evidence: none}
+  TLV6700DDCR: {lcsc: UNKNOWN, evidence: none}
+  MCP1703AT-3302E/MB: {lcsc: UNKNOWN, evidence: none}
+  ATTINY1616-SN: {lcsc: UNKNOWN, evidence: none}
+  DMP2022LSS-13: {lcsc: UNKNOWN, evidence: none}
+  SISS23DN-T1-GE3: {lcsc: UNKNOWN, evidence: none}
+  DMG1012T-7: {lcsc: UNKNOWN, evidence: none}
+  DMG1013T-7: {lcsc: UNKNOWN, evidence: none}
+  BZX585-C10: {lcsc: UNKNOWN, evidence: none}
+  BZX585-C6V2: {lcsc: UNKNOWN, evidence: none}
+  SRP1265A-4R7M: {lcsc: UNKNOWN, evidence: none}
+  XT30PW-M: {lcsc: UNKNOWN, evidence: none}
+  "3568": {lcsc: UNKNOWN, evidence: none}
+  MX126-5.0-02P: {lcsc: UNKNOWN, evidence: none}
+  B2B-PH-K-S: {lcsc: UNKNOWN, evidence: none}
+  # DD-39: the 40 lines that were "select at order"
+  0603WAF1000T5E: {lcsc: C22775, evidence: BUD-27}
+  0603WAF1001T5E: {lcsc: C21190, evidence: BUD-27}
+  0603WAF1002T5E: {lcsc: C25804, evidence: BUD-27}
+  0603WAF1003T5E: {lcsc: C25803, evidence: BUD-27}
+  0603WAF1004T5E: {lcsc: C22935, jlc: Basic, evidence: BUD-28}
+  0603WAF1502T5E: {lcsc: C22809, evidence: BUD-28}
+  0603WAF1800T5E: {lcsc: C22828, evidence: BUD-28}
+  0603WAF2201T5E: {lcsc: C4190, evidence: BUD-27}
+  0603WAF2703T5E: {lcsc: C22965, evidence: BUD-28}
+  0603WAF4700T5E: {lcsc: C23179, jlc: Basic, evidence: BUD-28}
+  0603WAF4702T5E: {lcsc: C25819, jlc: Basic, evidence: BUD-28}
+  0805W8F1001T5E: {lcsc: C17513, jlc: Basic, evidence: BUD-27}
+  RC0603FR-079K1L: {lcsc: C114639, uk: [RS 199-5645], evidence: BUD-28}
+  ERA-3AEB103V: {lcsc: UNKNOWN, uk: [RS 566-890, RS 741-9789], evidence: BUD-28}
+  ERA-3AEB134V: {lcsc: C473257, uk: [RS 179-9606], evidence: BUD-28}
+  ERA-3AEB2742V: {lcsc: UNKNOWN, uk: [RS 708-8855], evidence: BUD-28}
+  RT0603BRD07133KL: {lcsc: UNKNOWN, uk: [DigiKey], evidence: BUD-27}
+  TNPW06032K67BEEA: {lcsc: UNKNOWN, uk: [Farnell/element14 3885982], evidence: BUD-27}
+  CC0603KRX7R9BB104: {lcsc: C14663, jlc: Basic, evidence: BUD-27}
+  0603B103K500NT: {lcsc: C57112, jlc: Basic, evidence: BUD-27}
+  CL10B223KB8NNNC: {lcsc: C21122, evidence: BUD-28}
+  0603CG102J500NT: {lcsc: C1636, jlc: Extended, evidence: BUD-28}
+  CC0603JRNPO9BN472: {lcsc: C576818, evidence: BUD-28}
+  CL10A105KB8NNNC: {lcsc: C15849, jlc: Basic, evidence: BUD-27}
+  CL10B105KA8NNNC: {lcsc: C29936, uk: [Farnell 3013415], evidence: BUD-27}
+  CL10A475KO8NNNC: {lcsc: C19666, evidence: BUD-27}
+  CL31A226KAHNNNE: {lcsc: C12891, jlc: Basic, evidence: BUD-27}
+  EMVL160ARA101MF80G: {lcsc: C2928896, evidence: BUD-27}
+  SMAJ10CA: {lcsc: C315986, evidence: BUD-27}
+  NCP18XH103F03RB: {lcsc: C13564, evidence: BUD-28}
+  KT-0805Y: {lcsc: C2296, jlc: Basic, evidence: BUD-27}
+  TL3342F160QG/TR: {lcsc: C2918453, jlc: Extended, uk: [DigiKey], evidence: BUD-27}
+  "2.54-1*3P": {lcsc: C49257, evidence: BUD-27}

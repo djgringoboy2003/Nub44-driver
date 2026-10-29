@@ -1,10 +1,9 @@
 {
   "sources": {
     "hardware/budget-2s/placement.yaml": "8eea8717cf8bfaf117401488f64bcfaa65fd8350f7bccb8145e57e84be9d7267",
-    "engineering/design/budget-2s/connectivity.yaml": "66f754ed8ca9442a696df531fe3374587987a6b98faee44a7cbe2e7adc4d23ac",
-    "hardware/budget-2s/nubm44_budget2s.net": "4db836bc1fe3283187983c23df75024c802d88eba7974658493ee23cc6ea591c",
-    "automation/budget/build_pcb.py": "c8aa12b680e0d86ab54adc1ae4d49a94e653fda61081ffc76d6db480050b7d72",
-    "hardware/budget-2s/lib/budget2s.pretty/TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm.kicad_mod": "6ab117887985cce6dcef30efb5eb08c559ca74ba1750268396e29537bdbf7a4c"
+    "automation/budget/build_pcb.py": "58710ac5378418992d8dd1a6c12ca26380e9f6bb032da69d5382c239600227df",
+    "hardware/budget-2s/lib/budget2s.pretty/TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm.kicad_mod": "6ab117887985cce6dcef30efb5eb08c559ca74ba1750268396e29537bdbf7a4c",
+    "engineering/design/budget-2s/connectivity.yaml#refs-footprints-pins": "b5b11a0f11ace0783df47d1faed2532e09c3326e9bc8be6ac3eebba48a1be79e"
   },
   "session": {
     "nubm44_budget2s.dsn": "b7b650f273bccf6dbf6f97a1c1c96a618f12d57dcffefa34d5bc1e7035ca3343",

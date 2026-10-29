@@ -92,6 +92,21 @@ All eight new part prices, live stock, UK dispatch and delivered offers are `UNK
 explicit: neither output MOSFET pair nor an exact precision-divider resistor is frozen for manufacturing.
 The original A/B libraries and lands are not changed by these reviews.
 
+### BOM sourcing (DD-39, 2026-10-29)
+
+Order codes and part identities for the 40 lines that were "select at order". Collected per MPN in
+`engineering/design/budget-2s/sourcing.yaml`. Stock and prices seen while checking are **not** used for costing
+(UNKNOWN until quoted).
+
+| ID | Source | Locator | Reviewed scope |
+|---|---|---|---|
+| BUD-27 | Distributor part pages read directly, 2026-10-29 | `jlcpcb.com/partdetail/<code>`, `lcsc.com/product-detail/<code>.html`, DigiKey (RT0603BRD07133KL), element14 (3885982) | MPN, manufacturer and the stated value/tolerance/rating read from each page: C25804 0603WAF1002T5E, C21190 0603WAF1001T5E, C22775 0603WAF1000T5E, C25803 0603WAF1003T5E, C4190 0603WAF2201T5E (all 0603, ±1 %, 100 mW, ±100 ppm/°C); C17513 0805W8F1001T5E (1 k, ±1 %, 125 mW, JLC Basic); C14663 Yageo CC0603KRX7R9BB104 (100 nF 50 V X7R, Basic); C57112 FH 0603B103K500NT (10 nF 50 V X7R, Basic); C15849 Samsung CL10A105KB8NNNC (1 µF 50 V X5R, Basic); C29936 Samsung CL10B105KA8NNNC (1 µF 25 V X7R); C19666 Samsung CL10A475KO8NNNC (4.7 µF 16 V X5R); C12891 Samsung CL31A226KAHNNNE (22 µF 25 V X5R 1206, Basic); C2928896 Nippon Chemi-Con EMVL160ARA101MF80G (100 µF 16 V ±20 %, D6.3 × L7.7 mm, 81 mA at 120 Hz, −40…+105 °C); C315986 Littelfuse SMAJ10CA (bidirectional, SMA, VRWM 10 V, VBR 11.1 V, VC 17 V, IPP 23.5 A, 400 W 10/1000 µs; the page does not tie VC to IPP); C2296 KENTO KT-0805Y (yellow 0805, VF 1.8–2.4 V, Basic); C2918453 E-Switch TL3342F160QG/TR (SMD-4P 5.2 × 5.2 mm, Extended); C49257 BOOMELE 2.54-1*3P (1 × 3 male, 2.54 mm, through-hole); DigiKey RT0603BRD07133KL (133 kΩ ±0.1 %, ±25 ppm/°C, 0.1 W, Active, 44,048 shown); element14 3885982 Vishay TNPW06032K67BEEA (2.67 kΩ, 0.1 %, 125 mW, 75 V, TNPW e3; TCR not shown on the page). Rejected on reading: C2297 KT-0805G (emerald green, VF up to 3.1 V: too little current through the 1 kΩ from 3.3 V) and C77131 (NCP15XH103F03RC, an 0402 part). |
+| BUD-28 | Web-search result snapshots, 2026-10-29 (not fetched pages) | LCSC/JLCPCB, RS UK, Farnell, DigiKey, Future Electronics, Mouser listings returned by search | C22809 0603WAF1502T5E (15 k), C22828 0603WAF1800T5E (180 Ω), C22935 0603WAF1004T5E (1 M, Basic), C22965 0603WAF2703T5E (270 k), C23179 0603WAF4700T5E (470 Ω, Basic), C25819 0603WAF4702T5E (47 k, Basic): all UNI-ROYAL 0603 ±1 % 100 mW ±100 ppm/°C. C114639 / RS 199-5645 Yageo RC0603FR-079K1L (9.1 k ±1 %). C21122 Samsung CL10B223KB8NNNC (22 nF 50 V X7R). C1636 FH 0603CG102J500NT (1 nF 50 V C0G ±5 %, Extended). C576818 Yageo CC0603JRNPO9BN472 (4.7 nF 50 V NP0 ±5 %). C13564 Murata NCP18XH103F03RB (10 kΩ ±1 %, B25/50 3380 K ±1 %, 0603; DigiKey marks it "Not For New Designs"). Panasonic ERA-3AEB family (0603, ±0.1 %, ±25 ppm/°C, 0.1 W, 75 V, AEC-Q200; three-digit value code for E24, four for E96): ERA-3AEB103V 10 k (RS 566-890 / 741-9789), ERA-3AEB134V 130 k (RS 179-9606 / 169-1170; LCSC C473257 datasheet link), ERA-3AEB2742V 27.4 k (RS 708-8855), ERA-3AEB2671V 2.67 k (DigiKey/Future, ±25 ppm stated; 12-week lead shown). Vishay TNPW e3 code: B = ±0.1 %, E = ±25 ppm/K; sibling BEEA listings state 25 ppm (Mouser TNPW060322K6BEEA, Future TNPW0603200KBEEA). Yageo RT code: B/C/D/E = ±10/15/25/50 ppm/°C (datasheet extracts; RT0603BRE0710KL listed at ±50 ppm), so RT…BRE parts do not meet 25 ppm. E-Switch TL3342F160QG (non-TR) shown obsolete/zero stock; the /TR variant shown in stock at DigiKey. |
+
+Limits checked for D2 (no new download): BUD-01 TPS54821 p.4, VIN and PVIN absolute maximum 20 V; BUD-21 MCP1703A
+p.3, VDD absolute maximum +18 V. The SMAJ10CA 17 V clamp (BUD-27) sits below both, with about 1 V margin to the
+LDO at full rated pulse current.
+
 ## Download integrity
 
 SHA-256 of new local PDFs, checked with isolated Python after download. These identify source documents;

@@ -11,7 +11,7 @@ document revision, local path, relevant pages and primary/secondary classificati
 | Supporting components and sourcing | CMP-01 … CMP-42 | [sources/component-sources.md](sources/component-sources.md) | [component-research.md](component-research.md), [component-candidates.csv](component-candidates.csv) |
 | Batteries, polarity, host mechanics | BAT-01 … BAT-44 | [sources/battery-sources.md](sources/battery-sources.md) | [battery-and-mechanics.md](battery-and-mechanics.md) |
 | PCBWay fabrication/assembly, CAD tooling | MFG-01 … MFG-33 | [sources/manufacturing-sources.md](sources/manufacturing-sources.md) | [pcbway-requirements.md](pcbway-requirements.md), [cad-tooling.md](cad-tooling.md) |
-| Separate 2S budget-driver qualification | BUD-01 … BUD-26 | [sources/budget-driver-sources.md](sources/budget-driver-sources.md) | [budget-driver plan](../engineering/budget-driver-plan.md), [implementation handover](../engineering/budget-2s-design.md) |
+| Separate 2S budget-driver qualification | BUD-01 … BUD-28 | [sources/budget-driver-sources.md](sources/budget-driver-sources.md) | [budget-driver plan](../engineering/budget-driver-plan.md), [implementation handover](../engineering/budget-2s-design.md) |
 
 ## Sources added by the lead engineer
 

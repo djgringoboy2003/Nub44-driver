@@ -105,6 +105,22 @@ def test_bom_never_merges_different_tolerances_or_part_types():
     assert placed == {ref for ref, p in PARTS.items() if p.get("in_bom", True)}
 
 
+def test_every_bom_part_has_an_mpn_and_exactly_one_sourcing_entry():
+    import re
+    sourcing = yaml.safe_load((ROOT / "engineering/design/budget-2s/sourcing.yaml").read_text(encoding="utf-8"))
+    bom = {p["ref"]: p for p in PARTS.values() if p.get("in_bom", True)}
+    assert not [r for r, p in bom.items() if str(p.get("mpn", "UNKNOWN")) in ("", "UNKNOWN")]
+    entries = {str(m): c for m, c in sourcing["parts"].items()}
+    assert set(entries) == {str(p["mpn"]) for p in bom.values()}
+    for mpn, c in entries.items():
+        assert c.get("evidence"), mpn
+        assert c["lcsc"] == "UNKNOWN" or re.fullmatch(r"C\d+", c["lcsc"]), mpn
+        assert c.get("jlc", "Basic") in ("Basic", "Extended"), mpn
+    # the 0.1 % / 25 ppm lines are never satisfied by Yageo RT...BRE (+-50 ppm/C) parts
+    precision = [p for p in bom.values() if "0.1%" in p.get("desc", "")]
+    assert precision and not [p["ref"] for p in precision if re.match(r"RT\d{4}BRE", str(p["mpn"]))]
+
+
 def test_drc_evidence_when_present_is_current():
     rep = ROOT / "reports/budget-2s/drc.json"
     ev = ROOT / "reports/budget-2s/drc-evidence.json"

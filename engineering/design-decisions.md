@@ -747,3 +747,79 @@ re-routing.
 - **Analysis:** BUD-ISS-04 fault timing and energy.
 - **Ordering:** assembly quote and DFM.
 - **Gate G:** dummy-load bench data.
+
+## DD-39 Budget BOM sourced: part numbers for the 40 open lines (engineering, 2026-10-29)
+
+Owner request: "Find 40 open BOM lines for me." The selections below are Claude Code's (AI); the owner may
+change any of them. Every MPN was checked against a distributor or manufacturer listing (BUD-27 pages read
+directly, BUD-28 search snapshots). `engineering/design/budget-2s/connectivity.yaml` holds the MPNs, and
+`engineering/design/budget-2s/sourcing.yaml` the order codes and evidence. Stock and prices are not used for
+costing and stay UNKNOWN until quoted.
+
+**Policy.**
+- Cheap genuine parts that LCSC/JLCPCB stock (JLC Basic where available), so an assembled build avoids
+  extended-part fees.
+- Precision parts from UK distributors (RS, Farnell, DigiKey UK), where LCSC's 0.1 % stock is unreliable.
+- One part number per value wherever ratings allow. A higher voltage rating than stated (for example 50 V
+  where 25 V or 16 V was asked) meets the requirement.
+
+**Selections.**
+- **1 % resistors:** UNI-ROYAL 0603WAF series (±1 %, 100 mW, ±100 ppm/°C), 0805W8F1001T5E for R4 (125 mW),
+  and Yageo RC0603FR-079K1L for 9.1 k (no UNI-ROYAL listing found).
+- **0.1 % / ≤ 25 ppm/°C resistors:**
+  - R5 27.4 k: Panasonic ERA-3AEB2742V.
+  - R6/R15/R17 10.0 k: ERA-3AEB103V.
+  - R14 130 k: ERA-3AEB134V.
+  - R16 133 k: Yageo RT0603BRD07133KL.
+  - R7 2.67 k: Vishay TNPW06032K67BEEA; alternate ERA-3AEB2671V.
+  - Yageo RT…BRE parts are ±50 ppm/°C and were rejected.
+- **Capacitors:**
+  - 100 nF ×14: Yageo CC0603KRX7R9BB104 (50 V X7R).
+  - 10 nF: FH 0603B103K500NT. 22 nF: Samsung CL10B223KB8NNNC.
+  - 1 nF and 4.7 nF C0G: FH 0603CG102J500NT and Yageo CC0603JRNPO9BN472.
+  - 1 µF: Samsung CL10A105KB8NNNC (50 V X5R), and CL10B105KA8NNNC (X7R) for the compensation capacitor C8.
+  - 4.7 µF: Samsung CL10A475KO8NNNC (16 V).
+  - 22 µF ×8: Samsung CL31A226KAHNNNE (25 V X5R), also for the six output capacitors. The higher rating loses
+    less capacitance under bias, and the 16 V minimum and the 50–220 µF loop-model range still hold; effective C
+    is still to be measured.
+- **C1:** Nippon Chemi-Con EMVL160ARA101MF80G, 100 µF 16 V, 6.3 × 7.7 mm aluminium electrolytic. Its ESR helps
+  damp the input cable; it matches the CP_Elec_6.3x7.7 land.
+- **D2:** Littelfuse SMAJ10CA. 10 V standoff above the 8.4 V pack, 17 V clamp. The tightest limit on the
+  protected rail is the MCP1703A's +18 V (BUD-21 p.3), not the TPS54821's 20 V (BUD-01 p.4), so the clamp
+  margin is about 1 V at full rated pulse.
+- **TH1:** Murata NCP18XH103F03RB, 10 kΩ ±1 %, B25/50 3380 K ±1 %. Firmware must use this B value. DigiKey marks
+  the part Not For New Designs; LCSC stock is large.
+- **D4:** KENTO KT-0805Y (yellow, VF 1.8–2.4 V, about 0.9–1.5 mA through R36 from 3.3 V). The green KT-0805G
+  (VF up to 3.1 V) would be too dim.
+- **SW1:** E-Switch TL3342F160QG/TR. The non-/TR order code shows obsolete/no stock.
+- **J4:** BOOMELE 2.54-1*3P header.
+
+**Design change: R16 134 k → 133 k.** 134 k is neither an E96 nor an E192 value, so it cannot be bought as a
+0.1 % part. `qualify.py` was run with both neighbours:
+- 133 k: OV trip 5.6437–5.7967 V; 0.136 V margin over the highest normal VBUCK (0.10 V required); Q2 |Vgs| at OV
+  maximum 5.545 V against the 5.89 V clamp minimum.
+- 137 k: passes too, but raises the trip to 5.80–5.96 V, which protects the laser less.
+
+133 k is chosen and `voltage_monitor.ov_top_ohm` changed with it. The procurement fields `fb_resistor_mpns`,
+`backup.resistor_mpn` and `output_energy.bulk_cap_mpn` now name the chosen parts.
+
+**Tooling.**
+- `export.py` reads `sourcing.yaml` (LCSC and UK-distributor columns), so no code is guessed into a BOM. It
+  lists the 21 lines without an LCSC code: the earlier ICs, transistors, connectors, inductor and four of the
+  precision resistors. These are matched by MPN in the assembler's tool, consigned, or fitted by hand.
+- The routing checkpoint now hashes only the routing-relevant connectivity (refs, footprints, pin nets), so an
+  MPN or value edit no longer forces re-routing. The board was rebuilt from the archived session with
+  `--stage restore`.
+
+**Results (generated).**
+- ERC 0/0 with an exact netlist. DRC 0/0/0/0 after `restore`.
+- Copper check unchanged: 2.836 mΩ hot output loop; 11.1 mΩ fuse budget.
+- Export: "every BOM line has a sourced MPN"; 55 lines / 99 parts; 0 to select; 21 without an LCSC code.
+- BUD-OV-01 margin 0.136 V. Loop model 243/243.
+
+**OPEN.**
+- Live stock and landed GBP quotes.
+- The fuse and holder resistance against the 11.1 mΩ budget.
+- The thermistor's B value in firmware.
+- LCSC codes for the 21 lines if JLCPCB assembly is used.
+- Effective output capacitance under bias.

@@ -5,7 +5,7 @@
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
 efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
-sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package). The pre-order, quote, GBP/UK and Project 450
+sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package; DD-39: budget BOM sourced). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -109,12 +109,18 @@ layers, all parts on the top.
 - **Routed copper** (`automation/budget/layout_review.py`): the output loop is 2.84 mΩ hot against the 3 mΩ
   allocation, after LASER_P was repeated on In2/B.Cu (it was 4.29 mΩ). The input leaves 11.1 mΩ hot for the
   fuse and holder.
-- **Package** (`manufacturing/budget-2s/`): Gerber/drill ZIP, BOM 61 lines / 99 parts (40 lines to select at
-  order, MPN UNKNOWN with the requirement stated), CPL, PDFs, renders, `ORDERING.md`.
+- **Package** (`manufacturing/budget-2s/`): Gerber/drill ZIP, BOM 55 lines / 99 parts, CPL, PDFs, renders,
+  `ORDERING.md`. DD-39: every line has an MPN checked against a distributor listing. Order codes and evidence
+  are in `engineering/design/budget-2s/sourcing.yaml`; prices and stock stay UNKNOWN. R16 changed 134 k → 133 k,
+  because 134 k is not a purchasable value (OV margin 0.136 V).
 - **Routing archive:** FreeRouting results vary with KiCad's DSN pour order, so the accepted session is archived
   in `hardware/budget-2s/routing/` and `build_pcb.py --stage restore` reproduces the board.
-- **Open before an order:** the U1 and Q2 land reviews, the XT30 moulded marks, J2 wire entry and the BOM
-  selections.
+- **Open before an order:**
+  - the U1 and Q2 land reviews;
+  - the XT30 moulded marks and J2 wire entry;
+  - a fuse plus holder of at most 11.1 mΩ hot;
+  - LCSC codes for 21 lines if JLCPCB assembles the board;
+  - live stock and quotes.
 - **Also open:** BUD-ISS-04 (total shutdown time and fault energy, including the output P-FET turn-off through
   its 2.2 kΩ pull-up), budget firmware, and all nine REQ-BUD requirements with physical qualification.
 
@@ -189,8 +195,9 @@ factor 1.0 and reverse-FET limit 0.7 W (DD-36; was 4.0 A, DD-13); A/B efficiency
 are the ordered list), DD-38 and `manufacturing/budget-2s/ORDERING.md`.
 1. **Before any budget order:** review the U1 RHL land and stencil, the Q2 PowerPAK land (FP-POWERPAK), the XT30
    moulded +/− marks against the B+/B− silkscreen, J2's wire-entry side and the flagged PH neck.
-2. **BOM:** choose the 40 select-at-order lines with dated supplier evidence: genuine 0.1 % / 25 ppm divider
-   resistors, and a fuse plus holder of at most 11.1 mΩ hot.
+2. **BOM (DD-39 sourced every line):** choose the 10 A mini-blade fuse (fuse plus holder at most 11.1 mΩ hot).
+   Confirm live stock of the 0.1 % resistors (RS/Farnell/DigiKey UK). If JLCPCB assembles the board, find LCSC
+   codes for the 21 lines without one, or consign them.
 3. **BUD-ISS-04:** bound the total fault response and energy.
 4. **Firmware:** write the budget firmware profile and a budget bench schema.
 5. **Quotes:** obtain landed GBP quotes for 3 and 5 boards. Keep unknown prices UNKNOWN.
@@ -239,6 +246,36 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget BOM sourced, 40 open lines (DD-39)
+
+Owner: "Find 40 open BOM lines for me." Every select-at-order line now has an MPN. Each was checked against a
+distributor or manufacturer listing: BUD-27 for pages read directly, BUD-28 for search snapshots.
+
+**Parts chosen**
+- **Cheap parts:** LCSC/JLC Basic passives (UNI-ROYAL 0603WAF resistors; Yageo, Samsung and FH capacitors).
+- **0.1 % / 25 ppm resistors:** Panasonic ERA-3AEB, Yageo RT…BRD and Vishay TNPW…BEEA, bought in the UK.
+  Yageo RT…BRE is ±50 ppm/°C and was rejected.
+- **C1:** Chemi-Con EMVL 100 µF 6.3 × 7.7 mm.
+- **D2:** SMAJ10CA. Its 17 V clamp is checked against the MCP1703A's +18 V limit, the tightest on the rail.
+- **TH1:** NCP18XH103F03RB (B 3380 K).
+- **D4:** yellow KT-0805Y; the green part's Vf was too high for the 1 kΩ resistor.
+- **SW1:** TL3342F160QG/TR.
+- **J4:** BOOMELE 1×3 header.
+
+**Changes**
+- R16 134 k → 133 k (`ov_top_ohm`), since 134 k is not E96/E192. 137 k also passes, but protects less.
+- New `engineering/design/budget-2s/sourcing.yaml` (order codes plus evidence; no prices or stock), read by
+  `export.py`, which adds a UK distributor column and lists the 21 lines without an LCSC code.
+- The routing checkpoint now hashes only refs, footprints and pin nets of the connectivity, so the board was
+  rebuilt with `--stage restore`, without re-routing.
+
+**Results (generated)**
+- ERC 0/0; DRC 0/0/0/0.
+- Copper unchanged: 2.836 mΩ hot.
+- Export: every BOM line has a sourced MPN; 55 lines / 99 parts.
+- BUD-OV-01 margin 0.136 V; loop model 243/243.
+- 273 Python tests pass.
 
 ### 2026-10-29: budget PCB and prototype manufacturing package (DD-38)
 

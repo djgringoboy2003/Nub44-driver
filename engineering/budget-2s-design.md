@@ -21,6 +21,7 @@ not inherit the original single-cell boards' CAD, firmware or release results.
 | Placement and routing | `hardware/budget-2s/placement.yaml` (positions, pours, fixed tracks/vias, router keep-outs); `automation/budget/build_pcb.py --stage place/route/finish/drc/render` (shared builder via `pcb_builder_budget.py`); accepted session archived in `hardware/budget-2s/routing/`, re-applied with `--stage restore` |
 | DRC | `reports/budget-2s/drc.json` and `drc-evidence.json` (kicad-cli, all severities, schematic parity) |
 | Routed-copper check | `automation/budget/layout_review.py` → `reports/budget-2s/layout-review.md/.json` and a hash manifest: DC path resistances against the `power_model` allocations |
+| BOM order codes | `engineering/design/budget-2s/sourcing.yaml` (DD-39): LCSC/JLCPCB code, UK-distributor listings and evidence ID per MPN; stock and prices not recorded |
 | Manufacturing package | `automation/budget/export.py` → `manufacturing/budget-2s/` (Gerbers/drill ZIP, BOM, JLCPCB BOM/CPL, PDFs, renders, `ORDERING.md`) and `reports/budget-2s/export-evidence.json`; marks DO_NOT_FABRICATE unless DRC is clean and current |
 | Static default-off interface checks (DD-32) | `automation/budget/interface.py` (called by `qualify.py`; results in the same report) |
 | Electrical qualification | `automation/budget/qualify.py` → `reports/budget-2s/qualification.md`, JSON and hash manifest |
@@ -86,9 +87,10 @@ or absence-of-supply behaviour. Preserve fault/default-off behaviour on a stoppe
 | Output disconnect (single) | **SiSS23DN-T1-GE3** (DD-34; same part as A/B Q1, UK stocked), PREORDER-02; DMP2022LSS-13 compared. DMP2005UFG-7 (DD-31) dropped: 40-week lead time | 2.2 kΩ source–gate pull-up, 100 Ω to the N1/N2 pull-down and a BZX585-C6V2 source–gate clamp: \|Vgs\| about 0.957 × VBUCK, so the −4.5 V resistance figure applies at the main point; a switch-short is clamped at ≤ 6.51 V against the ±8 V rating. Shares the open FP-POWERPAK land review. |
 | Low-current gate driver | AO3400A, BUD-17 | Superseded for the interface by DMG1012T-7 (DD-32: lower leakage, resistance specified at 1.8 V). Not used unless a later review restores it. |
 
-No commercial precision-resistor/capacitor/connector/fuse suffix is invented to complete a BOM. Those lines,
-all final prices, stock and complete delivered GBP totals remain UNKNOWN. Candidates are new-circuit study
-choices, not authorised substitutions into A/B or an orderable approved BOM.
+DD-39 gave every BOM line an MPN checked against a distributor or manufacturer listing (BUD-27/28). The MPNs
+are in the connectivity file, and the order codes and evidence in `engineering/design/budget-2s/sourcing.yaml`.
+No suffix was invented. Prices, live stock and complete delivered GBP totals remain UNKNOWN until quoted. The
+selections are new-circuit choices, not authorised substitutions into A/B.
 
 ## Qualification findings (open until bench data)
 
@@ -168,12 +170,11 @@ rated dummy load before any laser. Only actual MEASURED records may enter the be
    - The Q2 PowerPAK land (the open A/B FP-POWERPAK review applies).
    - The XT30 moulded +/− marks against the B+/B− silkscreen, and J2's wire-entry side.
    - The PH neck flagged by `layout_review.py`.
-3. **BOM:** choose the 40 select-at-order lines with dated supplier evidence; record any new manufacturer
-   sources as BUD-27 onward.
-   - Precision lines: 0.1 % / 25 ppm/°C (R5, R6, R7, R14–R17).
-   - Capacitor voltage and dielectric ratings as stated in each line.
-   - The fuse and holder, which must be at most 11.1 mΩ hot (`layout-review.md`).
-   - The TVS clamp check.
+3. **BOM:** every line has a sourced MPN (DD-39). Still to do before ordering:
+   - Choose a 10 A mini-blade fuse whose fuse-plus-holder resistance is at most 11.1 mΩ hot (`layout-review.md`).
+   - Find LCSC codes for the 21 lines without one if JLCPCB assembles the board; otherwise consign or hand-fit.
+   - Confirm live stock, especially the 0.1 % parts from RS/Farnell/DigiKey UK.
+   - Use the NTC's B25/50 = 3380 K in firmware.
    Keep prices and stock UNKNOWN until quoted.
 4. **BUD-ISS-04:** the total fault response and energy. Chain the open-drain/comparator delays, the series
    pairs, the output P-FET turn-off through its 2.2 kΩ pull-up (55 nC typical gate charge suggests tens of µs,

@@ -1,12 +1,12 @@
 {
- "generated_utc": "2026-10-29T11:33:34+00:00",
+ "generated_utc": "2026-10-29T19:28:01+00:00",
  "generator": "automation/budget/build_schematic.py",
  "inputs": {
   "automation/budget/build_schematic.py": "2877304813a72021918df6eaa1e2684637e2b709960dc668a3de54e3bad39819",
   "automation/nubm44/kicad_lib.py": "c2c56b46562703df92d06892d70d0f005ab9d1aa69054f904959c2062e2fc73d",
   "automation/schematic/build_schematic.py": "27bc780ed3b075f2d47670d83e84fc76f4d5dd73e256bc7fde851ad3a594bf11",
-  "engineering/design/budget-2s/connectivity.yaml": "66f754ed8ca9442a696df531fe3374587987a6b98faee44a7cbe2e7adc4d23ac",
-  "engineering/design/budget-2s/parameters.yaml": "aa3f4675ebe769ba3279e481fd3c9893eb81a296c9894ce6c256c77acf4991b9",
+  "engineering/design/budget-2s/connectivity.yaml": "a4bf6ab5d6930207f0fb835560bf69544c952a3bddd257d9970f50d008699cd4",
+  "engineering/design/budget-2s/parameters.yaml": "2bf8511f92ad3bfd66ddaac4ecc8a5deaea0ede3121fbd047c8baf936a46232f",
   "hardware/budget-2s/lib/budget2s.kicad_sym": "2b01909bfa91199ef19d3f03548815dca49d87f8bf0b46ce7c4d9fb238ad51f0",
   "hardware/budget-2s/lib/symbols/INA186.yaml": "8e01ab00acac28ba8b3c743f946ae3d31b47d51ab9aed0d99fb434cb23451497",
   "hardware/budget-2s/lib/symbols/INA300.yaml": "44e7c0f983cc4c41a6fa7888daf957f8f3b87049d3b7f6d00f2de5b34e998179",
@@ -17,11 +17,11 @@
  },
  "kind": "budget-schematic",
  "outputs": {
-  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "89cd646081645a7660c04e422509c58b84607deb801be8c539fceb02e27e071a",
-  "hardware/budget-2s/nubm44_budget2s.net": "4c21d417d1852486ec1cde9aba56a711f5641c0d2604688d51adc6d353764c56",
-  "reports/budget-2s/erc.json": "ad00d7e819d42ce82b1bf0a33d1f067ce34ed5e829a54956481a27618ce81907",
+  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "87921c1d0242d7ad5411032083c1bbfd0ba79200997ab2a7c5f57cce61fd0f05",
+  "hardware/budget-2s/nubm44_budget2s.net": "43a250a7235d5c4b65cb0b2f6c7e1799161117f1fb09400db0686dc54ccf6763",
+  "reports/budget-2s/erc.json": "d6063714ff7f765a421ae535a42b8091a37f6fd0c36011cdef657d8b481be27d",
   "reports/budget-2s/schematic.json": "3e47f13b90c88e7517bc7b1e487bab6e0cd8e8f0a0f561214cd8e7ad09c42b05",
-  "reports/budget-2s/schematic.pdf": "d25d7ffb595b23d07f50c23447056a06f89009e7bd51f7c69526bc7c26d778aa"
+  "reports/budget-2s/schematic.pdf": "0a9096292d091412010672420e9b40d4394f1e6bdc48c8fcd49191d5b8f5c55c"
  },
  "schema": "nubm44-evidence-manifest.v1",
  "tools": {

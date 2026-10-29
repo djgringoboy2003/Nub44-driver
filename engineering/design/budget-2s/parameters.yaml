@@ -115,7 +115,7 @@ current_sense:  # PREORDER-07 / BUD-22. Resistor procurement qualification OPEN.
   fb_resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT, not verified MPN.
   fb_resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
   fb_resistor_delta_c_from_25: 25
-  fb_resistor_mpns: UNKNOWN
+  fb_resistor_mpns: [ERA-3AEB2742V, ERA-3AEB103V]  # DD-39: R5 top, R6 bottom; 0.1 %, 25 ppm/C (BUD-28).
   amplifier_bandwidth_hz_typ: 37000
 
 backup:  # BUD-06 pp.5,12,15,17-19. Fast mode MUST include 500 uV NAF.
@@ -138,7 +138,7 @@ backup:  # BUD-06 pp.5,12,15,17-19. Fast mode MUST include 500 uV NAF.
   delay: FLOAT
   hysteresis: FLOAT
   enable: VCTRL  # Hard enabled; not controlled by firmware.
-  resistor_mpn: UNKNOWN
+  resistor_mpn: TNPW06032K67BEEA  # DD-39: R7, 0.1 %, 25 ppm/K (BEEA code, BUD-28); alternate ERA-3AEB2671V.
 
 voltage_monitor:  # BUD-18, SNVSAV2B pp.3,5-6.
   mpn: TLV6700DDCR
@@ -151,7 +151,7 @@ voltage_monitor:  # BUD-18, SNVSAV2B pp.3,5-6.
   falling_threshold_v_max: 0.400
   uv_top_ohm: 130000  # DD-31: hardware backstop below the loaded 6.0 V operating floor (was 147k).
   uv_bottom_ohm: 10000
-  ov_top_ohm: 134000
+  ov_top_ohm: 133000  # DD-39: E96 (134k is not a purchasable value); RT0603BRD07133KL.
   ov_bottom_ohm: 10000
   resistor_tolerance_fraction: 0.001  # PROCUREMENT REQUIREMENT.
   resistor_tcr_fraction_per_c: 0.000025  # PROCUREMENT REQUIREMENT.
@@ -242,7 +242,7 @@ output_energy:
   discharge_to_v: 0.5  # Test criterion after fault, not an emission threshold.
   laser_reconnect_max_current_a: 4.4
   laser_reconnect_peak_verified: UNKNOWN
-  bulk_cap_mpn: UNKNOWN
+  bulk_cap_mpn: CL31A226KAHNNNE  # DD-39: six 22 uF 25 V X5R 1206; effective C under bias still UNKNOWN.
 
 interface:  # DD-32 default-off interface proposal; margins computed by automation/budget/interface.py.
   # nFAULT: wired-AND fault line = HCS74 CLR. Pull-up from VCTRL is split around the external interlock
