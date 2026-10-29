@@ -671,3 +671,79 @@ target**. REQ-PWR-02 becomes **≥ 93 % at 4.0 V input and 4.5 A, judged by benc
 figure as the budget board (DD-31). The 93 % value follows the budget precedent. `current.efficiency_target_pct`,
 the T1.7 bench limit and the requirement text were changed; the 3.0 V target (≥ 86 %, REQ-PWR-03) is unchanged.
 The routed estimate keeps 0.56 points of margin; the bench result decides.
+
+## DD-38 Budget PCB and prototype manufacturing package (engineering, 2026-10-29)
+
+Owner instruction: "Do everything on your own to complete the budget board ready for fabrication". The engineering
+choices below are Claude Code's (AI); the owner may change any of them. No order is placed, and Gate G stays open.
+
+**Board.** 90 × 60 mm, 4 layers, 1.6 mm, 1 oz on all layers, four M3 holes, all parts on the top side.
+- **Layers:** In1 is a solid GND plane; In2 and B.Cu are GND pours carrying a few signal tracks.
+- **Rules:** 0.15 mm clearance on all net classes; tracks 0.3 mm (Power), 0.25 mm (Ground), 0.15 mm (Sense).
+- **Power path:** F.Cu pours: XT30 → fuse holder → reverse FET Q1 → C2/C3 and U1 → L1 → output capacitors →
+  RS1 → Q2 → J2. The LASER_P strip from Q2 to J2 is repeated on In2 and B.Cu and stitched with six vias.
+- **Router protection:** rule areas keep the router off every power pour, the VBUCK neck to RS1 and the area
+  under L1's body.
+- **Silkscreen:** B+/B− beside the XT30 pads, LD+/LD−, INTLK, UPDI, MODE, LD NTC, FUSE 10A and a
+  "CLASS 4 LASER – DUMMY LOAD FIRST" legend.
+
+**Footprints.**
+- **U1 (TPS54821, RHL0014A):** project footprint from TI drawing 4228405/A (SLVSB14B pp.39–41). Five 0.3/0.6 mm
+  thermal vias at TI's positions (TI shows 0.2 mm drills), connected solid to every pour and tented on the bottom.
+  TI's 0.92 mm corner paste squares would overlap our larger drills, so they are 0.82 mm squares at ±0.61 mm,
+  0.2 mm clear of every via (about 64 % of TI's corner area). KiCad types the part through-hole because of the
+  plated vias; the export lists only parts with masked plated leads as hand-soldered.
+- **L1 (SRP1265A):** stock `Inductor_SMD:L_Bourns_SRP1245A`; the land is identical.
+- **J2:** symbol changed to `Connector:Screw_Terminal_01x02`. The generic connector's footprint filter did not
+  match the terminal block, which caused a DRC parity warning.
+- **J1 (XT30):** pins swapped to 1 = GND, 2 = VBAT_IN, because KiCad's footprint marks "+" beside pad 2. The
+  AMASS scan (BUD-26) shows no marks, so check the moulding against the silkscreen before first power. Q1
+  blocks a reversed pack.
+
+**Layout choices.**
+- **Kelvin sensing:** separate trace pairs run from RS1's inner pad edges to U2 (INA186) and U3 (INA300). U2's
+  VBUCK leg crosses on B.Cu so that U2's supply and ground pins are not enclosed.
+- **Q2 gate network:** R8 (pull-up) and D3 (clamp) tie into the VSH pour, so their about 2 mA does not flow in
+  a Kelvin trace.
+- **Input loop:** C2/C3 GND pads reach U1's GND pins 2–3 and exposed pad through 1.0 mm and 0.4 mm tracks, not
+  pour spokes. A solid same-net pour was tried first; it produced 0.10 mm connection necks against the main GND
+  pour.
+- **U1 cluster:** the feedback, compensation and soft-start parts (R5, R6, R3, C8, C9, C6) are hand-placed
+  under U1 with fixed short tracks. EN, CS_OUT and PWRGD escape through their own vias.
+- **OV divider:** the top resistor R16 sits at U5, so only the low-impedance VBUCK end runs far.
+
+**Builder workaround.** In KiCad 10.0.6, garbage-collecting the proxies of removed silkscreen items breaks the
+SWIG type table after `SetFPID`. `automation/budget/pcb_builder_budget.py` runs the unchanged shared builder
+with the proxies kept alive. The A/B builders are not edited.
+
+**Routing reproducibility.** KiCad's Specctra export orders pours and keep-outs by UUID, so every `place` gives
+FreeRouting a different order and a different result. The accepted session is archived in
+`hardware/budget-2s/routing/` with source hashes, and `build_pcb.py --stage restore` re-applies it without
+re-routing.
+
+**Results (generated).**
+- **Schematic:** ERC 0/0, 108 parts, 56 nets, exact netlist.
+- **DRC:** 0 errors, 0 warnings, 0 unconnected, 0 parity, with all severities and schematic parity on.
+- **Copper check:** new `automation/budget/layout_review.py`, which reuses the A/B extractor and DC solver.
+  - Output loop: 2.84 mΩ hot against the 3 mΩ `output_copper_ohm_allocation`. With LASER_P on F.Cu only it
+    was 4.29 mΩ, so the extra layers were added.
+  - Input copper: 2.29 mΩ hot. Adding the two XT30 contacts (1.6 mΩ) leaves 11.1 mΩ hot for the fuse and
+    holder within the 15 mΩ input allocation.
+  - Neck: the PH neck at U1's pins is flagged for review (0.90 mm equivalent width against a 1.58 mm
+    long-trace screen). Widening it made FreeRouting fail VCTRL, so it was left.
+- **Package:** `manufacturing/budget-2s/` holds the Gerber/drill ZIP, a BOM of 61 lines / 99 parts (40 lines to
+  select at order, MPN UNKNOWN with the requirement stated), a CPL of 99 placements, PDFs, renders and
+  `ORDERING.md`. BOM lines without an MPN are grouped by value, footprint, symbol and stated tolerance, TCR,
+  rating and dielectric, so 0.1 % and 1 % parts are never merged.
+- **Qualification:** `qualify.py` reports BUD-CAD-01 and BUD-MFG-01 CONDITIONAL from the hash-checked DRC and
+  export evidence.
+
+**OPEN.**
+- **Reviews:** U1 land and stencil; Q2 PowerPAK land (shared FP-POWERPAK); XT30 marks; J2 wire-entry side.
+- **Margins:** the output-copper margin is only about 0.16 mΩ. The fuse and holder must be at most 11.1 mΩ hot
+  (resistance UNKNOWN).
+- **Purchasing:** the 40 BOM selections, with genuine 0.1 % / 25 ppm divider resistors.
+- **Firmware:** the budget pin profile.
+- **Analysis:** BUD-ISS-04 fault timing and energy.
+- **Ordering:** assembly quote and DFM.
+- **Gate G:** dummy-load bench data.

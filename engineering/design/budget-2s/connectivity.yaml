@@ -4,7 +4,7 @@
 # - "NC" marks an intentionally unconnected pin. "GND" pins get ground symbols.
 # - Values come from engineering/design/budget-2s/parameters.yaml and the generated qualification report.
 # - mpn UNKNOWN means the line is specified by its description and still needs a sourced part (DD-34).
-# - DRAFT for schematic/ERC: footprints prefixed budget2s: are not generated yet (OPEN), no PCB exists.
+# - Footprints prefixed budget2s: come from automation/budget/build_library.py (U1 RHL0014A, from TI's drawing).
 
 meta:
   project: nubm44_budget2s
@@ -25,8 +25,8 @@ parts:
   # ------------------------------------------------------------------ power_in
   - {ref: J1, block: power_in, lib: "Connector_Generic:Conn_01x02", value: "XT30 2S in",
      footprint: "Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal", mpn: XT30PW-M, mfr: AMASS,
-     desc: "Battery input, protected balanced 2S pack. Pad-to-polarity mapping and B+/B- silkscreen to verify against the AMASS drawing (OPEN)",
-     pins: {1: VBAT_IN, 2: GND}}
+     desc: "Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)",
+     pins: {1: GND, 2: VBAT_IN}}
   - {ref: F1, block: power_in, lib: "Device:Fuse", value: "10A mini blade",
      footprint: "Fuse:Fuseholder_Blade_Mini_Keystone_3568", mpn: "3568", mfr: Keystone,
      desc: "Mini blade fuse holder; fuse 10 A (ATM) fitted separately. Holder + fuse + connector + copper must fit the 15 mOhm input allocation",
@@ -76,8 +76,8 @@ parts:
   - {ref: C9, block: converter, lib: "Device:C", value: 4.7n, footprint: "Capacitor_SMD:C_0603_1608Metric",
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "4.7 nF C0G 0603 compensation HF pole", pins: {1: COMP, 2: GND}}
   - {ref: L1, block: converter, lib: "Device:L", value: 4.7u,
-     footprint: "budget2s:L_Bourns_SRP1265A", mpn: SRP1265A-4R7M, mfr: Bourns,
-     desc: "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Footprint OPEN: check Bourns land against KiCad SRP1245A",
+     footprint: "Inductor_SMD:L_Bourns_SRP1245A", mpn: SRP1265A-4R7M, mfr: Bourns,
+     desc: "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads",
      pins: {1: PH, 2: VBUCK}}
   - {ref: C10, block: converter, lib: "Device:C", value: 22u, footprint: "Capacitor_SMD:C_1206_3216Metric",
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "22 uF 16 V X5R 1206 output (6 fitted; effective C under bias to verify)", pins: {1: VBUCK, 2: GND}}
@@ -131,7 +131,7 @@ parts:
      mpn: BZX585-C6V2, mfr: Nexperia, desc: "Q2 gate clamp, VZ 5.89-6.51 V (PREORDER-11, DD-34)", pins: {1: VSH, 2: QOUT_G}}
   - {ref: R9, block: sense, lib: "Device:R", value: 100, footprint: "Resistor_SMD:R_0603_1608Metric",
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 Ohm 1% 0603 gate series resistor to N1/N2 (limits clamp current)", pins: {1: QOUT_G, 2: QOUT_DRV}}
-  - {ref: J2, block: sense, lib: "Connector_Generic:Conn_01x02", value: "Laser out",
+  - {ref: J2, block: sense, lib: "Connector:Screw_Terminal_01x02", value: "Laser out",
      footprint: "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm", mpn: MX126-5.0-02P, mfr: MaiXu,
      desc: "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify",
      pins: {1: LASER_P, 2: GND}}
@@ -279,3 +279,11 @@ parts:
      mpn: UNKNOWN, mfr: UNKNOWN, desc: "100 nF X7R 0603 button debounce", pins: {1: BTN, 2: GND}}
   - {ref: TP5, block: control, lib: "Connector:TestPoint", value: VCTRL, in_bom: false,
      footprint: "TestPoint:TestPoint_Pad_D2.0mm", mpn: "-", mfr: "-", desc: "Test pad", pins: {1: VCTRL}}
+  - {ref: H1, block: control, lib: "Mechanical:MountingHole", value: M3, in_bom: false,
+     footprint: "MountingHole:MountingHole_3.2mm_M3", mpn: "-", mfr: "-", desc: "M3 mounting hole, unplated", pins: {}}
+  - {ref: H2, block: control, lib: "Mechanical:MountingHole", value: M3, in_bom: false,
+     footprint: "MountingHole:MountingHole_3.2mm_M3", mpn: "-", mfr: "-", desc: "M3 mounting hole, unplated", pins: {}}
+  - {ref: H3, block: control, lib: "Mechanical:MountingHole", value: M3, in_bom: false,
+     footprint: "MountingHole:MountingHole_3.2mm_M3", mpn: "-", mfr: "-", desc: "M3 mounting hole, unplated", pins: {}}
+  - {ref: H4, block: control, lib: "Mechanical:MountingHole", value: M3, in_bom: false,
+     footprint: "MountingHole:MountingHole_3.2mm_M3", mpn: "-", mfr: "-", desc: "M3 mounting hole, unplated", pins: {}}

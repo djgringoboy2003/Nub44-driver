@@ -1,0 +1,261 @@
+{
+ "paths": [
+  {
+   "net": "VBAT_IN",
+   "what": "J1 B+ to fuse holder",
+   "group": "input",
+   "from": [
+    "J1.2"
+   ],
+   "to": [
+    "F1.1"
+   ],
+   "r_mohm_25c": 0.355,
+   "r_mohm_hot": 0.426,
+   "current_a": 3.114,
+   "loss_mw_hot": 4.1,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     -29.0,
+     -10.55
+    ],
+    "equivalent_width_mm": 4.543,
+    "screen_width_mm": 0.951,
+    "flag": false
+   }
+  },
+  {
+   "net": "VBAT_F",
+   "what": "fuse holder to Q1 drain",
+   "group": "input",
+   "from": [
+    "F1.2"
+   ],
+   "to": [
+    "Q1.5",
+    "Q1.6",
+    "Q1.7",
+    "Q1.8"
+   ],
+   "r_mohm_25c": 0.238,
+   "r_mohm_hot": 0.286,
+   "current_a": 3.114,
+   "loss_mw_hot": 2.8,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     -12.95,
+     -8.5
+    ],
+    "equivalent_width_mm": 5.074,
+    "screen_width_mm": 0.951,
+    "flag": false
+   }
+  },
+  {
+   "net": "VBAT_P",
+   "what": "Q1 source to U1 VIN",
+   "group": "input",
+   "from": [
+    "Q1.1",
+    "Q1.2",
+    "Q1.3"
+   ],
+   "to": [
+    "U1.4",
+    "U1.5",
+    "U1.6"
+   ],
+   "r_mohm_25c": 1.055,
+   "r_mohm_hot": 1.266,
+   "current_a": 3.114,
+   "loss_mw_hot": 12.3,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     1.65,
+     -8.75
+    ],
+    "equivalent_width_mm": 1.673,
+    "screen_width_mm": 0.951,
+    "flag": false
+   }
+  },
+  {
+   "net": "GND",
+   "what": "U1 power ground to J1 B-",
+   "group": "input",
+   "from": [
+    "U1.15"
+   ],
+   "to": [
+    "J1.1"
+   ],
+   "r_mohm_25c": 0.258,
+   "r_mohm_hot": 0.31,
+   "current_a": 3.114,
+   "loss_mw_hot": 3.0,
+   "neck": {
+    "layer": "In2.Cu",
+    "at_mm": [
+     -30.88,
+     -18.08
+    ],
+    "equivalent_width_mm": 9.314,
+    "screen_width_mm": 2.473,
+    "flag": false
+   }
+  },
+  {
+   "net": "PH",
+   "what": "U1 switch node to L1 (not in an allocation)",
+   "group": "converter",
+   "from": [
+    "U1.11",
+    "U1.12"
+   ],
+   "to": [
+    "L1.1"
+   ],
+   "r_mohm_25c": 1.091,
+   "r_mohm_hot": 1.309,
+   "current_a": 4.5,
+   "loss_mw_hot": 26.5,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     6.95,
+     -10.7
+    ],
+    "equivalent_width_mm": 0.901,
+    "screen_width_mm": 1.58,
+    "flag": true
+   }
+  },
+  {
+   "net": "VBUCK",
+   "what": "L1 to shunt",
+   "group": "output",
+   "from": [
+    "L1.2"
+   ],
+   "to": [
+    "RS1.1"
+   ],
+   "r_mohm_25c": 0.826,
+   "r_mohm_hot": 0.991,
+   "current_a": 4.5,
+   "loss_mw_hot": 20.1,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     31.4,
+     -8.1
+    ],
+    "equivalent_width_mm": 3.276,
+    "screen_width_mm": 1.58,
+    "flag": false
+   }
+  },
+  {
+   "net": "VSH",
+   "what": "shunt to Q2 source",
+   "group": "output",
+   "from": [
+    "RS1.2"
+   ],
+   "to": [
+    "Q2.1",
+    "Q2.2",
+    "Q2.3"
+   ],
+   "r_mohm_25c": 0.234,
+   "r_mohm_hot": 0.281,
+   "current_a": 4.5,
+   "loss_mw_hot": 5.7,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     39.9,
+     -9.5
+    ],
+    "equivalent_width_mm": 2.287,
+    "screen_width_mm": 1.58,
+    "flag": false
+   }
+  },
+  {
+   "net": "LASER_P",
+   "what": "Q2 drain to J2 LD+",
+   "group": "output",
+   "from": [
+    "Q2.5"
+   ],
+   "to": [
+    "J2.1"
+   ],
+   "r_mohm_25c": 0.993,
+   "r_mohm_hot": 1.191,
+   "current_a": 4.5,
+   "loss_mw_hot": 24.1,
+   "neck": {
+    "layer": "F.Cu",
+    "at_mm": [
+     42.0,
+     -0.2
+    ],
+    "equivalent_width_mm": 3.638,
+    "screen_width_mm": 1.58,
+    "flag": false
+   }
+  },
+  {
+   "net": "GND",
+   "what": "J2 LD- to U1 power ground",
+   "group": "output",
+   "from": [
+    "J2.2"
+   ],
+   "to": [
+    "U1.15"
+   ],
+   "r_mohm_25c": 0.311,
+   "r_mohm_hot": 0.373,
+   "current_a": 4.5,
+   "loss_mw_hot": 7.6,
+   "neck": {
+    "layer": "In2.Cu",
+    "at_mm": [
+     39.43,
+     8.22
+    ],
+    "equivalent_width_mm": 7.873,
+    "screen_width_mm": 4.11,
+    "flag": false
+   }
+  }
+ ],
+ "summary": {
+  "output_copper_ohm_hot": 0.0028360000000000004,
+  "output_allocation_ohm": 0.003,
+  "output_ok": true,
+  "input_copper_ohm_hot": 0.0022879999999999997,
+  "connector_contacts_ohm": 0.0016,
+  "input_allocation_ohm": 0.015,
+  "fuse_and_holder_budget_ohm_hot": 0.011111999999999999,
+  "input_ok": true,
+  "necks_flagged": [
+   "PH (U1 switch node to L1 (not in an allocation))"
+  ],
+  "ok": true
+ },
+ "currents_a": {
+  "i_in": 3.114141899978908,
+  "i_laser": 4.5
+ },
+ "grid_mm": {
+  "power": 0.05,
+  "ground": 0.1
+ }
+}

@@ -26,9 +26,10 @@ The owner also authorised a **separate budget-2s development track** (DD-29/30):
 unrestricted size and a £60 target per working driver, comparing three and five units. Start with
 [engineering/budget-2s-design.md](engineering/budget-2s-design.md) for its current circuit candidates,
 qualification results, unresolved issues and next steps. Numeric sources and preliminary calculations/models
-exist. A draft budget schematic now exists (connectivity, separate `budget2s` library, ERC/netlist evidence);
-budget footprints for U1/L1, PCB, firmware adaptation and manufacturing files do not yet exist. A/B PASS
-results and the existing dashboard apply only to the original single-cell circuit.
+exist. DD-38 added a DRC-clean four-layer budget PCB (90 × 60 mm), a routed-copper check and a prototype
+bare-board package in `manufacturing/budget-2s/`. Its BOM still has lines to select at order, the U1/Q2 land
+and XT30/J2 reviews are open, and budget firmware does not exist yet. A/B PASS results and the existing
+dashboard apply only to the original single-cell circuit.
 
 ## Non-negotiable rules
 
@@ -47,11 +48,13 @@ results and the existing dashboard apply only to the original single-cell circui
    - PCB placement: `hardware/<variant>/placement.yaml`.
 
    For the separate budget circuit, numeric values are in `engineering/design/budget-2s/parameters.yaml`.
-   Its connectivity is `engineering/design/budget-2s/connectivity.yaml`; placement will be
-   `hardware/budget-2s/placement.yaml` (not created yet). Its symbols/footprints live in the separate
-   `hardware/budget-2s/lib` (`budget2s`), built by `automation/budget/build_library.py`. Build the schematic
-   with `automation/budget/build_schematic.py`, then rerun `automation/budget/qualify.py` (it hashes the
-   schematic evidence). Never edit `hardware/libraries` or the A/B builders for budget work. Resolve
+   Its connectivity is `engineering/design/budget-2s/connectivity.yaml` and its placement (positions, pours,
+   fixed tracks/vias, router keep-outs) is `hardware/budget-2s/placement.yaml`. Its symbols/footprints live in
+   the separate `hardware/budget-2s/lib` (`budget2s`), built by `automation/budget/build_library.py`. Build the
+   schematic with `automation/budget/build_schematic.py` and the board with `automation/budget/build_pcb.py`
+   (the shared KiCad-side builder runs through `automation/budget/pcb_builder_budget.py`). Then rerun
+   `layout_review.py`, `export.py` and `qualify.py` (it hashes their evidence). Never edit `hardware/libraries`
+   or the A/B builders for budget work. Resolve
    paths with `automation/nubm44/variants.py`. Do not repoint the shared A/B sources or add the budget variant
    to legacy generator defaults before the complete independent circuit workflow supports it.
 
@@ -90,6 +93,8 @@ results and the existing dashboard apply only to the original single-cell circui
 | `automation/export/` | PCBWay export (`export_pcbway.py`, marks incomplete boards), JLCPCB files derived from it (`export_jlcpcb.py`), release levels (`release_check.py`), review packaging |
 | `automation/review/footprint_report.py` | Pad tables for the human footprint reviews (`reports/footprint-review.md`) |
 | `manufacturing/jlcpcb/<variant>/` | JLCPCB upload files (flat Gerber ZIP, JLC BOM/CPL), evaluation board only |
+| `hardware/budget-2s/`, `manufacturing/budget-2s/` | Budget KiCad project, `placement.yaml`, archived router session (`routing/`); prototype package from `automation/budget/export.py` (Gerber/drill ZIP, BOM with select-at-order lines, JLC BOM/CPL, PDFs, renders, `ORDERING.md`) |
+| `automation/budget/build_pcb.py`, `layout_review.py`, `export.py` | Budget board stages (place/route/finish/drc/render/archive/restore), routed-copper resistance check against the `power_model` allocations, manufacturing export |
 | `documentation/ordering-guide.md`, `documentation/pre-order-review.md` | Fab files and options (PCBWay, JLCPCB, layer order); the brief for the independent pre-order review |
 | `automation/nubm44/evidence.py` | Evidence manifests (input/output SHA-256, tool versions) used by calculations, simulations, schematics |
 | `automation/bench/bench.py` | Bench-test records (MEASURED only): import, validation, judging against `documentation/testing/bench-tests.yaml`, Gate G summary |
@@ -134,8 +139,11 @@ For the current budget electrical-qualification stage, run
 `rtk proxy .venv/Scripts/python.exe automation/budget/loop_model.py` after any budget parameter/model or
 bound source-record change. The first currently exits 1 with unresolved prerequisites; a passing loop
 sensitivity model does not close physical qualification. See the budget handover for the exact scope.
-The legacy full validator still covers A/B only. Budget CAD and release tooling must be implemented
-separately before claiming any budget manufacturing readiness.
+The legacy full validator still covers A/B only. After a budget source change, regenerate in this order:
+`build_library.py`, `build_schematic.py`, then `build_pcb.py --stage restore` if the routing checkpoint still
+matches (it refuses otherwise; then `place`, `route`, `finish`, `drc` until DRC is clean, and `archive`), then
+`layout_review.py`, `export.py`, `qualify.py` and `loop_model.py`. The budget package is a prototype bare-board
+set only; release tooling (reviews, BOM selection, bench) is still to do.
 
 Evidence is hash-bound to its sources. After editing `parameters.yaml`, `connectivity.yaml` or a
 `placement.yaml`, regenerate it in this order:
@@ -203,6 +211,12 @@ and extracts its copper as the router's input.
 - A pour-only change can be applied to the archived router session (restore DSN/SES/evidence, then
   `--stage finish` and `--stage drc`) without re-routing. Unmatched `remove_*_post` selectors are skipped
   silently, so check the printed `matches` counts.
+- KiCad's Specctra export orders pours and keep-outs by UUID, so the budget DSN differs on every `place` and
+  FreeRouting gives a different result each time. Keep the accepted session with `build_pcb.py --stage archive`;
+  `--stage restore` rebuilds the board from it. With fanout disabled, FreeRouting does not route pads of a net
+  that has planes (zones_pre) off the plane: wire such branches with fixed `tracks` in `placement.yaml`.
+- KiCad 10.0.6: removing footprint silkscreen and letting the Python proxies be garbage-collected after
+  `SetFPID` breaks the SWIG type table (the budget `place` crashed). `pcb_builder_budget.py` keeps them alive.
 
 ## Commit conventions
 

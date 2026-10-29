@@ -261,8 +261,66 @@ def schematic_detail() -> str:
         return f"Budget schematic evidence STALE ({problems[0]}); rerun build_schematic.py. Placement/PCB/DRC OPEN."
     return (f"Schematic {data['status']}: ERC {data['erc_errors']} errors / {data['erc_warnings']} warnings, "
             f"{data['netlist_parts']} parts, {len(data['connectivity_differences'])} netlist differences. "
-            f"Footprints not generated: {', '.join(data['footprints_not_generated']) or 'none'}. "
-            "Placement, PCB, DRC and layout review OPEN.")
+            f"Footprints not generated: {', '.join(data['footprints_not_generated']) or 'none'}.")
+
+
+DRC_REPORT, DRC_MANIFEST = OUT / "drc.json", OUT / "drc-evidence.json"
+EXPORT_MANIFEST = OUT / "export-evidence.json"
+
+
+def pcb_state() -> dict:
+    """Budget PCB DRC (automation/budget/build_pcb.py --stage drc), re-verified against its hash manifest."""
+    if not DRC_REPORT.is_file() or not DRC_MANIFEST.is_file():
+        return {"clean": False, "detail": "No budget DRC evidence; run automation/budget/build_pcb.py."}
+    e = json.loads(DRC_MANIFEST.read_text(encoding="utf-8"))
+    stale = [] if e.get("report_sha256") == evidence.sha256_file(DRC_REPORT) else [DRC_REPORT.name]
+    stale += [rel for rel, digest in e.get("inputs", {}).items()
+              if not (ROOT / rel).is_file() or evidence.sha256_file(ROOT / rel) != digest]
+    if stale or not e.get("schematic_parity") or not e.get("severity_all"):
+        return {"clean": False, "detail": f"Budget DRC evidence STALE ({', '.join(stale) or 'flags'}); rerun DRC."}
+    d = json.loads(DRC_REPORT.read_text(encoding="utf-8"))
+    errors = sum(v["severity"] == "error" for v in d["violations"])
+    warnings = len(d["violations"]) - errors
+    counts = (errors, warnings, len(d["unconnected_items"]), len(d["schematic_parity"]))
+    return {"clean": counts == (0, 0, 0, 0),
+            "detail": "PCB DRC {} errors / {} warnings / {} unconnected / {} parity (parity and all severities on).".format(*counts)}
+
+
+LAYOUT_REPORT, LAYOUT_MANIFEST = OUT / "layout-review.json", OUT / "layout-review-evidence.json"
+
+
+def layout_state() -> dict:
+    """Routed-copper resistances against the power_model allocations (automation/budget/layout_review.py)."""
+    if not LAYOUT_REPORT.is_file() or not LAYOUT_MANIFEST.is_file():
+        return {"ok": False, "detail": "No routed-copper check; run automation/budget/layout_review.py."}
+    problems = evidence.problems(evidence.load(LAYOUT_MANIFEST), expected_kind="budget-layout-review")
+    if problems:
+        return {"ok": False, "detail": f"Routed-copper check STALE ({problems[0]}); rerun layout_review.py."}
+    s = json.loads(LAYOUT_REPORT.read_text(encoding="utf-8"))["summary"]
+    if "reason" in s:
+        return {"ok": False, "detail": f"Routed-copper check FAIL: {s['reason']}."}
+    return {"ok": s["ok"], "detail": (
+        f"Routed copper: output loop {s['output_copper_ohm_hot'] * 1e3:.3f} mΩ hot vs {s['output_allocation_ohm'] * 1e3:g} mΩ "
+        f"allocation ({'within' if s['output_ok'] else 'EXCEEDS'}); fuse and holder budget "
+        f"{s['fuse_and_holder_budget_ohm_hot'] * 1e3:.3f} mΩ hot. Necks for review: {', '.join(s['necks_flagged']) or 'none'}.")}
+
+
+def export_state() -> dict:
+    """Budget manufacturing package (automation/budget/export.py), re-verified against its hash manifest."""
+    if not EXPORT_MANIFEST.is_file():
+        return {"ok": False, "detail": "No budget manufacturing export; run automation/budget/export.py."}
+    problems = evidence.problems(evidence.load(EXPORT_MANIFEST), expected_kind="budget-export")
+    if problems:
+        return {"ok": False, "detail": f"Budget export evidence STALE ({problems[0]}); rerun export.py."}
+    ordering = ROOT / "manufacturing" / "budget-2s" / "ORDERING.md"
+    text = ordering.read_text(encoding="utf-8") if ordering.is_file() else ""
+    blocked = (ROOT / "manufacturing" / "budget-2s" / "DO_NOT_FABRICATE.txt").is_file()
+    selections = sum(1 for ln in text.split("## Lines to select at order time", 1)[-1].splitlines()
+                     if ln.startswith("- ")) if "## Lines to select" in text else 0
+    return {"ok": not blocked, "selections": selections,
+            "detail": ("Package marked DO_NOT_FABRICATE. " if blocked else
+                       "Prototype Gerbers/drill/CPL checked against the DRC-clean board. ")
+                      + f"BOM has {selections} lines to select at order (MPN UNKNOWN, requirement listed)."}
 
 
 def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
@@ -270,6 +328,7 @@ def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
     def row(identifier, status, detail):
         return {"id": identifier, "status": status, "detail": detail}
     t, dr, uv, ov, eff = p["targets"], pw["dropout"], pw["uv"], pw["ov"], pw["efficiency"]
+    sch, pcb, lay, mfg = schematic_detail(), pcb_state(), layout_state(), export_state()
     small = itf["smallest_voltage_margin"]
     conditional = lambda ok: "CONDITIONAL" if ok else "FAIL"
     return [
@@ -299,9 +358,12 @@ def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
         row("BUD-SAFE-01", "OPEN", "Total fault response time and energy, output-FET turn-off, single and latent "
             "faults (power-on self-test), interlock cable faults and bench fault injection."),
         row("BUD-LOOP-01", "OPEN", "Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open."),
-        row("BUD-CAD-01", "OPEN", schematic_detail()),
+        row("BUD-CAD-01", "CONDITIONAL" if pcb["clean"] and lay["ok"] and "PASS" in sch else "OPEN",
+            f"{sch} {pcb['detail']} {lay['detail']} Open reviews: U1 RHL land and stencil (project footprint), "
+            "shared FP-POWERPAK land (Q2), XT30 moulded +/- marks, J2 wire-entry side; thermal behaviour is bench-only."),
         row("BUD-FW-01", "OPEN", "Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified."),
-        row("BUD-MFG-01", "OPEN", "Exact BOM, package/paste/thermal review, quote and checked exports are absent."),
+        row("BUD-MFG-01", "CONDITIONAL" if mfg["ok"] and pcb["clean"] else "OPEN",
+            f"{mfg['detail']} Assembly quote, DFM review and inspection plan OPEN."),
         row("BUD-COST-01", "OPEN", "Complete 3/5-unit delivered GBP quotes UNKNOWN; GBP 180/300 are ceilings."),
         row("BUD-G-01", "OPEN", "No measured budget-board records. Gate G requires real dummy-load/thermal/fault data."),
     ]
@@ -310,10 +372,14 @@ def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
 def markdown(r: dict, p: dict) -> str:
     cc, oc, vm, rr, pw = (r[k] for k in ("current", "backup", "voltage_monitor", "ripple", "power"))
     targets, energy = p["targets"], p["output_energy"]
+    mfg_ready = any(x["id"] == "BUD-MFG-01" and x["status"] == "CONDITIONAL" for x in r["readiness"])
     efficiency_percent = targets["efficiency_fraction"] * 100
     lines = ["# Budget-2S electrical qualification", "",
              "Generated by `automation/budget/qualify.py`; do not hand-edit. Source: DD-30 / budget parameters.", "",
-             "**ELECTRICAL_QUALIFICATION — NOT READY FOR FABRICATION.** This report applies only to budget-2s.",
+             ("**PROTOTYPE PCB FILES CHECKED — ELECTRICAL QUALIFICATION CONDITIONAL, NOT RELEASED.** Bare-board "
+              "fabrication files exist for a dummy-load prototype; the BOM, reviews and bench data are still open."
+              if mfg_ready else "**ELECTRICAL_QUALIFICATION — NOT READY FOR FABRICATION.**")
+             + " This report applies only to budget-2s.",
              "Conditional calculations are not complete circuit verification. Existing A/B results do not apply.", "",
              "## Calculated candidate screens", "",
              "| Screen | Result | Qualification |", "|---|---|---|",
@@ -420,7 +486,8 @@ def main(argv: list[str] | None = None) -> int:
         "budget-qualification", inputs=[PARAMETERS, Path(__file__), Path(power.__file__), Path(interface.__file__),
             ROOT / "automation/nubm44/variants.py", ROOT / "automation/nubm44/evidence.py",
             ROOT / "research/sources/budget-driver-sources.md",
-            *[f for f in (SCHEMATIC_SUMMARY, SCHEMATIC_MANIFEST) if f.is_file()]],
+            *[f for f in (SCHEMATIC_SUMMARY, SCHEMATIC_MANIFEST, DRC_REPORT, DRC_MANIFEST, LAYOUT_REPORT,
+                          LAYOUT_MANIFEST, EXPORT_MANIFEST) if f.is_file()]],
         outputs=[jp, md], tools=evidence.python_tools(["PyYAML"])), manifest)
     problems = [x for x in result["readiness"] if x["status"] != "PASS"]
     for x in result["readiness"]:

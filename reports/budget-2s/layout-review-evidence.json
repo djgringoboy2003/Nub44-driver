@@ -1,0 +1,25 @@
+{
+ "generated_utc": "2026-10-29T11:35:48+00:00",
+ "generator": "automation/budget/layout_review.py",
+ "inputs": {
+  "automation/budget/layout_review.py": "9d62be23ce701201b24ba4d98530a14e32d27033b79c824729e925d894404da4",
+  "automation/budget/power.py": "36286602e2185c870d61d98c41ab8a5819058092a58181c060c0c585c8108297",
+  "automation/review/dcflow.py": "7b0219e47af82e850fb5af3c71f5936a082cef9d86a0c59c6abbb11615774741",
+  "automation/review/layout_extract.py": "dba0846c1be2fc9e553e355d7b2e70d2b9153670506feebde3fcaba46100ea73",
+  "automation/review/raster.py": "22b3530560bc2a2624f612bad7b0b95614f94cd9727651bfc1c149c740082d26",
+  "engineering/design/budget-2s/parameters.yaml": "aa3f4675ebe769ba3279e481fd3c9893eb81a296c9894ce6c256c77acf4991b9",
+  "hardware/budget-2s/nubm44_budget2s.kicad_pcb": "41da0d7cebd427d776bd9b9eb81dab09c134f089859e74a58e1bb9975de042c9"
+ },
+ "kind": "budget-layout-review",
+ "outputs": {
+  "reports/budget-2s/layout-review.json": "417cd688d7498e754118ef67f51883c2c4c3b0c530fb590b13b50d62860e9981",
+  "reports/budget-2s/layout-review.md": "6ade4afc9806f27fd691380185012cc1ad32648a87d9fecf84947effda0ecdd1"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "PyYAML": "6.0.3",
+  "numpy": "2.4.6",
+  "python": "3.11.5",
+  "scipy": "1.17.1"
+ }
+}

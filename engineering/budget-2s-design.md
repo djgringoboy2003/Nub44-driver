@@ -1,13 +1,14 @@
 # Budget-2S implementation and handover
 
 Updated 2026-10-29. Codex (AI review), requested by owner, decision DD-30; continued by Claude Code
-(AI), decision DD-31 (single output P-FET, UV backstop, operating-point model).
+(AI), decisions DD-31…DD-35 and DD-38 (PCB and prototype manufacturing package).
 
-**Stage: electrical qualification. No budget fabrication package exists and no order is authorised by this
-document.** The owner requested implementation of the separate two-cell, unrestricted-size, £60 driver.
-This checkpoint replaces the planning-only state with numeric sources, executable calculations, a
-preliminary ngspice current-loop model and an explicit fault/qualification register. It does not inherit
-the original single-cell boards' CAD, firmware or release results.
+**Stage: prototype PCB files checked; electrical qualification CONDITIONAL; not released.** DD-38 produced a
+DRC-clean 90 × 60 mm four-layer board and a bare-board manufacturing package (`manufacturing/budget-2s/`) for
+a dummy-load prototype. Its BOM still has lines to select at order (MPN UNKNOWN, requirement stated), and the
+footprint and layout reviews below are open. No order is authorised by this document or placed by any tool.
+The owner requested implementation of the separate two-cell, unrestricted-size, £60 driver. This work does
+not inherit the original single-cell boards' CAD, firmware or release results.
 
 ## Source and command map
 
@@ -15,9 +16,12 @@ the original single-cell boards' CAD, firmware or release results.
 |---|---|
 | Numeric candidate and study assumptions | `engineering/design/budget-2s/parameters.yaml` |
 | Separate source resolution | `automation/nubm44/variants.py`; original A/B defaults remain unchanged |
-| Circuit connectivity | `engineering/design/budget-2s/connectivity.yaml` (DD-35 draft): 104 parts, every pin and net |
+| Circuit connectivity | `engineering/design/budget-2s/connectivity.yaml` (DD-35, DD-38): 108 parts (incl. four mounting holes), every pin and net |
 | KiCad library and schematic | `automation/budget/build_library.py` → `hardware/budget-2s/lib/budget2s.*`; `automation/budget/build_schematic.py` → `hardware/budget-2s/nubm44_budget2s.kicad_sch`, `reports/budget-2s/erc.json`, `schematic.json`, `schematic.pdf` and a hash manifest |
-| Placement | Reserved `hardware/budget-2s/placement.yaml`; **not created** (next: U1/L1 footprints, then placement) |
+| Placement and routing | `hardware/budget-2s/placement.yaml` (positions, pours, fixed tracks/vias, router keep-outs); `automation/budget/build_pcb.py --stage place/route/finish/drc/render` (shared builder via `pcb_builder_budget.py`); accepted session archived in `hardware/budget-2s/routing/`, re-applied with `--stage restore` |
+| DRC | `reports/budget-2s/drc.json` and `drc-evidence.json` (kicad-cli, all severities, schematic parity) |
+| Routed-copper check | `automation/budget/layout_review.py` → `reports/budget-2s/layout-review.md/.json` and a hash manifest: DC path resistances against the `power_model` allocations |
+| Manufacturing package | `automation/budget/export.py` → `manufacturing/budget-2s/` (Gerbers/drill ZIP, BOM, JLCPCB BOM/CPL, PDFs, renders, `ORDERING.md`) and `reports/budget-2s/export-evidence.json`; marks DO_NOT_FABRICATE unless DRC is clean and current |
 | Static default-off interface checks (DD-32) | `automation/budget/interface.py` (called by `qualify.py`; results in the same report) |
 | Electrical qualification | `automation/budget/qualify.py` → `reports/budget-2s/qualification.md`, JSON and hash manifest |
 | Operating point, dropout, UV/OV margins, efficiency estimate | `automation/budget/power.py` (called by `qualify.py`; results in the same report) |
@@ -28,15 +32,22 @@ the original single-cell boards' CAD, firmware or release results.
 Run from the repository root (prefix shell commands with `rtk`, per the owner’s RTK.md):
 
 ```powershell
+rtk proxy .venv/Scripts/python.exe automation/budget/build_library.py
+rtk proxy .venv/Scripts/python.exe automation/budget/build_schematic.py
+rtk proxy .venv/Scripts/python.exe automation/budget/build_pcb.py --stage restore   # archived routing; or place/route/finish/drc
+rtk proxy .venv/Scripts/python.exe automation/budget/layout_review.py
+rtk proxy .venv/Scripts/python.exe automation/budget/export.py
 rtk proxy .venv/Scripts/python.exe automation/budget/qualify.py
 rtk proxy .venv/Scripts/python.exe automation/budget/loop_model.py
 rtk proxy .venv/Scripts/python.exe -m pytest tests -q
 rtk proxy .venv/Scripts/python.exe automation/validation/validate.py
 ```
 
-`qualify.py` currently **exits 1**, because all thirteen manufacturing prerequisites remain unresolved: six
-CONDITIONAL calculations (setpoint, dropout, efficiency estimate, UV, OVP margin, static default-off interface)
-and seven OPEN. That is the intended readiness result, not a failed Python invocation.
+`qualify.py` currently **exits 1**, because none of its thirteen prerequisites is a PASS: eight are CONDITIONAL
+(setpoint, dropout, efficiency estimate, UV, OVP margin, static default-off interface, CAD and manufacturing
+files) and five OPEN (fault safety, loop, firmware, cost, Gate G). That is the intended readiness result, not a
+failed Python invocation. Rerun `layout_review.py` and `export.py` after any board change; `qualify.py` reads
+their hash-checked evidence. `export.py` exits 1 and writes DO_NOT_FABRICATE.txt unless DRC is clean and current.
 `loop_model.py` exits 0 only when its actual sensitivity margins and independent ngspice/equation agreement
 pass; its physical qualification stays OPEN. Existing `validate.py` still validates **A/B only**. A return
 code of zero there is not evidence for budget-2s. Do not add budget failures to the A/B known-limitations
@@ -79,7 +90,7 @@ No commercial precision-resistor/capacitor/connector/fuse suffix is invented to 
 all final prices, stock and complete delivered GBP totals remain UNKNOWN. Candidates are new-circuit study
 choices, not authorised substitutions into A/B or an orderable approved BOM.
 
-## Findings that must be resolved before layout
+## Qualification findings (open until bench data)
 
 | ID | Finding | Remedy / evidence needed | State |
 |---|---|---|---|
@@ -149,29 +160,32 @@ rated dummy load before any laser. Only actual MEASURED records may enter the be
 
 ## Next implementation steps for another agent
 
-1. Read AGENTS.md, PROGRESS Current state, this file and both generated budget reports. Verify hashes via
-   `nubm44.evidence.problems`; regenerate with the producing scripts, never edit results.
-2. BUD-ISS-01/02/03 are mitigated in calculation (DD-31, DD-32); the owner set a 93% efficiency target.
-   Next resolve BUD-ISS-04: the total fault response and energy. Chain the open-drain/comparator delays, the
-   series pairs, the output P-FET turn-off through its 2.2 kΩ pull-up (55 nC typical gate charge suggests tens
-   of µs, see BUD-16), the buck EN shutdown, inductor and bulk-capacitor energy, and SOA. Prefer guaranteed delay
-   limits where datasheets give them, and record the rest as UNKNOWN for bench measurement. Choose exact
-   passives, a fuse and connector that meet the `power_model` allocations, gate clamps and the protected 2S
-   pack interface. Keep price/stock
-   UNKNOWN until supported by dated supplier evidence. Request 3/5-unit quotes only through an owner-approved
-   contact.
-3. Extend the preliminary model to startup/flash/open/short/reconnect, finite voltage/COMP/SS limits and
-   component corners. Record assumptions and actual failures. A laser survival bound remains a bench task.
-4. Then create the **separate** canonical connectivity and reviewed symbol/land sources. Extend schematic,
-   library, PCB, layout, sourcing, export, firmware and release tooling to select the registered budget
-   sources. Never repoint the shared A/B YAML or reuse their PASS evidence. Review all exact pin/land maps.
-5. Generate budget schematic/ERC/netlist, place and route a standard two-layer board if qualified; use four
-   layers if electrical/thermal checks require it. Preserve tight switching loops and Kelvin routing despite
-   unrestricted size. DRC → layout review → manufacturing exports → footprint/BOM/CPL checks, with all hashes.
-6. Prepare the budget HAL/target build, host/register/mutation tests and a budget-specific bench-test schema;
-   define release reviews and inspection (including hidden joints) before a PROTOTYPE_CANDIDATE disposition.
-7. Obtain complete GBP landed quotes for 3/5 accepted working boards, paid inspection/rework and all spares;
-   owner chooses the batch and places any order. A complete total is currently UNKNOWN.
+1. Read AGENTS.md, PROGRESS Current state, this file, DD-38 and the generated budget reports
+   (`qualification.md`, `loop-model.md`, `layout-review.md`, `manufacturing/budget-2s/ORDERING.md`). Verify
+   hashes via `nubm44.evidence.problems`; regenerate with the producing scripts, never edit results.
+2. **Reviews before any order** (DD-38 OPEN list):
+   - U1 RHL land and stencil against TI's drawing, using `budget2s.pretty` and the F.Paste Gerber.
+   - The Q2 PowerPAK land (the open A/B FP-POWERPAK review applies).
+   - The XT30 moulded +/− marks against the B+/B− silkscreen, and J2's wire-entry side.
+   - The PH neck flagged by `layout_review.py`.
+3. **BOM:** choose the 40 select-at-order lines with dated supplier evidence; record any new manufacturer
+   sources as BUD-27 onward.
+   - Precision lines: 0.1 % / 25 ppm/°C (R5, R6, R7, R14–R17).
+   - Capacitor voltage and dielectric ratings as stated in each line.
+   - The fuse and holder, which must be at most 11.1 mΩ hot (`layout-review.md`).
+   - The TVS clamp check.
+   Keep prices and stock UNKNOWN until quoted.
+4. **BUD-ISS-04:** the total fault response and energy. Chain the open-drain/comparator delays, the series
+   pairs, the output P-FET turn-off through its 2.2 kΩ pull-up (55 nC typical gate charge suggests tens of µs,
+   see BUD-16), the buck EN shutdown, inductor and bulk-capacitor energy, and SOA. Prefer guaranteed delay limits
+   and record the rest as UNKNOWN for bench measurement.
+5. **Firmware:** the budget HAL and pin profile (DD-35 pin table), ADC scaling, operating cutoff (BUD-ISS-02),
+   arming and permit, plus the target build and host/register/mutation tests. Then a budget-specific bench-test
+   schema (dummy load, efficiency at every owner V–I point, thermal, fault injection).
+6. **Ordering:** obtain GBP landed quotes for 3 and 5 boards (PCB, stencil, assembly, X-ray of U1, spares), each
+   requested only through an owner-approved contact; the owner places any order. A complete total is UNKNOWN.
+7. **Bench:** build on a current-limited supply and dummy load before any laser. Only MEASURED records may close
+   Gate G.
 
 At each milestone update this handover as needed, PROGRESS (Current/Next/Log), scoped requirements and any
 affected audit/decision records; commit with the actual check results and push `main` to origin. Keep Gate G

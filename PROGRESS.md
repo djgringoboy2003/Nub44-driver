@@ -5,7 +5,7 @@
 _Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
 efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
-sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %). The pre-order, quote, GBP/UK and Project 450
+sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
 protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
 
@@ -50,7 +50,8 @@ now saved locally with hashes. No design/CAD/export change. Dashboard missing bo
 startup, diagnostics and charging inhibition with our existing design. The two-cell TPS56C215 buck is not
 a straight swap for the single-cell TPS552882; costs/savings UNKNOWN. Proposals only; no design change.
 
-**Separate budget track (DD-29/30): ELECTRICAL_QUALIFICATION; not ready for fabrication.** Owner accepts two
+**Separate budget track (DD-29/30, DD-38): prototype PCB files checked; electrical qualification CONDITIONAL;
+not released.** Owner accepts two
 series Li-ion cells, no size constraint and £60 per working driver; compare three/five (£180/£300 batch
 ceilings, not quotes). Continue from `engineering/budget-2s-design.md`; the earlier rationale remains in
 `engineering/budget-driver-plan.md`. Independent numeric sources now exist in
@@ -99,12 +100,26 @@ level at VCTRL < 1.7 V whatever the logic state. `automation/budget/interface.py
 linearly scaled VOL, 25 °C leakage allocations, typical-only EN pull-up and MCU leakage. The smallest margin
 is the supervisor release threshold, about 13 mV beyond its 30 mV allocation.
 
-Layout is still held for BUD-ISS-04: total shutdown time and fault energy are unbounded, including the output
-P-FET turn-off through its 2.2 kΩ pull-up. DD-35: a draft budget KiCad schematic now exists
-(`hardware/budget-2s`, generated from `engineering/design/budget-2s/connectivity.yaml`). It has ERC 0 errors and an
-exact netlist match (104 parts, 56 nets); the 2 warnings are the not-yet-generated U1 (TPS54821 RHL) and L1
-(SRP1265A) footprints. No budget PCB, firmware adaptation or manufacturing package exists. All nine REQ-BUD requirements and physical qualification remain OPEN.
-`qualify.py` reports thirteen unresolved prerequisites and exits 1 deliberately: six CONDITIONAL, seven OPEN. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
+DD-35/38: the budget KiCad project (`hardware/budget-2s`) is generated from the budget connectivity and placement
+sources. The schematic has ERC 0/0 with an exact netlist (108 parts, 56 nets). The board is 90 × 60 mm, four
+layers, all parts on the top.
+- **DRC:** 0 errors, 0 warnings, 0 unconnected, 0 parity.
+- **U1 footprint:** project TI RHL land, thermal vias, corner paste kept clear of the drills.
+- **J1:** XT30 pins swapped to match KiCad's "+" mark.
+- **Routed copper** (`automation/budget/layout_review.py`): the output loop is 2.84 mΩ hot against the 3 mΩ
+  allocation, after LASER_P was repeated on In2/B.Cu (it was 4.29 mΩ). The input leaves 11.1 mΩ hot for the
+  fuse and holder.
+- **Package** (`manufacturing/budget-2s/`): Gerber/drill ZIP, BOM 61 lines / 99 parts (40 lines to select at
+  order, MPN UNKNOWN with the requirement stated), CPL, PDFs, renders, `ORDERING.md`.
+- **Routing archive:** FreeRouting results vary with KiCad's DSN pour order, so the accepted session is archived
+  in `hardware/budget-2s/routing/` and `build_pcb.py --stage restore` reproduces the board.
+- **Open before an order:** the U1 and Q2 land reviews, the XT30 moulded marks, J2 wire entry and the BOM
+  selections.
+- **Also open:** BUD-ISS-04 (total shutdown time and fault energy, including the output P-FET turn-off through
+  its 2.2 kΩ pull-up), budget firmware, and all nine REQ-BUD requirements with physical qualification.
+
+`qualify.py` exits 1 deliberately with thirteen unresolved prerequisites: eight CONDITIONAL (now including CAD and
+manufacturing files) and five OPEN. Prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
 four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
 still cover A/B only; their PASS results cannot qualify this circuit.
 
@@ -117,7 +132,7 @@ and the reverse-FET limit 0.7 W (0.68 W computed). Results:
 - Routed-copper efficiency estimate 93.56%. The owner lowered the A/B target to ≥ 93%, bench-judged (DD-37), so
   the estimate has 0.56 points of margin.
 
-**Validation (existing A/B only):** full-toolchain rerun after DD-36 (2026-10-29, KiCad, ngspice and avr-gcc
+**Validation (existing A/B only):** full-toolchain rerun after DD-38 (2026-10-29, KiCad, ngspice and avr-gcc
 present): exit 0, 57 entries, 55 PASS and 2 known, unchanged failures listed in
 `engineering/known-limitations.yaml`: compact routing and compact DRC (accepted, DD-27). VAL-SIM-12 was resolved and
 removed from the baseline. Any new or changed failure makes it exit 1. The evaluation board has 2 blockers to
@@ -170,18 +185,18 @@ factor 1.0 and reverse-FET limit 0.7 W (DD-36; was 4.0 A, DD-13); A/B efficiency
 
 ## Next actions (in order)
 
-**Active budget implementation track:** read `engineering/budget-2s-design.md`, its issue/fault matrices and
-the generated qualification/loop reports. BUD-ISS-01/02/03 are mitigated in calculation (DD-31, DD-32), and
-the owner set a 93% bench-judged efficiency target. Next resolve BUD-ISS-04: chain the fault-detection delays,
-the series-pair and output P-FET turn-off (2.2 kΩ pull-up against its gate charge), buck EN shutdown,
-inductor/bulk-capacitor energy and SOA into a total response and energy bound. Use guaranteed limits where
-given; mark the rest UNKNOWN for the bench. In parallel, continue the KiCad board (DD-35): generate and review the
-U1 RHL and L1 footprints, check the XT30 polarity, write `hardware/budget-2s/placement.yaml` and extend PCB
-placement/routing/DRC for the budget variant. Choose a fuse and connector that meet the input allocation. Then qualify
-startup/flash/open/short/reconnect and exact passive corners; the preliminary AC model cannot prove these.
-Only then create separate connectivity/library/placement sources and extend CAD, firmware, sourcing/export
-and release tooling for this independent circuit. Obtain complete landed GBP quotes for 3/5 working units;
-compare a repriced existing board. Keep unknown prices UNKNOWN and commit/push each documented milestone.
+**Active budget implementation track:** read `engineering/budget-2s-design.md` (its "Next implementation steps"
+are the ordered list), DD-38 and `manufacturing/budget-2s/ORDERING.md`.
+1. **Before any budget order:** review the U1 RHL land and stencil, the Q2 PowerPAK land (FP-POWERPAK), the XT30
+   moulded +/− marks against the B+/B− silkscreen, J2's wire-entry side and the flagged PH neck.
+2. **BOM:** choose the 40 select-at-order lines with dated supplier evidence: genuine 0.1 % / 25 ppm divider
+   resistors, and a fuse plus holder of at most 11.1 mΩ hot.
+3. **BUD-ISS-04:** bound the total fault response and energy.
+4. **Firmware:** write the budget firmware profile and a budget bench schema.
+5. **Quotes:** obtain landed GBP quotes for 3 and 5 boards. Keep unknown prices UNKNOWN.
+6. **Bench:** build on a dummy load first. Only MEASURED data can close Gate G.
+
+The owner places any order.
 
 1. **Resolve the pre-order review:** `reports/pre-order-review.md`. Correct or obtain assembler acceptance for
    RS1, U3 and PowerPAK-8S lands; fix AUD-VAL-11/12 and Q1's source link; address R16 and decide R4/Q6. Rebuild
@@ -224,6 +239,37 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget PCB and prototype manufacturing package (DD-38)
+
+Owner: "Do everything on your own to complete the budget board ready for fabrication." The engineering choices
+are Claude Code's (DD-38).
+
+**Board and footprints**
+- Board: 90 × 60 mm, four layers, 0.15 mm rules.
+- U1 RHL footprint from TI's drawing: 0.3/0.6 mm thermal vias connected solid; corner paste reduced clear of
+  the drills.
+- L1: stock SRP1245A land. J2: screw-terminal symbol (fixes a parity warning). J1: XT30 pins swapped to KiCad's
+  "+" mark.
+- Layout: Kelvin pairs, Q2 gate network tied to the VSH pour, solid input-loop return, hand-placed U1
+  feedback/compensation cluster, OV divider at U5, LASER_P on three layers.
+- Builder: a KiCad 10.0.6 SWIG workaround runs in a budget-only wrapper (`pcb_builder_budget.py`). An
+  uncommitted edit to the shared builder was reverted.
+- Routing: FreeRouting varies with KiCad's DSN pour order, so the session is archived with `archive` and
+  `restore` stages.
+
+**Tools**
+- New `automation/budget/layout_review.py` (reuses the A/B DC solver).
+- `automation/budget/export.py`: groups BOM lines by spec tokens; through-hole list from masked leads; CPL 0–360.
+- `qualify.py`: reads the hash-checked DRC, copper and export evidence; BUD-CAD-01 and BUD-MFG-01 are CONDITIONAL.
+- New source BUD-26 (XT30 drawing).
+
+**Results (generated)**
+- ERC 0/0; DRC 0/0/0/0 reproduced by `restore`.
+- Copper: output 2.836 mΩ hot (3 mΩ allocation); fuse and holder budget 11.1 mΩ.
+- Export: OK; BOM 61 lines / 99 parts, 40 to select.
+- Loop model 243/243. `qualify.py` exits 1 by design.
+- 272 Python tests pass. Full A/B validator exit 0 (57 entries, 2 known; evaluation readiness unchanged).
 
 ### 2026-10-29: A/B efficiency target 93 % (DD-37)
 - The owner accepted a lower A/B target after the 4.5 A routed-copper estimate (93.56%) fell below 94%. Changed

@@ -1,0 +1,44 @@
+{
+ "generated_utc": "2026-10-29T11:36:00+00:00",
+ "generator": "automation/budget/export.py",
+ "inputs": {
+  "automation/budget/export.py": "a133a4afc2bc15ac711ea9b33d330f00a7a190968fff22233e6aa8efdcb391d2",
+  "engineering/design/budget-2s/connectivity.yaml": "66f754ed8ca9442a696df531fe3374587987a6b98faee44a7cbe2e7adc4d23ac",
+  "hardware/budget-2s/nubm44_budget2s.kicad_pcb": "41da0d7cebd427d776bd9b9eb81dab09c134f089859e74a58e1bb9975de042c9",
+  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "89cd646081645a7660c04e422509c58b84607deb801be8c539fceb02e27e071a",
+  "hardware/budget-2s/placement.yaml": "8eea8717cf8bfaf117401488f64bcfaa65fd8350f7bccb8145e57e84be9d7267",
+  "reports/budget-2s/drc.json": "d9487ea62eb634a90a042235d39f023fd26d3663be5d930eba7cd5fd32f9fc35"
+ },
+ "kind": "budget-export",
+ "outputs": {
+  "manufacturing/budget-2s/ORDERING.md": "6280fdd891ef7877042358fc1c750e4e0eb0da1fe2a5506183e59fb78fcc982c",
+  "manufacturing/budget-2s/assembly/BOM.csv": "d92ef025ffd093d5bdffcdbd0f0ccbf421f30dbff654ecfacc3caf470cca8c96",
+  "manufacturing/budget-2s/assembly/BOM_JLCPCB.csv": "90fc4f9063c6806e05fb20d971cf2a255d85f03d8351babd97aa587b2d35ec7f",
+  "manufacturing/budget-2s/assembly/CPL_JLCPCB.csv": "5cd18a65ac3e8a8a0ce092a864cf111ed91dcf62c38883a5304d96e8e443bffd",
+  "manufacturing/budget-2s/budget-2s-gerbers.zip": "e38466d167d764ebaaa1de20eb0e20cc99ec603728aa4be82b04e9e512f52f04",
+  "manufacturing/budget-2s/drawings/assembly_top.pdf": "1d2fd565a58d8c3ab4165db1ff928411ab2ab75cdf5485c96058d2ce59b1aefb",
+  "manufacturing/budget-2s/drawings/nubm44_budget2s_schematic.pdf": "85820451ff060263b25fab9372b93930ba4436226f77d3249a55ca2dfd78b9cd",
+  "manufacturing/budget-2s/drawings/render_bottom.png": "921d741de9db9758a40c50bf196d1e42cd1b6fedf36576f7fb6350e89dfafe55",
+  "manufacturing/budget-2s/drawings/render_top.png": "0c239806c6e01e1740e00bae9d7cda646daf1c6a2802bb5eb5001cc7d1633486",
+  "manufacturing/budget-2s/drill/nubm44_budget2s-NPTH-drl_map.pdf": "7e1c51173a730c643046e9e32d7960acd64ae978a2c491e67d9501ddab97cc65",
+  "manufacturing/budget-2s/drill/nubm44_budget2s-NPTH.drl": "af5bdc6d7087717792e0659be4e4e85ec1a7b4f2b3794a4774cb64b4116f508d",
+  "manufacturing/budget-2s/drill/nubm44_budget2s-PTH-drl_map.pdf": "b25caa0b39726889ca38058fba0b9598f1d23c44cf90ed00bd29f68c1fdd2181",
+  "manufacturing/budget-2s/drill/nubm44_budget2s-PTH.drl": "b87515c1773d84d646ea60c75ffef87b76e19a6f578c7317309d2c4451b5285d",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-B_Cu.gbl": "f4eb42fa62fb4791e8dfc6349332acb6d65b6971f02578ccb076905150b4fd58",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-B_Mask.gbs": "285f166c9ae3a674bc0b25042747fd7f2d73c9ba7841275247916696c66cc0f4",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-B_Paste.gbp": "d85f0ac1e0935b8bb08ce07decb1ba9850cabff85b3fd93b31b6a6958411bbbf",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-B_Silkscreen.gbo": "a57de5dc206c6406ee012e5d3fef20c1eaceda092a2b424825412840c1e2a96d",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-Edge_Cuts.gm1": "2dccb9bd4d373884c4c76aae47c74e68dda1458c0b71e80381ce157a7c2c034b",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-F_Cu.gtl": "e2f1ca23d84c7c9ab4cdf7b5c47983717e769413b30db39b926054cca3946346",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-F_Mask.gts": "831f23378dc8c204c99006fed254c7d1a721bf76f474556e37f6325bdd92c498",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-F_Paste.gtp": "459d2676949c26f7db7b85191e992734c5c49f3d46fdf41f2750b66b76e70d53",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-F_Silkscreen.gto": "c5ed20445a25762350eb259dc09f3105ccbae0a5312e0082ed9eef40aafbaea0",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-In1_Cu.g1": "6f283c2d4c98fde68b06b2388034e558268fedaabfceb90b18c7aa83545745ac",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-In2_Cu.g2": "58464c91fe6619d227b96dad94d68554a4d35a68b095be9a3f42758acf2260a4",
+  "manufacturing/budget-2s/gerbers/nubm44_budget2s-job.gbrjob": "503330cbc4c8ba235510c3dc6c3ca177909a02b2882bbaa0664275935a627260"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "kicad-cli": "10.0.6"
+ }
+}

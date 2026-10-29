@@ -14,6 +14,212 @@
 		(comment 3 "Class 4 laser product: see documentation/testing for safety requirements")
 	)
 	(lib_symbols
+		(symbol "Connector:Screw_Terminal_01x02"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Screw_Terminal_01x02"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "screw terminal"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TerminalBlock*:*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Screw_Terminal_01x02_1_1"
+				(rectangle
+					(start -1.27 1.27)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 0.3302) (xy 0.3302 -0.508)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 -2.2098) (xy 0.3302 -3.048)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 0.508) (xy 0.508 -0.3302)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 -2.032) (xy 0.508 -2.8702)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -2.54)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector:TestPoint"
 			(pin_numbers
 				(hide yes)
@@ -2546,6 +2752,105 @@
 								(size 1.27 1.27)
 							)
 						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Mechanical:MountingHole"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "H"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole"
+				(at 0 3.175 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Mounting Hole without connection"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "MountingHole_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
 					)
 				)
 			)
@@ -6053,7 +6358,7 @@
 	)
 	(rectangle
 		(start 304.8 284.48)
-		(end 579.12 472.44)
+		(end 579.12 495.3)
 		(stroke
 			(width 0.254)
 			(type dash)
@@ -6061,7 +6366,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "37f39339-bdb1-5bfa-b863-0d4f3dae0e95")
+		(uuid "74f9c485-e663-570c-b601-4696e53ceb0c")
 	)
 	(rectangle
 		(start 15.24 15.24)
@@ -7152,6 +7457,16 @@
 			(type default)
 		)
 		(uuid "3f6fef64-349d-56d1-8e3f-ec92c8147db7")
+	)
+	(wire
+		(pts
+			(xy 322.58 480.06) (xy 322.58 482.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "40d4ae96-5020-59d7-a6e9-93473e8763f9")
 	)
 	(wire
 		(pts
@@ -9645,16 +9960,6 @@
 	)
 	(wire
 		(pts
-			(xy 322.58 457.2) (xy 322.58 459.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ef34a199-a0e7-595f-b67b-0aed42be03bc")
-	)
-	(wire
-		(pts
 			(xy 500.38 392.43) (xy 502.92 392.43)
 		)
 		(stroke
@@ -10054,7 +10359,7 @@
 		(uuid "1bcfb76b-bea2-5121-97a8-1a8e217b3ee6")
 	)
 	(label "VCTRL"
-		(at 322.58 459.74 270)
+		(at 322.58 482.6 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -10914,6 +11219,16 @@
 		(uuid "8e840eaa-8a04-5535-974f-ac263a39c858")
 	)
 	(label "GND"
+		(at 40.64 38.1 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8ec5e378-f46b-564a-957b-9311ad88129d")
+	)
+	(label "GND"
 		(at 528.32 309.88 180)
 		(effects
 			(font
@@ -11143,16 +11458,6 @@
 		)
 		(uuid "a60b0fbd-0dfe-59f6-9da2-c96e39823b66")
 	)
-	(label "GND"
-		(at 40.64 40.64 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a868a99b-e9cf-5eb0-a833-3018b9e0b8f5")
-	)
 	(label "COMP_RC"
 		(at 152.4 232.41 0)
 		(effects
@@ -11322,16 +11627,6 @@
 			(justify left bottom)
 		)
 		(uuid "bd57beaa-892f-5b28-bb32-e877f942950f")
-	)
-	(label "VBAT_IN"
-		(at 40.64 38.1 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "be2360d3-b096-5f8e-9c00-6c0613fb62c4")
 	)
 	(label "nFAULT"
 		(at 505.46 96.52 180)
@@ -11772,6 +12067,16 @@
 			(justify left bottom)
 		)
 		(uuid "f4f35470-a710-5412-8779-30adaf778d9e")
+	)
+	(label "VBAT_IN"
+		(at 40.64 40.64 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f65cad20-a1e0-5dd6-aad0-fbadbbe0b86c")
 	)
 	(label "VCTRL"
 		(at 53.34 317.5 90)
@@ -13402,6 +13707,118 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 378.46 454.66 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1a7d497d-bba3-5c20-aa63-9aeea62424ed")
+		(property "Reference" "H4"
+			(at 378.46 449.58 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "M3"
+			(at 378.46 451.485 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "M3 mounting hole, unplated"
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "-"
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "-"
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Block" "control"
+			(at 378.46 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "nubm44_budget2s"
+				(path "/b5333f5e-33da-5c67-bd30-e6dba3517054"
+					(reference "H4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:D_Zener")
 		(at 58.42 396.24 270)
 		(unit 1)
@@ -13514,6 +13931,118 @@
 			(project "nubm44_budget2s"
 				(path "/b5333f5e-33da-5c67-bd30-e6dba3517054"
 					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 347.98 454.66 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1e8639e0-1b4d-5461-80f4-28e42d4c0c8e")
+		(property "Reference" "H3"
+			(at 347.98 449.58 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "M3"
+			(at 347.98 451.485 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "M3 mounting hole, unplated"
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "-"
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "-"
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Block" "control"
+			(at 347.98 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "nubm44_budget2s"
+				(path "/b5333f5e-33da-5c67-bd30-e6dba3517054"
+					(reference "H3")
 					(unit 1)
 				)
 			)
@@ -16106,7 +16635,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "budget2s:L_Bourns_SRP1265A"
+		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1245A"
 			(at 241.3 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -16130,7 +16659,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Footprint OPEN: check Bourns land against KiCad SRP1245A"
+		(property "Description" "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads"
 			(at 241.3 226.06 0)
 			(hide yes)
 			(show_name no)
@@ -18634,6 +19163,118 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 317.5 454.66 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5c4ac23e-6b77-5de1-ba2f-af32e0f38278")
+		(property "Reference" "H2"
+			(at 317.5 449.58 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "M3"
+			(at 317.5 451.485 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "M3 mounting hole, unplated"
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "-"
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "-"
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Block" "control"
+			(at 317.5 454.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "nubm44_budget2s"
+				(path "/b5333f5e-33da-5c67-bd30-e6dba3517054"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 58.42 255.27 0)
 		(unit 1)
@@ -20415,7 +21056,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 322.58 457.2 0)
+		(at 322.58 480.06 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -20425,7 +21066,7 @@
 		(dnp no)
 		(uuid "7b505308-063f-55c2-9607-c5a4add8e7e4")
 		(property "Reference" "TP5"
-			(at 322.58 450.342 0)
+			(at 322.58 473.202 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -20435,7 +21076,7 @@
 			)
 		)
 		(property "Value" "VCTRL"
-			(at 322.58 452.12 0)
+			(at 322.58 474.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -20445,7 +21086,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20457,7 +21098,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20469,7 +21110,7 @@
 			)
 		)
 		(property "Description" "Test pad"
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20481,7 +21122,7 @@
 			)
 		)
 		(property "MPN" "-"
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20493,7 +21134,7 @@
 			)
 		)
 		(property "Manufacturer" "-"
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20505,7 +21146,7 @@
 			)
 		)
 		(property "Block" "control"
-			(at 322.58 457.2 0)
+			(at 322.58 480.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22557,7 +23198,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x02")
+		(lib_id "Connector:Screw_Terminal_01x02")
 		(at 254 320.04 0)
 		(unit 1)
 		(body_style 1)
@@ -25672,6 +26313,118 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 530.86 431.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ca0758b7-3104-5a10-990d-e60c936855ea")
+		(property "Reference" "H1"
+			(at 530.86 426.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "M3"
+			(at 530.86 428.625 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "M3 mounting hole, unplated"
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "-"
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "-"
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Block" "control"
+			(at 530.86 431.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "nubm44_budget2s"
+				(path "/b5333f5e-33da-5c67-bd30-e6dba3517054"
+					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 322.58 261.62 0)
 		(unit 1)
@@ -26631,7 +27384,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "Battery input, protected balanced 2S pack. Pad-to-polarity mapping and B+/B- silkscreen to verify against the AMASS drawing (OPEN)"
+		(property "Description" "Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)"
 			(at 48.26 38.1 0)
 			(hide yes)
 			(show_name no)

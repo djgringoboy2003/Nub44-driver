@@ -322,9 +322,17 @@ power_model:  # automation/budget/power.py. ALLOCATIONs are limits the BOM/layou
   output_copper_ohm_allocation: 0.003  # ALLOCATION: board copper VBUCK -> output terminals, excl. shunt/FET.
   laser_wiring_ohm: 0.010  # ESTIMATE: off-board leads, same as A/B laser.wiring_resistance_ohm.
   copper_hot_factor: 1.2  # Copper resistance at ~50 K rise (0.39 %/K); applied to the 25 C inductor DCR.
+  connector_contact_ohm_each: 0.0008  # BUD-26 XT30PW-M catalogue contact resistance; J1 carries two contacts.
   dropout_margin_v_allocation: 0.10  # ALLOCATION: BOOT refresh, ripple, pack transient below 6.0 V.
   uv_margin_v_allocation: 0.10  # ALLOCATION: residual ripple/transient at the filtered UV sense node.
   ov_margin_v_allocation: 0.10  # ALLOCATION: overshoot above the highest normal VBUCK before OVP.
+
+pcb:  # DD-38 board (hardware/budget-2s). Stack-up for automation/budget/layout_review.py only.
+  layers: 4
+  board_thickness_mm: 1.6
+  copper_oz: 1.0  # Ordering note: 1 oz on all four layers; finished thickness UNKNOWN until the fab confirms.
+  prepreg_mm: 0.1855  # ASSUMPTION: same standard 4-layer example as the A/B stack-up (DD-14); fab stack UNKNOWN.
+  via_plating_um: 20  # ASSUMPTION (copper.py default); fabricator barrel plating UNKNOWN.
 
 estimates:  # ESTIMATE, efficiency only; not datasheet limits. Bench efficiency is the evidence of record.
   buck_transition_s: 0.000000004  # Per edge, integrated stage; same assumption as the A/B model.

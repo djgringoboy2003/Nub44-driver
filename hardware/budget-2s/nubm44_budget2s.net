@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "E:\\NUBM44 driver\\hardware\\budget-2s\\nubm44_budget2s.kicad_sch")
-		(date "2026-10-29T02:40:09")
+		(date "2026-10-29T11:33:32")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -2719,10 +2719,282 @@
 			)
 		)
 		(comp
+			(ref "H1")
+			(value "M3")
+			(footprint "MountingHole:MountingHole_3.2mm_M3")
+			(description "M3 mounting hole, unplated")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 mounting hole, unplated")
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole")
+				(description "Mounting Hole without connection")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_budget2s")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_budget2s.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ca0758b7-3104-5a10-990d-e60c936855ea")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "H2")
+			(value "M3")
+			(footprint "MountingHole:MountingHole_3.2mm_M3")
+			(description "M3 mounting hole, unplated")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 mounting hole, unplated")
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole")
+				(description "Mounting Hole without connection")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_budget2s")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_budget2s.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5c4ac23e-6b77-5de1-ba2f-af32e0f38278")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "H3")
+			(value "M3")
+			(footprint "MountingHole:MountingHole_3.2mm_M3")
+			(description "M3 mounting hole, unplated")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 mounting hole, unplated")
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole")
+				(description "Mounting Hole without connection")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_budget2s")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_budget2s.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1e8639e0-1b4d-5461-80f4-28e42d4c0c8e")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "H4")
+			(value "M3")
+			(footprint "MountingHole:MountingHole_3.2mm_M3")
+			(description "M3 mounting hole, unplated")
+			(fields
+				(field
+					(name "MPN") "-")
+				(field
+					(name "Manufacturer") "-")
+				(field
+					(name "Block") "control")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 mounting hole, unplated")
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole")
+				(description "Mounting Hole without connection")
+			)
+			(property
+				(name "MPN")
+				(value "-")
+			)
+			(property
+				(name "Manufacturer")
+				(value "-")
+			)
+			(property
+				(name "Block")
+				(value "control")
+			)
+			(property
+				(name "Sheetname")
+				(value "nubm44_budget2s")
+			)
+			(property
+				(name "Sheetfile")
+				(value "nubm44_budget2s.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1a7d497d-bba3-5c20-aa63-9aeea62424ed")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
 			(ref "J1")
 			(value "XT30 2S in")
 			(footprint "Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal")
-			(description "Battery input, protected balanced 2S pack. Pad-to-polarity mapping and B+/B- silkscreen to verify against the AMASS drawing (OPEN)")
+			(description "Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)")
 			(fields
 				(field
 					(name "MPN") "XT30PW-M")
@@ -2736,7 +3008,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "Battery input, protected balanced 2S pack. Pad-to-polarity mapping and B+/B- silkscreen to verify against the AMASS drawing (OPEN)")
+					(name "Description") "Battery input, protected balanced 2S pack. Pad 2 = B+, pad 1 = B- per the KiCad footprint's +/- marks; the AMASS scan (BUD-26) shows no marks, so check the moulded marks before first power (Q1 blocks a reversed pack)")
 			)
 			(libsource
 				(lib "Connector_Generic")
@@ -2811,9 +3083,9 @@
 					(name "Description") "Laser output screw terminal; 1 = LD+ (anode), 2 = LD- (cathode/GND). Current rating >= 6 A to verify")
 			)
 			(libsource
-				(lib "Connector_Generic")
-				(part "Conn_01x02")
-				(description "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			)
 			(property
 				(name "MPN")
@@ -2837,11 +3109,11 @@
 			)
 			(property
 				(name "ki_keywords")
-				(value "connector")
+				(value "screw terminal")
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "Connector*:*_1x??_*")
+				(value "TerminalBlock*:*")
 			)
 			(sheetpath
 				(names "/")
@@ -3084,8 +3356,8 @@
 		(comp
 			(ref "L1")
 			(value "4.7u")
-			(footprint "budget2s:L_Bourns_SRP1265A")
-			(description "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Footprint OPEN: check Bourns land against KiCad SRP1245A")
+			(footprint "Inductor_SMD:L_Bourns_SRP1245A")
+			(description "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads")
 			(fields
 				(field
 					(name "MPN") "SRP1265A-4R7M")
@@ -3094,12 +3366,12 @@
 				(field
 					(name "Block") "converter")
 				(field
-					(name "Footprint") "budget2s:L_Bourns_SRP1265A")
+					(name "Footprint") "Inductor_SMD:L_Bourns_SRP1245A")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Footprint OPEN: check Bourns land against KiCad SRP1245A")
+					(name "Description") "4.7 uH 20%, 8.4 mOhm max, Isat 28 A (BUD-05). Land = Bourns SRP1265A recommended layout (14.2/8.0/5.0 mm), identical to KiCad SRP1245A pads")
 			)
 			(libsource
 				(lib "Device")
@@ -7743,6 +8015,40 @@
 	(libparts
 		(libpart
 			(lib "Connector")
+			(part "Screw_Terminal_01x02")
+			(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "TerminalBlock*:*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Screw_Terminal_01x02")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
 			(part "TestPoint")
 			(description "test point")
 			(footprints
@@ -8285,6 +8591,28 @@
 					(name "GND")
 					(type "power_in")
 				)
+			)
+		)
+		(libpart
+			(lib "Mechanical")
+			(part "MountingHole")
+			(description "Mounting Hole without connection")
+			(footprints
+				(fp "MountingHole*")
+			)
+			(fields
+				(field
+					(name "Reference") "H")
+				(field
+					(name "Value") "MountingHole")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Mounting Hole without connection")
 			)
 		)
 		(libpart
@@ -8959,6 +9287,10 @@
 			(uri "${KICAD10_SYMBOL_DIR}/MCU_Microchip_ATtiny.kicad_sym")
 		)
 		(library
+			(logical "Mechanical")
+			(uri "${KICAD10_SYMBOL_DIR}/Mechanical.kicad_sym")
+		)
+		(library
 			(logical "Regulator_Linear")
 			(uri "${KICAD10_SYMBOL_DIR}/Regulator_Linear.kicad_sym")
 		)
@@ -9039,7 +9371,7 @@
 		(net
 			(code "4")
 			(name "/BOOT")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C7")
 				(pin "1")
@@ -9082,7 +9414,7 @@
 		(net
 			(code "6")
 			(name "/COMP")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C9")
 				(pin "1")
@@ -9103,7 +9435,7 @@
 		(net
 			(code "7")
 			(name "/COMP_RC")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C8")
 				(pin "1")
@@ -9139,7 +9471,7 @@
 		(net
 			(code "9")
 			(name "/CS_OUT")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R29")
 				(pin "1")
@@ -9160,7 +9492,7 @@
 		(net
 			(code "10")
 			(name "/EN")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R23")
 				(pin "2")
@@ -9219,7 +9551,7 @@
 		(net
 			(code "13")
 			(name "/LASER_P")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C19")
 				(pin "1")
@@ -9451,7 +9783,7 @@
 		(net
 			(code "24")
 			(name "/OC_LIM")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R7")
 				(pin "1")
@@ -9557,7 +9889,7 @@
 		(net
 			(code "29")
 			(name "/PH")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C7")
 				(pin "2")
@@ -9585,7 +9917,7 @@
 		(net
 			(code "30")
 			(name "/PWRGD")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R28")
 				(pin "2")
@@ -9672,7 +10004,7 @@
 		(net
 			(code "34")
 			(name "/RT")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R2")
 				(pin "1")
@@ -9688,7 +10020,7 @@
 		(net
 			(code "35")
 			(name "/SS")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "C6")
 				(pin "1")
@@ -9762,7 +10094,7 @@
 		(net
 			(code "39")
 			(name "/VBAT_F")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "F1")
 				(pin "2")
@@ -9796,7 +10128,7 @@
 		(net
 			(code "40")
 			(name "/VBAT_IN")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "F1")
 				(pin "1")
@@ -9804,15 +10136,15 @@
 			)
 			(node
 				(ref "J1")
-				(pin "1")
-				(pinfunction "Pin_1_1")
+				(pin "2")
+				(pinfunction "Pin_2_2")
 				(pintype "passive")
 			)
 		)
 		(net
 			(code "41")
 			(name "/VBAT_P")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C1")
 				(pin "1")
@@ -9917,7 +10249,7 @@
 		(net
 			(code "42")
 			(name "/VBUCK")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "C10")
 				(pin "1")
@@ -10167,7 +10499,7 @@
 		(net
 			(code "44")
 			(name "/VSENSE")
-			(class "Default")
+			(class "Sense")
 			(node
 				(ref "R5")
 				(pin "2")
@@ -10188,7 +10520,7 @@
 		(net
 			(code "45")
 			(name "/VSH")
-			(class "Default")
+			(class "Power")
 			(node
 				(ref "D3")
 				(pin "1")
@@ -10314,7 +10646,7 @@
 		(net
 			(code "47")
 			(name "GND")
-			(class "Default")
+			(class "Ground")
 			(node
 				(ref "C1")
 				(pin "2")
@@ -10484,8 +10816,8 @@
 			)
 			(node
 				(ref "J1")
-				(pin "2")
-				(pinfunction "Pin_2_2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
 				(pintype "passive")
 			)
 			(node

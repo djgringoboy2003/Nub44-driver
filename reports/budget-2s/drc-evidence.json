@@ -1,0 +1,13 @@
+{
+ "report_sha256": "d9487ea62eb634a90a042235d39f023fd26d3663be5d930eba7cd5fd32f9fc35",
+ "inputs": {
+  "hardware/budget-2s/nubm44_budget2s.kicad_pcb": "41da0d7cebd427d776bd9b9eb81dab09c134f089859e74a58e1bb9975de042c9",
+  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "89cd646081645a7660c04e422509c58b84607deb801be8c539fceb02e27e071a",
+  "hardware/budget-2s/nubm44_budget2s.kicad_pro": "e506b3231bc33d66a0e6e3bd7e8b9b772ba1078866b9a3bbd35a629a802b384b",
+  "hardware/budget-2s/placement.yaml": "8eea8717cf8bfaf117401488f64bcfaa65fd8350f7bccb8145e57e84be9d7267",
+  "engineering/design/budget-2s/connectivity.yaml": "66f754ed8ca9442a696df531fe3374587987a6b98faee44a7cbe2e7adc4d23ac",
+  "engineering/design/budget-2s/parameters.yaml": "aa3f4675ebe769ba3279e481fd3c9893eb81a296c9894ce6c256c77acf4991b9"
+ },
+ "schematic_parity": true,
+ "severity_all": true
+}

@@ -4,9 +4,48 @@
       "defaults": {},
       "diff_pair_dimensions": [],
       "drc_exclusions": [],
-      "rules": {},
-      "track_widths": [],
-      "via_dimensions": []
+      "rules": {
+        "min_clearance": 0.15,
+        "min_track_width": 0.15,
+        "min_via_diameter": 0.6,
+        "min_via_annular_width": 0.15,
+        "min_through_hole_diameter": 0.3,
+        "min_hole_clearance": 0.25,
+        "min_hole_to_hole": 0.3,
+        "min_copper_edge_clearance": 0.3,
+        "min_connection": 0.15,
+        "min_silk_clearance": 0.0,
+        "min_text_height": 0.6,
+        "min_text_thickness": 0.1,
+        "min_resolved_spokes": 1
+      },
+      "track_widths": [
+        0.0,
+        0.15,
+        0.2,
+        0.3,
+        0.5,
+        0.8,
+        1.0,
+        1.5
+      ],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        },
+        {
+          "diameter": 0.6,
+          "drill": 0.3
+        }
+      ],
+      "rule_severities": {
+        "lib_footprint_mismatch": "ignore",
+        "missing_courtyard": "warning",
+        "track_not_centered_on_via": "warning",
+        "footprint_filters_mismatch": "warning",
+        "footprint_type_mismatch": "warning"
+      }
     }
   },
   "boards": [],
@@ -19,10 +58,162 @@
     "version": 1
   },
   "net_settings": {
-    "classes": [],
+    "classes": [
+      {
+        "bus_width": 12,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": "",
+        "wire_width": 6,
+        "name": "Default",
+        "clearance": 0.15,
+        "track_width": 0.15,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "priority": 2147483647
+      },
+      {
+        "bus_width": 12,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": "",
+        "wire_width": 6,
+        "name": "Power",
+        "clearance": 0.15,
+        "track_width": 0.3,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "priority": 0
+      },
+      {
+        "bus_width": 12,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": "",
+        "wire_width": 6,
+        "name": "Ground",
+        "clearance": 0.15,
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "priority": 1
+      },
+      {
+        "bus_width": 12,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": "",
+        "wire_width": 6,
+        "name": "Sense",
+        "clearance": 0.15,
+        "track_width": 0.15,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "priority": 2
+      }
+    ],
     "meta": {
-      "version": 0
-    }
+      "version": 5
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "Power",
+        "pattern": "/VBAT_IN"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/VBAT_F"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/VBAT_P"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/PH"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/VBUCK"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/VSH"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/LASER_P"
+      },
+      {
+        "netclass": "Ground",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/VSENSE"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/COMP"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/COMP_RC"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/CS_OUT"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/OC_LIM"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/BOOT"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/EN"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/SS"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/RT"
+      },
+      {
+        "netclass": "Sense",
+        "pattern": "/PWRGD"
+      }
+    ],
+    "netclass_assignments": null
   },
   "pcbnew": {
     "page_layout_descr_file": ""
