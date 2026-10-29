@@ -2,7 +2,8 @@
 
 Library identifiers use KiCad's ``Nickname:Item`` form. Standard libraries are read
 from the KiCad install; the project library nickname is ``nubm44`` and lives in
-``hardware/libraries``.
+``hardware/libraries``. The separate budget circuit has its own ``budget2s`` library
+under ``hardware/budget-2s/lib`` so it never changes the A/B library.
 """
 from __future__ import annotations
 
@@ -14,6 +15,8 @@ from . import paths
 from .sexpr import Sym, child, children, head, load, loads
 
 PROJECT_LIB = "nubm44"
+BUDGET_LIB = "budget2s"
+BUDGET_LIB_DIR = paths.HARDWARE / "budget-2s" / "lib"
 
 
 # ---------------------------------------------------------------------- symbols
@@ -21,6 +24,8 @@ PROJECT_LIB = "nubm44"
 def _symbol_lib_location(nickname: str) -> Path:
     if nickname == PROJECT_LIB:
         return paths.LIBRARIES / f"{PROJECT_LIB}.kicad_sym"
+    if nickname == BUDGET_LIB:
+        return BUDGET_LIB_DIR / f"{BUDGET_LIB}.kicad_sym"
     base = paths.kicad_symbols_dir()
     for cand in (base / f"{nickname}.kicad_sym", base / f"{nickname}.kicad_symdir"):
         if cand.exists():
@@ -108,6 +113,8 @@ def is_power_symbol(sym: list) -> bool:
 def _footprint_dir(nickname: str) -> Path:
     if nickname == PROJECT_LIB:
         return paths.LIBRARIES / f"{PROJECT_LIB}.pretty"
+    if nickname == BUDGET_LIB:
+        return BUDGET_LIB_DIR / f"{BUDGET_LIB}.pretty"
     d = paths.kicad_footprints_dir() / f"{nickname}.pretty"
     if not d.exists():
         raise FileNotFoundError(f"footprint library '{nickname}' not found at {d}")

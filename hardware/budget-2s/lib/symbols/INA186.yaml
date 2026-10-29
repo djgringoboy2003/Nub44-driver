@@ -1,0 +1,22 @@
+# Copied from the A/B library spec; pin table: TI SBOS318B (Jul 2021) Table 5-1, page 3, DCK (SC70-6) column (source CMP-05 / LEAD-02).
+name: INA186
+reference: U
+value: INA186A2
+footprint: Package_TO_SOT_SMD:SOT-363_SC-70-6
+datasheet: https://www.ti.com/lit/ds/symlink/ina186.pdf
+description: Zero-drift current-sense amplifier, 40 V common mode, REF pin, SC70-6 (DCK). A2 gain = 50 V/V
+keywords: current sense amplifier shunt INA186
+fp_filters: SOT?363*
+width: 15.24
+height: 10.16
+pins:
+  left:
+    - {number: 4, name: IN+, type: input}
+    - {number: 5, name: IN-, type: input}
+    - {number: 1, name: REF, type: input}
+  right:
+    - {number: 6, name: OUT, type: output}
+  top:
+    - {number: 3, name: VS, type: power_in}
+  bottom:
+    - {number: 2, name: GND, type: power_in}

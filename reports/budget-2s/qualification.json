@@ -1966,7 +1966,7 @@
       "status": "OPEN"
     },
     {
-      "detail": "Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet.",
+      "detail": "Schematic PASS: ERC 0 errors / 2 warnings, 104 parts, 0 netlist differences. Footprints not generated: budget2s:L_Bourns_SRP1265A, budget2s:TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm. Placement, PCB, DRC and layout review OPEN.",
       "id": "BUD-CAD-01",
       "status": "OPEN"
     },

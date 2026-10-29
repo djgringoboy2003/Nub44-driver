@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "budget2s")(type "KiCad")(uri "${KIPRJMOD}/lib/budget2s.kicad_sym")(options "")(descr "Budget-2S project symbols"))
+)

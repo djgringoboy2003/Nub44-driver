@@ -1,0 +1,30 @@
+{
+ "generated_utc": "2026-10-29T02:40:11+00:00",
+ "generator": "automation/budget/build_schematic.py",
+ "inputs": {
+  "automation/budget/build_schematic.py": "2877304813a72021918df6eaa1e2684637e2b709960dc668a3de54e3bad39819",
+  "automation/nubm44/kicad_lib.py": "c2c56b46562703df92d06892d70d0f005ab9d1aa69054f904959c2062e2fc73d",
+  "automation/schematic/build_schematic.py": "27bc780ed3b075f2d47670d83e84fc76f4d5dd73e256bc7fde851ad3a594bf11",
+  "engineering/design/budget-2s/connectivity.yaml": "a392394b4a18279777ab0815a9e4a8907e7f6d6b43f27e9c3f8a979d09d825ab",
+  "engineering/design/budget-2s/parameters.yaml": "d3457b7371aca10bea468ed76be0f3a289123e8d9abd2a27496bf18cb0e70228",
+  "hardware/budget-2s/lib/budget2s.kicad_sym": "2b01909bfa91199ef19d3f03548815dca49d87f8bf0b46ce7c4d9fb238ad51f0",
+  "hardware/budget-2s/lib/symbols/INA186.yaml": "8e01ab00acac28ba8b3c743f946ae3d31b47d51ab9aed0d99fb434cb23451497",
+  "hardware/budget-2s/lib/symbols/INA300.yaml": "44e7c0f983cc4c41a6fa7888daf957f8f3b87049d3b7f6d00f2de5b34e998179",
+  "hardware/budget-2s/lib/symbols/SN74HCS74.yaml": "e5c029c6a5933a36f73dbac4f56dd6a5dadb0d55fc1192d6bed9f5549a73128a",
+  "hardware/budget-2s/lib/symbols/TLV6700.yaml": "7fc7376304f3e8bac6eca750f2d2faf7d9e87abe996fcd5d41077bd5a8e1de6c",
+  "hardware/budget-2s/lib/symbols/TLV803E.yaml": "0eb13ef8c8b8e9b77a3051da6cc63fcb05537bd947fd83501c7d86009ba80acd",
+  "hardware/budget-2s/lib/symbols/TPS54821.yaml": "9f531b950e7b6cad2d137335c20e1e2896c866e52bb4ca61d8e418880735b5ea"
+ },
+ "kind": "budget-schematic",
+ "outputs": {
+  "hardware/budget-2s/nubm44_budget2s.kicad_sch": "b350a4d361036961f3ed5ad9b1c7780220a2868fe0bf9a4ddadfc0c1dfd0ac96",
+  "hardware/budget-2s/nubm44_budget2s.net": "2d2ef90056a307c153ddaa2f0e23e462afa55dc4ee3c39516ee29e95f5fdd03a",
+  "reports/budget-2s/erc.json": "d1db2c9edf55edf4e9b1c24e9641baba8c0b9efafdf01e72e5696f9c2a4c0c49",
+  "reports/budget-2s/schematic.json": "7e21c0fe460b41674624507a3bc15d29acaa6eed152525e62cdd926765731114",
+  "reports/budget-2s/schematic.pdf": "f1daf35c65b4874bd8298381d492a31e4b607f512be11ff45fb48fda390e19b3"
+ },
+ "schema": "nubm44-evidence-manifest.v1",
+ "tools": {
+  "kicad-cli": "10.0.6"
+ }
+}

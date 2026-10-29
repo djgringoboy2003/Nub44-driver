@@ -1,0 +1,22 @@
+# Pin table: TI SNVSAV2B (Nov 2019), page 3, DDC (SOT-23-THIN-6) package (source BUD-18).
+name: TLV6700
+reference: U
+value: TLV6700
+footprint: Package_TO_SOT_SMD:SOT-23-6
+datasheet: https://www.ti.com/lit/ds/symlink/tlv6700.pdf
+description: Window comparator, 400 mV reference, open-drain outputs, 1.8-18 V supply, SOT-23-6 (DDC)
+keywords: window comparator voltage monitor TLV6700
+fp_filters: SOT?23*
+width: 15.24
+height: 10.16
+pins:
+  left:
+    - {number: 3, name: INA+, type: input}
+    - {number: 4, name: INB-, type: input}
+  right:
+    - {number: 1, name: OUTA, type: open_collector}
+    - {number: 6, name: OUTB, type: open_collector}
+  top:
+    - {number: 5, name: VDD, type: power_in}
+  bottom:
+    - {number: 2, name: GND, type: power_in}

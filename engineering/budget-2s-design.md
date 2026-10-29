@@ -15,8 +15,9 @@ the original single-cell boards' CAD, firmware or release results.
 |---|---|
 | Numeric candidate and study assumptions | `engineering/design/budget-2s/parameters.yaml` |
 | Separate source resolution | `automation/nubm44/variants.py`; original A/B defaults remain unchanged |
-| Circuit connectivity | Reserved `engineering/design/budget-2s/connectivity.yaml`; **not created until the circuit is qualified** |
-| Placement | Reserved `hardware/budget-2s/placement.yaml`; **not created** |
+| Circuit connectivity | `engineering/design/budget-2s/connectivity.yaml` (DD-35 draft): 104 parts, every pin and net |
+| KiCad library and schematic | `automation/budget/build_library.py` → `hardware/budget-2s/lib/budget2s.*`; `automation/budget/build_schematic.py` → `hardware/budget-2s/nubm44_budget2s.kicad_sch`, `reports/budget-2s/erc.json`, `schematic.json`, `schematic.pdf` and a hash manifest |
+| Placement | Reserved `hardware/budget-2s/placement.yaml`; **not created** (next: U1/L1 footprints, then placement) |
 | Static default-off interface checks (DD-32) | `automation/budget/interface.py` (called by `qualify.py`; results in the same report) |
 | Electrical qualification | `automation/budget/qualify.py` → `reports/budget-2s/qualification.md`, JSON and hash manifest |
 | Operating point, dropout, UV/OV margins, efficiency estimate | `automation/budget/power.py` (called by `qualify.py`; results in the same report) |

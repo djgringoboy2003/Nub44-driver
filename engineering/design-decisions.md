@@ -561,3 +561,56 @@ the UK or from AliExpress with fast shipping.
   with near-100% duty: the common XL4016/LM2596-class modules are asynchronous.
 - SRP1265A: no stock KiCad footprint.
 - INA300, SN74HCS74 (TI showed it out of stock), DMG1012T/1013T and DMP2022LSS: UK stock unverified.
+
+## DD-35 Budget KiCad schematic started (engineering, 2026-10-29)
+
+Owner instruction: start getting the budget board out with KiCad. Engineering choices by Claude Code; the owner may
+change any of them.
+
+**Tooling (separate from A/B).**
+- `engineering/design/budget-2s/connectivity.yaml` is the budget's connectivity source.
+- `hardware/budget-2s/lib` holds the `budget2s` library (YAML symbols, plus MOSFET symbols renumbered for SOT-523,
+  SO-8 and PowerPAK 1212).
+- `automation/budget/build_schematic.py` reuses the A/B block-layout and labelling helpers unchanged. It wraps
+  wide blocks into rows of four multi-pin parts, and writes its own project, ERC, netlist comparison and hash
+  manifest.
+- `nubm44.kicad_lib` gained a `budget2s` library location. No A/B evidence hashes that module, and the A/B library
+  and builders are untouched.
+
+**Schematic content.**
+- **Connectors and fuse:** XT30 PCB male battery input (AMASS XT30PW-M); 10 A mini-blade fuse in a Keystone 3568
+  holder (car-accessory fuses are easy to buy in the UK); MaiXu MX126 5 mm screw terminal for the laser; JST-PH
+  for the interlock and laser NTC; 3-pin UPDI header.
+- **Clamps:** reverse FET Q1 gets a BZX585-C10 gate clamp; a bidirectional 10 V TVS sits on VBAT_P.
+- **Output capacitors:** six 22 µF 16 V 1206.
+- **ADC dividers:** the pack and VBUCK monitors use 1 MΩ / 270 kΩ with 100 nF, so their worst-case back-power
+  injection (about 2 × 8.4 µA) fits the 20 µA DD-32 allocation.
+- **MCU pins:**
+
+  | Function | Pin |
+  |---|---|
+  | Permit (N5 gate) | PA1 |
+  | Arm clock | PC0 |
+  | nFAULT monitor | PB1 |
+  | PWRGD | PB0 |
+  | Interlock state | PA2 |
+  | Button | PA3 |
+  | LED | PB2 |
+  | NTC excitation | PA4 |
+  | Board NTC | PA5 |
+  | Laser NTC | PB4 |
+  | Current | PA6 |
+  | VBUCK | PA7 |
+  | Pack | PB5 |
+  | Spare | PB3, PC1–PC3 |
+
+**Result (generated).** ERC 0 errors and 2 warnings, both for the not-yet-generated footprints. The netlist matches
+the connectivity exactly: 104 parts, 56 nets. `qualify.py` reports this in BUD-CAD-01, which stays OPEN.
+
+**OPEN.**
+- Project footprints for the TPS54821 RHL VQFN-14 (from TI's drawing, with a footprint review) and the SRP1265A
+  (check the Bourns land against KiCad's SRP1245A).
+- XT30 pad-to-polarity mapping and B+/B− silkscreen.
+- Sourced MPNs for generic passives, TVS, fuse and LED.
+- Whether any other pin injects into an unpowered VCTRL (TLV6700/INA inputs).
+- Placement, PCB, DRC, layout review and the firmware pin profile.

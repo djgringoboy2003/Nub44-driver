@@ -1,19 +1,21 @@
 {
- "generated_utc": "2026-10-29T02:27:34+00:00",
+ "generated_utc": "2026-10-29T02:40:13+00:00",
  "generator": "automation/budget/qualify.py",
  "inputs": {
   "automation/budget/interface.py": "890b149df8df2bc07e918cb0d305d8f8f408c03430d3451ec76c5f06f4d99dd4",
   "automation/budget/power.py": "36286602e2185c870d61d98c41ab8a5819058092a58181c060c0c585c8108297",
-  "automation/budget/qualify.py": "478c25ac2f724d0319d85ad2e39adeab6dc9dcbb95db4e5fc989f3636475401b",
+  "automation/budget/qualify.py": "64d322498a1ff210d12a33b59aed43584888821b72a392f027fd52c21fc8dcd3",
   "automation/nubm44/evidence.py": "82197c83b892aca47d180d0f24fef5b5a2deb026c0d19cf1898087189fd266cf",
   "automation/nubm44/variants.py": "8e81e9eb3b9bf1ff86bc611ed5c43b58ea1780d4107f0aae34f21966a65367f2",
   "engineering/design/budget-2s/parameters.yaml": "d3457b7371aca10bea468ed76be0f3a289123e8d9abd2a27496bf18cb0e70228",
+  "reports/budget-2s/schematic-evidence.json": "8580567b3d64e4742a6a26b9de6d72399b30b7f37d776cf438ab4a9d472ec105",
+  "reports/budget-2s/schematic.json": "7e21c0fe460b41674624507a3bc15d29acaa6eed152525e62cdd926765731114",
   "research/sources/budget-driver-sources.md": "fdd46788c162617f7507c02337208c992b477ed57d381bdc6ca90c624bce31b9"
  },
  "kind": "budget-qualification",
  "outputs": {
-  "reports/budget-2s/qualification.json": "e264c89ecf02732697a79bf4b5fe08fdf59fedeb34d17222e781cd1ad2952015",
-  "reports/budget-2s/qualification.md": "10307c481ed94d5f59ff8589ed3b73fd1c788d2b025f3748ff2298ebc3a5d9ab"
+  "reports/budget-2s/qualification.json": "efe500db65392fea0ace39a26c8a09b1b47a3b857790a2649076d6a6f592cc6b",
+  "reports/budget-2s/qualification.md": "07cf183273838d4db6d4e720b7dceddeddf21836a6ab5ff83d4248ac912b6338"
  },
  "schema": "nubm44-evidence-manifest.v1",
  "tools": {

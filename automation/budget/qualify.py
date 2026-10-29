@@ -248,6 +248,23 @@ def calculate(p: dict) -> dict:
             "unknown_inputs": unknowns(p), "readiness": readiness(p, cc, pw, itf)}
 
 
+SCHEMATIC_SUMMARY, SCHEMATIC_MANIFEST = OUT / "schematic.json", OUT / "schematic-evidence.json"
+
+
+def schematic_detail() -> str:
+    """Budget schematic evidence (automation/budget/build_schematic.py); a PCB is still required."""
+    if not SCHEMATIC_SUMMARY.is_file() or not SCHEMATIC_MANIFEST.is_file():
+        return "No budget schematic evidence; run automation/budget/build_schematic.py. Placement/PCB/DRC OPEN."
+    problems = evidence.problems(evidence.load(SCHEMATIC_MANIFEST), expected_kind="budget-schematic")
+    data = json.loads(SCHEMATIC_SUMMARY.read_text(encoding="utf-8"))
+    if problems:
+        return f"Budget schematic evidence STALE ({problems[0]}); rerun build_schematic.py. Placement/PCB/DRC OPEN."
+    return (f"Schematic {data['status']}: ERC {data['erc_errors']} errors / {data['erc_warnings']} warnings, "
+            f"{data['netlist_parts']} parts, {len(data['connectivity_differences'])} netlist differences. "
+            f"Footprints not generated: {', '.join(data['footprints_not_generated']) or 'none'}. "
+            "Placement, PCB, DRC and layout review OPEN.")
+
+
 def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
     """Computed gates: existing A/B PASS results cannot satisfy any budget gate."""
     def row(identifier, status, detail):
@@ -282,7 +299,7 @@ def readiness(p: dict, cc: dict, pw: dict, itf: dict) -> list[dict]:
         row("BUD-SAFE-01", "OPEN", "Total fault response time and energy, output-FET turn-off, single and latent "
             "faults (power-on self-test), interlock cable faults and bench fault injection."),
         row("BUD-LOOP-01", "OPEN", "Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open."),
-        row("BUD-CAD-01", "OPEN", "Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet."),
+        row("BUD-CAD-01", "OPEN", schematic_detail()),
         row("BUD-FW-01", "OPEN", "Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified."),
         row("BUD-MFG-01", "OPEN", "Exact BOM, package/paste/thermal review, quote and checked exports are absent."),
         row("BUD-COST-01", "OPEN", "Complete 3/5-unit delivered GBP quotes UNKNOWN; GBP 180/300 are ceilings."),
@@ -402,7 +419,8 @@ def main(argv: list[str] | None = None) -> int:
     evidence.write(evidence.build(
         "budget-qualification", inputs=[PARAMETERS, Path(__file__), Path(power.__file__), Path(interface.__file__),
             ROOT / "automation/nubm44/variants.py", ROOT / "automation/nubm44/evidence.py",
-            ROOT / "research/sources/budget-driver-sources.md"],
+            ROOT / "research/sources/budget-driver-sources.md",
+            *[f for f in (SCHEMATIC_SUMMARY, SCHEMATIC_MANIFEST) if f.is_file()]],
         outputs=[jp, md], tools=evidence.python_tools(["PyYAML"])), manifest)
     problems = [x for x in result["readiness"] if x["status"] != "PASS"]
     for x in result["readiness"]:

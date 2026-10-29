@@ -1,0 +1,26 @@
+# Pin table: TI SBOS613C (Jun 2021) Table 5-1, page 3, DGS (VSSOP-10) column (source BUD-06).
+name: INA300
+reference: U
+value: INA300A
+footprint: Package_SO:MSOP-10_3x3mm_P0.5mm
+datasheet: https://www.ti.com/lit/ds/symlink/ina300.pdf
+description: 36 V overcurrent protection comparator, resistor-set limit, latching open-drain alert, VSSOP-10 (DGS)
+keywords: current comparator overcurrent INA300
+fp_filters: MSOP*3x3mm*P0.5mm* VSSOP*3x3mm*P0.5mm*
+width: 17.78
+height: 15.24
+pins:
+  left:
+    - {number: 1, name: IN+, type: input}
+    - {number: 2, name: IN-, type: input}
+    - {number: 3, name: LIMIT, type: passive}
+    - {number: 4, name: ENABLE, type: input}
+  right:
+    - {number: 5, name: "~{ALERT}", type: open_collector}
+    - {number: 6, name: LATCH, type: input}
+    - {number: 7, name: DELAY, type: input}
+    - {number: 10, name: HYS, type: input}
+  top:
+    - {number: 9, name: VS, type: power_in}
+  bottom:
+    - {number: 8, name: GND, type: power_in}

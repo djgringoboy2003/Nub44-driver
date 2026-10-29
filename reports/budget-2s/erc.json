@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-29T02:40:08",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/b5333f5e-33da-5c67-bd30-e6dba3517054",
+            "violations": [
+                {
+                    "description": "Footprint 'TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm' not found in library 'budget2s'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [TPS54821]",
+                            "pos": {
+                                "x": 0.5842,
+                                "y": 1.8034
+                            },
+                            "uuid": "fdd8f23a-ed21-55c1-bb63-9e7792885615"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "Footprint 'L_Bourns_SRP1265A' not found in library 'budget2s'",
+                    "items": [
+                        {
+                            "description": "Symbol L1 [L]",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 2.2606
+                            },
+                            "uuid": "40025c06-ee94-55ae-8a31-ab798c29fe76"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                }
+            ]
+        }
+    ],
+    "source": "nubm44_budget2s.kicad_sch"
+}

@@ -100,8 +100,10 @@ linearly scaled VOL, 25 °C leakage allocations, typical-only EN pull-up and MCU
 is the supervisor release threshold, about 13 mV beyond its 30 mV allocation.
 
 Layout is still held for BUD-ISS-04: total shutdown time and fault energy are unbounded, including the output
-P-FET turn-off through its 2.2 kΩ pull-up. No budget connectivity, PCB, firmware adaptation or
-manufacturing package exists. All nine REQ-BUD requirements and physical qualification remain OPEN.
+P-FET turn-off through its 2.2 kΩ pull-up. DD-35: a draft budget KiCad schematic now exists
+(`hardware/budget-2s`, generated from `engineering/design/budget-2s/connectivity.yaml`). It has ERC 0 errors and an
+exact netlist match (104 parts, 56 nets); the 2 warnings are the not-yet-generated U1 (TPS54821 RHL) and L1
+(SRP1265A) footprints. No budget PCB, firmware adaptation or manufacturing package exists. All nine REQ-BUD requirements and physical qualification remain OPEN.
 `qualify.py` reports thirteen unresolved prerequisites and exits 1 deliberately: six CONDITIONAL, seven OPEN. Complete BOM, prices/stock and delivered/development GBP totals are UNKNOWN. Earlier
 four-role reference baskets omit most of the driver and are not build totals. Legacy validation/dashboard
 still cover A/B only; their PASS results cannot qualify this circuit.
@@ -178,7 +180,9 @@ the generated qualification/loop reports. BUD-ISS-01/02/03 are mitigated in calc
 the owner set a 93% bench-judged efficiency target. Next resolve BUD-ISS-04: chain the fault-detection delays,
 the series-pair and output P-FET turn-off (2.2 kΩ pull-up against its gate charge), buck EN shutdown,
 inductor/bulk-capacitor energy and SOA into a total response and energy bound. Use guaranteed limits where
-given; mark the rest UNKNOWN for the bench. Choose a fuse and connector that meet the input allocation. Then qualify
+given; mark the rest UNKNOWN for the bench. In parallel, continue the KiCad board (DD-35): generate and review the
+U1 RHL and L1 footprints, check the XT30 polarity, write `hardware/budget-2s/placement.yaml` and extend PCB
+placement/routing/DRC for the budget variant. Choose a fuse and connector that meet the input allocation. Then qualify
 startup/flash/open/short/reconnect and exact passive corners; the preliminary AC model cannot prove these.
 Only then create separate connectivity/library/placement sources and extend CAD, firmware, sourcing/export
 and release tooling for this independent circuit. Obtain complete landed GBP quotes for 3/5 working units;
@@ -225,6 +229,14 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-10-29: budget KiCad schematic started (DD-35)
+- Added budget connectivity (104 parts), the separate `budget2s` library (TPS54821, INA300, TLV6700, TLV803E,
+  SN74HCS74 single-unit, INA186, and renumbered MOSFET symbols) and a budget schematic builder that reuses the A/B
+  layout helpers unchanged. Result: ERC 0 errors / 2 warnings (U1, L1 footprints not generated), netlist exact.
+  `qualify.py` BUD-CAD-01 now reports the hash-verified schematic evidence. `reports/budget-2s/schematic.pdf` is a
+  plot of it.
+- Checks: see the commit message.
 
 ### 2026-10-29: budget sourcing directive and part swaps (DD-34); A/B 4.5 A analysis
 - Owner asked for: A/B boards at 4.5 A; the budget board built from cheap UK/AliExpress-available parts; KiCad

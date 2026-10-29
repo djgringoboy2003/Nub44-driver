@@ -1,0 +1,18 @@
+# Pin table: TI SLVSES2J (May 2021), DBZ package standard pinout 1 GND, 2 RESET, 3 VDD (source BUD-20).
+name: TLV803E
+reference: U
+value: TLV803EA29
+footprint: Package_TO_SOT_SMD:SOT-23
+datasheet: https://www.ti.com/lit/ds/symlink/tlv803e.pdf
+description: Voltage supervisor, open-drain active-low reset, SOT-23 (DBZ standard pinout)
+keywords: supervisor reset TLV803E
+fp_filters: SOT?23*
+width: 12.7
+height: 7.62
+pins:
+  right:
+    - {number: 2, name: "~{RESET}", type: open_collector}
+  top:
+    - {number: 3, name: VDD, type: power_in}
+  bottom:
+    - {number: 1, name: GND, type: power_in}

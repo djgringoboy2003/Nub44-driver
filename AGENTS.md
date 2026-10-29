@@ -26,7 +26,8 @@ The owner also authorised a **separate budget-2s development track** (DD-29/30):
 unrestricted size and a £60 target per working driver, comparing three and five units. Start with
 [engineering/budget-2s-design.md](engineering/budget-2s-design.md) for its current circuit candidates,
 qualification results, unresolved issues and next steps. Numeric sources and preliminary calculations/models
-exist; budget connectivity, PCB, firmware adaptation and manufacturing files do not yet exist. A/B PASS
+exist. A draft budget schematic now exists (connectivity, separate `budget2s` library, ERC/netlist evidence);
+budget footprints for U1/L1, PCB, firmware adaptation and manufacturing files do not yet exist. A/B PASS
 results and the existing dashboard apply only to the original single-cell circuit.
 
 ## Non-negotiable rules
@@ -46,8 +47,11 @@ results and the existing dashboard apply only to the original single-cell circui
    - PCB placement: `hardware/<variant>/placement.yaml`.
 
    For the separate budget circuit, numeric values are in `engineering/design/budget-2s/parameters.yaml`.
-   Its reserved connectivity source is `engineering/design/budget-2s/connectivity.yaml` and placement is
-   `hardware/budget-2s/placement.yaml`; neither exists at the electrical-qualification checkpoint. Resolve
+   Its connectivity is `engineering/design/budget-2s/connectivity.yaml`; placement will be
+   `hardware/budget-2s/placement.yaml` (not created yet). Its symbols/footprints live in the separate
+   `hardware/budget-2s/lib` (`budget2s`), built by `automation/budget/build_library.py`. Build the schematic
+   with `automation/budget/build_schematic.py`, then rerun `automation/budget/qualify.py` (it hashes the
+   schematic evidence). Never edit `hardware/libraries` or the A/B builders for budget work. Resolve
    paths with `automation/nubm44/variants.py`. Do not repoint the shared A/B sources or add the budget variant
    to legacy generator defaults before the complete independent circuit workflow supports it.
 

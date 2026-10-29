@@ -199,7 +199,7 @@ Voltage and energy arithmetic do not establish laser safety. See the budget faul
 | BUD-IF-01 | CONDITIONAL | 37/37 static default-off checks pass; smallest voltage margin 0.0135 V (Supervisor release threshold maximum). Conditional on: HCS74 thresholds interpolated between the 2 V and 4.5 V rows; open-drain/MCU VOL and VOH scaled linearly from their test currents; leakage allocations cover 25 C datasheet maxima; hot leakage UNKNOWN; TPS54821 EN pull-up and ATtiny pin leakage are typical-only figures; interlock loop and back-power injection are allocations for later parts. |
 | BUD-SAFE-01 | OPEN | Total fault response time and energy, output-FET turn-off, single and latent faults (power-on self-test), interlock cable faults and bench fault injection. |
 | BUD-LOOP-01 | OPEN | Preliminary small-signal model is separate; complete switching/fault and component-corner qualification remains open. |
-| BUD-CAD-01 | OPEN | Budget connectivity/symbols/placement/ERC/DRC/netlist evidence do not exist yet. |
+| BUD-CAD-01 | OPEN | Schematic PASS: ERC 0 errors / 2 warnings, 104 parts, 0 netlist differences. Footprints not generated: budget2s:L_Bourns_SRP1265A, budget2s:TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm. Placement, PCB, DRC and layout review OPEN. |
 | BUD-FW-01 | OPEN | Budget MCU HAL/ADC/clock/reset/arming interface and target build are not qualified. |
 | BUD-MFG-01 | OPEN | Exact BOM, package/paste/thermal review, quote and checked exports are absent. |
 | BUD-COST-01 | OPEN | Complete 3/5-unit delivered GBP quotes UNKNOWN; GBP 180/300 are ceilings. |

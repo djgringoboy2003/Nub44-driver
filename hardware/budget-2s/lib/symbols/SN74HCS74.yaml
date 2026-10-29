@@ -1,0 +1,30 @@
+# Pin table: TI SCLS782D (Dec 2021), page 3, D (SOIC-14) package (source BUD-19). Single-unit symbol.
+name: SN74HCS74
+reference: U
+value: SN74HCS74
+footprint: Package_SO:SOIC-14_3.9x8.7mm_P1.27mm
+datasheet: https://www.ti.com/lit/ds/symlink/sn74hcs74.pdf
+description: Dual D flip-flop with Schmitt-trigger inputs, preset and clear, SOIC-14
+keywords: flip-flop latch HCS74 schmitt
+fp_filters: SOIC*3.9x8.7mm*P1.27mm*
+width: 20.32
+height: 25.4
+pins:
+  left:
+    - {number: 2, name: 1D, type: input}
+    - {number: 3, name: 1CLK, type: input}
+    - {number: 4, name: "~{1PRE}", type: input}
+    - {number: 1, name: "~{1CLR}", type: input}
+    - {number: 12, name: 2D, type: input}
+    - {number: 11, name: 2CLK, type: input}
+    - {number: 10, name: "~{2PRE}", type: input}
+    - {number: 13, name: "~{2CLR}", type: input}
+  right:
+    - {number: 5, name: 1Q, type: output}
+    - {number: 6, name: "~{1Q}", type: output}
+    - {number: 9, name: 2Q, type: output}
+    - {number: 8, name: "~{2Q}", type: output}
+  top:
+    - {number: 14, name: VCC, type: power_in}
+  bottom:
+    - {number: 7, name: GND, type: power_in}

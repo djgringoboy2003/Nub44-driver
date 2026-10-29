@@ -1,0 +1,30 @@
+# Pin table: TI SLVSB14B (Feb 2016) Pin Functions, page 3 (source BUD-01). Pins sharing a name are stacked.
+name: TPS54821
+reference: U
+value: TPS54821
+footprint: budget2s:TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm
+datasheet: https://www.ti.com/lit/ds/symlink/tps54821.pdf
+description: 4.5-17 V input, 8 A synchronous buck, external compensation, VQFN-14 (RHL) with exposed pad
+keywords: buck converter TPS54821 current mode
+fp_filters: TI*RHL0014A*
+width: 25.4
+height: 22.86
+pins:
+  left:
+    - {number: 4, name: PVIN, type: power_in}
+    - {number: 5, name: PVIN, type: power_in}
+    - {number: 6, name: VIN, type: power_in}
+    - {number: 10, name: EN, type: input}
+    - {number: 9, name: SS/TR, type: passive}
+    - {number: 1, name: RT/CLK, type: passive}
+  right:
+    - {number: 13, name: BOOT, type: passive}
+    - {number: 11, name: PH, type: passive}
+    - {number: 12, name: PH, type: passive}
+    - {number: 7, name: VSENSE, type: input}
+    - {number: 8, name: COMP, type: passive}
+    - {number: 14, name: PWRGD, type: open_collector}
+  bottom:
+    - {number: 2, name: GND, type: power_in}
+    - {number: 3, name: GND, type: power_in}
+    - {number: 15, name: GND, type: power_in}

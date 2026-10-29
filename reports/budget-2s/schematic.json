@@ -1,0 +1,36 @@
+{
+ "variant": "budget-2s",
+ "schematic": "hardware/budget-2s/nubm44_budget2s.kicad_sch",
+ "upgrade_rc": 0,
+ "erc_rc": 0,
+ "netlist_rc": 0,
+ "erc_errors": 0,
+ "erc_warnings": 2,
+ "erc_violations": [
+  {
+   "severity": "warning",
+   "type": "footprint_link_issues",
+   "description": "Footprint 'TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm' not found in library 'budget2s'",
+   "items": [
+    "Symbol U1 [TPS54821]"
+   ]
+  },
+  {
+   "severity": "warning",
+   "type": "footprint_link_issues",
+   "description": "Footprint 'L_Bourns_SRP1265A' not found in library 'budget2s'",
+   "items": [
+    "Symbol L1 [L]"
+   ]
+  }
+ ],
+ "netlist_parts": 104,
+ "netlist_nets": 56,
+ "connectivity_differences": [],
+ "footprints_not_generated": [
+  "budget2s:L_Bourns_SRP1265A",
+  "budget2s:TI_RHL0014A_VQFN-14-1EP_3.5x3.5mm_P0.5mm"
+ ],
+ "status": "PASS",
+ "scope": "schematic ERC and connectivity only; footprints, PCB and release remain OPEN"
+}
