@@ -3,8 +3,8 @@
  "inputs": {
   "board": "hardware/compact-22mm/nubm44_driver.kicad_pcb",
   "board_sha256": "1729aa309fa05cc29bff613089875db203bdfc66ac9c826309d9d25fcdb01f35",
-  "parameters_sha256": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb",
-  "calculations_sha256": "0f71f20d5792bd99c961a4917a97fb74db651311ea7c8f067571d237c11ab7fd"
+  "parameters_sha256": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4",
+  "calculations_sha256": "b1bce42822b7441a25f0e49897412e53867c29962c375fe8f9f691af1838aba3"
  },
  "assumptions": {
   "copper": "1.0 oz (34.8 um) on every layer (DD-14 target; finished thickness UNKNOWN)",

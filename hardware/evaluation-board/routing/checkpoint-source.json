@@ -145,6 +145,30 @@
         "unconnected": 0,
         "schematic_parity": 0
       }
+    },
+    {
+      "date": "2026-10-29",
+      "commit_basis": "aa52a2e",
+      "change": "Owner decision DD-37: parameters.yaml efficiency target 93 % (was 94 %); schematics regenerated and DRC re-run. DSN/SES, tracks, vias and pads unchanged.",
+      "source_files_sha256": {
+        "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4",
+        "engineering/design/connectivity.yaml": "25f43c8f1200e7615f8d9b56ab5d6aca9fc40beb7a4923441b2a714059e5680e",
+        "hardware/evaluation-board/placement.yaml": "fd9b354e2179df620c4020c44e0f028358ae51c386b2d1a6a0be495c6fd53d1a",
+        "hardware/evaluation-board/nubm44_driver.kicad_pcb": "9fe967c625a012c7c538b619748db00da29dbbfff52689771d0d039f642ed40b",
+        "hardware/evaluation-board/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
+        "hardware/evaluation-board/nubm44_driver.kicad_sch": "92f1d2e2aaad8f15c06dcbea39c94cf6b7be50730b42333401296244fe721d6b",
+        "hardware/evaluation-board/nubm44_driver.net": "1ac6b7e9b55c48f3f403a20300b7d7352d0e8283dd784948b5a4c175f36f36c9",
+        "automation/placement/build_pcb.py": "842f43498f9c545b09e3e69cff81e50ec5e0aa63688d3cde372c12208e9abfba",
+        "automation/placement/pcb_builder.py": "d0434f23046fe6accb115ea8aa5d119ea426fa286434b8748bc30841bb855850"
+      },
+      "validation": {
+        "report": "reports/drc-evaluation-board.json",
+        "report_sha256": "8a3e824f8956a280737c3db9dd720c7a401e4dff9bee6528632fc62b56a5916d",
+        "errors": 0,
+        "warnings": 0,
+        "unconnected": 0,
+        "schematic_parity": 0
+      }
     }
   ]
 }

@@ -1,15 +1,15 @@
 {
- "generated_utc": "2026-10-29T02:52:28+00:00",
+ "generated_utc": "2026-10-29T03:17:13+00:00",
  "generator": "automation/schematic/build_schematic.py",
  "inputs": {
   "engineering/design/connectivity.yaml": "25f43c8f1200e7615f8d9b56ab5d6aca9fc40beb7a4923441b2a714059e5680e",
-  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb"
+  "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4"
  },
  "kind": "schematic",
  "outputs": {
   "hardware/evaluation-board/nubm44_driver.kicad_sch": "92f1d2e2aaad8f15c06dcbea39c94cf6b7be50730b42333401296244fe721d6b",
-  "hardware/evaluation-board/nubm44_driver.net": "be86fa860f01dfadc74f6eb9f4d3239facbe5a9e1e57a8159094d7056cd8a3a0",
-  "reports/erc-evaluation-board.json": "2a624d631e5f6ec19861d8b5ab0b87dda126c69b28d9946de8d02b4faef38ed3",
+  "hardware/evaluation-board/nubm44_driver.net": "1ac6b7e9b55c48f3f403a20300b7d7352d0e8283dd784948b5a4c175f36f36c9",
+  "reports/erc-evaluation-board.json": "e5436cf14c566ce876b525c36c7b10d88e32a33aec1cc66226daf4574e4d3ca9",
   "reports/schematic-evaluation-board.json": "c40b4f0a2f06fe8ffbd2ead065aa8bcaf701a7106e8cc03150f9628d0df1ce11"
  },
  "schema": "nubm44-evidence-manifest.v1",

@@ -14,7 +14,7 @@ measurements. Gate G (physical validation) remains open until bench data exists.
 | Average inductor current vs ILIM minimum (20 % margin) | 10.2907 A | ≤ 11.2386 A | **PASS** | worst operating avg 8.58 A; ILIM min 11.24 A |
 | Peak inductor current vs Isat (30 % drop rating) | 9.6739 A | ≤ 14 A | **PASS** |  |
 | Inductor RMS current vs Irms (20 C rise) | 8.599 A | ≤ 12.8 A | **PASS** | RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point |
-| Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | 94.1015 % | ≥ 94 % | **PASS** | board-input to laser; estimate from loss model; brief asked > 95 % |
+| Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 93 %, owner deviations DD-26/DD-37) | 94.1015 % | ≥ 93 % | **PASS** | board-input to laser; estimate from loss model; brief asked > 95 % |
 | Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | 90.2736 % | ≥ 86 % | **PASS** |  |
 | Boost off-time vs minimum off-time | 881.927 ns | ≥ 145 ns | **PASS** |  |
 | Reverse-polarity FET dissipation (worst point) | 0.6842 W | ≤ 0.7 W | **PASS** | PowerPAK 1212-8 on 4-layer pour at ~60 K/W (estimate); limit is an owner decision (DD-36), bench thermal T-test decides |

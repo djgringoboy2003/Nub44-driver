@@ -6,7 +6,7 @@
   "Average inductor current vs ILIM minimum (20 % margin)",
   "Peak inductor current vs Isat (30 % drop rating)",
   "Inductor RMS current vs Irms (20 C rise)",
-  "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26)",
+  "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 93 %, owner deviations DD-26/DD-37)",
   "Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %)",
   "Boost off-time vs minimum off-time",
   "Reverse-polarity FET dissipation (worst point)",
@@ -23,7 +23,7 @@
   "Crossover below CSA bandwidth / 3"
  ],
  "evidence_class": "PREDICTION (engineering calculation from datasheet parameters; not a measurement)",
- "generated_utc": "2026-10-29T02:51:34+00:00",
+ "generated_utc": "2026-10-29T03:16:39+00:00",
  "generator": "engineering/calculations/power_stage.py",
  "inputs": {
   "automation/nubm44/calc/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -31,15 +31,15 @@
   "automation/nubm44/calc/buckboost.py": "5dcc5b628a898e4bf86e414a23020bb3a4739c09a1123d60fd6a65a8a20b6ac7",
   "automation/nubm44/calc/copper.py": "3cf0049153b88cbd2e1a265d028fefca26f10244b0569da144560e448721426b",
   "automation/nubm44/calc/loop.py": "966f4f9ccde36638500bfff6c6baa027a1fd8a36332f8c83d9c1d84e3ffa8d39",
-  "engineering/calculations/power_stage.py": "1508af4f5da2b8cf50d6ae88ed9dfad3542f902d49ddb4138ee7b6b789c0c328",
-  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb"
+  "engineering/calculations/power_stage.py": "58e7d7f3ec5ff87953aca9fe89d4639de9296ee678f67abfe2d0d13a832de9d4",
+  "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4"
  },
  "kind": "calculation",
  "outputs": {
   "engineering/calculations/plots/current_loop_bode.png": "8016bd469a032d3ca7ee7bc0549db37b2e19fb942ad51cb0fbefbe7655a860e7",
-  "engineering/calculations/plots/efficiency_vs_vin.png": "f9ac51717c070d3fede22d162164e9eed654a998ef8cbcfb42cfde0d22645bd1",
-  "engineering/calculations/power-stage-results.json": "0f71f20d5792bd99c961a4917a97fb74db651311ea7c8f067571d237c11ab7fd",
-  "engineering/calculations/power-stage-results.md": "6a7c73c001cf897abd0c52df649fe29dfd2d63cdd4e5910a0dd33d5e9d509e29"
+  "engineering/calculations/plots/efficiency_vs_vin.png": "8c4300d057e2fb654eea70e55bc1ac9f1a7ad0e234586405b9a3afa433d9dbb2",
+  "engineering/calculations/power-stage-results.json": "b1bce42822b7441a25f0e49897412e53867c29962c375fe8f9f691af1838aba3",
+  "engineering/calculations/power-stage-results.md": "f30b77edd21af5df4b5324b076969cfb286084b799667f59159b39720adc6f6f"
  },
  "schema": "nubm44-evidence-manifest.v1",
  "tools": {

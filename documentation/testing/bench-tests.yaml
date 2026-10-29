@@ -73,7 +73,7 @@ tests:
     title: Efficiency
     gate_g: [evaluation-board, compact-22mm]
     quantities:
-      - {name: efficiency_pct, unit: "%", min: 94.0, when: {vin_v: 4.0},
+      - {name: efficiency_pct, unit: "%", min: 93.0, when: {vin_v: 4.0},
          prediction: {source: calculation-check, check: "Efficiency at 4.0 V"}}
       - {name: efficiency_pct, unit: "%", min: 86.0, when: {vin_v: 3.0},
          prediction: {source: calculation-check, check: "Efficiency at 3.0 V"}}

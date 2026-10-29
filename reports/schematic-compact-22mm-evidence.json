@@ -1,15 +1,15 @@
 {
- "generated_utc": "2026-10-29T02:52:20+00:00",
+ "generated_utc": "2026-10-29T03:17:04+00:00",
  "generator": "automation/schematic/build_schematic.py",
  "inputs": {
   "engineering/design/connectivity.yaml": "25f43c8f1200e7615f8d9b56ab5d6aca9fc40beb7a4923441b2a714059e5680e",
-  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb"
+  "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4"
  },
  "kind": "schematic",
  "outputs": {
   "hardware/compact-22mm/nubm44_driver.kicad_sch": "d6150485294f63ef09b4c87f3d3c4ae5eacd45f710b26c4aa2f5c381cbf90ae7",
-  "hardware/compact-22mm/nubm44_driver.net": "abb559e4d2063a32ea00b5921e69fc8a5d6b4c9c92919c23261bf8ac4f046ad0",
-  "reports/erc-compact-22mm.json": "8af1bfeb4dc2e68c19b8562c5428508596e23434a37a14c8fbe6d3fb0f5f7432",
+  "hardware/compact-22mm/nubm44_driver.net": "2010f04b5750a1ca9f65b1748aca2ebca4ed4bc0da1510b8486bc8c232df7632",
+  "reports/erc-compact-22mm.json": "2c9731c26e557c3e2857cd7021cde383f739bbcefcb3a34ea48f27ebf65550db",
   "reports/schematic-compact-22mm.json": "73ab895c23c486b707dc92ee374e49f03abfd91cc1418bc1d273fe51ccb9e360"
  },
  "schema": "nubm44-evidence-manifest.v1",

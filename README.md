@@ -42,7 +42,7 @@ browser). Agents start with [AGENTS.md](AGENTS.md); people with the
 | Current regulation | 10 mΩ high-side shunt, INA186A2, ±3.6 % worst case (calculated) |
 | Protection | Reverse polarity (P-FET), hardware UVLO, 4.8–5.2 A hardware current ceiling, hiccup short protection, open-load trip, interlock, default-off enable, thermal monitoring |
 | Modes | Continuous, flash (2 Hz default); mode change by short power interruption or optional switch pad |
-| Efficiency (estimated) | 94.6 % at 4.0 V (target ≥ 94 %, owner deviation DD-26), 91.3 % at 3.0 V |
+| Efficiency (estimated, 4.5 A) | 94.1 % at 4.0 V by model, 93.6 % with routed copper (target ≥ 93 %, owner DD-37); 90.3 % at 3.0 V |
 | PCB | 4 layers, 1.6 mm, ENIG: Ø 22 mm compact board (Variant A) and 45 × 40 mm evaluation board (Variant B) |
 
 ## Getting started

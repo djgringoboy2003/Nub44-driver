@@ -150,7 +150,7 @@ eta_4v = eff[("typ_25C", 4.0)]
 eta_3v = eff[("typ_25C", 3.0)]
 eta_3v_worst = min(eff[(c, 3.0)] for c in LASER_CORNERS)
 ETA_TARGET = P["current"]["efficiency_target_pct"]
-check(f"Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= {ETA_TARGET:g} %, owner deviation DD-26)",
+check(f"Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= {ETA_TARGET:g} %, owner deviations DD-26/DD-37)",
       eta_4v * 100, ETA_TARGET, "min", "%", "board-input to laser; estimate from loss model; brief asked > 95 %")
 check("Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %)", eta_3v_worst * 100, 86.0, "min", "%")
 

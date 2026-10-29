@@ -20,7 +20,7 @@ current:
   alternates_a: [3.0, 3.5, 4.0]     # BOM options via R_FB_TOP only
   backup_margin_factor: 1.0         # DD-36 owner deviation: ISP/ISN backup only needs to clear the worst-case setpoint (was 1.05)
   accuracy_target_pct: 5.0          # REQ-OUT-03
-  efficiency_target_pct: 94.0       # REQ-PWR-02 at 4.0 V, 4 A: owner deviation from the brief's > 95 % (DD-26)
+  efficiency_target_pct: 93.0       # REQ-PWR-02 at 4.0 V, 4.5 A, bench-judged: owner DD-37 (was 94 %, DD-26; brief > 95 %)
 
 battery:
   v_full: 4.20

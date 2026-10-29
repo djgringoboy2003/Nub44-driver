@@ -1,10 +1,10 @@
 {
  "evidence_class": "PREDICTION (behavioural cycle-averaged ngspice model; not switching-level, not a measurement)",
- "generated_utc": "2026-10-29T02:55:30+00:00",
+ "generated_utc": "2026-10-29T03:18:24+00:00",
  "generator": "simulation/run_sims.py",
  "inputs": {
-  "engineering/calculations/power-stage-results.json": "0f71f20d5792bd99c961a4917a97fb74db651311ea7c8f067571d237c11ab7fd",
-  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb",
+  "engineering/calculations/power-stage-results.json": "b1bce42822b7441a25f0e49897412e53867c29962c375fe8f9f691af1838aba3",
+  "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4",
   "simulation/run_sims.py": "735a06a226698b971dbe289d72c19983191de2e596c7470fde36233f6a01ec23"
  },
  "kind": "simulation",

@@ -99,7 +99,7 @@ def test_changed_raw_data_and_wrong_folder_are_invalid(bench, tmp_path):
 def test_missing_quantity_and_conditional_limits(bench, tmp_path):
     cat = bench.load_catalogue()
     p = record(bench, tmp_path / "results", "T1.7",
-               [{"quantity": "efficiency_pct", "value": 93.9, "unit": "%", "conditions": {"vin_v": 4.0}},
+               [{"quantity": "efficiency_pct", "value": 92.9, "unit": "%", "conditions": {"vin_v": 4.0}},
                 {"quantity": "efficiency_pct", "value": 90.0, "unit": "%", "conditions": {"vin_v": 3.0}}], status="FAIL")
     r = bench.evaluate(p, cat)
     assert r["status"] == "FAIL" and [m["result"] for m in r["measurements"]] == ["FAIL", "PASS"]

@@ -1,12 +1,12 @@
 {
- "report_sha256": "8ec9220ebe066f4da645076e4bc832e99a3587890e6cfebc00b5ec6d1366f51d",
+ "report_sha256": "8a3e824f8956a280737c3db9dd720c7a401e4dff9bee6528632fc62b56a5916d",
  "inputs": {
   "hardware/evaluation-board/nubm44_driver.kicad_pcb": "9fe967c625a012c7c538b619748db00da29dbbfff52689771d0d039f642ed40b",
   "hardware/evaluation-board/nubm44_driver.kicad_sch": "92f1d2e2aaad8f15c06dcbea39c94cf6b7be50730b42333401296244fe721d6b",
   "hardware/evaluation-board/nubm44_driver.kicad_pro": "26cbd5478ca3006adb276e563cf69985b79b8a26e79a018abc816911ab0c9948",
   "hardware/evaluation-board/placement.yaml": "fd9b354e2179df620c4020c44e0f028358ae51c386b2d1a6a0be495c6fd53d1a",
   "engineering/design/connectivity.yaml": "25f43c8f1200e7615f8d9b56ab5d6aca9fc40beb7a4923441b2a714059e5680e",
-  "engineering/design/parameters.yaml": "2ac978d9a69984f2bca771dca0cef9723af5b6429dde8c3a041cd5c5ff9149fb"
+  "engineering/design/parameters.yaml": "c5343ead8caa1e3d93fcc41afc8e385649d12084a8913b1ae278259138c7e2b4"
  },
  "schematic_parity": true,
  "severity_all": true

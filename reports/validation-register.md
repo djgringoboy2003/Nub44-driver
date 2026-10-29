@@ -49,7 +49,7 @@ Listed in `engineering/known-limitations.yaml`. They remain FAIL below; the vali
 | VAL-CALC-04 | Average inductor current vs ILIM minimum (20 % margin) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 10.2907 A (limit max 11.238554216867469) |
 | VAL-CALC-05 | Peak inductor current vs Isat (30 % drop rating) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 9.6739 A (limit max 14.0) |
 | VAL-CALC-06 | Inductor RMS current vs Irms (20 C rise) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 8.599 A (limit max 12.8) |
-| VAL-CALC-07 | Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 94.1015 % (limit min 94.0) |
+| VAL-CALC-07 | Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 93 %, owner deviations DD-26/DD-37) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 94.1015 % (limit min 93.0) |
 | VAL-CALC-08 | Efficiency at 3.0 V, worst diode corner (REQ-PWR-03 target >= 86 %) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 90.2736 % (limit min 86.0) |
 | VAL-CALC-09 | Boost off-time vs minimum off-time | CALC | **PASS** | engineering/calculations/power-stage-results.md | 881.9271 ns (limit min 145.0) |
 | VAL-CALC-10 | Reverse-polarity FET dissipation (worst point) | CALC | **PASS** | engineering/calculations/power-stage-results.md | 0.6842 W (limit max 0.7) |

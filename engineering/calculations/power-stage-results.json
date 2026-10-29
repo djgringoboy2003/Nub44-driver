@@ -870,9 +870,9 @@
    "note": "RMS = sqrt(avg^2 + ripple_pp^2 / 12) at the worst operating point"
   },
   {
-   "check": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 94 %, owner deviation DD-26)",
+   "check": "Efficiency at 4.0 V, typical diode (REQ-PWR-02 target >= 93 %, owner deviations DD-26/DD-37)",
    "value": 94.1015,
-   "limit": 94.0,
+   "limit": 93.0,
    "kind": "min",
    "unit": "%",
    "status": "PASS",

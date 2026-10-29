@@ -315,6 +315,8 @@ sets the 5 A backup limit.
 (`parameters.yaml` `current.efficiency_target_pct`), which the calculation checks. The bench measurement
 (test plan T1.7) remains the evidence of record.
 
+**Superseded 2026-10-29 by DD-37:** the target is now ≥ 93 % at 4.5 A.
+
 ## DD-27 Evaluation board first; compact board parked
 The compact board ends at 20 open signal connections. The grid router and simulations show a routing-capacity
 limit near the MCU, not a net-order problem: an MCU pin swap and finer inner-layer rules do not finish it
@@ -660,3 +662,12 @@ target (as for the budget board) or wait for the bench measurement (T1.7).
 
 **Diode risk.** Same as DD-33: 4.5 A exceeds LD-05's 4.2 A maximum operating current; risk R-01 is raised.
 Lower-current builds (R8 2.49/4.53/6.65 kΩ) raise the loop gain, so rerun SIM-12 before fitting one.
+
+## DD-37 A/B efficiency target 93 % at 4.5 A (owner, 2026-10-29)
+
+At 4.5 A (DD-36) the loss model gives 94.10 % at 4.0 V input. With the evaluation board's routed copper (switch-node
+copper the model omits), the estimate is 93.56 %, below the 94 % DD-26 target. The owner chose to **accept a lower
+target**. REQ-PWR-02 becomes **≥ 93 % at 4.0 V input and 4.5 A, judged by bench measurement (T1.7)**, the same
+figure as the budget board (DD-31). The 93 % value follows the budget precedent. `current.efficiency_target_pct`,
+the T1.7 bench limit and the requirement text were changed; the 3.0 V target (≥ 86 %, REQ-PWR-03) is unchanged.
+The routed estimate keeps 0.56 points of margin; the bench result decides.
