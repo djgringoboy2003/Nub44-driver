@@ -2,12 +2,14 @@
 
 ## Current state (handover)
 
-_Last updated: 2026-10-29 (budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
+_Last updated: 2026-11-07 (repository made public at owner direction; budget-2s electrical qualification, DD-30 checkpoint by Codex, continued by
 Claude Code with DD-31: single output P-FET, UV backstop, operating-point/dropout model, owner's 93%
 efficiency decision; DD-32: static default-off interface; DD-33: owner main setpoint 4.5 A; DD-34: owner
 sourcing directive and part swaps; DD-35: budget KiCad schematic; DD-36: A/B boards moved to 4.5 A; DD-37: A/B efficiency target 93 %; DD-38: budget PCB and prototype manufacturing package; DD-39: budget BOM sourced; DD-40: LCSC codes for every budget BOM line). The pre-order, quote, GBP/UK and Project 450
 reviews and DD-29 plan are integrated into `main`. The original A/B electrical sources, 4.0 A setpoint,
-protection thresholds, copper and manufacturing files remain unchanged. The gate table below is A/B only._
+protection thresholds, copper and manufacturing files remain unchanged. The GitHub repository is PUBLIC by
+owner decision as of 2026-11-07; the tracked PCBWay quote workbook, related pricing/sourcing reports, and full
+Git history are exposed. The gate table below is A/B only._
 
 | Gate | Status | Evidence |
 |---|---|---|
@@ -187,12 +189,15 @@ factor 1.0 and reverse-FET limit 0.7 W (DD-36; was 4.0 A, DD-13); A/B efficiency
    unmeasured until Gate G.
 4. The averaged simulation model has no switching ripple, saturation or dead time; its inner-loop gain is an
    assumption.
-5. Remote `origin` is the private repository https://github.com/djgringoboy2003/Nub44-driver; `main` includes the
+5. Remote `origin` is the public repository https://github.com/djgringoboy2003/Nub44-driver; `main` includes the
    audit work. CI (`.github/workflows/ci.yml`) passes on GitHub (run 40500901442, 2026-10-27): Linux 188 tests pass
    and 19 skip without KiCad, gcc host tests and mutation check pass, fast validation exits 0 with the 3 known items;
    Windows pinned-toolchain target build and mutation check pass.
 
 ## Next actions (in order)
+
+**Public collaboration:** choose and add an explicit project license and contribution guidance before inviting
+code reuse or changes. Keep the Class 4 laser hazards, DRAFT release status and unmeasured Gate G results clear.
 
 **Active budget implementation track:** read `engineering/budget-2s-design.md` (its "Next implementation steps"
 are the ordered list), DD-38 and `manufacturing/budget-2s/ORDERING.md`.
@@ -250,6 +255,12 @@ The per-process PowerShell flag is needed on this machine; no system policy was 
 - See `documentation/developer-guide.md` for onboarding, troubleshooting and recovery.
 
 ## Log
+
+### 2026-11-07: repository made public
+
+At the owner's direction, changed the GitHub repository visibility to PUBLIC. The owner accepted publication as-is,
+including the tracked PCBWay quote workbook, detailed pricing/sourcing reports and existing Git history. No design
+or manufacturing files were changed.
 
 ### 2026-10-29: LCSC codes for the remaining 21 BOM lines (DD-40)
 
